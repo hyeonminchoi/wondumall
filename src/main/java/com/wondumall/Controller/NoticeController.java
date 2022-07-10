@@ -133,4 +133,22 @@ public class NoticeController {
 		}
 	}
 	
+	@Secured("ROLE_ADMIN")
+	@PostMapping("/noticeEdit.do")
+	public void noticeEdit(@RequestParam("pageNo") int pageNo, @RequestParam("n_no") int n_no, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		NoticeDTO noticeDTO = new NoticeDTO();
+		noticeDTO.setN_no(n_no);
+		noticeDTO.setN_title(Util.xss_clean_check(request.getParameter("n_title")));
+		noticeDTO.setN_content(Util.xss_clean_check(request.getParameter("n_content"), request));
+		noticeDTO.setU_nickname(request.getParameter("u_nickname"));
+		int result = noticeService.edit(noticeDTO);
+		response.setContentType("text/html; charset=UTF-8");
+		if (result > 0) {
+			response.getWriter().println("<script> alert('공지사항 수정에 성공했습니다'); location.href='./noticeDetail.do?n_no=" + n_no +  "&pageNo=" + pageNo + "'</script>");
+		} else {
+			response.getWriter().println("<script> alert('공지사항 수정에 실패했습니다'); location.href='./noticeDetail.do?n_no=" + n_no +  "&pageNo=" + pageNo + "'</script>");
+		}
+	}
+	
 }

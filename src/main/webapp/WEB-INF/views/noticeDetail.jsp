@@ -41,6 +41,20 @@
 		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
+
+
+<!-- jQuery Plugins -->
+<script src="./js/jquery.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
+<script src="./js/slick.min.js"></script>
+<script src="./js/nouislider.min.js"></script>
+<script src="./js/jquery.zoom.min.js"></script>
+<script src="./js/main.js"></script>
+
+<!-- include summernote css/js -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
 <style>
 	#back{
 		margin-bottom: 10px;
@@ -56,6 +70,19 @@
 			location.href= './noticeDelete.do?pageNo=${pageNo}&n_no=${detail.n_no}';
 		}
 	}
+	
+	$(document).ready(function() {
+		  $('#summernote').summernote({
+			  height: 400,
+			  callbacks : {
+					onImageUpload : function(files, editor, welEditable) {       
+						for (var i = 0; i < files.length; i++) {
+							sendFile(files[i], this);
+						}
+					}
+				}
+		  });
+	});
 </script>
 </head>
 <body>
@@ -90,9 +117,12 @@
 		<div class="container">
 			<div id="back">
 				<button type="button" onclick="location.href='./notice.do?pageNo=${pageNo}'">뒤로가기</button>
+				<sec:authentication property="principal" var="user"/>
+					<c:if test="${user.nickname eq detail.u_nickname }">
+						<button type="button" onclick="showNoticeEditDialog()">수정</button>
+					</c:if>
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<button type="button" onclick="#">수정</button>
-					<button type="button" onclick="noticeDelete()"}>삭제</button>
+					<button type="button" onclick="noticeDelete()">삭제</button>
 				</sec:authorize>
 			</div>
 			<table class="table table-bordered">
@@ -171,13 +201,41 @@
 	</footer>
 	<!-- /FOOTER -->
 
-	<!-- jQuery Plugins -->
-	<script src="./js/jquery.min.js"></script>
-	<script src="./js/bootstrap.min.js"></script>
-	<script src="./js/slick.min.js"></script>
-	<script src="./js/nouislider.min.js"></script>
-	<script src="./js/jquery.zoom.min.js"></script>
-	<script src="./js/main.js"></script>
 
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+	<dialog id="noticeEditDialog">
+		<div>
+			<form action="./noticeEdit.do" method="post">
+				<div style="padding-bottom: 10px;">
+					<h2><label>제목</label></h2>
+					<input style="width: 100%;" type="text" name="n_title" value="${detail.n_title }" required>
+				</div>
+				<div style="padding-bottom: 10px;">
+					<h4><label>내용</label></h4>
+					<textarea id="summernote" name="n_content">${detail.n_content }</textarea>
+				</div>
+				<input type="hidden" name="pageNo" value="${pageNo }">
+				<input type="hidden" name="n_no" value="${detail.n_no }">
+				<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">
+				<div>
+					<button type="submit">수정</button>
+					<button type="button" onclick="hideNoticeEditDialog()">닫기</button>
+				</div>
+			</form>
+		</div>
+	</dialog>
+	
+<script>
+
+var noticeEditDialog = document.getElementById('noticeEditDialog');
+
+function showNoticeEditDialog(){
+	noticeEditDialog.showModal();
+}
+function hideNoticeEditDialog(){
+	noticeEditDialog.close();
+}
+</script>
+</sec:authorize>
 </body>
 </html>

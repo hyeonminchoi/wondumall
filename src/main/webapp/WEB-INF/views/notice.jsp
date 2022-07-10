@@ -210,8 +210,7 @@
 			</form>
 		</div>
 	</dialog>
-</sec:authorize>
-
+	
 <script>
 var noticeWriteDialog = document.getElementById('noticeWriteDialog');
 
@@ -222,5 +221,7 @@ function hideWriteDialog(){
 	noticeWriteDialog.close();
 }
 </script>
+</sec:authorize>
+
 </body>
 </html>

@@ -30,4 +30,9 @@
 		UPDATE notice SET n_del = 1
 		WHERE n_no = #{n_no}
 	</update>
+	
+	<update id="edit" parameterType="noticeDTO">
+		UPDATE notice SET n_title=#{n_title}, n_content=#{n_content}, n_date=current_timestamp()
+		WHERE n_no = #{n_no} AND u_no = (SELECT u_no FROM user WHERE u_nickname=#{u_nickname})
+	</update>
 </mapper>

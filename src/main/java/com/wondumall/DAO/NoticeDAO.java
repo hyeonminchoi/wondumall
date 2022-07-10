@@ -32,4 +32,8 @@ public class NoticeDAO {
 	public int delete(NoticeDTO noticeDTO) {
 		return sqlSession.update("notice.delete", noticeDTO);
 	}
+
+	public int edit(NoticeDTO noticeDTO) {
+		return sqlSession.update("notice.edit", noticeDTO);
+	}
 }
