@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,7 +66,8 @@ public class NoticeController {
 		mv.addObject("commentList", noticeCommentService.getCommentList(n_no));
 		return mv;
 	}
-
+	
+	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@PostMapping("/noticeComment.do")
 	public void noticeCommentWrite(NoticecommentDTO noticecommentDTO, @RequestParam("pageNo") int pageNo,
 			HttpServletResponse response) throws Exception {
@@ -81,6 +83,7 @@ public class NoticeController {
 		}
 	}
 
+	@Secured("ROLE_ADMIN")
 	@PostMapping("/noticeWrite.do")
 	public void noticeWrite(@RequestParam("pageNo") int pageNo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -98,7 +101,8 @@ public class NoticeController {
 					"<script> alert('공지사항 작성에 실패했습니다'); location.href='./notice.do?pageNo=" + pageNo + "'</script>");
 		}
 	}
-
+	
+	@Secured("ROLE_ADMIN")
 	@PostMapping("/noticeImage.do")
 	public ResponseEntity<?> imageUpload(MultipartFile file) {
 		try {

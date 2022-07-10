@@ -42,11 +42,8 @@
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 <style>
-	th, td{
-		text-align: center;
-	}
-	td:nth-child(2){
-		text-align: left;
+	#back{
+		margin-bottom: 10px;
 	}
 </style>
 <script type="text/javascript">
@@ -85,10 +82,17 @@
 	<div class="section">
 		<!-- container -->
 		<div class="container">
+			<div id="back">
+				<button type="button" onclick="location.href='./notice.do?pageNo=${pageNo}'">뒤로가기</button>
+			</div>
 			<table class="table table-bordered">
 				<tr>
 					<th>번호</th>
 					<td>${detail.n_no }</td>
+				</tr>
+				<tr>
+					<th>제목</th>
+					<td>${detail.n_title }</td>
 				</tr>
 				<tr>
 					<th>글쓴이</th>

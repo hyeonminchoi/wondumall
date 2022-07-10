@@ -61,6 +61,18 @@
 	td:nth-child(2){
 		text-align: left;
 	}
+	th:nth-child(1), th:nth-child(3), th:nth-child(4), th:nth-child(5){
+		width: 10%;
+	}
+	th:nth-child(2){
+		width: 40%;
+	}
+	th:nth-child(6){
+		width: 20%;
+	}
+	td:nth-child(2){
+		text-align: left;
+	}
 </style>
 <script type="text/javascript">
 	function linkPage(pageNo) {
@@ -155,7 +167,7 @@
 			<div style="text-align: center;">
 				<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
 			</div>
-			<sec:authorize access="authenticated">
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<div style="float:right;">
 					<button type="button" onclick="showWriteDialog()">글쓰기</button>
 				</div>
@@ -176,26 +188,30 @@
 	</footer>
 	<!-- /FOOTER -->
 
-<dialog id="noticeWriteDialog">
-	<div>
-		<form action="./noticeWrite.do" method="post">
-			<div style="padding-bottom: 10px;">
-				<h2><label>제목</label></h2>
-				<input style="width: 100%;" type="text" name="n_title" required>
-			</div>
-			<div style="padding-bottom: 10px;">
-				<h4><label>내용</label></h4>
-				<textarea id="summernote" name="n_content"></textarea>
-			</div>
-			<input type="hidden" name="pageNo" value="${pageNo }">
-			<input type="hidden" name="u_nickname" value="${sessionScope.nickname }">
-			<div>
-				<button type="submit">글쓰기</button>
-				<button type="button" onclick="hideWriteDialog()">닫기</button>
-			</div>
-		</form>
-	</div>
-</dialog>
+<!-- 관리자만 공지사항 작성 가능 -->
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+	<dialog id="noticeWriteDialog">
+		<div>
+			<form action="./noticeWrite.do" method="post">
+				<div style="padding-bottom: 10px;">
+					<h2><label>제목</label></h2>
+					<input style="width: 100%;" type="text" name="n_title" required>
+				</div>
+				<div style="padding-bottom: 10px;">
+					<h4><label>내용</label></h4>
+					<textarea id="summernote" name="n_content"></textarea>
+				</div>
+				<input type="hidden" name="pageNo" value="${pageNo }">
+				<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">
+				<div>
+					<button type="submit">글쓰기</button>
+					<button type="button" onclick="hideWriteDialog()">닫기</button>
+				</div>
+			</form>
+		</div>
+	</dialog>
+</sec:authorize>
+
 <script>
 var noticeWriteDialog = document.getElementById('noticeWriteDialog');
 
