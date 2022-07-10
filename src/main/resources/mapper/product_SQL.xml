@@ -9,6 +9,9 @@
 		<if test="cate_no != 1">
 			WHERE cate_no=#{cate_no};
 		</if>
-		
 	</select>
+	<insert id="productAdd" parameterType="productDTO">
+		INSERT INTO product (p_name, cate_no, p_description, p_price, p_stock)
+	 	VALUES (#{p_name}, #{cate_no}, #{p_description}, #{p_price}, #{p_stock})
+	</insert>
 </mapper>

@@ -51,10 +51,8 @@
 		<!-- /NAVIGATION -->
 		
 		<c:if test="${productList ne null}">
-			제품 등록!
+			<a href="./productAdd.do">제품 등록</a>
 		</c:if>
-		
-		<a href="./"></a>
 		
 		<!-- SECTION -->
 		<div class="section">

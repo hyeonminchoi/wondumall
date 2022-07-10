@@ -1,5 +1,6 @@
 package com..Controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com..DTO.CategoryDTO;
@@ -28,7 +30,7 @@ public class ProductController {
 	private Util util;
 	
 	//제품 종류별 카테고리 분류하기
-	@RequestMapping(value = "/category")
+	@RequestMapping(value = "/category.do")
 	public ModelAndView category(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("category");
 		
@@ -50,42 +52,43 @@ public class ProductController {
 		return mv;
 	}
 	
-	
-	
-	@PostMapping(value = "/")
-	public ModelAndView productAdd(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		
-		LoginDTO dto = new LoginDTO();
-		int u_confirm = 1;
-		if((request.getParameter("u_confirm")) != null) {
-			u_confirm = util.str2Int(request.getParameter("u_confirm"));
-		}
-		dto.setU_confirm(u_confirm);
-		
-		
-		//로그인을 했을 때 LoginDTO.u_confirm이 0 = '사업자' 이고
-		//제품명 / 설명 / 가격 / 사진을 insert 하기
-		
-		String u_email = request.getParameter("u_email");
-		
-		if(session.getAttribute(u_email) != null
-				) {
-			
+	//상품등록 화면 나오게 하기
+	@GetMapping(value = "/productAdd.do")
+	public String productAdd(HttpSession session) {
+		if(session.getAttribute("u_email") != null) {
+			return "productAdd";
 		} else {
-			
+			return "productAdd";
 		}
+	}
+	
+	@PostMapping(value = "/productAdd.do")
+	public String productAdd(HttpServletRequest request, MultipartFile[] files) throws UnsupportedEncodingException {
+		// 한글 입력 UTF-8로 set.
+		request.setCharacterEncoding("UTF-8");
 		
+		ProductDTO add = new ProductDTO();
 		
-		//로그인 했을 때 LoginDTO.u_confirm이 1 = '고객' 이고
-		//제품명을 찾아서 / 리뷰 / 가격 / 별점을 insert 하기
+		//숫자 타입 들어오는게 왜 str2Int로 전환해줘야 하는지?!
+		add.setP_name(request.getParameter("p_name"));
+		add.setCate_no(util.str2Int(request.getParameter("cate_no")));
+		add.setP_description(request.getParameter("p_description"));
+		add.setP_price(util.str2Int(request.getParameter("p_price")));
+		add.setP_stock(util.str2Int(request.getParameter("p_stock")));
+		// 상품 이미지 추가하기
 		
+		System.out.println(request.getParameter("p_name"));
+		System.out.println(request.getParameter("p_price"));
+		System.out.println(request.getParameter("p_description"));
+		System.out.println(request.getParameter("p_price"));
 		
+		int result = productService.productAdd(add);
 		
+		//redirect는 언제 쓰는지?
+		if(result == 1) {
+			return "redirect:/";
+		}
+		return "redirect:/failure";
 		
-		ModelAndView mv = new ModelAndView("nav");
-		
-		
-		return mv;
 	}
 }
