@@ -28,4 +28,8 @@ public class NoticeDAO {
 	public int write(NoticeDTO noticeDTO) {
 		return sqlSession.insert("notice.write", noticeDTO);
 	}
+
+	public int delete(NoticeDTO noticeDTO) {
+		return sqlSession.update("notice.delete", noticeDTO);
+	}
 }

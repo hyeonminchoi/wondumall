@@ -28,6 +28,10 @@ public class NoticeService {
 	public int write(NoticeDTO noticeDTO) {
 		return noticeDAO.write(noticeDTO);
 	}
+
+	public int delete(NoticeDTO noticeDTO) {
+		return noticeDAO.delete(noticeDTO);
+	}
 	
 	
 }

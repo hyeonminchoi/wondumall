@@ -25,4 +25,9 @@
 		INSERT INTO notice(n_title, n_content, u_no)
 		VALUES(#{n_title}, #{n_content}, (SELECT u_no FROM user WHERE u_nickname=#{u_nickname}))
 	</insert>
+	
+	<update id="delete" parameterType="noticeDTO">
+		UPDATE notice SET n_del = 1
+		WHERE n_no = #{n_no}
+	</update>
 </mapper>

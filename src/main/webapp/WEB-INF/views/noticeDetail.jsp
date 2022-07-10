@@ -50,6 +50,12 @@
 	function linkPage(pageNo) {
 		location.href = "./notice.do?pageNo=" + pageNo;
 	}
+	
+	function noticeDelete(){
+		if(confirm("공지사항을 삭제하겠습니까?")){
+			location.href= './noticeDelete.do?pageNo=${pageNo}&n_no=${detail.n_no}';
+		}
+	}
 </script>
 </head>
 <body>
@@ -84,6 +90,10 @@
 		<div class="container">
 			<div id="back">
 				<button type="button" onclick="location.href='./notice.do?pageNo=${pageNo}'">뒤로가기</button>
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<button type="button" onclick="#">수정</button>
+					<button type="button" onclick="noticeDelete()"}>삭제</button>
+				</sec:authorize>
 			</div>
 			<table class="table table-bordered">
 				<tr>

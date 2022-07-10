@@ -115,5 +115,22 @@ public class NoticeController {
 			return ResponseEntity.badRequest().build();
 		}
 	}
-
+	
+	@Secured("ROLE_ADMIN")
+	@GetMapping("/noticeDelete.do")
+	public void noticeDelete(@RequestParam("pageNo") int pageNo, @RequestParam("n_no") int n_no, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		NoticeDTO noticeDTO = new NoticeDTO();
+		noticeDTO.setN_no(n_no);
+		int result = noticeService.delete(noticeDTO);
+		response.setContentType("text/html; charset=UTF-8");
+		if (result > 0) {
+			response.getWriter().println(
+					"<script> alert('공지사항 삭제에 성공했습니다'); location.href='./notice.do?pageNo=" + pageNo + "'</script>");
+		} else {
+			response.getWriter().println(
+					"<script> alert('공지사항 삭제에 실패했습니다'); location.href='./notice.do?pageNo=" + pageNo + "'</script>");
+		}
+	}
+	
 }
