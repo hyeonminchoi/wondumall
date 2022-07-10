@@ -49,6 +49,13 @@
 			<c:import url="./nav.jsp"></c:import>
 		</nav>
 		<!-- /NAVIGATION -->
+		
+		<c:if test="${productList ne null}">
+			제품 등록!
+		</c:if>
+		
+		<a href="./"></a>
+		
 		<!-- SECTION -->
 		<div class="section">
 			<!-- container -->
@@ -62,8 +69,8 @@
 								<img src="./img/shop01.png" alt="">
 							</div>
 							<div class="shop-body">
-								<h3>Laptop<br>Collection</h3>
-								<a href="./category?cate_no=1" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+								<h3>Coffee Beans<br>Collection</h3>
+								<a href="./category?cate_no=2" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</div>
@@ -76,8 +83,8 @@
 								<img src="./img/shop03.png" alt="">
 							</div>
 							<div class="shop-body">
-								<h3>Accessories<br>Collection</h3>
-								<a href="./category?cate_no=2" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+								<h3>Coffee Machine<br>Collection</h3>
+								<a href="./category?cate_no=3" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</div>
@@ -90,8 +97,8 @@
 								<img src="./img/shop02.png" alt="">
 							</div>
 							<div class="shop-body">
-								<h3>Cameras<br>Collection</h3>
-								<a href="./category?cate_no=3" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+								<h3>Accessories<br>Collection</h3>
+								<a href="./category?cate_no=4" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</div>
