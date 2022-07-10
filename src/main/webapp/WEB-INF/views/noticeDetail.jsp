@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -114,7 +115,7 @@
 				<tr>
 					<th style="vertical-align: middle;">댓글</th>
 					<td>
-						<c:if test="${sessionScope.nickname ne null }">
+						<sec:authorize access="authenticated">
 							<div>
 								<form action="./noticeComment.do" method="post">
 									<input type="hidden" name="n_no" value="${detail.n_no }">
@@ -124,7 +125,7 @@
 									<button type="submit">댓글쓰기</button>
 								</form>
 							</div>
-						</c:if>
+						</sec:authorize>
 						<c:choose>
 							<c:when test="${fn:length(commentList) gt 0 }">
 								<c:forEach var="c" items="${commentList }">

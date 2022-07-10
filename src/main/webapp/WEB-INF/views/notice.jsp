@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -154,11 +155,16 @@
 			<div style="text-align: center;">
 				<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
 			</div>
-			<c:if test="${sessionScope.nickname ne null }">
+			<sec:authorize access="authenticated">
 				<div style="float:right;">
 					<button type="button" onclick="showWriteDialog()">글쓰기</button>
 				</div>
-			</c:if>
+			</sec:authorize>
+			<sec:authorize access="not authenticated">
+				<div style="float:right;">
+					<button type="button" onclick="location.href='./login.do'">로그인</button>
+				</div>
+			</sec:authorize>
 		</div>
 		<!-- /container -->
 	</div>

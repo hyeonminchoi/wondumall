@@ -19,4 +19,8 @@ public class LoginDAO {
 		return sqlSession.insert("login.join", dto);
 	}
 
+	public LoginDTO findByUserid(LoginDTO user) {
+		return sqlSession.selectOne("login.findByUserid", user);
+	}
+
 }

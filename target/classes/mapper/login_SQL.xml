@@ -11,4 +11,8 @@
 	<select id="login" parameterType="loginDTO" resultType="loginDTO">
 		SELECT * FROM user WHERE u_email = #{u_email} AND u_pw = #{u_pw} AND u_confirm = 1 AND u_resign = 0 AND u_provider = #{u_provider}
 	</select>
+	
+	<select id="findByUserid" parameterType="loginDTO" resultType="loginDTO">
+		SELECT * FROM user WHERE u_email = #{u_email} AND u_confirm = 1 AND u_resign = 0 AND u_provider = #{u_provider}
+	</select>
 </mapper>

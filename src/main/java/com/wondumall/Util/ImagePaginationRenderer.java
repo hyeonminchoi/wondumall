@@ -1,6 +1,6 @@
 package com..Util;
 
-import egovframework.rte.ptl.mvc.tags.ui.pagination.AbstractPaginationRenderer;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.AbstractPaginationRenderer;
 
 public class ImagePaginationRenderer extends AbstractPaginationRenderer {
  

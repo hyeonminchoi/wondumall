@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!-- TOP HEADER -->
 
 <div id="top-header">
@@ -14,7 +15,16 @@
 		<ul class="header-links pull-right">
 			<li><a href="./notice.do"><i class="fa fa-users"></i> 커뮤니티</a></li>
 			<li><a href="#"><i class="fa fa-dollar"></i> WON</a></li>
-			<li><a href="./login.do"><i class="fa fa-user-o"></i> 내 계정</a></li>
+			<sec:authorize access="authenticated">
+				<div style="float:right;">
+					<li><a href="./logout.do"><i class="fa fa-user-o"></i> 로그아웃</a></li>
+				</div>
+			</sec:authorize>
+			<sec:authorize access="not authenticated">
+				<div style="float:right;">
+					<li><a href="./login.do"><i class="fa fa-user-o"></i> 로그인</a></li>
+				</div>
+			</sec:authorize>
 		</ul>
 	</div>
 </div>

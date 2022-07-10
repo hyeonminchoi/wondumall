@@ -10,7 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import egovframework.rte.ptl.mvc.filter.HTMLTagFilterRequestWrapper;
+import org.egovframe.rte.ptl.mvc.filter.HTMLTagFilterRequestWrapper;
 
 public class HTMLTagFilter implements Filter {
 
