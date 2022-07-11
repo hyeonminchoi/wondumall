@@ -72,10 +72,8 @@ public class ProductController {
 	public String productAdd(HttpServletRequest request, MultipartFile[] files) throws Exception {
 		// 한글 입력 UTF-8로 set.
 		request.setCharacterEncoding("UTF-8");
-		HttpSession session = request.getSession();
 		
-		if(session.getAttribute("u_email") != null
-				&& request.getParameter("p_name") != null
+		if(request.getParameter("p_name") != null
 				&& request.getParameter("p_description") != null) {
 			ProductDTO add = new ProductDTO();
 			
@@ -85,7 +83,6 @@ public class ProductController {
 			add.setP_description(request.getParameter("p_description"));
 			add.setP_price(util.str2Int(request.getParameter("p_price")));
 			add.setP_stock(util.str2Int(request.getParameter("p_stock")));
-			
 			// 상품 이미지 추가하기
 			for(MultipartFile file: files) {
 				if(!(file.getOriginalFilename().isEmpty())) {

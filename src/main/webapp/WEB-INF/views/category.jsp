@@ -64,6 +64,7 @@
 			<td> 상품번호 : ${p.p_no} &nbsp; </td>
 			<td> 상품명 : ${p.p_name} &nbsp; </td>
 			<td> 카테고리 번호 : ${p.cate_no} / </td>
+			<img src="./productUpload/${p.p_img}">
 			<br>
 		</c:forEach>
 	</table>
