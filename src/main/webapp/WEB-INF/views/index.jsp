@@ -50,7 +50,7 @@
 		</nav>
 		<!-- /NAVIGATION -->
 		
-		<c:if test="${productList ne null}">
+		<c:if test="${sessionScope.id eq null}">
 			<a href="./productAdd.do">제품 등록</a>
 		</c:if>
 		
