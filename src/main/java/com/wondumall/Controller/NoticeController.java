@@ -186,7 +186,7 @@ public class NoticeController {
 		}
 	}
 	
-	@Secured("ROLE_USER")
+	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@GetMapping("/noticeCommentDelete.do")
 	public void noticeCommentDelete(@RequestParam("pageNo") int pageNo, @RequestParam("n_no") int n_no, @RequestParam("nc_no") int nc_no, HttpServletRequest request,
 			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
