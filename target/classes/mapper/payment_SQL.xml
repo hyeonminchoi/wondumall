@@ -4,6 +4,12 @@
 
 <mapper namespace="payment">
 	<insert id="checkout" parameterType="orderDTO">
-	INSERT INTO  (o_name, o_email, o_postcode, o_roadAddress, o_extraAddress, o_detailAddress, ) VALUES ()
+	INSERT INTO order (o_name, o_email, o_postcode, o_roadAddress, o_extraAddress, o_detailAddress, ) VALUES (#{o_name}, #{o_email}, #{o_postcode}, #{o_roadAddress}, #{o_extraAddress}, #{o_detailAddress})
 	</insert>
+	<select id="product" resultType="productDTO">
+	SELECT * FROM product WHERE p_no=#{p_no}
+	</select>
+	<select id="user" resultType="userDTO">
+	SELECT * FROM user WHERE u_no=#{u_no}
+	</select>
 </mapper>

@@ -81,36 +81,36 @@
 						<!-- Billing Details -->
 						<div class="billing-details">
 							<div class="section-title">
-								<h3 class="title">ì²?êµ¬ì?</h3>
+								<h3 class="title">ì²­êµ¬ì§€</h3>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" id="o_name" name="o_name" placeholder="?´ë¦?">
+								<input class="input" type="text" id="o_name" name="o_name" placeholder="ì´ë¦„">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" id="o_email" name="o_email" placeholder="?´ë©”ì¼">
+								<input class="input" type="text" id="o_email" name="o_email" placeholder="ì´ë©”ì¼">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" id="o_postcode" name="o_postcode" placeholder="?š°?¸ë²ˆí˜¸">
-								<input type="button" onclick="sample4_execDaumPostcode()" value="?š°?¸ë²ˆí˜¸ ì°¾ê¸°" class="primary-btn">
+								<input class="input" type="text" id="o_postcode" name="o_postcode" placeholder="ìš°í¸ë²ˆí˜¸">
+								<input type="button" onclick="sample4_execDaumPostcode()" value="ìš°í¸ë²ˆí˜¸ ì°¾ê¸°" class="primary-btn">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" id="o_roadAddress" name="o_roadAddress" placeholder="?„ë¡œëª…ì£¼ì†Œ">
+								<input class="input" type="text" id="o_roadAddress" name="o_roadAddress" placeholder="ë„ë¡œëª…ì£¼ì†Œ">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" id="o_extraAddress" name="o_extraAddress" placeholder="ì°¸ê³ ?•­ëª?">
+								<input class="input" type="text" id="o_extraAddress" name="o_extraAddress" placeholder="ì°¸ê³ í•­ëª©">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" id="o_detailAddress" name="o_detailAddress" placeholder="?ƒ?„¸ì£¼ì†Œ">
+								<input class="input" type="text" id="o_detailAddress" name="o_detailAddress" placeholder="ìƒì„¸ì£¼ì†Œ">
 							</div>
 							<div class="form-group">
-								<input class="input" type="tel" id="o_tel" name="o_tel" placeholder="? „?™”ë²ˆí˜¸">
+								<input class="input" type="tel" id="o_tel" name="o_tel" placeholder="ì „í™”ë²ˆí˜¸">
 							</div>
 						</div>
 						<!-- /Billing Details -->
 
 						<!-- Order notes -->
 						<div class="order-notes">
-							<textarea class="input" id="o_request" name="o_request" placeholder="?š”êµ¬ì‚¬?•­" style="resize: none;"></textarea>
+							<textarea class="input" id="o_request" name="o_request" placeholder="ìš”êµ¬ì‚¬í•­" style="resize: none;"></textarea>
 						</div>
 						<!-- /Order notes -->
 					</div>
@@ -122,17 +122,13 @@
 						</div>
 						<div class="order-summary">
 							<div class="order-col">
-								<div><strong>? œ?’ˆ</strong></div>
+								<div><strong>ì œí’ˆ</strong></div>
 								<div><strong>TOTAL</strong></div>
 							</div>
 							<div class="order-products">
 								<div class="order-col">
-									<div>1x Product Name Goes Here</div>
-									<div>$980.00</div>
-								</div>
-								<div class="order-col">
-									<div>2x Product Name Goes Here</div>
-									<div>$980.00</div>
+									<div>${product.p_name }</div>
+									<div>${product.p_price }</div>
 								</div>
 							</div>
 							<div class="order-col">
@@ -140,8 +136,8 @@
 								<div><strong>FREE</strong></div>
 							</div>
 							<div class="order-col">
-								<div><strong>ì´ê¸ˆ?•¡</strong></div>
-								<div><strong class="order-total">$2940.00</strong></div>
+								<div><strong>ì´ê¸ˆì•¡</strong></div>
+								<div><strong class="order-total">${product.p_price }</strong></div>
 							</div>
 						</div>
 						
@@ -149,10 +145,10 @@
 							<input type="checkbox" id="terms">
 							<label for="terms">
 								<span></span>
-								ê²°ì œë¥? ?•˜?‹œê² ìŠµ?‹ˆê¹??
+								ê²°ì œë¥¼ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?
 							</label>
 						</div>
-						<a href="javascript:iamport();" class="primary-btn order-submit">ê²°ì œ</a>
+						<a href="javascript:void(0);" onclick="iamport();" class="primary-btn order-submit">ê²°ì œ</a>
 					</div>
 					<!-- /Order Details -->
 				</div>
@@ -181,64 +177,75 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 function iamport(){
-	//ê°?ë§¹ì  ?‹ë³„ì½”?“œ
+	var p_name = ${product.p_name};
+	var price = ${product.p_price};
+	var email = ${user.u_email};
+	var u_name = ${user.u_name};
+	var roadAddress = ${user.u_roadAddress};
+	var postcode = ${user.u_postcode};
+	
+	//ê°€ë§¹ì  ì‹ë³„ì½”ë“œ
 	IMP.init('imp56561187');
 	IMP.request_pay({
 	    pg : 'kg',
 	    pay_method : 'card',
 	    merchant_uid : 'merchant_' + new Date().getTime(),
-	    name : '?ƒ?’ˆ1' , //ê²°ì œì°½ì—?„œ ë³´ì—¬ì§? ?´ë¦?
-	    amount : 100, //?‹¤? œ ê²°ì œ?˜?Š” ê°?ê²?
-	    buyer_email : 'iamport@siot.do',
-	    buyer_name : 'êµ¬ë§¤??´ë¦?',
+	    name : p_name , //ê²°ì œì°½ì—ì„œ ë³´ì—¬ì§ˆ ì´ë¦„
+	    amount : price, //ì‹¤ì œ ê²°ì œë˜ëŠ” ê°€ê²©
+	    buyer_email : email,
+	    buyer_name : u_name,
 	    buyer_tel : '010-1234-5678',
-	    buyer_addr : '?„œ?š¸ ê°•ë‚¨êµ? ?„ê³¡ë™',
-	    buyer_postcode : '123-456'
+	    buyer_addr : roadAddress,
+	    buyer_postcode : postcode
 	}, function(rsp) {
 		console.log(rsp);
-	    if ( rsp.success ) {
-	    	var msg = 'ê²°ì œê°? ?™„ë£Œë˜?—ˆ?Šµ?‹ˆ?‹¤.';
-	        msg += 'ê³ ìœ ID : ' + rsp.imp_uid;
-	        msg += '?ƒ?  ê±°ë˜ID : ' + rsp.merchant_uid;
-	        msg += 'ê²°ì œ ê¸ˆì•¡ : ' + rsp.paid_amount;
-	        msg += 'ì¹´ë“œ ?Š¹?¸ë²ˆí˜¸ : ' + rsp.apply_num;
-	    } else {
-	    	 var msg = 'ê²°ì œ?— ?‹¤?Œ¨?•˜???Šµ?‹ˆ?‹¤.';
-	         msg += '?—?Ÿ¬?‚´?š© : ' + rsp.error_msg;
-	    }
-	    alert(msg);
+		// ê²°ì œê²€ì¦
+		$.ajax({
+        	type : "POST",
+        	url : "/verifyIamport/" + rsp.imp_uid 
+        }).done(function(data) {
+        	
+        	console.log(data);
+        	
+        	// ìœ„ì˜ rsp.paid_amount ì™€ data.response.amountë¥¼ ë¹„êµí•œí›„ ë¡œì§ ì‹¤í–‰ (import ì„œë²„ê²€ì¦)
+        	if(rsp.paid_amount == data.response.amount){
+	        	alert("ê²°ì œ ë° ê²°ì œê²€ì¦ì™„ë£Œ");
+        	} else {
+        		alert("ê²°ì œ ì‹¤íŒ¨");
+        	}
+        });
 	});
 }
 
 function sample4_execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
-            // ?Œ?—…?—?„œ ê²??ƒ‰ê²°ê³¼ ?•­ëª©ì„ ?´ë¦??–ˆ?„?•Œ ?‹¤?–‰?•  ì½”ë“œë¥? ?‘?„±?•˜?Š” ë¶?ë¶?.
+            // íŒì—…ì—ì„œ ê²€ìƒ‰ê²°ê³¼ í•­ëª©ì„ í´ë¦­í–ˆì„ë•Œ ì‹¤í–‰í•  ì½”ë“œë¥¼ ì‘ì„±í•˜ëŠ” ë¶€ë¶„.
 
-            // ?„ë¡œëª… ì£¼ì†Œ?˜ ?…¸ì¶? ê·œì¹™?— ?”°?¼ ì£¼ì†Œë¥? ?‘œ?‹œ?•œ?‹¤.
-            // ?‚´? ¤?˜¤?Š” ë³??ˆ˜ê°? ê°’ì´ ?—†?Š” ê²½ìš°?—” ê³µë°±('')ê°’ì„ ê°?ì§?ë¯?ë¡?, ?´ë¥? ì°¸ê³ ?•˜?—¬ ë¶„ê¸° ?•œ?‹¤.
-            var roadAddr = data.roadAddress; // ?„ë¡œëª… ì£¼ì†Œ ë³??ˆ˜
-            var extraRoadAddr = ''; // ì°¸ê³  ?•­ëª? ë³??ˆ˜
+            // ë„ë¡œëª… ì£¼ì†Œì˜ ë…¸ì¶œ ê·œì¹™ì— ë”°ë¼ ì£¼ì†Œë¥¼ í‘œì‹œí•œë‹¤.
+            // ë‚´ë ¤ì˜¤ëŠ” ë³€ìˆ˜ê°€ ê°’ì´ ì—†ëŠ” ê²½ìš°ì—” ê³µë°±('')ê°’ì„ ê°€ì§€ë¯€ë¡œ, ì´ë¥¼ ì°¸ê³ í•˜ì—¬ ë¶„ê¸° í•œë‹¤.
+            var roadAddr = data.roadAddress; // ë„ë¡œëª… ì£¼ì†Œ ë³€ìˆ˜
+            var extraRoadAddr = ''; // ì°¸ê³  í•­ëª© ë³€ìˆ˜
 
-            // ë²•ì •?™ëª…ì´ ?ˆ?„ ê²½ìš° ì¶”ê??•œ?‹¤. (ë²•ì •ë¦¬ëŠ” ? œ?™¸)
-            // ë²•ì •?™?˜ ê²½ìš° ë§ˆì?ë§? ë¬¸ìê°? "?™/ë¡?/ê°?"ë¡? ??‚œ?‹¤.
-            if(data.bname !== '' && /[?™|ë¡?|ê°?]$/g.test(data.bname)){
+            // ë²•ì •ë™ëª…ì´ ìˆì„ ê²½ìš° ì¶”ê°€í•œë‹¤. (ë²•ì •ë¦¬ëŠ” ì œì™¸)
+            // ë²•ì •ë™ì˜ ê²½ìš° ë§ˆì§€ë§‰ ë¬¸ìê°€ "ë™/ë¡œ/ê°€"ë¡œ ëë‚œë‹¤.
+            if(data.bname !== '' && /[ë™|ë¡œ|ê°€]$/g.test(data.bname)){
                 extraRoadAddr += data.bname;
             }
-            // ê±´ë¬¼ëª…ì´ ?ˆê³?, ê³µë™ì£¼íƒ?¼ ê²½ìš° ì¶”ê??•œ?‹¤.
+            // ê±´ë¬¼ëª…ì´ ìˆê³ , ê³µë™ì£¼íƒì¼ ê²½ìš° ì¶”ê°€í•œë‹¤.
             if(data.buildingName !== '' && data.apartment === 'Y'){
                extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
             }
-            // ?‘œ?‹œ?•  ì°¸ê³ ?•­ëª©ì´ ?ˆ?„ ê²½ìš°, ê´„í˜¸ê¹Œì? ì¶”ê??•œ ìµœì¢… ë¬¸ì?—´?„ ë§Œë“ ?‹¤.
+            // í‘œì‹œí•  ì°¸ê³ í•­ëª©ì´ ìˆì„ ê²½ìš°, ê´„í˜¸ê¹Œì§€ ì¶”ê°€í•œ ìµœì¢… ë¬¸ìì—´ì„ ë§Œë“ ë‹¤.
             if(extraRoadAddr !== ''){
                 extraRoadAddr = ' (' + extraRoadAddr + ')';
             }
 
-            // ?š°?¸ë²ˆí˜¸?? ì£¼ì†Œ ? •ë³´ë?? ?•´?‹¹ ?•„?“œ?— ?„£?Š”?‹¤.
+            // ìš°í¸ë²ˆí˜¸ì™€ ì£¼ì†Œ ì •ë³´ë¥¼ í•´ë‹¹ í•„ë“œì— ë„£ëŠ”ë‹¤.
             document.getElementById('o_postcode').value = data.zonecode;
             document.getElementById("o_roadAddress").value = roadAddr;
             
-            // ì°¸ê³ ?•­ëª? ë¬¸ì?—´?´ ?ˆ?„ ê²½ìš° ?•´?‹¹ ?•„?“œ?— ?„£?Š”?‹¤.
+            // ì°¸ê³ í•­ëª© ë¬¸ìì—´ì´ ìˆì„ ê²½ìš° í•´ë‹¹ í•„ë“œì— ë„£ëŠ”ë‹¤.
             if(roadAddr !== ''){
                 document.getElementById("o_extraAddress").value = extraRoadAddr;
             } else {
