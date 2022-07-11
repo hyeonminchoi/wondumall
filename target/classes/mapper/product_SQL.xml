@@ -11,7 +11,7 @@
 		</if>
 	</select>
 	<insert id="productAdd" parameterType="productDTO">
-		INSERT INTO product (p_name, cate_no, p_description, p_price, p_stock)
-	 	VALUES (#{p_name}, #{cate_no}, #{p_description}, #{p_price}, #{p_stock})
+		INSERT INTO product (p_name, cate_no, p_description, p_price, p_stock, p_img)
+	 	VALUES (#{p_name}, #{cate_no}, #{p_description}, #{p_price}, #{p_stock}, #{p_img})
 	</insert>
 </mapper>

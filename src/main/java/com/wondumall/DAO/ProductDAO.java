@@ -22,5 +22,4 @@ public class ProductDAO {
 	public int productAdd(ProductDTO add) {
 		return sqlSession.insert("product.productAdd", add);
 	}
-
 }

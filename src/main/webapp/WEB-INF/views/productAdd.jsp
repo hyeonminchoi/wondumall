@@ -56,7 +56,7 @@
 
 	<div id="section">
 		<div id="container">
-			<form action="./productAdd.do" method="POST" id="join" class="joinForm">
+			<form action="./productAdd.do" method="POST" id="join" class="joinForm" enctype="multipart/form-data">
 
 				<h2>상품등록</h2>
 				
@@ -116,19 +116,15 @@
 					</div>
 				</div>
 
-				<!-- <div class="form-group row">
+				<div class="form-group row">
 					<label class="col-sm-3">상품 이미지</label>
 					<div>
-						<input type="file" name="productImage" class="form-control">
+						<input 
+							type="file" name="files" class="form-control" 
+							accept=".png, .jpg, .gif, .jpeg, .ico" multiple="multiple"
+						>
 					</div>
 				</div>
-
-				<div class="form-group row">
-					<div class="col-sm-offset-2 col-sm-10">
-						<input type="button" class="btn btn-primary" value="등록"
-							onclick="CheckAddProduct()">
-					</div>
-				</div> -->
 
 				<input type="submit"  id="addBtn" class="btn" value="등록하기" />
 			</form>
