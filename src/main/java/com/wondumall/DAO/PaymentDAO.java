@@ -14,9 +14,9 @@ public class PaymentDAO {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public int checkout(OrderDTO orderInfo) {
+	public void checkout(OrderDTO orderInfo) {
 		
-		return sqlSession.insert("payment.checkout", orderInfo);
+		sqlSession.insert("payment.checkout", orderInfo);
 	}
 
 	public void user(UserDTO user) {
@@ -24,9 +24,9 @@ public class PaymentDAO {
 		sqlSession.selectOne("payment.user", user);
 	}
 
-	public void product(ProductDTO dto) {
+	public ProductDTO product(ProductDTO dto) {
 		
-		sqlSession.selectOne("payment.product", dto);
+		return sqlSession.selectOne("payment.product", dto);
 	}
 
 

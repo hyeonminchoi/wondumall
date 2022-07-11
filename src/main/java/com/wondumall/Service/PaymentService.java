@@ -13,9 +13,9 @@ public class PaymentService {
 	
 	@Autowired PaymentDAO paymentDAO;
 
-	public int checkout(OrderDTO orderInfo) {
+	public void checkout(OrderDTO orderInfo) {
 		
-		return paymentDAO.checkout(orderInfo);
+		paymentDAO.checkout(orderInfo);
 	}
 
 	public void user(UserDTO user) {
@@ -23,9 +23,9 @@ public class PaymentService {
 		paymentDAO.user(user);
 	}
 
-	public void product(ProductDTO dto) {
+	public ProductDTO product(ProductDTO dto) {
 		
-		paymentDAO.product(dto);
+		return paymentDAO.product(dto);
 	}
 
 

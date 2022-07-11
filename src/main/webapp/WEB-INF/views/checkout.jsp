@@ -148,7 +148,7 @@
 								결제를 하시겠습니까?
 							</label>
 						</div>
-						<a href="javascript:void(0);" onclick="iamport();" class="primary-btn order-submit">결제</a>
+						<button onclick="iamport()" class="primary-btn order-submit">결제</button>
 					</div>
 					<!-- /Order Details -->
 				</div>
@@ -177,12 +177,18 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 function iamport(){
-	var p_name = ${product.p_name};
+	var p_name = '${product.p_name}';
 	var price = ${product.p_price};
-	var email = ${user.u_email};
-	var u_name = ${user.u_name};
-	var roadAddress = ${user.u_roadAddress};
-	var postcode = ${user.u_postcode};
+	var email = $("#o_email").val();
+	var o_name = $("#o_name").val();
+	var roadAddress = $("#o_roadAddress").val();
+	var extraAddress = $("#o_extraAddress").val();
+	var detailAddress = $("#o_detailAddress").val();
+	var postcode = $("#o_postcode").val();
+	var tel = $("#o_tel").val();
+	var request = $("#o_request").val();
+	
+	alert(roadAddress);
 	
 	//가맹점 식별코드
 	IMP.init('imp56561187');
@@ -193,8 +199,8 @@ function iamport(){
 	    name : p_name , //결제창에서 보여질 이름
 	    amount : price, //실제 결제되는 가격
 	    buyer_email : email,
-	    buyer_name : u_name,
-	    buyer_tel : '010-1234-5678',
+	    buyer_name : o_name,
+	    buyer_tel : tel,
 	    buyer_addr : roadAddress,
 	    buyer_postcode : postcode
 	}, function(rsp) {
@@ -202,7 +208,26 @@ function iamport(){
 		// 결제검증
 		$.ajax({
         	type : "POST",
-        	url : "/verifyIamport/" + rsp.imp_uid 
+        	url : "./verifyIamport/" + rsp.imp_uid,
+        	data : {
+        		"o_email" : email,
+        		"o_name" : o_name,
+        		"o_roadAddress" : roadAddress,
+        		"o_postcode" : postcode,
+        		"o_extraAddress" : extraAddress,
+        		"o_detailAddress" : detailAddress,
+        		"o_tel" : tel,
+        		"o_request" : request,
+        		"merchant_uid" : rsp.merchant_uid
+        	},
+        	success : function(data){
+        		alert("데이터전송성공!");
+        		location.href = "/paysuccess.do";
+        	},
+        	error : function(error){
+        		alert("에러");
+        		location.href = "/payfailure.do";
+        	}
         }).done(function(data) {
         	
         	console.log(data);
