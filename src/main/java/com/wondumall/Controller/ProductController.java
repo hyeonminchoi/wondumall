@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,6 +35,14 @@ public class ProductController {
 	
 	@Autowired
 	private ServletContext servletContext;
+	
+	@GetMapping(value = "/productDetail.do")
+	public ModelAndView productDetail(@RequestParam("p_no") int p_no) {
+		ModelAndView mv = new ModelAndView("productDetail");
+		mv.addObject("productDetail", productService.productDetail(p_no));
+		
+		return mv;
+	}
 	
 	//제품 종류별 카테고리 분류하기
 	@RequestMapping(value = "/category.do")

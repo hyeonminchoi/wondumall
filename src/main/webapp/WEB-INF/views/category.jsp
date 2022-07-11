@@ -35,7 +35,14 @@
 		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
-
+<style type="text/css">
+tr{
+max-width: 996px;
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 20px;
+}
+</style>
 </head>
 <body>
 	<!-- HEADER -->
@@ -49,18 +56,38 @@
 		</nav>
 	<!-- /NAVIGATION -->
 	
-	category test
 	<br>
 	<%-- ${productList} --%>
-	<hr>
-	<table>
-		<c:forEach items="${productList}" var="p">
-			<td> 상품번호 : ${p.p_no} &nbsp; </td>
-			<td> 상품명 : ${p.p_name} &nbsp; </td>
-			<td> 카테고리 번호 : ${p.cate_no} / </td>
-			<img src="./productUpload/${p.p_img}">
-			<br>
-		</c:forEach>
-	</table>
+	<div class="section">
+		<div class="container">
+			<div class="row">
+				<h2>category test</h2>
+				<table class="table table-bordered">
+					<c:forEach items="${productList}" var="p">
+						<tr onclick="location.href='./productDetail.do?p_no=${p.p_no}'">
+							<td><img src="./productUpload/${p.p_img}" style="width: 200px; height: 200px;"></td>
+							<td><a href="./productDetail.do"> 상품번호 : ${p.p_no} &nbsp; </a></td>
+							<td> 상품명 : ${p.p_name} &nbsp; </td>
+							<td> 카테고리 번호 : ${p.cate_no} / </td>
+						</tr>
+					</c:forEach>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<!-- FOOTER -->
+	<footer id="footer">
+		<c:import url="./footer.jsp"></c:import>
+	</footer>
+	<!-- /FOOTER -->
+
+	<!-- jQuery Plugins -->
+	<script src="./js/jquery.min.js"></script>
+	<script src="./js/bootstrap.min.js"></script>
+	<script src="./js/slick.min.js"></script>
+	<script src="./js/nouislider.min.js"></script>
+	<script src="./js/jquery.zoom.min.js"></script>
+	<script src="./js/main.js"></script>
 </body>
 </html>

@@ -65,7 +65,7 @@
 							</div>
 							<div class="shop-body">
 								<h3>Coffee Beans<br>Collection</h3>
-								<a href="./category?cate_no=2" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+								<a href="./category.do?cate_no=2" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</div>
@@ -79,7 +79,7 @@
 							</div>
 							<div class="shop-body">
 								<h3>Coffee Machine<br>Collection</h3>
-								<a href="./category?cate_no=3" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+								<a href="./category.do?cate_no=3" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</div>
@@ -93,7 +93,7 @@
 							</div>
 							<div class="shop-body">
 								<h3>Accessories<br>Collection</h3>
-								<a href="./category?cate_no=4" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+								<a href="./category.do?cate_no=4" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</div>

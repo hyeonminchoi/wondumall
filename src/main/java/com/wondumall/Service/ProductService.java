@@ -22,4 +22,8 @@ public class ProductService {
 	public int productAdd(ProductDTO add) {
 		return productDAO.productAdd(add);
 	}
+
+	public ProductDTO productDetail(int p_no) {
+		return productDAO.productDetail(p_no);
+	}
 }

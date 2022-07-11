@@ -22,4 +22,8 @@ public class ProductDAO {
 	public int productAdd(ProductDTO add) {
 		return sqlSession.insert("product.productAdd", add);
 	}
+
+	public ProductDTO productDetail(int p_no) {
+		return sqlSession.selectOne("product.productDetail", p_no);
+	}
 }
