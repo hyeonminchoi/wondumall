@@ -165,7 +165,7 @@
 									<input type="hidden" name="n_no" value="${detail.n_no }">
 									<textarea name="nc_comment" required></textarea>
 									<input type="hidden" name="pageNo" value="${pageNo }">
-									<input type="hidden" name="u_nickname" value="${sessionScope.nickname}">
+									<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">
 									<button type="submit">댓글쓰기</button>
 								</form>
 							</div>

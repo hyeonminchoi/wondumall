@@ -13,8 +13,8 @@ import com..DTO.NoticeDTO;
 public class NoticeDAO {
 	@Autowired private SqlSession sqlSession;
 
-	public int getCount() {
-		return sqlSession.selectOne("notice.getCount");
+	public int getCount(Map<String, Object> map) {
+		return sqlSession.selectOne("notice.getCount", map);
 	}
 
 	public List<NoticeDTO> getNoticeList(Map<String, Object> map) {

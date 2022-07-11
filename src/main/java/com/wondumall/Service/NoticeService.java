@@ -13,8 +13,8 @@ import com..DTO.NoticeDTO;
 public class NoticeService {
 	@Autowired private NoticeDAO noticeDAO;
 
-	public int getCount() {
-		return noticeDAO.getCount();
+	public int getCount(Map<String, Object> map) {
+		return noticeDAO.getCount(map);
 	}
 
 	public List<NoticeDTO> getNoticeList(Map<String, Object> map) {

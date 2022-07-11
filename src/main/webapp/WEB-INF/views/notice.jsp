@@ -76,7 +76,11 @@
 </style>
 <script type="text/javascript">
 	function linkPage(pageNo) {
-		location.href = "./notice.do?pageNo=" + pageNo;
+		if(${not empty searchColumn} && ${not empty searchValue}){
+			location.href = "./notice.do?pageNo=" + pageNo + "&searchColumn=${searchColumn}&searchValue=${searchValue}";
+		} else{
+			location.href = "./notice.do?pageNo=" + pageNo;
+		}
 	}
 	$(document).ready(function() {
 		  $('#summernote').summernote({
@@ -164,8 +168,19 @@
 					</c:forEach>
 				</tbody>
 			</table>
-			<div style="text-align: center;">
+			<div style="text-align: center; margin-bottom: 10px;">
 				<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
+			</div>
+			<div style="text-align: center;">
+				<form action="./notice.do?pageNo=${pageNo }">
+					<select name="searchColumn">
+						<option value="n_title" ${searchColumn eq 'n_title'?'selected':'' }>제목</option>
+						<option value="n_content" ${searchColumn eq 'n_content'?'selected':''}>내용</option>
+						<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>작성자</option>
+					</select>
+					<input type="text" name="searchValue" value="${searchValue}">
+					<button type="submit">검색</button>
+				</form>
 			</div>
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<div style="float:right;">

@@ -3,14 +3,38 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="notice">
-	<select id="getCount" resultType="integer">
-		SELECT COUNT(*) FROM notice WHERE n_del = 0
+	<select id="getCount" resultType="integer" parameterType="map">
+		SELECT COUNT(*) FROM notice
+		JOIN user ON user.u_no = notice.u_no
+		WHERE notice.n_del = 0
+		<choose>
+			<when test='searchColumn == "n_title"'>
+				AND notice.n_title like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "n_content"'>
+				AND notice.n_content like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_nickname"'>
+				AND user.u_nickname like #{searchValue}
+			</when>
+		</choose>
 	</select>
 	
 	<select id="getNoticeList" parameterType="map" resultType="noticeDTO">
 		SELECT notice.*, user.u_nickname FROM notice 
 		JOIN user ON user.u_no = notice.u_no
-		WHERE n_del = 0
+		WHERE notice.n_del = 0
+		<choose>
+			<when test='searchColumn == "n_title"'>
+				AND notice.n_title like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "n_content"'>
+				AND notice.n_content like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_nickname"'>
+				AND user.u_nickname like #{searchValue}
+			</when>
+		</choose>
 		ORDER BY notice.n_no DESC
 		LIMIT #{firstIndex}, #{recordCountPerPage}
 	</select>
