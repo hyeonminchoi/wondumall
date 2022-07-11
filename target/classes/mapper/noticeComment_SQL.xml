@@ -12,11 +12,16 @@
 		SELECT notice_comment.*, user.u_nickname FROM notice_comment
 		JOIN user ON user.u_no = notice_comment.u_no
 		WHERE notice_comment.n_no = #{n_no} AND notice_comment.nc_del = 0
-		ORDER BY notice_comment.nc_no DESC
+		ORDER BY notice_comment.nc_date DESC
 	</select>	
 	
 	<update id="delete" parameterType="noticeCommentDTO">
 		UPDATE notice_comment SET nc_del = 1
+		WHERE n_no = #{n_no} AND nc_no = #{nc_no} AND u_no = (SELECT u_no FROM user WHERE u_nickname=#{u_nickname})
+	</update>
+	
+	<update id="edit" parameterType="noticeCommentDTO">
+		UPDATE notice_comment SET nc_comment = #{nc_comment}, nc_date = current_timestamp()
 		WHERE n_no = #{n_no} AND nc_no = #{nc_no} AND u_no = (SELECT u_no FROM user WHERE u_nickname=#{u_nickname})
 	</update>
 </mapper>

@@ -213,4 +213,28 @@ public class NoticeController {
 						+ n_no + "&pageNo=" + pageNo + "'</script>");
 		}
 	}
+	
+	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
+	@PostMapping("/noticeCommentEdit.do")
+	public void noticeCommentEdit(NoticecommentDTO noticecommentDTO, @RequestParam("pageNo") int pageNo,
+			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
+			@RequestParam(name="searchValue", required=false) String searchValue) throws Exception {
+		int result = noticeCommentService.edit(noticecommentDTO);
+		response.setContentType("text/html; charset=UTF-8");
+		if (result > 0) {
+			if(searchColumn!=null && searchValue!=null)
+				response.getWriter().println("<script> alert('댓글수정에 성공했습니다'); location.href='./noticeDetail.do?n_no="
+						+ noticecommentDTO.getN_no() + "&pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
+			else
+				response.getWriter().println("<script> alert('댓글수정에 성공했습니다'); location.href='./noticeDetail.do?n_no="
+						+ noticecommentDTO.getN_no() + "&pageNo=" + pageNo + "'</script>");
+		} else {
+			if(searchColumn!=null && searchValue!=null)
+				response.getWriter().println("<script> alert('댓글수정에 실패했습니다'); location.href='./noticeDetail.do?n_no="
+						+ noticecommentDTO.getN_no() + "&pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
+			else
+				response.getWriter().println("<script> alert('댓글수정에 실패했습니다'); location.href='./noticeDetail.do?n_no="
+						+ noticecommentDTO.getN_no() + "&pageNo=" + pageNo + "'</script>");
+		}
+	}
 }

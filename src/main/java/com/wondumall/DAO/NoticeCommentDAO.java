@@ -24,5 +24,7 @@ public class NoticeCommentDAO {
 		return sqlSession.update("noticeComment.delete", noticecommentDTO);
 	}
 	
-	
+	public int edit(NoticecommentDTO noticecommentDTO) {
+		return sqlSession.update("noticeComment.edit", noticecommentDTO);
+	}
 }

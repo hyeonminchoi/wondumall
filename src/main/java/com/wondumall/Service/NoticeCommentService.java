@@ -23,6 +23,10 @@ public class NoticeCommentService {
 	public int delete(NoticecommentDTO noticecommentDTO) {
 		return noticeCommentDAO.delete(noticecommentDTO);
 	}
+
+	public int edit(NoticecommentDTO noticecommentDTO) {
+		return noticeCommentDAO.edit(noticecommentDTO);
+	}
 	
 	
 }
