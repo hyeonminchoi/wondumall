@@ -37,10 +37,10 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-	  <repository>
-	    <id>jitpack.io</id>
-	    <url>https://jitpack.io</url>
-	  </repository>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -50,7 +50,7 @@
 			<artifactId>iamport-rest-client-java</artifactId>
 			<version>0.2.14</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>

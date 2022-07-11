@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>  
 <!DOCTYPE html>
 <html>
 	<head>
@@ -50,11 +51,9 @@
 		</nav>
 		<!-- /NAVIGATION -->
 		
-		<c:if test="${productList ne null}">
-			제품 등록!
-		</c:if>
-		
-		<a href="./"></a>
+		<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_BUSINESS')">
+			<a href="./productAdd.do">제품 등록</a>
+		</sec:authorize>
 		
 		<!-- SECTION -->
 		<div class="section">
@@ -66,7 +65,7 @@
 					<div class="col-md-4 col-xs-6">
 						<div class="shop">
 							<div class="shop-img">
-								<img src="./img/shop01.png" alt="">
+								<img src="./img/coffeeBean.png" alt="">
 							</div>
 							<div class="shop-body">
 								<h3>Coffee Beans<br>Collection</h3>
@@ -80,7 +79,7 @@
 					<div class="col-md-4 col-xs-6">
 						<div class="shop">
 							<div class="shop-img">
-								<img src="./img/shop03.png" alt="">
+								<img src="./img/coffeeMachine.png" alt="">
 							</div>
 							<div class="shop-body">
 								<h3>Coffee Machine<br>Collection</h3>
@@ -94,7 +93,7 @@
 					<div class="col-md-4 col-xs-6">
 						<div class="shop">
 							<div class="shop-img">
-								<img src="./img/shop02.png" alt="">
+								<img src="./img/Accessory.png" alt="">
 							</div>
 							<div class="shop-body">
 								<h3>Accessories<br>Collection</h3>
@@ -134,8 +133,6 @@
 					<!-- /section title -->
 					
 					${productList}
-
-					merge test : ${productList}
 					
 					<!-- Products tab & slick -->
 					<div class="col-md-12">

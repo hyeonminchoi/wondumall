@@ -19,4 +19,7 @@ public class ProductDAO {
 		return sqlSession.selectList("product.productList", dto);
 	}
 
+	public int productAdd(ProductDTO add) {
+		return sqlSession.insert("product.productAdd", add);
+	}
 }
