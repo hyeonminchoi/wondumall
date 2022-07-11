@@ -48,12 +48,6 @@
 			<c:import url="./nav.jsp"></c:import>
 		</nav>
 	<!-- /NAVIGATION -->
-	<div>
-		<button onclick="location.href='./category?cate_no=1'">커피원두</button>
-		<button onclick="location.href='./category?cate_no=2'">커피머신</button>
-		<button onclick="location.href='./category?cate_no=3'">액세서리</button>
-		<button onclick="location.href='./category'">제자리</button>
-	</div>
 	
 	category test
 	<br>
