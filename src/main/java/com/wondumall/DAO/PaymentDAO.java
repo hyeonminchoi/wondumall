@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com..DTO.OrderDTO;
+import com..DTO.ProductDTO;
+import com..DTO.UserDTO;
 
 @Component
 public class PaymentDAO {
@@ -15,6 +17,16 @@ public class PaymentDAO {
 	public int checkout(OrderDTO orderInfo) {
 		
 		return sqlSession.insert("payment.checkout", orderInfo);
+	}
+
+	public void user(UserDTO user) {
+		
+		sqlSession.selectOne("payment.user", user);
+	}
+
+	public void product(ProductDTO dto) {
+		
+		sqlSession.selectOne("payment.product", dto);
 	}
 
 
