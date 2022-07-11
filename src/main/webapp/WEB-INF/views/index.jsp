@@ -65,7 +65,7 @@
 					<div class="col-md-4 col-xs-6">
 						<div class="shop">
 							<div class="shop-img">
-								<img src="./img/shop01.png" alt="">
+								<img src="./img/coffeeBean.png" alt="">
 							</div>
 							<div class="shop-body">
 								<h3>Coffee Beans<br>Collection</h3>
@@ -79,7 +79,7 @@
 					<div class="col-md-4 col-xs-6">
 						<div class="shop">
 							<div class="shop-img">
-								<img src="./img/shop03.png" alt="">
+								<img src="./img/coffeeMachine.png" alt="">
 							</div>
 							<div class="shop-body">
 								<h3>Coffee Machine<br>Collection</h3>
@@ -93,7 +93,7 @@
 					<div class="col-md-4 col-xs-6">
 						<div class="shop">
 							<div class="shop-img">
-								<img src="./img/shop02.png" alt="">
+								<img src="./img/Accessory.png" alt="">
 							</div>
 							<div class="shop-body">
 								<h3>Accessories<br>Collection</h3>
