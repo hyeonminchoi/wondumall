@@ -78,16 +78,25 @@ public class NoticeController {
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@PostMapping("/noticeComment.do")
 	public void noticeCommentWrite(NoticecommentDTO noticecommentDTO, @RequestParam("pageNo") int pageNo,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
+			@RequestParam(name="searchValue", required=false) String searchValue) throws Exception {
 
 		int result = noticeCommentService.writeComment(noticecommentDTO);
 		response.setContentType("text/html; charset=UTF-8");
 		if (result > 0) {
-			response.getWriter().println("<script> alert('댓글쓰기에 성공했습니다'); location.href='./noticeDetail.do?n_no="
-					+ noticecommentDTO.getN_no() + "&pageNo=" + pageNo + "'</script>");
+			if(searchColumn!=null && searchValue!=null)
+				response.getWriter().println("<script> alert('댓글쓰기에 성공했습니다'); location.href='./noticeDetail.do?n_no="
+						+ noticecommentDTO.getN_no() + "&pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
+			else
+				response.getWriter().println("<script> alert('댓글쓰기에 성공했습니다'); location.href='./noticeDetail.do?n_no="
+						+ noticecommentDTO.getN_no() + "&pageNo=" + pageNo + "'</script>");
 		} else {
-			response.getWriter().println("<script> alert('댓글쓰기에 실패했습니다'); location.href='./noticeDetail.do?n_no="
-					+ noticecommentDTO.getN_no() + "&pageNo=" + pageNo + "'</script>");
+			if(searchColumn!=null && searchValue!=null)
+				response.getWriter().println("<script> alert('댓글쓰기에 실패했습니다'); location.href='./noticeDetail.do?n_no="
+						+ noticecommentDTO.getN_no() + "&pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
+			else
+				response.getWriter().println("<script> alert('댓글쓰기에 실패했습니다'); location.href='./noticeDetail.do?n_no="
+						+ noticecommentDTO.getN_no() + "&pageNo=" + pageNo + "'</script>");
 		}
 	}
 
@@ -127,24 +136,30 @@ public class NoticeController {
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/noticeDelete.do")
 	public void noticeDelete(@RequestParam("pageNo") int pageNo, @RequestParam("n_no") int n_no, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
+			@RequestParam(name="searchValue", required=false) String searchValue) throws Exception {
 		NoticeDTO noticeDTO = new NoticeDTO();
 		noticeDTO.setN_no(n_no);
 		int result = noticeService.delete(noticeDTO);
 		response.setContentType("text/html; charset=UTF-8");
 		if (result > 0) {
-			response.getWriter().println(
-					"<script> alert('공지사항 삭제에 성공했습니다'); location.href='./notice.do?pageNo=" + pageNo + "'</script>");
+			if(searchColumn!=null && searchValue!=null)
+				response.getWriter().println("<script> alert('공지사항 삭제에 성공했습니다'); location.href='./notice.do?pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
+			else
+				response.getWriter().println("<script> alert('공지사항 삭제에 성공했습니다'); location.href='./notice.do?pageNo=" + pageNo + "'</script>");
 		} else {
-			response.getWriter().println(
-					"<script> alert('공지사항 삭제에 실패했습니다'); location.href='./notice.do?pageNo=" + pageNo + "'</script>");
+			if(searchColumn!=null && searchValue!=null)
+				response.getWriter().println("<script> alert('공지사항 삭제에 실패했습니다'); location.href='./notice.do?pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
+			else
+				response.getWriter().println("<script> alert('공지사항 삭제에 실패했습니다'); location.href='./notice.do?pageNo=" + pageNo + "'</script>");
 		}
 	}
 	
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/noticeEdit.do")
 	public void noticeEdit(@RequestParam("pageNo") int pageNo, @RequestParam("n_no") int n_no, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
+			@RequestParam(name="searchValue", required=false) String searchValue) throws Exception {
 		NoticeDTO noticeDTO = new NoticeDTO();
 		noticeDTO.setN_no(n_no);
 		noticeDTO.setN_title(Util.xss_clean_check(request.getParameter("n_title")));
@@ -153,9 +168,19 @@ public class NoticeController {
 		int result = noticeService.edit(noticeDTO);
 		response.setContentType("text/html; charset=UTF-8");
 		if (result > 0) {
-			response.getWriter().println("<script> alert('공지사항 수정에 성공했습니다'); location.href='./noticeDetail.do?n_no=" + n_no +  "&pageNo=" + pageNo + "'</script>");
+			if(searchColumn!=null && searchValue!=null)
+				response.getWriter().println("<script> alert('공지사항 수정에 성공했습니다'); location.href='./noticeDetail.do?n_no="
+						+ n_no + "&pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
+			else
+				response.getWriter().println("<script> alert('공지사항 수정에 성공했습니다'); location.href='./noticeDetail.do?n_no="
+						+ n_no + "&pageNo=" + pageNo + "'</script>");
 		} else {
-			response.getWriter().println("<script> alert('공지사항 수정에 실패했습니다'); location.href='./noticeDetail.do?n_no=" + n_no +  "&pageNo=" + pageNo + "'</script>");
+			if(searchColumn!=null && searchValue!=null)
+				response.getWriter().println("<script> alert('공지사항 수정에 실패했습니다'); location.href='./noticeDetail.do?n_no="
+						+ n_no + "&pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
+			else
+				response.getWriter().println("<script> alert('공지사항 수정에 실패했습니다'); location.href='./noticeDetail.do?n_no="
+						+ n_no + "&pageNo=" + pageNo + "'</script>");
 		}
 	}
 	

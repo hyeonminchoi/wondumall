@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,22 +53,33 @@
 <script src="./js/main.js"></script>
 
 <!-- include summernote css/js -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <style>
-	#back{
-		margin-bottom: 10px;
-	}
+#back {
+	margin-bottom: 10px;
+}
 </style>
 <script type="text/javascript">
-	function linkPage(pageNo) {
-		location.href = "./notice.do?pageNo=" + pageNo;
+	function notice() {
+		if(${not empty param.searchColumn} && ${not empty param.searchValue}){
+			location.href = "./notice.do?pageNo=" + ${pageNo} + "&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
+		} else{
+			location.href = "./notice.do?pageNo=" + ${pageNo};
+		}
 	}
 	
 	function noticeDelete(){
 		if(confirm("공지사항을 삭제하겠습니까?")){
-			location.href= './noticeDelete.do?pageNo=${pageNo}&n_no=${detail.n_no}';
+			if(${not empty param.searchColumn} && ${not empty param.searchValue}){
+				location.href = "./noticeDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
+			} else{
+				location.href = "./noticeDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}";
+			}
 		}
 	}
 	
@@ -116,11 +128,11 @@
 		<!-- container -->
 		<div class="container">
 			<div id="back">
-				<button type="button" onclick="location.href='./notice.do?pageNo=${pageNo}'">뒤로가기</button>
-				<sec:authentication property="principal" var="user"/>
-					<c:if test="${user.nickname eq detail.u_nickname }">
-						<button type="button" onclick="showNoticeEditDialog()">수정</button>
-					</c:if>
+				<button type="button" onclick="notice()">뒤로가기</button>
+				<sec:authentication property="principal" var="user" />
+				<c:if test="${user ne 'anonymousUser' and user.nickname eq detail.u_nickname }">
+					<button type="button" onclick="showNoticeEditDialog()">수정</button>
+				</c:if>
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 					<button type="button" onclick="noticeDelete()">삭제</button>
 				</sec:authorize>
@@ -140,8 +152,10 @@
 				</tr>
 				<tr>
 					<th>작성일</th>
-					<fmt:parseDate value="${detail.n_date}" var="time" pattern="yyyy-MM-dd HH:mm:ss.S"/>
-					<fmt:formatDate value="${time}" var="time"  pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:parseDate value="${detail.n_date}" var="time"
+						pattern="yyyy-MM-dd HH:mm:ss.S" />
+					<fmt:formatDate value="${time}" var="time"
+						pattern="yyyy-MM-dd HH:mm:ss" />
 					<td>${time }</td>
 				</tr>
 				<tr>
@@ -158,36 +172,41 @@
 				</tr>
 				<tr>
 					<th style="vertical-align: middle;">댓글</th>
-					<td>
-						<sec:authorize access="authenticated">
+					<td><sec:authorize access="authenticated">
 							<div>
 								<form action="./noticeComment.do" method="post">
 									<input type="hidden" name="n_no" value="${detail.n_no }">
 									<textarea name="nc_comment" required></textarea>
 									<input type="hidden" name="pageNo" value="${pageNo }">
-									<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">
+									<c:if
+										test="${not empty param.searchColumn && not empty param.searchValue}">
+										<input type="hidden" name="searchColumn"
+											value="${param.searchColumn }">
+										<input type="hidden" name="searchValue"
+											value="${param.searchValue }">
+									</c:if>
+									<input type="hidden" name="u_nickname"
+										value="<sec:authentication property="principal.nickname" />">
 									<button type="submit">댓글쓰기</button>
 								</form>
 							</div>
-						</sec:authorize>
-						<c:choose>
+						</sec:authorize> <c:choose>
 							<c:when test="${fn:length(commentList) gt 0 }">
 								<c:forEach var="c" items="${commentList }">
 									<div>
-										<fmt:parseDate value="${c.nc_date}" var="time" pattern="yyyy-MM-dd HH:mm:ss.S"/>
-										<fmt:formatDate value="${time}" var="time"  pattern="yyyy-MM-dd HH:mm:ss"/>
+										<fmt:parseDate value="${c.nc_date}" var="time"
+											pattern="yyyy-MM-dd HH:mm:ss.S" />
+										<fmt:formatDate value="${time}" var="time"
+											pattern="yyyy-MM-dd HH:mm:ss" />
 										${c.u_nickname } / ${time }
 									</div>
-									<div>
-										${c.nc_comment }
-									</div>
+									<div>${c.nc_comment }</div>
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
 								댓글이 없습니다.
 							</c:otherwise>
-						</c:choose>
-					</td>
+						</c:choose></td>
 				</tr>
 			</table>
 		</div>
@@ -202,30 +221,43 @@
 	<!-- /FOOTER -->
 
 
-<sec:authorize access="hasRole('ROLE_ADMIN')">
-	<dialog id="noticeEditDialog">
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<dialog id="noticeEditDialog">
 		<div>
 			<form action="./noticeEdit.do" method="post">
 				<div style="padding-bottom: 10px;">
-					<h2><label>제목</label></h2>
-					<input style="width: 100%;" type="text" name="n_title" value="${detail.n_title }" required>
+					<h2>
+						<label>제목</label>
+					</h2>
+					<input style="width: 100%;" type="text" name="n_title"
+						value="${detail.n_title }" required>
 				</div>
 				<div style="padding-bottom: 10px;">
-					<h4><label>내용</label></h4>
+					<h4>
+						<label>내용</label>
+					</h4>
 					<textarea id="summernote" name="n_content">${detail.n_content }</textarea>
 				</div>
-				<input type="hidden" name="pageNo" value="${pageNo }">
-				<input type="hidden" name="n_no" value="${detail.n_no }">
-				<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">
+				<input type="hidden" name="pageNo" value="${pageNo }"> <input
+					type="hidden" name="n_no" value="${detail.n_no }">
+				<c:if
+					test="${not empty param.searchColumn && not empty param.searchValue}">
+					<input type="hidden" name="searchColumn"
+						value="${param.searchColumn }">
+					<input type="hidden" name="searchValue"
+						value="${param.searchValue }">
+				</c:if>
+				<input type="hidden" name="u_nickname"
+					value="<sec:authentication property="principal.nickname" />">
 				<div>
 					<button type="submit">수정</button>
 					<button type="button" onclick="hideNoticeEditDialog()">닫기</button>
 				</div>
 			</form>
 		</div>
-	</dialog>
-	
-<script>
+		</dialog>
+
+		<script>
 
 var noticeEditDialog = document.getElementById('noticeEditDialog');
 
@@ -236,6 +268,6 @@ function hideNoticeEditDialog(){
 	noticeEditDialog.close();
 }
 </script>
-</sec:authorize>
+	</sec:authorize>
 </body>
 </html>

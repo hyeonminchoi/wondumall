@@ -82,6 +82,15 @@
 			location.href = "./notice.do?pageNo=" + pageNo;
 		}
 	}
+	
+	function noticeDetail(n_no) {
+		if(${not empty searchColumn} && ${not empty searchValue}){
+			location.href = "./noticeDetail.do?n_no=" + n_no + "&pageNo=" + ${pageNo} + "&searchColumn=${searchColumn}&searchValue=${searchValue}";
+		} else{
+			location.href = "./noticeDetail.do?n_no=" + n_no + "&pageNo=" + ${pageNo};
+		}
+	}
+	
 	$(document).ready(function() {
 		  $('#summernote').summernote({
 			  height: 400,
@@ -157,9 +166,9 @@
 				</thead>
 				<tbody>
 					<c:forEach var="n" items="${noticeList}">
-						<tr onclick="location.href='./noticeDetail.do?n_no=${n.n_no}&pageNo=${pageNo }'">
+						<tr>
 							<td>${n.n_no }</td>
-							<td>${n.n_title }</td>
+							<td onclick="noticeDetail(${n.n_no})">${n.n_title }</td>
 							<td>${n.u_nickname }</td>
 							<td>${n.n_count }</td>
 							<td>${n.n_like }</td>
