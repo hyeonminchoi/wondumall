@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,36 +43,12 @@ public class PaymentController {
 	
 	@ResponseBody
 	@RequestMapping(value="/verifyIamport/{imp_uid}")
-	public IamportResponse<Payment> paymentByImpUid(
+	public IamportResponse<Payment> paymentByImpUid(HttpServletRequest request,
 			Model model
 			, Locale locale
 			, HttpSession session
 			, @PathVariable(value= "imp_uid") String imp_uid) throws IamportResponseException, IOException
 	{	
-			return api.paymentByImpUid(imp_uid);
-	}
-	
-	@GetMapping(value = "/checkout.do")
-	public ModelAndView checkout() {
-		ModelAndView mv = new ModelAndView("checkout");
-		
-		ProductDTO dto = new ProductDTO();
-		UserDTO user = new UserDTO();
-		
-		paymentService.product(dto);
-		paymentService.user(user);
-		
-		mv.addObject("product", dto);
-		mv.addObject("user", user);
-		
-
-		return mv;
-	}
-	
-	@PostMapping(value = "/checkout.do")
-	public String checkout(HttpServletRequest request) throws UnsupportedEncodingException {
-		request.setCharacterEncoding("UTF-8");
-		
 		String name = request.getParameter("o_name");
 		String email = request.getParameter("o_email");
 		String postcode = request.getParameter("o_postcode");
@@ -79,6 +56,8 @@ public class PaymentController {
 		String extraAddress = request.getParameter("o_extraAddress");
 		String detailAddress = request.getParameter("o_detailAddress");
 		String tel = request.getParameter("o_tel");
+		String o_request = request.getParameter("o_request");
+		String merchant_uid = request.getParameter("merchant_uid");
 		
 		OrderDTO orderInfo = new OrderDTO();
 		
@@ -89,14 +68,31 @@ public class PaymentController {
 		orderInfo.setO_extraAddress(extraAddress);
 		orderInfo.setO_detailAddress(detailAddress);
 		orderInfo.setO_tel(tel);
+		orderInfo.setO_request(o_request);
+		orderInfo.setImp_uid(imp_uid);
+		orderInfo.setMerchant_uid(merchant_uid);
 		
-		int result = paymentService.checkout(orderInfo);
+		paymentService.checkout(orderInfo);	
 		
-		if(result == 1) {
-			return "redirect:/paysuccess.do";
-		} else {
-			return "redirect:/payfailure.do";
-		}
 		
+		return api.paymentByImpUid(imp_uid);
+	}
+	
+	@GetMapping(value = "/checkout.do")
+	public ModelAndView checkout1(HttpServletRequest request, @RequestParam("p_no") int p_no){
+		ModelAndView mv = new ModelAndView("checkout");
+		
+		ProductDTO dto = new ProductDTO();
+		dto.setP_no(p_no);
+		dto = paymentService.product(dto);
+		
+		UserDTO user = new UserDTO();
+		paymentService.user(user);
+		
+		mv.addObject("product", dto);
+		mv.addObject("user", user);
+		
+
+		return mv;
 	}
 }

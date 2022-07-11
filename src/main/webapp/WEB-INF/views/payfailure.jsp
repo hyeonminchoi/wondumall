@@ -53,6 +53,7 @@
 		<div class="container">
 			실패
 			<a href="./" class="primary-btn">메인으로</a>
+			<a href="./checkout.do" class="primary-btn">메인으로</a>
 		</div>
 	</div>
 	<!-- FOOTER -->

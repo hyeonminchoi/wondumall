@@ -15,7 +15,6 @@
 		<typeAlias type="com..DTO.NoticeDTO" alias="noticeDTO" />
 		<typeAlias type="com..DTO.NoticecommentDTO" alias="noticeCommentDTO" />
 		<typeAlias type="com..DTO.OrderDTO" alias="orderDTO" />
-		<typeAlias type="com..DTO.PaymentDTO" alias="paymentDTO" />
 		<typeAlias type="com..DTO.ProductDTO" alias="productDTO" />
 		<typeAlias type="com..DTO.QuestionDTO" alias="questionDTO" />
 		<typeAlias type="com..DTO.ReviewDTO" alias="reviewDTO" />
