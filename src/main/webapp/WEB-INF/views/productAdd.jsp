@@ -60,7 +60,7 @@
 
 				<h2>상품등록</h2>
 				
-				<div class="textForm">
+				<!-- <div class="textForm">
 					<input name="p_name" id="email" type="text" class="email" placeholder="상품명" >
 				</div>
 				<div class="textForm">
@@ -68,19 +68,69 @@
 				</div>
 				<div class="textForm">
 					<textarea name="p_description" id="email" class="email" rows="50" cols="10"  placeholder="상품설명"></textarea>
-					<!-- <input name="p_description" id="email" type="" class="email" placeholder="상품설명" > -->
+					<input name="p_description" id="email" type="" class="email" placeholder="상품설명" >
 				</div>
 				<div class="textForm">
 					<input name="p_price" id="email" type="number" class="email" placeholder="상품가격">
 				</div>
 				<div class="textForm">
 					<input name="p_stock" id="email" type="number" class="email" placeholder="수량" >
-				</div>
+				</div> -->
 				<!-- <div class="textForm">
 					<input name="p_img" id="email" type="text" class="email" placeholder="상품사진">
 				</div> -->
+				<hr>
 
-				<input type="submit"  id="joinbtn" class="btn" value="등록하기" />
+				<div class="form-group row">
+					<label class="col-sm-3">상품 이름</label>
+					<div class="com-sm-3">
+						<input type="text" id="p_name" name="p_name" class="form-control">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label class="col-sm-3">분류 번호</label>
+					<div class="com-sm-3">
+						<input type="number" id="cate_no" name="cate_no" class="form-control">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label class="col-sm-3">상품 설명</label>
+					<div class="com-sm-5">
+						<textarea name="p_description" cols="50" rows="2" class="form-control"></textarea>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label class="col-sm-3">상품 가격</label>
+					<div class="com-sm-3">
+						<input type="text" id="unitPrice" name="p_price" class="form-control">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label class="col-sm-3">상품 수량</label>
+					<div class="com-sm-3">
+						<input type="number" id="p_stock" name="p_stock" class="form-control">
+					</div>
+				</div>
+
+				<!-- <div class="form-group row">
+					<label class="col-sm-3">상품 이미지</label>
+					<div>
+						<input type="file" name="productImage" class="form-control">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<input type="button" class="btn btn-primary" value="등록"
+							onclick="CheckAddProduct()">
+					</div>
+				</div> -->
+
+				<input type="submit"  id="addBtn" class="btn" value="등록하기" />
 			</form>
 		</div>
 	</div>

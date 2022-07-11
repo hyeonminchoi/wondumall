@@ -77,10 +77,6 @@ public class ProductController {
 		add.setP_stock(util.str2Int(request.getParameter("p_stock")));
 		// 상품 이미지 추가하기
 		
-		System.out.println(request.getParameter("p_name"));
-		System.out.println(request.getParameter("p_price"));
-		System.out.println(request.getParameter("p_description"));
-		System.out.println(request.getParameter("p_price"));
 		
 		int result = productService.productAdd(add);
 		
