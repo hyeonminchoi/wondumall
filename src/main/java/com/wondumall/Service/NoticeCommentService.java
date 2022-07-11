@@ -19,6 +19,10 @@ public class NoticeCommentService {
 	public List<NoticecommentDTO> getCommentList(int n_no) {
 		return noticeCommentDAO.getCommentList(n_no);
 	}
+
+	public int delete(NoticecommentDTO noticecommentDTO) {
+		return noticeCommentDAO.delete(noticecommentDTO);
+	}
 	
 	
 }

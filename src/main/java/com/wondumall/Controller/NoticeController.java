@@ -11,6 +11,7 @@ import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com..Config.MyUserDetails;
 import com..DTO.NoticeDTO;
 import com..DTO.NoticecommentDTO;
 import com..Service.NoticeCommentService;
@@ -184,4 +186,31 @@ public class NoticeController {
 		}
 	}
 	
+	@Secured("ROLE_USER")
+	@GetMapping("/noticeCommentDelete.do")
+	public void noticeCommentDelete(@RequestParam("pageNo") int pageNo, @RequestParam("n_no") int n_no, @RequestParam("nc_no") int nc_no, HttpServletRequest request,
+			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
+			@RequestParam(name="searchValue", required=false) String searchValue, @AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
+		NoticecommentDTO noticecommentDTO = new NoticecommentDTO();
+		noticecommentDTO.setN_no(n_no);
+		noticecommentDTO.setNc_no(nc_no);
+		noticecommentDTO.setU_nickname(myUserDetails.getNickname());
+		int result = noticeCommentService.delete(noticecommentDTO);
+		response.setContentType("text/html; charset=UTF-8");
+		if (result > 0) {
+			if(searchColumn!=null && searchValue!=null)
+				response.getWriter().println("<script> alert('댓글 삭제에 성공했습니다'); location.href='./noticeDetail.do?n_no="
+						+ n_no + "&pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
+			else
+				response.getWriter().println("<script> alert('댓글 삭제에 성공했습니다'); location.href='./noticeDetail.do?n_no="
+						+ n_no + "&pageNo=" + pageNo + "'</script>");
+		} else {
+			if(searchColumn!=null && searchValue!=null)
+				response.getWriter().println("<script> alert('댓글 삭제에 실패했습니다'); location.href='./noticeDetail.do?n_no="
+						+ n_no + "&pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
+			else
+				response.getWriter().println("<script> alert('댓글 삭제에 실패했습니다'); location.href='./noticeDetail.do?n_no="
+						+ n_no + "&pageNo=" + pageNo + "'</script>");
+		}
+	}
 }
