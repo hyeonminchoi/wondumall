@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @NoArgsConstructor
 public class NoticeDTO {
-	private int n_no, n_count, n_like, u_no;
+	private int n_no, n_count, n_like, u_no, n_commentCount;
 	private String n_date;
 	
 	@NonNull

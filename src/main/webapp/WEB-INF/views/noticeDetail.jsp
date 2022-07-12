@@ -137,19 +137,6 @@ label:hover{
 		}
 	}
 	
-	$(document).ready(function() {
-		  $('#summernote').summernote({
-			  height: 400,
-			  callbacks : {
-					onImageUpload : function(files, editor, welEditable) {       
-						for (var i = 0; i < files.length; i++) {
-							sendFile(files[i], this);
-						}
-					}
-				}
-		  });
-	});
-	
 	function sendFile(file, el) {
 		var form_data = new FormData();
 		form_data.append('file', file);
@@ -276,11 +263,13 @@ function noticeCommentEdit(nc_no, nc_comment){
 		<div class="container">
 			<div id="back">
 				<label onclick="notice()"><i class="fa fa-arrow-left" aria-hidden="true"></i>뒤로가기</label>
-				<c:if test="${user ne 'anonymousUser' and user.nickname eq detail.u_nickname }">
-					<label onclick="showNoticeEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>수정</label>
-				</c:if>
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<label onclick="noticeDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</label>
+				<sec:authorize access="authenticated">
+					<sec:authorize access="hasRole('ROLE_ADMIN') || principal != null && principal.nickname == '${detail.u_nickname }' ">
+						<label onclick="showNoticeEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>수정</label>
+					</sec:authorize>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<label onclick="noticeDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</label>
+					</sec:authorize>
 				</sec:authorize>
 			</div>
 			<table class="table table-bordered">
@@ -427,6 +416,20 @@ function showNoticeEditDialog(){
 function hideNoticeEditDialog(){
 	noticeEditDialog.close();
 }
+
+$(document).ready(function() {
+	  $('#summernote').summernote({
+		  height: 400,
+		  callbacks : {
+				onImageUpload : function(files, editor, welEditable) {       
+					for (var i = 0; i < files.length; i++) {
+						sendFile(files[i], this);
+					}
+				}
+			}
+	  });
+});
+
 </script>
 	</sec:authorize>
 </body>

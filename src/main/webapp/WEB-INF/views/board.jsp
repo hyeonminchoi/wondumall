@@ -92,18 +92,6 @@
 		}
 	}
 	
-	$(document).ready(function() {
-		  $('#summernote').summernote({
-			  height: 400,
-			  callbacks : {
-					onImageUpload : function(files, editor, welEditable) {       
-						for (var i = 0; i < files.length; i++) {
-							sendFile(files[i], this);
-						}
-					}
-				}
-		  });
-	});
 	function sendFile(file, el) {
 		var form_data = new FormData();
 		form_data.append('file', file);
@@ -169,7 +157,7 @@
 					<c:forEach var="b" items="${boardList}">
 						<tr>
 							<td>${b.b_no }</td>
-							<td onclick="boardDetail(${b.b_no})">${b.b_title }</td>
+							<td onclick="boardDetail(${b.b_no})">${b.b_title } <small style="color:red;">${b.b_commentCount }</small></td>
 							<td>${b.u_nickname }</td>
 							<td>${b.b_count }</td>
 							<td>${b.b_like }</td>
@@ -196,7 +184,8 @@
 					<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
 				</form>
 			</div>
-			<sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN','ROLE_BUSINESS')">
+			
+			<sec:authorize access="authenticated">
 				<div style="float:right;">
 					<button type="button" onclick="showWriteDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>글쓰기</button>
 				</div>
@@ -218,7 +207,7 @@
 	<!-- /FOOTER -->
 
 <!-- 로그인한 유저는 글쓰기 가능 -->
-<sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN','ROLE_BUSINESS')">
+<sec:authorize access="authenticated">
 	<dialog id="boardWriteDialog">
 		<div>
 			<form action="./boardWrite.do" method="post">
@@ -249,6 +238,19 @@ function showWriteDialog(){
 function hideWriteDialog(){
 	boardWriteDialog.close();
 }
+
+$(document).ready(function() {
+	  $('#summernote').summernote({
+		  height: 400,
+		  callbacks : {
+				onImageUpload : function(files, editor, welEditable) {       
+					for (var i = 0; i < files.length; i++) {
+						sendFile(files[i], this);
+					}
+				}
+			}
+	  });
+});
 </script>
 </sec:authorize>
 

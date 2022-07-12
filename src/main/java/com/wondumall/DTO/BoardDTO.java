@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 
 public class BoardDTO {
-	private int b_no, cate_no, u_no, b_count, b_like, b_del;
+	private int b_no, cate_no, u_no, b_count, b_like, b_del, b_commentCount;
 	private String b_date;
 	
 	@NonNull

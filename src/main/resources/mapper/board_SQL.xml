@@ -21,8 +21,9 @@
 	</select>
 	
 	<select id="getBoardList" parameterType="map" resultType="boardDTO">
-		SELECT board.*, user.u_nickname FROM board 
+		SELECT board.*, user.u_nickname, (SELECT COUNT(*) FROM board_comment WHERE board_comment.b_no = board.b_no AND board_comment.c_del = 0) as b_commentCount FROM board 
 		JOIN user ON user.u_no = board.u_no
+		LEFT JOIN board_comment ON board_comment.b_no = board.b_no
 		WHERE board.b_del = 0
 		<choose>
 			<when test='searchColumn == "b_title"'>
@@ -35,6 +36,7 @@
 				AND user.u_nickname like #{searchValue}
 			</when>
 		</choose>
+		GROUP BY board.b_no
 		ORDER BY board.b_date DESC
 		LIMIT #{firstIndex}, #{recordCountPerPage}
 	</select>

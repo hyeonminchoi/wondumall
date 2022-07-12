@@ -137,19 +137,6 @@ label:hover{
 		}
 	}
 	
-	$(document).ready(function() {
-		  $('#summernote').summernote({
-			  height: 400,
-			  callbacks : {
-					onImageUpload : function(files, editor, welEditable) {       
-						for (var i = 0; i < files.length; i++) {
-							sendFile(files[i], this);
-						}
-					}
-				}
-		  });
-	});
-	
 	function sendFile(file, el) {
 		var form_data = new FormData();
 		form_data.append('file', file);
@@ -276,11 +263,13 @@ function boardCommentEdit(c_no, c_comment){
 		<div class="container">
 			<div id="back">
 				<label onclick="board()"><i class="fa fa-arrow-left" aria-hidden="true"></i>뒤로가기</label>
-				<c:if test="${user ne 'anonymousUser' and user.nickname eq detail.u_nickname }">
-					<label onclick="showBoardEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>수정</label>
-				</c:if>
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<label onclick="boardDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</label>
+				<sec:authorize access="authenticated">
+					<sec:authorize access="principal.nickname == '${detail.u_nickname }' ">
+						<label onclick="showBoardEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>수정</label>
+					</sec:authorize>
+					<sec:authorize access="hasRole('ROLE_ADMIN') || principal.nickname == '${detail.u_nickname }' ">
+						<label onclick="boardDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</label>
+					</sec:authorize>
 				</sec:authorize>
 			</div>
 			<table class="table table-bordered">
@@ -380,8 +369,8 @@ function boardCommentEdit(c_no, c_comment){
 	</footer>
 	<!-- /FOOTER -->
 
-	<sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN','ROLE_BUSINESS')">
-		<dialog id="boardEditDialog">
+<sec:authorize access="authenticated">
+	<dialog id="boardEditDialog">
 		<div>
 			<form action="./boardEdit.do" method="post">
 				<div style="padding-bottom: 10px;">
@@ -414,19 +403,33 @@ function boardCommentEdit(c_no, c_comment){
 				</div>
 			</form>
 		</div>
-		</dialog>
+	</dialog>
 
-		<script>
-
-var boardEditDialog = document.getElementById('boardEditDialog');
-
-function showBoardEditDialog(){
-	boardEditDialog.showModal();
-}
-function hideBoardEditDialog(){
-	boardEditDialog.close();
-}
-</script>
-	</sec:authorize>
+	<script>
+	
+	var boardEditDialog = document.getElementById('boardEditDialog');
+	
+	function showBoardEditDialog(){
+		boardEditDialog.showModal();
+	}
+	function hideBoardEditDialog(){
+		boardEditDialog.close();
+	}
+	$(document).ready(function() {
+		  $('#summernote').summernote({
+			  height: 400,
+			  callbacks : {
+					onImageUpload : function(files, editor, welEditable) {       
+						for (var i = 0; i < files.length; i++) {
+							sendFile(files[i], this);
+						}
+					}
+				}
+		  });
+	});
+	
+	
+	</script>
+</sec:authorize>
 </body>
 </html>

@@ -3,7 +3,6 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <sec:authentication property="principal" var="user"/>
-<script src="./js/jquery.min.js"></script>
 <!-- TOP HEADER -->
 <sec:authorize access="authenticated">
 <script type="text/javascript">

@@ -92,18 +92,6 @@
 		}
 	}
 	
-	$(document).ready(function() {
-		  $('#summernote').summernote({
-			  height: 400,
-			  callbacks : {
-					onImageUpload : function(files, editor, welEditable) {       
-						for (var i = 0; i < files.length; i++) {
-							sendFile(files[i], this);
-						}
-					}
-				}
-		  });
-	});
 	function sendFile(file, el) {
 		var form_data = new FormData();
 		form_data.append('file', file);
@@ -169,7 +157,7 @@
 					<c:forEach var="n" items="${noticeList}">
 						<tr>
 							<td>${n.n_no }</td>
-							<td onclick="noticeDetail(${n.n_no})">${n.n_title }</td>
+							<td onclick="noticeDetail(${n.n_no})">${n.n_title } <small style="color:red;">${n.n_commentCount }</small></td>
 							<td>${n.u_nickname }</td>
 							<td>${n.n_count }</td>
 							<td>${n.n_like }</td>
@@ -249,6 +237,19 @@ function showWriteDialog(){
 function hideWriteDialog(){
 	noticeWriteDialog.close();
 }
+
+$(document).ready(function() {
+	  $('#summernote').summernote({
+		  height: 400,
+		  callbacks : {
+				onImageUpload : function(files, editor, welEditable) {       
+					for (var i = 0; i < files.length; i++) {
+						sendFile(files[i], this);
+					}
+				}
+			}
+	  });
+});
 </script>
 </sec:authorize>
 
