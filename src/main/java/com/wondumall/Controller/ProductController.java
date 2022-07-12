@@ -1,5 +1,6 @@
 package com..Controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -11,11 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com..DTO.CategoryDTO;
 import com..DTO.ProductDTO;
+import com..DTO.ReviewDTO;
 import com..Service.ProductService;
 import com..Util.FileSave;
 import com..Util.Util;
@@ -34,6 +37,36 @@ public class ProductController {
 	
 	@Autowired
 	private ServletContext servletContext;
+	
+//	@PostMapping(value = "/productReview.do")
+//	public String productReview(HttpServletRequest request) throws UnsupportedEncodingException {
+//		request.setCharacterEncoding("UTF-8");
+//		
+//		HttpSession session = request.getSession();
+//		if(session.getAttribute("u_email") != null
+//				&& request.getParameter("p_no") != null
+//				&& request.getParameter("r_title") != null) {
+//			
+//			ReviewDTO dto = new ReviewDTO();
+//			
+//			dto.setP_no(util.str2Int(request.getParameter("p_no")));
+//			dto.setR_title(request.getParameter("r_title"));
+//			dto.setR_content(request.getParameter("r_content"));
+//			
+//			dto.setU_no((int)(session.getAttribute("u_no")));
+//			
+//			productService.productReview(dto);
+//		}
+//		return "redirect:/productDetail?p_no=" + request.getParameter("p_no");
+//	}
+	
+	@GetMapping(value = "/productDetail.do")
+	public ModelAndView productDetail(@RequestParam("p_no") int p_no) {
+		ModelAndView mv = new ModelAndView("productDetail");
+		mv.addObject("productDetail", productService.productDetail(p_no));
+		
+		return mv;
+	}
 	
 	//제품 종류별 카테고리 분류하기
 	@RequestMapping(value = "/category.do")
@@ -72,10 +105,8 @@ public class ProductController {
 	public String productAdd(HttpServletRequest request, MultipartFile[] files) throws Exception {
 		// 한글 입력 UTF-8로 set.
 		request.setCharacterEncoding("UTF-8");
-		HttpSession session = request.getSession();
 		
-		if(session.getAttribute("u_email") != null
-				&& request.getParameter("p_name") != null
+		if(request.getParameter("p_name") != null
 				&& request.getParameter("p_description") != null) {
 			ProductDTO add = new ProductDTO();
 			
@@ -85,7 +116,6 @@ public class ProductController {
 			add.setP_description(request.getParameter("p_description"));
 			add.setP_price(util.str2Int(request.getParameter("p_price")));
 			add.setP_stock(util.str2Int(request.getParameter("p_stock")));
-			
 			// 상품 이미지 추가하기
 			for(MultipartFile file: files) {
 				if(!(file.getOriginalFilename().isEmpty())) {

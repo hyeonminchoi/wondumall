@@ -119,6 +119,9 @@
 				<div class="form-group row">
 					<label class="col-sm-3">상품 이미지</label>
 					<div>
+					<!-- <button type="button" class="btn_upload">
+						<img src="">
+					</button> -->
 						<input 
 							type="file" name="files" class="form-control" 
 							accept=".png, .jpg, .gif, .jpeg, .ico" multiple="multiple"

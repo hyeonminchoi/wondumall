@@ -19,6 +19,12 @@ public class NoticeCommentDAO {
 	public List<NoticecommentDTO> getCommentList(int n_no) {
 		return sqlSession.selectList("noticeComment.getCommentList", n_no);
 	}
+
+	public int delete(NoticecommentDTO noticecommentDTO) {
+		return sqlSession.update("noticeComment.delete", noticecommentDTO);
+	}
 	
-	
+	public int edit(NoticecommentDTO noticecommentDTO) {
+		return sqlSession.update("noticeComment.edit", noticecommentDTO);
+	}
 }

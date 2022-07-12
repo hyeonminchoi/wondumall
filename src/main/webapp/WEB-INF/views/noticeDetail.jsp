@@ -63,6 +63,33 @@
 #back {
 	margin-bottom: 10px;
 }
+
+#cwriteform, #ceditform {
+	width: 100%;
+	height: 170px;
+	background-color: #c1c1c1;
+	padding: 10px;
+}
+
+#cwriteform textarea, #ceditform textarea {
+	width: calc(100% - 85px);
+	height: 150px;
+	margin-right: -3px;
+	vertical-align: middle;
+	padding: 10px;
+	box-sizing: border-box;
+	resize: none;
+}
+
+#cwriteform button, #ceditform button {
+	vertical-align: middle;
+	width: 80px;
+	height: 150px;
+	margin-left: -2px;
+	border: 0px;
+	background-color: black;
+	color: white;
+}
 </style>
 <script type="text/javascript">
 	function notice() {
@@ -83,6 +110,42 @@
 		}
 	}
 	
+	function noticeCommentDelete(nc_no){
+		if(confirm("댓글을 삭제하겠습니까?")){
+			if(${not empty param.searchColumn} && ${not empty param.searchValue}){
+				location.href = "./noticeCommentDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}&nc_no=" + nc_no + "&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
+			} else{
+				location.href = "./noticeCommentDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}&nc_no=" + nc_no;
+			}
+		}
+	}
+	
+	function noticeCommentEdit(nc_no, nc_comment){
+		if(confirm("댓글을 수정하겠습니까?")){
+			var oldComment = nc_comment.trim();
+			var temp = ''; 
+			temp += '<div id="ceditform">'
+			temp += '<form action="./noticeCommentEdit.do" method="post">';
+			temp += '<input type="hidden" name="n_no" value="${detail.n_no }">'
+			temp += '<input type="hidden" name="nc_no" value="' + nc_no + '">'
+			temp += '<textarea name="nc_comment" id="nc_comment" required>' + nc_comment +'</textarea>'
+			temp += '<input type="hidden" name="pageNo" value="${pageNo }">'
+			temp += '<c:if test="${not empty param.searchColumn && not empty param.searchValue}">'
+			temp += '<input type="hidden" name="searchColumn" value="${param.searchColumn }">'
+			temp += '<input type="hidden" name="searchValue" value="${param.searchValue }">'
+			temp += '</c:if>'
+			temp += '<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">'
+			temp += '<button type="submit" id="commentCount1">댓글수정<br>(' + nc_comment.length + '/300)</button>'
+			temp += '</form>'
+			temp += '</div>'
+			$('#commentList').empty().html(temp);
+			$(".commentEdit").remove();
+			$(".commentDelete").remove();
+			$('#noticeComment').remove();
+			$("#cwriteform").remove();
+		}
+	}
+	
 	$(document).ready(function() {
 		  $('#summernote').summernote({
 			  height: 400,
@@ -94,6 +157,37 @@
 					}
 				}
 		  });
+	});
+	
+	function sendFile(file, el) {
+		var form_data = new FormData();
+		form_data.append('file', file);
+		$.ajax({
+			data : form_data,
+			type : "POST",
+			url : './noticeImage.do',
+			cache : false,
+			contentType : false,
+			enctype : 'multipart/form-data',
+			processData : false,
+			success : function(url) {
+				$(el).summernote('insertImage', url, function($image) {
+					$image.css('width', "25%");
+				});
+			}
+		});
+	}
+	
+	//댓글 글자수 제한
+	$(document).on("input","#nc_comment",function(){
+		if($(this).val().length>=300){
+			$(this).val($(this).val().substring(0,300));
+			$("#commentCount").html("댓글쓰기<br>(300/300)");
+			$("#commentCount1").html("댓글수정<br>(300/300)");
+			return;
+		}
+		$("#commentCount").html("댓글쓰기<br>(" + $(this).val().length + "/300)");
+		$("#commentCount1").html("댓글수정<br>(" + $(this).val().length + "/300)");
 	});
 </script>
 </head>
@@ -173,10 +267,10 @@
 				<tr>
 					<th style="vertical-align: middle;">댓글</th>
 					<td><sec:authorize access="authenticated">
-							<div>
+							<div id="cwriteform">
 								<form action="./noticeComment.do" method="post">
 									<input type="hidden" name="n_no" value="${detail.n_no }">
-									<textarea name="nc_comment" required></textarea>
+									<textarea name="nc_comment" id="nc_comment" required></textarea>
 									<input type="hidden" name="pageNo" value="${pageNo }">
 									<c:if
 										test="${not empty param.searchColumn && not empty param.searchValue}">
@@ -187,20 +281,22 @@
 									</c:if>
 									<input type="hidden" name="u_nickname"
 										value="<sec:authentication property="principal.nickname" />">
-									<button type="submit">댓글쓰기</button>
+									<button type="submit" id="commentCount">댓글쓰기<br>(0/300)</button>
 								</form>
 							</div>
 						</sec:authorize> <c:choose>
 							<c:when test="${fn:length(commentList) gt 0 }">
 								<c:forEach var="c" items="${commentList }">
-									<div>
+									<div id="commentList">
 										<fmt:parseDate value="${c.nc_date}" var="time"
 											pattern="yyyy-MM-dd HH:mm:ss.S" />
 										<fmt:formatDate value="${time}" var="time"
 											pattern="yyyy-MM-dd HH:mm:ss" />
-										${c.u_nickname } / ${time }
+										${c.u_nickname } / ${time } <c:if test="${user.nickname eq c.u_nickname }">
+											<i class="fa fa-pencil commentEdit" aria-hidden="true" onclick="noticeCommentEdit(${c.nc_no}, '${c.nc_comment }')"></i><i class="fa fa-trash-o commentDelete" aria-hidden="true" onclick="noticeCommentDelete(${c.nc_no})"></i>
+										</c:if>
 									</div>
-									<div>${c.nc_comment }</div>
+									<div id="noticeComment"><pre>${c.nc_comment }</pre></div>
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
@@ -236,7 +332,7 @@
 					<h4>
 						<label>내용</label>
 					</h4>
-					<textarea id="summernote" name="n_content">${detail.n_content }</textarea>
+					<textarea id="summernote" name="n_content"><c:out value="${detail.n_content}" /></textarea>
 				</div>
 				<input type="hidden" name="pageNo" value="${pageNo }"> <input
 					type="hidden" name="n_no" value="${detail.n_no }">

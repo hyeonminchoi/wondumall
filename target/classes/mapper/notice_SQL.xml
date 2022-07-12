@@ -35,7 +35,7 @@
 				AND user.u_nickname like #{searchValue}
 			</when>
 		</choose>
-		ORDER BY notice.n_no DESC
+		ORDER BY notice.n_date DESC
 		LIMIT #{firstIndex}, #{recordCountPerPage}
 	</select>
 	
