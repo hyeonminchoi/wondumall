@@ -380,10 +380,10 @@
 										<!-- Review Form -->
 										<div class="col-md-3">
 											<div id="review-form">
-												<form class="review-form">
-													<input class="input" type="text" placeholder="Your Name">
-													<input class="input" type="email" placeholder="Your Email">
-													<textarea class="input" placeholder="Your Review"></textarea>
+												<form action="./productReview.do" method="POST" class="review-form">
+													<input name="" class="input" type="text" placeholder="Your Name">
+													<input name="" class="input" type="email" placeholder="Your Email">
+													<textarea name="" class="input" placeholder="Your Review"></textarea>
 													<div class="input-rating">
 														<span>Your Rating: </span>
 														<div class="stars">
@@ -394,7 +394,7 @@
 															<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
 														</div>
 													</div>
-													<button class="primary-btn">Submit</button>
+													<button type="submit" class="primary-btn">Submit</button>
 												</form>
 											</div>
 										</div>
@@ -413,7 +413,39 @@
 			<!-- /container -->
 		</div>
 		<!-- /SECTION -->
-
+		
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<form action="./productReview.do" method="POST" id="join" class="joinForm" enctype="multipart/form-data">
+							<div class="form-group row">
+								<label class="col-sm-3">리뷰 제목</label>
+								<div class="com-sm-3">
+									<input type="text" id="r_title" name="r_title" class="form-control">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-3">리뷰 설명</label>
+								<div class="com-sm-5">
+									<textarea name="r_content" cols="50" rows="2" class="form-control"></textarea>
+								</div>
+							</div>
+							<!-- <div class="input-rating">
+								<span>Your Rating: </span>
+								<div class="stars">
+									<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
+									<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
+									<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
+									<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
+									<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+								</div>
+							</div> -->
+						<input type="submit" id="Btn" class="primary-btn" value="등록하기" />
+					</form>
+				</div>
+			</div>
+		</div>
+		
 		<!-- Section -->
 		<div class="section">
 			<!-- container -->

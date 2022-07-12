@@ -19,4 +19,8 @@
 		FROM product
 		WHERE p_no = #{p_no}
 	</select>
+	<insert id="productReview" parameterType="reviewDTO">
+		INSERT INTO review (r_title, r_content)
+		VALUES (#{r_title}, #{r_content})
+	</insert>
 </mapper>

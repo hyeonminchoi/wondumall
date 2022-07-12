@@ -1,5 +1,6 @@
 package com..Controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com..DTO.CategoryDTO;
 import com..DTO.ProductDTO;
+import com..DTO.ReviewDTO;
 import com..Service.ProductService;
 import com..Util.FileSave;
 import com..Util.Util;
@@ -35,6 +37,28 @@ public class ProductController {
 	
 	@Autowired
 	private ServletContext servletContext;
+	
+//	@PostMapping(value = "/productReview.do")
+//	public String productReview(HttpServletRequest request) throws UnsupportedEncodingException {
+//		request.setCharacterEncoding("UTF-8");
+//		
+//		HttpSession session = request.getSession();
+//		if(session.getAttribute("u_email") != null
+//				&& request.getParameter("p_no") != null
+//				&& request.getParameter("r_title") != null) {
+//			
+//			ReviewDTO dto = new ReviewDTO();
+//			
+//			dto.setP_no(util.str2Int(request.getParameter("p_no")));
+//			dto.setR_title(request.getParameter("r_title"));
+//			dto.setR_content(request.getParameter("r_content"));
+//			
+//			dto.setU_no((int)(session.getAttribute("u_no")));
+//			
+//			productService.productReview(dto);
+//		}
+//		return "redirect:/productDetail?p_no=" + request.getParameter("p_no");
+//	}
 	
 	@GetMapping(value = "/productDetail.do")
 	public ModelAndView productDetail(@RequestParam("p_no") int p_no) {

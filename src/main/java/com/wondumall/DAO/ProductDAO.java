@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com..DTO.CategoryDTO;
 import com..DTO.ProductDTO;
+import com..DTO.ReviewDTO;
 
 @Repository
 public class ProductDAO {
@@ -25,5 +26,9 @@ public class ProductDAO {
 
 	public ProductDTO productDetail(int p_no) {
 		return sqlSession.selectOne("product.productDetail", p_no);
+	}
+
+	public void productReview(ReviewDTO dto) {
+		sqlSession.insert("product.productReview", dto);
 	}
 }
