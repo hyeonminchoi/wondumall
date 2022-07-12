@@ -70,6 +70,7 @@
 	height: 170px;
 	background-color: #c1c1c1;
 	padding: 10px;
+	margin-bottom: 10px;
 }
 
 #cwriteform textarea, #ceditform textarea {
