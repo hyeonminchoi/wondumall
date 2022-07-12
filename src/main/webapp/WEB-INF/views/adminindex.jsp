@@ -29,7 +29,7 @@
 	<header>
 		<c:import url="./adminheader.jsp"></c:import>
 	</header>
-	<nav id="navigation">
+	<nav if="navigation">
 		<c:import url="./adminnav.jsp"></c:import>
 	</nav>
 	<div id="section">

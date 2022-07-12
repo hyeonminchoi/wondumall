@@ -20,6 +20,5 @@
 		<typeAlias type="com..DTO.ReviewDTO" alias="reviewDTO" />
 		<typeAlias type="com..DTO.UserDTO" alias="userDTO" />
 		<typeAlias type="com..DTO.LoginDTO" alias="loginDTO" />
-		<typeAlias type="com..DTO.PageDTO" alias="pageDTO"/>
 	</typeAliases>
   </configuration>
