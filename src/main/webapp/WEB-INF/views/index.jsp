@@ -128,8 +128,6 @@
 					</div>
 					<!-- /section title -->
 					
-					${productList}
-					
 					<!-- Products tab & slick -->
 					<div class="col-md-12">
 						<div class="row">
@@ -149,7 +147,7 @@
 											</div>
 											<div class="product-body">
 												<p class="product-category">Category</p>
-												<h3 class="product-name"><a href="#">${p.p_name}</a></h3>
+												<h3 class="product-name"><a href="./productDetail.do?p_no=${p.p_no}">${p.p_name}</a></h3>
 												<h4 class="product-price">$${p.p_price} <del class="product-old-price">$990.00</del></h4>
 												<div class="product-rating">
 													<i class="fa fa-star"></i>
@@ -165,7 +163,7 @@
 												</div>
 											</div>
 											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+												<button class="add-to-cart-btn" onclick="location.href='/checkout.do?p_no=${p.p_no}'"><i class="fa fa-shopping-cart"></i>결제하기</button>
 											</div>
 										</div>
 										<!-- /product -->
