@@ -51,8 +51,9 @@
 	
 	<div class="section">
 		<div class="container">
-			성공
-			<a href="./" class="primary-btn">메인으로</a>
+			<h1 style="margin: 0 auto; text-align: center;">성공</h1>
+			<br>
+			<a href="./" class="primary-btn" style="margin: auto; text-align: center;  display: block;">메인으로</a>
 		</div>
 	</div>
 	<!-- FOOTER -->
