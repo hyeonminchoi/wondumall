@@ -64,4 +64,29 @@
 		UPDATE notice SET n_count = n_count + 1
 		WHERE n_no = #{n_no}
 	</update>
+	
+	<select id="containLike" parameterType="noticeDTO" resultType="integer">
+		SELECT COUNT(*) FROM noticeLike
+		WHERE n_no = #{n_no} AND u_no = (SELECT u_no FROM user WHERE u_nickname=#{u_nickname})
+	</select>
+	
+	<insert id="insertLike" parameterType="noticeDTO">
+		INSERT INTO noticeLike(n_no, u_no)
+		VALUES(#{n_no}, (SELECT u_no FROM user WHERE u_nickname=#{u_nickname}))
+	</insert>
+	
+	<delete id="deleteLike" parameterType="noticeDTO">
+		DELETE FROM noticeLike
+		WHERE n_no = #{n_no} AND u_no = (SELECT u_no FROM user WHERE u_nickname=#{u_nickname})
+	</delete>
+	
+	<select id="like" parameterType="integer" resultType="integer">
+		SELECT n_like FROM notice
+		WHERE n_no = #{n_no}
+	</select>
+	
+	<update id="updateLike">
+		UPDATE notice SET n_like = (SELECT COUNT(*) FROM noticeLike WHERE n_no = #{n_no}) 
+		WHERE n_no = #{n_no} 
+	</update>
 </mapper>

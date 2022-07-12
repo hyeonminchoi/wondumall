@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -263,5 +264,23 @@ public class NoticeController {
 				response.getWriter().println("<script> alert('댓글수정에 실패했습니다'); location.href='./noticeDetail.do?n_no="
 						+ noticecommentDTO.getN_no() + "&pageNo=" + pageNo + "'</script>");
 		}
+	}
+	
+	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
+	@ResponseBody
+	@PostMapping("/noticeLikeAjax.do")
+	public Map<String, Object> noticeLike(NoticeDTO noticeDTO) {
+		int result = noticeService.containLike(noticeDTO);
+		Map<String, Object> map = new HashMap<>();
+		map.put("result", result);
+		if(result>0) { //이미 좋아요를 누른 상태
+			noticeService.deleteLike(noticeDTO);
+		} else { //좋아요를 누르지 않은 상태
+			noticeService.insertLike(noticeDTO);
+		}
+		noticeService.updateLike(noticeDTO.getN_no());
+		int count = noticeService.like(noticeDTO.getN_no());
+		map.put("count", count);
+		return map;
 	}
 }

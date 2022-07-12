@@ -177,6 +177,32 @@ td:nth-child(2){
 
 <c:if test="${user ne 'anonymousUser'}">
 <script>
+
+function noticeLike(u_nickname){
+	$.ajax({
+		  type: 'post',
+		  url: './noticeLikeAjax.do',
+		  data:{
+			  "n_no" : ${detail.n_no},
+			  "u_nickname":u_nickname},
+		  dataType: 'json',
+		  success: function(map){
+			  if(map.result == 0){
+			  	$('#noticeLikeImg').html(map.count + ' <i class="fa fa-heart" aria-hidden="true" onclick="noticeLike(${user.nickname})"></i>');
+			  } else{
+				$('#noticeLikeImg').html(map.count + ' <i class="fa fa-heart-o" aria-hidden="true" onclick="noticeLike(${user.nickname})"></i>');
+			  }
+		  },
+		  error: function(error){
+			  console.log(error);
+		  }
+	})
+}
+
+window.onload = function(){
+	noticeLike(${user.nickname});
+}
+
 function noticeCommentDelete(nc_no){
 	if(confirm("댓글을 삭제하겠습니까?")){
 		if(${not empty param.searchColumn} && ${not empty param.searchValue}){
@@ -212,7 +238,6 @@ function noticeCommentEdit(nc_no, nc_comment){
 		$("#cwriteform").remove();
 	}
 }
-
 </script>
 </c:if>
 </head>
@@ -282,12 +307,8 @@ function noticeCommentEdit(nc_no, nc_comment){
 				</tr>
 				<tr>
 					<th>좋아요</th>
-					<td>
+					<td  id="noticeLikeImg">
 						${detail.n_like }
-						<c:if test="${user ne 'anonymousUser'}">
-							<i class="fa fa-heart" aria-hidden="true"></i>
-							<i class="fa fa-heart-o" aria-hidden="true"></i>
-						</c:if>
 					</td>
 				</tr>
 				<tr>

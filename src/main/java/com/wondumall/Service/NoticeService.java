@@ -40,6 +40,26 @@ public class NoticeService {
 	public void countUp(int n_no) {
 		noticeDAO.countUp(n_no);
 	}
+
+	public int containLike(NoticeDTO noticeDTO) {
+		return noticeDAO.containLike(noticeDTO);
+	}
+
+	public void deleteLike(NoticeDTO noticeDTO) {
+		noticeDAO.deleteLike(noticeDTO);
+	}
+
+	public void insertLike(NoticeDTO noticeDTO) {
+		noticeDAO.insertLike(noticeDTO);
+	}
+
+	public int like(int n_no) {
+		return noticeDAO.like(n_no);
+	}
+
+	public void updateLike(int n_no) {
+		noticeDAO.updateLike(n_no);
+	}
 	
 	
 }
