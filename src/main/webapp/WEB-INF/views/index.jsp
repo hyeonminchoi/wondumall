@@ -163,7 +163,7 @@
 												</div>
 											</div>
 											<div class="add-to-cart">
-												<button class="add-to-cart-btn" onclick="location.href='/checkout.do?p_no=${p.p_no}'"><i class="fa fa-shopping-cart"></i>결제하기</button>
+												<button class="add-to-cart-btn" onclick="location.href='./checkout.do?p_no=${p.p_no}'"><i class="fa fa-shopping-cart"></i>결제하기</button>
 											</div>
 										</div>
 										<!-- /product -->
