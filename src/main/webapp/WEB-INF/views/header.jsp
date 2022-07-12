@@ -1,8 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<sec:authentication property="principal" var="user"/>
+<script src="./js/jquery.min.js"></script>
 <!-- TOP HEADER -->
-
+<sec:authorize access="authenticated">
+<script type="text/javascript">
+function cartCount(u_no){
+	$.ajax({
+		url:'./cartCount.do',
+		type:'post',
+		data:{u_no:u_no},
+		success: function(data){
+			$('.qty').text(data);
+		},
+		error: function(error){
+			console.log(error);
+		}
+	})
+}
+window.onload = function(){
+	cartCount('<sec:authentication property='principal.no'/>')
+}
+</script>
+</sec:authorize>
 <div id="top-header">
 	<div class="container">
 		<ul class="header-links pull-left">
@@ -74,11 +96,20 @@
 
 					<!-- Cart -->
 					<div class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown"
-							aria-expanded="true"> <i class="fa fa-shopping-cart"></i> <span>Your
-								Cart</span>
-							<div class="qty">3</div>
-						</a>
+						<c:choose>
+							<c:when test="${user ne 'anonymousUser'}">
+								<a href="./cart.do?u_no=<sec:authentication property='principal.no'/>" class="dropdown-toggle" > <i class="fa fa-shopping-cart"></i> 
+								<span>Your Cart</span>
+									<div class="qty">0</div>
+								</a>
+							</c:when>
+							<c:otherwise>
+								<a href="./login.do" class="dropdown-toggle" > <i class="fa fa-shopping-cart"></i> 
+								<span>Your Cart</span>
+									<div class="qty">0</div>
+								</a>
+							</c:otherwise>
+						</c:choose>
 						<div class="cart-dropdown">
 							<div class="cart-list">
 								<div class="product-widget">

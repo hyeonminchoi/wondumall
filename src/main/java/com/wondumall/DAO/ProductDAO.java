@@ -36,4 +36,12 @@ public class ProductDAO {
 	public void cartAdd(CartDTO dto) {
 		sqlSession.insert("product.cartAdd", dto);
 	}
+
+	public List<CartDTO> cartAdd(int u_no) {
+		return sqlSession.selectList("product.cart", u_no);
+	}
+
+	public int cartCount(int u_no) {
+		return sqlSession.selectOne("product.cartCount", u_no);
+	}
 }
