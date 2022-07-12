@@ -128,7 +128,7 @@
 				<ul class="main-nav nav navbar-nav" id="nav">
 					<li><a href="./notice.do">공지사항</a></li>
 					<li><a href="./board.do">자유게시판</a></li>
-					<li><a href="#">질문게시판</a></li>
+					<li><a href="./question.do">질문게시판</a></li>
 					<li><a href="#">자주묻는질문</a></li>
 					<li><a href="#">실시간문의</a></li>
 				</ul>

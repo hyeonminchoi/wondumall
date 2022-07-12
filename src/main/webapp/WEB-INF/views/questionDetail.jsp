@@ -65,7 +65,7 @@
 	margin-bottom: 10px;
 }
 
-#cwriteform, #ceditform {
+#awriteform, #aeditform {
 	width: 100%;
 	height: 170px;
 	background-color: #c1c1c1;
@@ -73,7 +73,7 @@
 	margin-bottom: 10px;
 }
 
-#cwriteform textarea, #ceditform textarea {
+#awriteform textarea, #aeditform textarea {
 	width: calc(100% - 85px);
 	height: 150px;
 	margin-right: -3px;
@@ -83,7 +83,7 @@
 	resize: none;
 }
 
-#cwriteform button, #ceditform button {
+#awriteform button, #aeditform button {
 	vertical-align: middle;
 	width: 80px;
 	height: 150px;
@@ -92,7 +92,7 @@
 	background-color: black;
 	color: white;
 }
-#noticeComment{
+#answer{
 	width: 100%;
 }
 pre{
@@ -119,20 +119,20 @@ label:hover{
 }
 </style>
 <script type="text/javascript">
-	function notice() {
+	function answer() {
 		if(${not empty param.searchColumn} && ${not empty param.searchValue}){
-			location.href = "./notice.do?pageNo=" + ${pageNo} + "&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
+			location.href = "./question.do?pageNo=" + ${pageNo} + "&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
 		} else{
-			location.href = "./notice.do?pageNo=" + ${pageNo};
+			location.href = "./question.do?pageNo=" + ${pageNo};
 		}
 	}
 	
-	function noticeDelete(){
-		if(confirm("ê³µì??‚¬?•­?„ ?‚­? œ?•˜ê² ìŠµ?‹ˆê¹??")){
+	function questionDelete(){
+		if(confirm("ì§ˆë¬¸ì„ ì‚­ì œí•˜ê² ìŠµë‹ˆê¹Œ?")){
 			if(${not empty param.searchColumn} && ${not empty param.searchValue}){
-				location.href = "./noticeDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
+				location.href = "./questionDelete.do?pageNo=" + ${pageNo} + "&q_no=${detail.q_no}&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
 			} else{
-				location.href = "./noticeDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}";
+				location.href = "./questionDelete.do?pageNo=" + ${pageNo} + "&q_no=${detail.q_no}";
 			}
 		}
 	}
@@ -143,7 +143,7 @@ label:hover{
 		$.ajax({
 			data : form_data,
 			type : "POST",
-			url : './noticeImage.do',
+			url : './answerImage.do',
 			cache : false,
 			contentType : false,
 			enctype : 'multipart/form-data',
@@ -156,80 +156,59 @@ label:hover{
 		});
 	}
 	
-	//?Œ“ê¸? ê¸???ˆ˜ ? œ?•œ
-	$(document).on("input","#nc_comment",function(){
+	//ë‹µë³€ ê¸€ììˆ˜ ì œí•œ
+	$(document).on("input","#answer",function(){
 		if($(this).val().length>=300){
 			$(this).val($(this).val().substring(0,300));
-			$("#commentCount").html("?Œ“ê¸??“°ê¸?<br>(300/300)");
-			$("#commentCount1").html("?Œ“ê¸??ˆ˜? •<br>(300/300)");
+			$("#answerCount").html("ë‹µë³€ì“°ê¸°<br>(300/300)");
+			$("#answerCount1").html("ë‹µë³€ìˆ˜ì •<br>(300/300)");
 			return;
 		}
-		$("#commentCount").html("?Œ“ê¸??“°ê¸?<br>(" + $(this).val().length + "/300)");
-		$("#commentCount1").html("?Œ“ê¸??ˆ˜? •<br>(" + $(this).val().length + "/300)");
+		$("#answerCount").html("ë‹µë³€ì“°ê¸°<br>(" + $(this).val().length + "/300)");
+		$("#answerCount1").html("ë‹µë³€ìˆ˜ì •<br>(" + $(this).val().length + "/300)");
 	});
 </script>
 
-<c:if test="${user ne 'anonymousUser'}">
+<sec:authorize access="hasRole('ROLE_ADMIN')">
 <script>
 
-function noticeLike(u_nickname){
-	$.ajax({
-		  type: 'post',
-		  url: './noticeLikeAjax.do',
-		  data:{
-			  "n_no" : ${detail.n_no},
-			  "u_nickname":u_nickname},
-		  dataType: 'json',
-		  success: function(map){
-			  if(map.result == 0){
-			  	$('#noticeLikeImg').html(map.count + ' <i class="fa fa-heart" aria-hidden="true" onclick="noticeLike(\'${user.nickname}\')"></i>');
-			  } else{
-				$('#noticeLikeImg').html(map.count + ' <i class="fa fa-heart-o" aria-hidden="true" onclick="noticeLike(\'${user.nickname}\')"></i>');
-			  }
-		  },
-		  error: function(error){
-			  console.log(error);
-		  }
-	})
-}
-
-function noticeCommentDelete(nc_no){
-	if(confirm("?Œ“ê¸??„ ?‚­? œ?•˜ê² ìŠµ?‹ˆê¹??")){
+function answerDelete(a_no){
+	if(confirm("ë‹µë³€ì„ ì‚­ì œí•˜ê² ìŠµë‹ˆê¹Œ?")){
 		if(${not empty param.searchColumn} && ${not empty param.searchValue}){
-			location.href = "./noticeCommentDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}&nc_no=" + nc_no + "&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
+			location.href = "./answerDelete.do?pageNo=" + ${pageNo} + "&q_no=${detail.q_no}&a_no=" + a_no + "&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
 		} else{
-			location.href = "./noticeCommentDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}&nc_no=" + nc_no;
+			location.href = "./answerDelete.do?pageNo=" + ${pageNo} + "&q_no=${detail.q_no}&a_no=" + a_no;
 		}
 	}
 }
 
-function noticeCommentEdit(nc_no, nc_comment){
-	if(confirm("?Œ“ê¸??„ ?ˆ˜? •?•˜ê² ìŠµ?‹ˆê¹??")){
-		var oldComment = nc_comment.trim();
+function answerEdit(a_no, answer){
+	if(confirm("ë‹µë³€ì„ ìˆ˜ì •í•˜ê² ìŠµë‹ˆê¹Œ?")){
+		var oldComment = answer.trim();
 		var temp = ''; 
-		temp += '<div id="ceditform">'
-		temp += '<form action="./noticeCommentEdit.do" method="post">';
-		temp += '<input type="hidden" name="n_no" value="${detail.n_no }">'
-		temp += '<input type="hidden" name="nc_no" value="' + nc_no + '">'
-		temp += '<textarea name="nc_comment" id="nc_comment" required>' + nc_comment +'</textarea>'
+		temp += '<div id="aeditform">'
+		temp += '<form action="./answerEdit.do" method="post">';
+		temp += '<input type="hidden" name="q_no" value="${detail.q_no }">'
+		temp += '<input type="hidden" name="a_no" value="' + a_no + '">'
+		temp += '<textarea name="a_answer" id="a_answer" required>' + answer +'</textarea>'
 		temp += '<input type="hidden" name="pageNo" value="${pageNo }">'
 		temp += '<c:if test="${not empty param.searchColumn && not empty param.searchValue}">'
 		temp += '<input type="hidden" name="searchColumn" value="${param.searchColumn }">'
 		temp += '<input type="hidden" name="searchValue" value="${param.searchValue }">'
 		temp += '</c:if>'
 		temp += '<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">'
-		temp += '<button type="submit" id="commentCount1">?Œ“ê¸??ˆ˜? •<br>(' + nc_comment.length + '/300)</button>'
+		temp += '<button type="submit" id="answerCount1">ë‹µë³€ìˆ˜ì •<br>(' + answer.length + '/300)</button>'
 		temp += '</form>'
 		temp += '</div>'
-		$('#commentList').empty().html(temp);
-		$(".commentEdit").remove();
-		$(".commentDelete").remove();
-		$('#noticeComment').remove();
-		$("#cwriteform").remove();
+		$('#answerList').empty().html(temp);
+		$(".answerEdit").remove();
+		$(".answerDelete").remove();
+		$('#answer').remove();
+		$("#awriteform").remove();
 	}
 }
 </script>
-</c:if>
+</sec:authorize>
 </head>
 <body>
 	<!-- HEADER -->
@@ -245,11 +224,11 @@ function noticeCommentEdit(nc_no, nc_comment){
 			<div id="responsive-nav">
 				<!-- NAV -->
 				<ul class="main-nav nav navbar-nav" id="nav">
-					<li><a href="./notice.do">ê³µì??‚¬?•­</a></li>
-					<li><a href="./board.do">??œ ê²Œì‹œ?Œ</a></li>
-					<li><a href="./question.do">ì§ˆë¬¸ê²Œì‹œ?Œ</a></li>
-					<li><a href="#">?ì£¼ë¬»?Š”ì§ˆë¬¸</a></li>
-					<li><a href="#">?‹¤?‹œê°„ë¬¸?˜</a></li>
+					<li><a href="./notice.do">ê³µì§€ì‚¬í•­</a></li>
+					<li><a href="./board.do">ììœ ê²Œì‹œíŒ</a></li>
+					<li><a href="./question.do">ì§ˆë¬¸ê²Œì‹œíŒ</a></li>
+					<li><a href="#">ìì£¼ë¬»ëŠ”ì§ˆë¬¸</a></li>
+					<li><a href="#">ì‹¤ì‹œê°„ë¬¸ì˜</a></li>
 				</ul>
 				<!-- /NAV -->
 			</div>
@@ -262,68 +241,48 @@ function noticeCommentEdit(nc_no, nc_comment){
 		<!-- container -->
 		<div class="container">
 			<div id="back">
-				<label onclick="notice()"><i class="fa fa-arrow-left" aria-hidden="true"></i>?’¤ë¡œê?ê¸?</label>
+				<label onclick="answer()"><i class="fa fa-arrow-left" aria-hidden="true"></i>ë’¤ë¡œê°€ê¸°</label>
 				<sec:authorize access="authenticated">
-					<sec:authorize access="hasRole('ROLE_ADMIN') || principal != null && principal.nickname == '${detail.u_nickname }' ">
-						<label onclick="showNoticeEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>?ˆ˜? •</label>
+					<sec:authorize access="principal.nickname == '${detail.u_nickname }' ">
+						<label onclick="showQuestionEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>ìˆ˜ì •</label>
 					</sec:authorize>
-					<sec:authorize access="hasRole('ROLE_ADMIN')">
-						<label onclick="noticeDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i>?‚­? œ</label>
+					<sec:authorize access="hasRole('ROLE_ADMIN') || principal.nickname == '${detail.u_nickname }' ">
+						<label onclick="questionDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i>ì‚­ì œ</label>
 					</sec:authorize>
 				</sec:authorize>
 			</div>
 			<table class="table table-bordered">
 				<tr>
 					<th>ë²ˆí˜¸</th>
-					<td>${detail.n_no }</td>
+					<td>${detail.q_no }</td>
 				</tr>
 				<tr>
-					<th>? œëª?</th>
-					<td>${detail.n_title }</td>
+					<th>ì œëª©</th>
+					<td>${detail.q_title }</td>
 				</tr>
 				<tr>
-					<th>ê¸??“´?´</th>
+					<th>ê¸€ì“´ì´</th>
 					<td>${detail.u_nickname }</td>
 				</tr>
 				<tr>
-					<th>?‘?„±?¼</th>
-					<fmt:parseDate value="${detail.n_date}" var="time"
+					<th>ì‘ì„±ì¼</th>
+					<fmt:parseDate value="${detail.q_date}" var="time"
 						pattern="yyyy-MM-dd HH:mm:ss.S" />
 					<fmt:formatDate value="${time}" var="time"
 						pattern="yyyy-MM-dd HH:mm:ss" />
 					<td>${time }</td>
 				</tr>
 				<tr>
-					<th>ì¡°íšŒ?ˆ˜</th>
-					<td>${detail.n_count }</td>
+					<th>ë‚´ìš©</th>
+					<td>${detail.q_content }</td>
 				</tr>
 				<tr>
-					<th>ì¢‹ì•„?š”</th>
-					<td id="noticeLikeImg">
-						${detail.n_like }
-						<c:if test="${user ne 'anonymousUser'}">
-							<c:choose>
-								<c:when test="${not empty likeStatus and likeStatus == true }">
-									<i class="fa fa-heart" aria-hidden="true" onclick="noticeLike('${user.nickname}')"></i>
-								</c:when>
-								<c:otherwise>
-									<i class="fa fa-heart-o" aria-hidden="true" onclick="noticeLike('${user.nickname}')"></i>
-								</c:otherwise>
-							</c:choose>
-						</c:if>
-					</td>
-				</tr>
-				<tr>
-					<th>?‚´?š©</th>
-					<td>${detail.n_content }</td>
-				</tr>
-				<tr>
-					<th style="vertical-align: middle;">?Œ“ê¸?</th>
+					<th style="vertical-align: middle;">ë‹µë³€</th>
 					<td><sec:authorize access="authenticated">
-							<div id="cwriteform">
-								<form action="./noticeComment.do" method="post">
-									<input type="hidden" name="n_no" value="${detail.n_no }">
-									<textarea name="nc_comment" id="nc_comment" required></textarea>
+							<div id="awriteform">
+								<form action="./answer.do" method="post">
+									<input type="hidden" name="q_no" value="${detail.q_no }">
+									<textarea name="a_answer" id="a_answer" required></textarea>
 									<input type="hidden" name="pageNo" value="${pageNo }">
 									<c:if
 										test="${not empty param.searchColumn && not empty param.searchValue}">
@@ -334,26 +293,26 @@ function noticeCommentEdit(nc_no, nc_comment){
 									</c:if>
 									<input type="hidden" name="u_nickname"
 										value="<sec:authentication property="principal.nickname" />">
-									<button type="submit" id="commentCount">?Œ“ê¸??“°ê¸?<br>(0/300)</button>
+									<button type="submit" id="answerCount">ë‹µë³€ì“°ê¸°<br>(0/300)</button>
 								</form>
 							</div>
 						</sec:authorize> <c:choose>
-							<c:when test="${fn:length(commentList) gt 0 }">
-								<c:forEach var="c" items="${commentList }">
-									<div id="commentList">
-										<fmt:parseDate value="${c.nc_date}" var="time"
+							<c:when test="${fn:length(answerList) gt 0 }">
+								<c:forEach var="a" items="${answerList }">
+									<div id="answerList">
+										<fmt:parseDate value="${a.a_date}" var="time"
 											pattern="yyyy-MM-dd HH:mm:ss.S" />
 										<fmt:formatDate value="${time}" var="time"
 											pattern="yyyy-MM-dd HH:mm:ss" />
-										<strong>${c.u_nickname }</strong> / ${time } <c:if test="${user ne 'anonymousUser' and user.nickname eq c.u_nickname }">
-											<i class="fa fa-pencil commentEdit" aria-hidden="true" onclick="noticeCommentEdit(${c.nc_no}, '${c.nc_comment }')"></i><i class="fa fa-trash-o commentDelete" aria-hidden="true" onclick="noticeCommentDelete(${c.nc_no})"></i>
+										<strong>${a.u_nickname }</strong> / ${time } <c:if test="${user ne 'anonymousUser' and user.nickname eq a.u_nickname }">
+											<i class="fa fa-pencil answerEdit" aria-hidden="true" onclick="answerEdit(${a.a_no}, '${a.a_answer }')"></i><i class="fa fa-trash-o answerDelete" aria-hidden="true" onclick="answerDelete(${a.a_no})"></i>
 										</c:if>
 									</div>
-									<div id="noticeComment"><pre>${c.nc_comment }</pre></div>
+									<div id="answer"><pre>${a.a_answer }</pre></div>
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
-								?Œ“ê¸??´ ?—†?Šµ?‹ˆ?‹¤.
+								ë‹µë³€ì´ ì—†ìŠµë‹ˆë‹¤.
 							</c:otherwise>
 						</c:choose></td>
 				</tr>
@@ -369,26 +328,25 @@ function noticeCommentEdit(nc_no, nc_comment){
 	</footer>
 	<!-- /FOOTER -->
 
-
-	<sec:authorize access="hasRole('ROLE_ADMIN')">
-		<dialog id="noticeEditDialog">
+<sec:authorize access="authenticated">
+	<dialog id="questionEditDialog">
 		<div>
-			<form action="./noticeEdit.do" method="post">
+			<form action="./questionEdit.do" method="post">
 				<div style="padding-bottom: 10px;">
 					<h2>
-						<label>? œëª?</label>
+						<label>ì œëª©</label>
 					</h2>
-					<input style="width: 100%;" type="text" name="n_title"
-						value="${detail.n_title }" required>
+					<input style="width: 100%;" type="text" name="q_title"
+						value="${detail.q_title }" required>
 				</div>
 				<div style="padding-bottom: 10px;">
 					<h4>
-						<label>?‚´?š©</label>
+						<label>ë‚´ìš©</label>
 					</h4>
-					<textarea id="summernote" name="n_content" required><c:out value="${detail.n_content}" /></textarea>
+					<textarea id="summernote" name="q_content" required><c:out value="${detail.q_content}" /></textarea>
 				</div>
 				<input type="hidden" name="pageNo" value="${pageNo }"> <input
-					type="hidden" name="n_no" value="${detail.n_no }">
+					type="hidden" name="q_no" value="${detail.q_no }">
 				<c:if
 					test="${not empty param.searchColumn && not empty param.searchValue}">
 					<input type="hidden" name="searchColumn"
@@ -399,38 +357,38 @@ function noticeCommentEdit(nc_no, nc_comment){
 				<input type="hidden" name="u_nickname"
 					value="<sec:authentication property="principal.nickname" />">
 				<div>
-					<button type="submit">?ˆ˜? •</button>
-					<button type="button" onclick="hideNoticeEditDialog()">?‹«ê¸?</button>
+					<button type="submit">ìˆ˜ì •</button>
+					<button type="button" onclick="hideQuestionEditDialog()">ë‹«ê¸°</button>
 				</div>
 			</form>
 		</div>
-		</dialog>
+	</dialog>
 
-		<script>
-
-var noticeEditDialog = document.getElementById('noticeEditDialog');
-
-function showNoticeEditDialog(){
-	noticeEditDialog.showModal();
-}
-function hideNoticeEditDialog(){
-	noticeEditDialog.close();
-}
-
-$(document).ready(function() {
-	  $('#summernote').summernote({
-		  height: 400,
-		  callbacks : {
-				onImageUpload : function(files, editor, welEditable) {       
-					for (var i = 0; i < files.length; i++) {
-						sendFile(files[i], this);
+	<script>
+	
+	var questionEditDialog = document.getElementById('questionEditDialog');
+	
+	function showQuestionEditDialog(){
+		questionEditDialog.showModal();
+	}
+	function hideQuestionEditDialog(){
+		questionEditDialog.close();
+	}
+	$(document).ready(function() {
+		  $('#summernote').summernote({
+			  height: 400,
+			  callbacks : {
+					onImageUpload : function(files, editor, welEditable) {       
+						for (var i = 0; i < files.length; i++) {
+							sendFile(files[i], this);
+						}
 					}
 				}
-			}
-	  });
-});
-
-</script>
-	</sec:authorize>
+		  });
+	});
+	
+	
+	</script>
+</sec:authorize>
 </body>
 </html>

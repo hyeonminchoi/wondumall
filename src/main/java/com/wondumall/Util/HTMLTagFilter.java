@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.egovframe.rte.ptl.mvc.filter.HTMLTagFilterRequestWrapper;
 
-
 public class HTMLTagFilter implements Filter {
 
 	@SuppressWarnings("unused")
@@ -21,12 +20,11 @@ public class HTMLTagFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
-        if(checkUrl(req)){
-            chain.doFilter(request, response);
-        }
-        else {
-            chain.doFilter(new HTMLTagFilterRequestWrapper((HttpServletRequest)request),            response);
-        }
+		if (checkUrl(req)) {
+			chain.doFilter(request, response);
+		} else {
+			chain.doFilter(new HTMLTagFilterRequestWrapper((HttpServletRequest) request), response);
+		}
 	}
 
 	public void init(FilterConfig config) throws ServletException {
@@ -36,14 +34,15 @@ public class HTMLTagFilter implements Filter {
 	public void destroy() {
 
 	}
-	
+
 	private boolean checkUrl(HttpServletRequest req) {
-        String uri = req.getRequestURI().toString().trim();
-        if(uri.startsWith("//noticeWrite.do") || uri.startsWith("//noticeEdit.do") || uri.startsWith("//boardWrite.do") || uri.startsWith("//boardEdit.do")){
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+		String uri = req.getRequestURI().toString().trim();
+		if (uri.startsWith("//noticeWrite.do") || uri.startsWith("//noticeEdit.do")
+				|| uri.startsWith("//boardWrite.do") || uri.startsWith("//boardEdit.do")
+				|| uri.startsWith("//questionWrite.do") || uri.startsWith("//questionEdit.do")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

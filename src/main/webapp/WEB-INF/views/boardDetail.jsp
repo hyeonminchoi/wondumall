@@ -169,7 +169,7 @@ label:hover{
 	});
 </script>
 
-<c:if test="${user ne 'anonymousUser'}">
+<sec:authorize access="authenticated">
 <script>
 
 function boardLike(u_nickname){
@@ -229,7 +229,7 @@ function boardCommentEdit(c_no, c_comment){
 	}
 }
 </script>
-</c:if>
+</sec:authorize>
 </head>
 <body>
 	<!-- HEADER -->
@@ -247,7 +247,7 @@ function boardCommentEdit(c_no, c_comment){
 				<ul class="main-nav nav navbar-nav" id="nav">
 					<li><a href="./notice.do">공지사항</a></li>
 					<li><a href="./board.do">자유게시판</a></li>
-					<li><a href="#">질문게시판</a></li>
+					<li><a href="./question.do">질문게시판</a></li>
 					<li><a href="#">자주묻는질문</a></li>
 					<li><a href="#">실시간문의</a></li>
 				</ul>
