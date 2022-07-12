@@ -18,4 +18,19 @@ public class AdminDAO {
 
 		return sqlSession.selectList("admin.productList");
 	}
+
+	public void del(int p_no) {
+		
+		sqlSession.update("admin.del", p_no);
+	}
+
+	public void pdelete(int p_no) {
+		
+		sqlSession.delete("admin.pdelete", p_no);
+	}
+
+	public void admission(int p_no) {
+		
+		sqlSession.update("admin.admission", p_no);
+	}
 }

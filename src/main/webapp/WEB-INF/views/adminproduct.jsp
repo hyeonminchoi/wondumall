@@ -42,6 +42,7 @@
 						<th scope="col">제품가격</th>
 						<th scope="col">등록날짜</th>
 						<th scope="col">승인여부</th>
+						<th scope="col">삭제여부</th>
 						<th scope="col">삭제</th>
 						<th scope="col">완전삭제</th>
 						<th scope="col">승인</th>
@@ -55,9 +56,10 @@
 							<td>${p.p_price }</td>
 							<td>${p.p_date }</td>
 							<td>${p.p_confirm }</td>
-							<td><button onclick="del()">삭제</button></td>
-							<td><button onclick="pdelete()">완전삭제</button></td>
-							<td><button onclick="admission()">승인</button></td>
+							<td>${p.p_del }</td>
+							<td><button onclick="del(${p.p_no})">삭제</button></td>
+							<td><button onclick="pdelete(${p.p_no})">완전삭제</button></td>
+							<td><button onclick="admission(${p.p_no})">승인</button></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -80,24 +82,23 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-function del(){
-	if (window.confirm("삭제하시겠습니까?")){
-		
+function del(p_no){
+	if (confirm("삭제하시겠습니까?")){
+		location.href = "./del/" + p_no;
 	} else {
 		
 	}
-	
 }
-function pdelete(){
-	if (window.confirm("삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?")){
-		
+function pdelete(p_no){
+	if (confirm("삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?")){
+		location.href = "./pdelete/" + p_no;
 	} else {
 		
 	}	
 }
-function admission(){
-	if (window.confirm("승인하시겠습니까?");){
-		
+function admission(p_no){
+	if (confirm("승인하시겠습니까?")){
+		location.href = "./admission/" + p_no;
 	} else {
 		
 	}

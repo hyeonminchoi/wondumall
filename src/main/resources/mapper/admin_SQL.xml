@@ -4,6 +4,15 @@
 
 <mapper namespace="admin">
 	<select id="productList" resultType="productDTO">
-		SELECT * FROM product LIMIT 0,20
+		SELECT * FROM product
 	</select>
+	<update id="del" parameterType="productDTO">
+		UPDATE product SET p_del=1 WHERE p_no=#{p_no}
+	</update>
+	<delete id="pdelete" parameterType="productDTO">
+		DELETE FROM product WHERE p_no=#{p_no}
+	</delete>
+	<update id="admission" parameterType="productDTO">
+		UPDATE product SET p_confirm=1 WHERE p_no=#{p_no}
+	</update>
 </mapper>
