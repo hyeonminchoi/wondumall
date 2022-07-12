@@ -28,4 +28,14 @@
 		INSERT INTO cart (p_no, u_no, p_count)
 		VALUES (#{p_no}, #{u_no}, #{p_count})
 	</insert>
+	<select id="cart" parameterType="integer" resultType="cartDTO">
+		SELECT *
+		FROM cart
+		WHERE u_no = #{u_no}
+	</select>
+	<select id="cartCount" parameterType="integer" resultType="integer">
+		SELECT COUNT(*)
+		FROM cart
+		WHERE u_no = #{u_no}
+	</select>
 </mapper>

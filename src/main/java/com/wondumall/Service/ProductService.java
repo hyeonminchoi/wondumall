@@ -36,4 +36,12 @@ public class ProductService {
 	public void cartAdd(CartDTO dto) {
 		productDAO.cartAdd(dto);
 	}
+
+	public List<CartDTO> cart(int u_no) {
+		return productDAO.cartAdd(u_no);
+	}
+
+	public int cartCount(int u_no) {
+		return productDAO.cartCount(u_no);
+	}
 }

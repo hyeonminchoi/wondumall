@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -41,6 +42,26 @@ public class ProductController {
 	
 	@Autowired
 	private ServletContext servletContext;
+	
+	@GetMapping(value = "/cart.do")
+	public ModelAndView cart(@RequestParam(name = "u_no", required = false, defaultValue = "-1") int u_no) {
+		ModelAndView mv = new ModelAndView("cart");
+		if(u_no ==-1) {
+			mv.addObject("cart", 0);
+		} else {
+			List<CartDTO> cart = productService.cart(u_no);
+			mv.addObject("cart", cart);
+		}
+		return mv;
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/cartCount.do")
+	public int cartHeader(@RequestParam("u_no") int u_no) {
+		int count = productService.cartCount(u_no);
+		
+		return count;
+	}
 	
 	@PostMapping(value = "/cartAdd.do")
 	public String cartAdd(HttpServletRequest request, CartDTO dto,@AuthenticationPrincipal MyUserDetails myUserDetails) {

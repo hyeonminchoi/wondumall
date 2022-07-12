@@ -82,6 +82,10 @@
 					
 					Cart Test
 					
+					${cart}
+					
+					
+					
 				</div>
 				<!-- /row -->
 			</div>
