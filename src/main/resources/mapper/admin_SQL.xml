@@ -3,8 +3,8 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="admin">
-	<select id="productList" resultType="productDTO">
-		SELECT * FROM product
+	<select id="productList" resultType="productDTO" parameterType="pageDTO">
+		SELECT * FROM productview LIMIT #{startPage}, #{lastPage}
 	</select>
 	<update id="del" parameterType="productDTO">
 		UPDATE product SET p_del=1 WHERE p_no=#{p_no}
@@ -15,4 +15,14 @@
 	<update id="admission" parameterType="productDTO">
 		UPDATE product SET p_confirm=1 WHERE p_no=#{p_no}
 	</update>
+	<update id="repair" parameterType="productDTO">
+		UPDATE product SET p_del=0 WHERE p_no=#{p_no}
+	</update>
+	<update id="adcancel" parameterType="productDTO">
+		UPDATE product SET p_confirm=0 WHERE p_no=#{p_no}
+	</update>
+	<select id="getCount" parameterType="integer" resultType="integer">
+		SELECT count(*) AS count
+		FROM product
+	</select>
 </mapper>

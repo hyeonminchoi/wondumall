@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,6 +40,7 @@
 					<tr>
 						<th scope="col">#</th>
 						<th scope="col">제품이름</th>
+						<th scope="col">작성자</th>
 						<th scope="col">제품가격</th>
 						<th scope="col">등록날짜</th>
 						<th scope="col">승인여부</th>
@@ -53,17 +55,33 @@
 						<tr>
 							<th scope='row'>${p.p_no }</th>
 							<td>${p.p_name }</td>
+							<td>${p.u_name }</td>
 							<td>${p.p_price }</td>
 							<td>${p.p_date }</td>
 							<td>${p.p_confirm }</td>
 							<td>${p.p_del }</td>
-							<td><button onclick="del(${p.p_no})">삭제</button></td>
+							<td>
+							<button onclick="del(${p.p_no})">삭제</button>
+							<button onclick="repair(${p.p_no})">복구</button>
+							</td>
 							<td><button onclick="pdelete(${p.p_no})">완전삭제</button></td>
-							<td><button onclick="admission(${p.p_no})">승인</button></td>
+							<td>
+							<button onclick="admission(${p.p_no})">승인</button>
+							<button onclick="adcancel(${p.p_no})">취소</button>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
+			
+			<div id="pagination" style="text-align: center;">
+				<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
+			</div>
+			
+			<div id="search" style="margin: 0 auto; text-align: center; display: block;">
+				<input type="text" name="searchValue" value="${searchValue}">
+				<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
+			</div>
 		</div>
 	</div>
 	
@@ -89,6 +107,13 @@ function del(p_no){
 		
 	}
 }
+function repair(p_no){
+	if (confirm("복구하시겠습니까?")){
+		location.href = "./repair/" + p_no;
+	} else {
+		
+	}
+}
 function pdelete(p_no){
 	if (confirm("삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?")){
 		location.href = "./pdelete/" + p_no;
@@ -102,6 +127,16 @@ function admission(p_no){
 	} else {
 		
 	}
+}
+function adcancel(p_no){
+	if (confirm("승인을 취소하시겠습니까?")){
+		location.href = "./adcancel/" + p_no;
+	} else {
+		
+	}
+}
+function linkPage(pageNo) {
+	location.href = "./adminproduct.do?pageNo=" + pageNo;
 }
 </script>
 </body>
