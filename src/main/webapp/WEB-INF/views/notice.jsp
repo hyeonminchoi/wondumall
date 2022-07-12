@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
@@ -172,7 +173,11 @@
 							<td>${n.u_nickname }</td>
 							<td>${n.n_count }</td>
 							<td>${n.n_like }</td>
-							<td>${n.n_date }</td>
+							<fmt:parseDate value="${n.n_date}" var="time"
+								pattern="yyyy-MM-dd HH:mm:ss.S" />
+							<fmt:formatDate value="${time}" var="time"
+								pattern="yyyy-MM-dd HH:mm:ss" />
+							<td>${time }</td>
 						</tr>
 					</c:forEach>
 				</tbody>
