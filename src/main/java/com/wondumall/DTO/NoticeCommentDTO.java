@@ -14,4 +14,5 @@ public class NoticeCommentDTO {
 	
 	@NonNull
 	private String nc_comment, u_nickname;
+	
 }
