@@ -1,5 +1,6 @@
 package com..Service;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,19 @@ public class LoginService {
 		dto.setU_pw(passwordEncoder.encode(dto.getU_pw()));
 		return loginDAO.join(dto);
 	}
+
+	public int emailCheck(String email) {
+		return loginDAO.emailCheck(email);
+	}
+
+	public int nicknameCheck(String nickname) {
+		return loginDAO.nicknameCheck(nickname);
+	}
+
+		
+		
+	
+	
+	
 
 }

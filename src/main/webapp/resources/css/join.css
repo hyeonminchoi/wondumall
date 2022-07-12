@@ -20,6 +20,15 @@ body {
   /* transform: translate(-50%,-50%); */
   border-radius: 15px;
 }
+.email_ok, .nickname_ok {
+color:#008000;
+display: none;
+}
+
+.email_already, .nickname_already {
+color:#6A82FB; 
+display: none;
+}
 
 .joinForm h2 {
   text-align: center;
@@ -34,7 +43,7 @@ body {
 
 
 .email, .pw, .name, .nickname, 
-.roadAddress, .detailAddress, .postcode {
+.roadAddress, .detailAddress, .postcode  {
   width: 100%;
   border:none;
   outline:none;

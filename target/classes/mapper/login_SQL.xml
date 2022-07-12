@@ -4,8 +4,8 @@
 
 <mapper namespace="login">
 	<insert id="join" parameterType="loginDTO">
-		INSERT INTO user(u_email, u_pw, u_name, u_postcode, u_roadAddress, u_detailAddress, u_extraAddress, u_nickname)
-		VALUES(#{u_email}, #{u_pw}, #{u_name}, #{u_postcode}, #{u_roadAddress}, #{u_detailAddress}, #{u_extraAddress}, #{u_nickname})
+		INSERT INTO user(u_email, u_pw, u_name, u_postcode, u_roadAddress, u_detailAddress, u_extraAddress, u_nickname, u_tel)
+		VALUES(#{u_email}, #{u_pw}, #{u_name}, #{u_postcode}, #{u_roadAddress}, #{u_detailAddress}, #{u_extraAddress}, #{u_nickname}, #{u_tel} )
 	</insert>
 	
 	<select id="login" parameterType="loginDTO" resultType="loginDTO">
@@ -14,5 +14,11 @@
 	
 	<select id="findByUserid" parameterType="loginDTO" resultType="loginDTO">
 		SELECT * FROM user WHERE u_email = #{u_email} AND u_confirm = 1 AND u_resign = 0 AND u_provider = #{u_provider}
+	</select>
+	<select id="emailCheck" parameterType="string" resultType="integer">
+		SELECT COUNT(*) FROM user WHERE u_email=#{u_email} AND u_provider=""
+	</select>
+	<select id="nicknameCheck" parameterType="string" resultType="integer">
+		SELECT COUNT(*) FROM user WHERE u_nickname=#{u_nickname} AND u_provider=""
 	</select>
 </mapper>

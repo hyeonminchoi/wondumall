@@ -23,4 +23,12 @@ public class LoginDAO {
 		return sqlSession.selectOne("login.findByUserid", user);
 	}
 
+	public int emailCheck(String email) {
+		return sqlSession.selectOne("login.emailCheck", email);
+	}
+
+	public int nicknameCheck(String nickname) {
+		return sqlSession.selectOne("login.nicknameCheck", nickname);
+	}
+
 }

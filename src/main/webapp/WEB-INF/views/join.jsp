@@ -60,40 +60,50 @@
 
 				<h2>회원가입</h2>
 				<div class="textForm">
-					<input name="u_email" id="email" type="email" class="email" placeholder="아이디(이메일 형식)" />
-					
+					<input autocomplete="off" name="u_email" id="email" minlength="6" type="email" required="required" class="email" placeholder="아이디(이메일 형식)" oninput = "checkemail()" />
+				</div>				
+				<!-- email ajax 중복체크 -->
+				<span class="email_ok" >사용 가능한 이메일 입니다.</span>
+				<span class="email_already">사용중인 이메일 입니다.</span>
+				
+				<div class="textForm">
+					<input autocomplete="off" name="u_pw" type="password" id="pw1" required="required" class="pw" placeholder="비밀번호">
 				</div>
 				<div class="textForm">
-					<input name="u_pw" type="password" id="pw1" class="pw" placeholder="비밀번호">
-				</div>
-				<div class="textForm">
-					<input name="loginPwConfirm" type="password" id="pw2" class="pw" placeholder="비밀번호 확인" onkeyup="passConfirm()">
+					<input autocomplete="off" name="loginPwConfirm" type="password" minlength="4" required="required" id="pw2" class="pw" placeholder="비밀번호 확인" onkeyup="passConfirm()">
 				</div>
 				<span id ="confirmMsg"></span>
 				
 				<div class="textForm">
-					<input name="u_name" type="text" class="name" placeholder="이름">
+					<input autocomplete="off" name="u_name" minlength="2" type="text" class="name" required="required" placeholder="이름">
 				</div>
 				<div class="textForm">
-					<input name="u_nickname" type="text" class="nickname" placeholder="닉네임">
+					<input autocomplete="off" name="u_tel" type="text" minlength="10" class="name" required="required" placeholder="핸드폰번호 ( - 없이 입력)">
 				</div>
+				<div class="textForm">
+					<input autocomplete="off" name="u_nickname" type="text" id="nickname" minlength="1" required="required" class="nickname" placeholder="닉네임" oninput = "checknickname()">
+				</div>
+				<!-- nickname ajax 중복체크 -->
+				<span class="nickname_ok" >사용 가능한 닉네임 입니다.</span>
+				<span class="nickname_already">사용중인 닉네임 입니다.</span>
+				
 				
 				<div>
 				
 				<div class="textForm">
-					<input type="text" id="sample6_postcode" class="postcode"  name="u_postcode" placeholder="우편번호" type="button" onclick="sample6_execDaumPostcode()" class="postbtn" value="우편번호 찾기 Click">
+					<input autocomplete="off" type="text" id="sample6_postcode" required="required" class="postcode"  name="u_postcode" placeholder="우편번호" type="button" onclick="sample6_execDaumPostcode()" class="postbtn" value="우편번호 찾기 Click">
 					<!-- <input type="button" onclick="sample6_execDaumPostcode()" class="postbtn" value="우편번호 찾기"> -->
 				</div> 
 
 
 				<div class="textForm">
-					<input type="text" id="sample6_address" class="roadAddress" name="u_roadAddress" placeholder="주소"><br>
+					<input autocomplete="off" type="text" id="sample6_address" required="required" class="roadAddress" name="u_roadAddress" placeholder="주소"><br>
 				</div>
 				<div class="textForm">
-					<input type="text" id="sample6_detailAddress" class="detailAddress" name="u_detailAddress" placeholder="상세주소">
+					<input autocomplete="off" type="text" id="sample6_detailAddress" required="required" class="detailAddress" name="u_detailAddress" placeholder="상세주소">
 				</div>
 				<div class="textForm">
-					<input type="text" id="sample6_extraAddress" class="roadAddress"  name="u_extraAddress" placeholder="참고항목">
+					<input autocomplete="off" type="text" id="sample6_extraAddress" class="roadAddress"  name="u_extraAddress" placeholder="참고항목">
 				</div>
 
 					<script
@@ -180,7 +190,7 @@
 		var confrimMsg = document.getElementById('confirmMsg');				//확인 메세지
 		var correctColor = "#228B22";	//맞았을 때 출력되는 색깔.
 		var wrongColor = "#FF00FF";	//틀렸을 때 출력되는 색깔
-		
+					
 		if(password.value == passwordConfirm.value){//password 변수의 값과 passwordConfirm 변수의 값과 동일하다.
 			confirmMsg.style.color = correctColor;/* span 태그의 ID(confirmMsg) 사용  */
 			confirmMsg.innerHTML ="비밀번호 일치";/* innerHTML : HTML 내부에 추가적인 내용을 넣을 때 사용하는 것. */
@@ -189,6 +199,67 @@
 			confirmMsg.innerHTML ="비밀번호 불일치";
 		}
 	}
+	
+	/* function passConfirm() {
+		
+	 	var pattern1 = /[0-9]/; //숫자
+		var pattern2 = /[a-zA-Z]/; //문자
+		var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/; //특수문자
+		var armColor = "#191970"
+		
+		if(!pattern1.test() || !pattern2.test() || !pattern3.test() || str.lenghth < 8) {
+			confirmMsg.style.color = armColor;
+			confirmMsg.innerHTML ="비밀번호는 8자리 이상 문자,숫자,특수문자로 구성하여야 합니다.";
+			return false;
+		}else{
+			return true;
+	}
+	}	 */
+	
+	 function checkemail(){
+		
+	     var id = $('#email').val(); //id값이 "id"인 입력란의 값을 저장
+	        $.ajax({
+	            url:'./emailCheck', //Controller에서 요청 받을 주소
+	            type:'post', //POST 방식으로 전달
+	            data:{email:id},
+	            success:function(result){ //컨트롤러에서 넘어온 cnt값을 받는다 
+	                if(result == 0){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디 
+	                    $('.email_ok').css("display","inline-block"); 
+	                    $('.email_already').css("display", "none");
+	                } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
+	                    $('.email_already').css("display","inline-block");
+	                    $('.email_ok').css("display", "none");
+	                    $('#emailchk').val('');
+	                }
+	            },
+	            error:function(){
+	                alert("에러입니다");
+	            }
+	        });
+	        }; 
+	        
+	        function checknickname(){
+		        var id = $('#nickname').val(); //id값이 "id"인 입력란의 값을 저장
+		        $.ajax({
+		            url:'./nicknameCheck', //Controller에서 요청 받을 주소
+		            type:'post', //POST 방식으로 전달
+		            data:{nickname:id},
+		            success:function(result){ //컨트롤러에서 넘어온 cnt값을 받는다 
+		                if(result == 0){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디 
+		                    $('.nickname_ok').css("display","inline-block"); 
+		                    $('.nickname_already').css("display", "none");
+		                } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
+		                    $('.nickname_already').css("display","inline-block");
+		                    $('.nickname_ok').css("display", "none");
+		                    $('#nicknamechk').val('');
+		                }
+		            },
+		            error:function(){
+		                alert("에러입니다");
+		            }
+		        });
+		        };
 </script>
 
 
