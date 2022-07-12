@@ -402,19 +402,19 @@
 								<div class="form-group row">
 									<label class="col-sm-3">리뷰 제목</label>
 									<div class="com-sm-3">
-										<input type="text" id="r_title" name="r_title" class="form-control">
+										<input type="text" id="r_title" name="r_title" class="form-control" required>
 									</div>
 								</div>
 								<div class="form-group row">
 									<label class="col-sm-3">리뷰 내용</label>
 									<div class="com-sm-5">
-										<textarea name="r_content" cols="50" rows="2" class="form-control"></textarea>
+										<textarea name="r_content" cols="50" rows="2" class="form-control" required></textarea>
 									</div>
 								</div>
 								<div class="form-group row">
 									<label class="col-sm-3">별점</label>
 									<div class="com-sm-5">
-										<input type="number" id="r_rating" name="r_rating" class="form-control">
+										<input type="number" id="r_rating" name="r_rating" class="form-control" required>
 									</div>
 								</div>
 								<!-- <div class="input-rating">

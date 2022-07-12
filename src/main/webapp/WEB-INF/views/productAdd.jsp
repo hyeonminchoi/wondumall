@@ -84,35 +84,35 @@
 				<div class="form-group row">
 					<label class="col-sm-3">상품 이름</label>
 					<div class="com-sm-3">
-						<input type="text" id="p_name" name="p_name" class="form-control">
+						<input type="text" id="p_name" name="p_name" class="form-control" required>
 					</div>
 				</div>
 
 				<div class="form-group row">
 					<label class="col-sm-3">분류 번호</label>
 					<div class="com-sm-3">
-						<input type="number" id="cate_no" name="cate_no" class="form-control">
+						<input type="number" id="cate_no" name="cate_no" class="form-control" required>
 					</div>
 				</div>
 
 				<div class="form-group row">
 					<label class="col-sm-3">상품 설명</label>
 					<div class="com-sm-5">
-						<textarea name="p_description" cols="50" rows="2" class="form-control"></textarea>
+						<textarea name="p_description" cols="50" rows="2" class="form-control" required></textarea>
 					</div>
 				</div>
 
 				<div class="form-group row">
 					<label class="col-sm-3">상품 가격</label>
 					<div class="com-sm-3">
-						<input type="text" id="unitPrice" name="p_price" class="form-control">
+						<input type="text" id="unitPrice" name="p_price" class="form-control" required>
 					</div>
 				</div>
 
 				<div class="form-group row">
 					<label class="col-sm-3">상품 수량</label>
 					<div class="com-sm-3">
-						<input type="number" id="p_stock" name="p_stock" class="form-control">
+						<input type="number" id="p_stock" name="p_stock" class="form-control" required>
 					</div>
 				</div>
 
@@ -124,7 +124,7 @@
 					</button> -->
 						<input 
 							type="file" name="files" class="form-control" 
-							accept=".png, .jpg, .gif, .jpeg, .ico" multiple="multiple"
+							accept=".png, .jpg, .gif, .jpeg, .ico" multiple="multiple" required
 						>
 					</div>
 				</div>
