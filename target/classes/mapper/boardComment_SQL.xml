@@ -1,0 +1,27 @@
+<?xml version="1.0"	encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"	
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boardComment">
+	<insert id="writeComment">
+		INSERT INTO board_comment(c_comment, u_no, b_no)
+		VALUES(#{c_comment}, (SELECT u_no FROM user WHERE u_nickname=#{u_nickname}), #{b_no})
+	</insert>
+
+	<select id="getCommentList" parameterType="integer" resultType="boardCommentDTO">
+		SELECT board_comment.*, user.u_nickname FROM board_comment
+		JOIN user ON user.u_no = board_comment.u_no
+		WHERE board_comment.b_no = #{b_no} AND board_comment.c_del = 0
+		ORDER BY board_comment.c_date DESC
+	</select>	
+	
+	<update id="delete" parameterType="boardCommentDTO">
+		UPDATE board_comment SET c_del = 1
+		WHERE b_no = #{b_no} AND c_no = #{c_no} AND u_no = (SELECT u_no FROM user WHERE u_nickname=#{u_nickname})
+	</update>
+	
+	<update id="edit" parameterType="boardCommentDTO">
+		UPDATE board_comment SET c_comment = #{c_comment}, c_date = current_timestamp()
+		WHERE b_no = #{b_no} AND c_no = #{c_no} AND u_no = (SELECT u_no FROM user WHERE u_nickname=#{u_nickname})
+	</update>
+</mapper>

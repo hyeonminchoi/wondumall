@@ -9,11 +9,11 @@
 		<typeAlias type="com..DTO.CartDTO" alias="cartDTO" />
 		<typeAlias type="com..DTO.CategoryDTO" alias="categoryDTO" />
 		<typeAlias type="com..DTO.ChatDTO" alias="chatDTO" />
-		<typeAlias type="com..DTO.CommentDTO" alias="commentDTO" />
+		<typeAlias type="com..DTO.BoardCommentDTO" alias="boardCommentDTO" />
 		<typeAlias type="com..DTO.CouponDTO" alias="couponDTO" />
 		<typeAlias type="com..DTO.FaqDTO" alias="faqDTO" />
 		<typeAlias type="com..DTO.NoticeDTO" alias="noticeDTO" />
-		<typeAlias type="com..DTO.NoticecommentDTO" alias="noticeCommentDTO" />
+		<typeAlias type="com..DTO.NoticeCommentDTO" alias="noticeCommentDTO" />
 		<typeAlias type="com..DTO.OrderDTO" alias="orderDTO" />
 		<typeAlias type="com..DTO.ProductDTO" alias="productDTO" />
 		<typeAlias type="com..DTO.QuestionDTO" alias="questionDTO" />
