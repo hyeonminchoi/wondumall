@@ -282,7 +282,13 @@ function noticeCommentEdit(nc_no, nc_comment){
 				</tr>
 				<tr>
 					<th>좋아요</th>
-					<td>${detail.n_like }</td>
+					<td>
+						${detail.n_like }
+						<c:if test="${user ne 'anonymousUser'}">
+							<i class="fa fa-heart" aria-hidden="true"></i>
+							<i class="fa fa-heart-o" aria-hidden="true"></i>
+						</c:if>
+					</td>
 				</tr>
 				<tr>
 					<th>내용</th>

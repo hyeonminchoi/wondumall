@@ -25,7 +25,7 @@ public class MyUserDetails implements UserDetails {
 
     //변경 가능
     final String name, postcode, roadAddress, extraAddress, detailAddress, joindate, img, nickname, provider;
-    final int grade, resign;
+    final int grade, resign, no;
 
     //생성자
     public MyUserDetails(LoginDTO user) {
@@ -40,6 +40,7 @@ public class MyUserDetails implements UserDetails {
         this.isEnabled = (user.getU_confirm() == 1) && (user.getU_resign()==0); //승인을 받았고, 탈퇴를 안 했을 시 true
 
         //변경 가능
+        this.no = user.getU_no();
         this.name = user.getU_name();
         this.postcode = user.getU_postcode();
         this.roadAddress = user.getU_roadAddress();
