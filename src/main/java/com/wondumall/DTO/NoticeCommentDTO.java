@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class NoticecommentDTO {
+public class NoticeCommentDTO {
 	private int nc_no, u_no, n_no;
 	private String nc_date;
 	

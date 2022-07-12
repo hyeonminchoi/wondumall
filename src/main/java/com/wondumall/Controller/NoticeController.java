@@ -27,7 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com..Config.MyUserDetails;
 import com..DTO.NoticeDTO;
-import com..DTO.NoticecommentDTO;
+import com..DTO.NoticeCommentDTO;
 import com..Service.NoticeCommentService;
 import com..Service.NoticeService;
 import com..Util.FileSave;
@@ -122,7 +122,7 @@ public class NoticeController {
 	
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@PostMapping("/noticeComment.do")
-	public void noticeCommentWrite(NoticecommentDTO noticecommentDTO, @RequestParam("pageNo") int pageNo,
+	public void noticeCommentWrite(NoticeCommentDTO noticecommentDTO, @RequestParam("pageNo") int pageNo,
 			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
 			@RequestParam(name="searchValue", required=false) String searchValue) throws Exception {
 		if(noticecommentDTO.getNc_comment().equals(""))
@@ -231,7 +231,7 @@ public class NoticeController {
 	public void noticeCommentDelete(@RequestParam("pageNo") int pageNo, @RequestParam("n_no") int n_no, @RequestParam("nc_no") int nc_no, HttpServletRequest request,
 			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
 			@RequestParam(name="searchValue", required=false) String searchValue, @AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
-		NoticecommentDTO noticecommentDTO = new NoticecommentDTO();
+		NoticeCommentDTO noticecommentDTO = new NoticeCommentDTO();
 		noticecommentDTO.setN_no(n_no);
 		noticecommentDTO.setNc_no(nc_no);
 		noticecommentDTO.setU_nickname(myUserDetails.getNickname());
@@ -256,7 +256,7 @@ public class NoticeController {
 	
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@PostMapping("/noticeCommentEdit.do")
-	public void noticeCommentEdit(NoticecommentDTO noticecommentDTO, @RequestParam("pageNo") int pageNo,
+	public void noticeCommentEdit(NoticeCommentDTO noticecommentDTO, @RequestParam("pageNo") int pageNo,
 			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
 			@RequestParam(name="searchValue", required=false) String searchValue) throws Exception {
 		if(noticecommentDTO.getNc_comment().equals(""))

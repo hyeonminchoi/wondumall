@@ -6,25 +6,25 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com..DTO.NoticecommentDTO;
+import com..DTO.NoticeCommentDTO;
 
 @Repository
 public class NoticeCommentDAO {
 	@Autowired SqlSession sqlSession;
 
-	public int writeComment(NoticecommentDTO noticecommentDTO) {
+	public int writeComment(NoticeCommentDTO noticecommentDTO) {
 		return sqlSession.insert("noticeComment.writeComment", noticecommentDTO);
 	}
 
-	public List<NoticecommentDTO> getCommentList(int n_no) {
+	public List<NoticeCommentDTO> getCommentList(int n_no) {
 		return sqlSession.selectList("noticeComment.getCommentList", n_no);
 	}
 
-	public int delete(NoticecommentDTO noticecommentDTO) {
+	public int delete(NoticeCommentDTO noticecommentDTO) {
 		return sqlSession.update("noticeComment.delete", noticecommentDTO);
 	}
 	
-	public int edit(NoticecommentDTO noticecommentDTO) {
+	public int edit(NoticeCommentDTO noticecommentDTO) {
 		return sqlSession.update("noticeComment.edit", noticecommentDTO);
 	}
 }

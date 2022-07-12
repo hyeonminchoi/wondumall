@@ -6,25 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com..DAO.NoticeCommentDAO;
-import com..DTO.NoticecommentDTO;
+import com..DTO.NoticeCommentDTO;
 
 @Service
 public class NoticeCommentService {
 	@Autowired NoticeCommentDAO noticeCommentDAO;
 
-	public int writeComment(NoticecommentDTO noticecommentDTO) {
+	public int writeComment(NoticeCommentDTO noticecommentDTO) {
 		return noticeCommentDAO.writeComment(noticecommentDTO);
 	}
 
-	public List<NoticecommentDTO> getCommentList(int n_no) {
+	public List<NoticeCommentDTO> getCommentList(int n_no) {
 		return noticeCommentDAO.getCommentList(n_no);
 	}
 
-	public int delete(NoticecommentDTO noticecommentDTO) {
+	public int delete(NoticeCommentDTO noticecommentDTO) {
 		return noticeCommentDAO.delete(noticecommentDTO);
 	}
 
-	public int edit(NoticecommentDTO noticecommentDTO) {
+	public int edit(NoticeCommentDTO noticecommentDTO) {
 		return noticeCommentDAO.edit(noticecommentDTO);
 	}
 	

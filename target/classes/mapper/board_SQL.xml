@@ -3,17 +3,90 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="board">
-	<select id="getCount" resultType="integer">
+	<select id="getCount" resultType="integer" parameterType="map">
 		SELECT COUNT(*) FROM board
-		WHERE b_del = 0
+		JOIN user ON user.u_no = board.u_no
+		WHERE board.b_del = 0
+		<choose>
+			<when test='searchColumn == "b_title"'>
+				AND board.b_title like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "b_content"'>
+				AND board.b_content like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_nickname"'>
+				AND user.u_nickname like #{searchValue}
+			</when>
+		</choose>
 	</select>
-
-	<select id="getBoardList" parameterType="map"
-		resultType="boardDTO">
+	
+	<select id="getBoardList" parameterType="map" resultType="boardDTO">
+		SELECT board.*, user.u_nickname FROM board 
+		JOIN user ON user.u_no = board.u_no
+		WHERE board.b_del = 0
+		<choose>
+			<when test='searchColumn == "b_title"'>
+				AND board.b_title like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "b_content"'>
+				AND board.b_content like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_nickname"'>
+				AND user.u_nickname like #{searchValue}
+			</when>
+		</choose>
+		ORDER BY board.b_date DESC
+		LIMIT #{firstIndex}, #{recordCountPerPage}
+	</select>
+	
+	<select id="getDetail" resultType="boardDTO" parameterType="integer">
 		SELECT board.*, user.u_nickname FROM board
 		JOIN user ON user.u_no = board.u_no
-		WHERE b_del = 0
-		LIMIT #{firstIndex},
-		#{recordCountPerPage}
+		WHERE b_no = #{b_no}
 	</select>
+	
+	<insert id="write" parameterType="boardDTO">
+		INSERT INTO board(b_title, b_content, u_no)
+		VALUES(#{b_title}, #{b_content}, (SELECT u_no FROM user WHERE u_nickname=#{u_nickname}))
+	</insert>
+	
+	<update id="delete" parameterType="boardDTO">
+		UPDATE board SET b_del = 1
+		WHERE b_no = #{b_no}
+	</update>
+	
+	<update id="edit" parameterType="boardDTO">
+		UPDATE board SET b_title=#{b_title}, b_content=#{b_content}, b_date=current_timestamp()
+		WHERE b_no = #{b_no} AND u_no = (SELECT u_no FROM user WHERE u_nickname=#{u_nickname})
+	</update>
+	
+	<update id="countUp">
+		UPDATE board SET b_count = b_count + 1
+		WHERE b_no = #{b_no}
+	</update>
+	
+	<select id="containLike" parameterType="boardDTO" resultType="integer">
+		SELECT COUNT(*) FROM boardLike
+		WHERE b_no = #{b_no} AND u_no = (SELECT u_no FROM user WHERE u_nickname=#{u_nickname})
+	</select>
+	
+	<insert id="insertLike" parameterType="boardDTO">
+		INSERT INTO boardLike(b_no, u_no)
+		VALUES(#{b_no}, (SELECT u_no FROM user WHERE u_nickname=#{u_nickname}))
+	</insert>
+	
+	<delete id="deleteLike" parameterType="boardDTO">
+		DELETE FROM boardLike
+		WHERE b_no = #{b_no} AND u_no = (SELECT u_no FROM user WHERE u_nickname=#{u_nickname})
+	</delete>
+	
+	<select id="like" parameterType="integer" resultType="integer">
+		SELECT b_like FROM board
+		WHERE b_no = #{b_no}
+	</select>
+	
+	<update id="updateLike">
+		UPDATE board SET b_like = (SELECT COUNT(*) FROM boardLike WHERE b_no = #{b_no}) 
+		WHERE b_no = #{b_no} 
+	</update>
 </mapper>

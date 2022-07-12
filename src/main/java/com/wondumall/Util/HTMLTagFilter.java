@@ -39,7 +39,7 @@ public class HTMLTagFilter implements Filter {
 	
 	private boolean checkUrl(HttpServletRequest req) {
         String uri = req.getRequestURI().toString().trim();
-        if(uri.startsWith("//noticeWrite.do") || uri.startsWith("//noticeEdit.do")){
+        if(uri.startsWith("//noticeWrite.do") || uri.startsWith("//noticeEdit.do") || uri.startsWith("//boardWrite.do") || uri.startsWith("//boardEdit.do")){
             return true;
         }
         else {
