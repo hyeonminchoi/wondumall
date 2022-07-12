@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com..Config.MyUserDetails;
+import com..DTO.CartDTO;
 import com..DTO.CategoryDTO;
 import com..DTO.ProductDTO;
 import com..DTO.ReviewDTO;
@@ -40,6 +41,15 @@ public class ProductController {
 	
 	@Autowired
 	private ServletContext servletContext;
+	
+	@PostMapping(value = "/cartAdd.do")
+	public String cartAdd(HttpServletRequest request, CartDTO dto,@AuthenticationPrincipal MyUserDetails myUserDetails) {
+		myUserDetails.getNickname();
+		
+		productService.cartAdd(dto);
+		
+		return "redirect:/productDetail.do?p_no=" + request.getParameter("p_no");
+	}
 	
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@PostMapping(value = "/productReview.do")

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com..DAO.ProductDAO;
+import com..DTO.CartDTO;
 import com..DTO.CategoryDTO;
 import com..DTO.ProductDTO;
 import com..DTO.ReviewDTO;
@@ -30,5 +31,9 @@ public class ProductService {
 
 	public void productReview(ReviewDTO dto) {
 		productDAO.productReview(dto);
+	}
+
+	public void cartAdd(CartDTO dto) {
+		productDAO.cartAdd(dto);
 	}
 }

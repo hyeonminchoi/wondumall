@@ -50,8 +50,6 @@
 			<c:import url="./nav.jsp"></c:import>
 		</nav>
 		<!-- /NAVIGATION -->
-		
-		테스트 : ${productDetail}
 		<!-- BREADCRUMB -->
 		<div id="breadcrumb" class="section">
 			<!-- container -->
@@ -159,17 +157,21 @@
 								</label>
 							</div>
 
+							<form action="./cartAdd.do" method="post">
 							<div class="add-to-cart">
 								<div class="qty-label">
 									Qty
 									<div class="input-number">
-										<input type="number">
+										<input type="number" name="p_count" required >
 										<span class="qty-up">+</span>
 										<span class="qty-down">-</span>
 									</div>
 								</div>
+								<input type="hidden" value="${productDetail.p_no }" name="p_no">
+								<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
 								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
 							</div>
+							</form>
 
 							<ul class="product-btns">
 								<li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
@@ -377,29 +379,6 @@
 											</div>
 										</div>
 										<!-- /Reviews -->
-
-										<!-- Review Form -->
-										<div class="col-md-3">
-											<div id="review-form">
-												<form action="./productReview.do" method="POST" class="review-form">
-													<input name="" class="input" type="text" placeholder="Your Name">
-													<input name="" class="input" type="email" placeholder="Your Email">
-													<textarea name="" class="input" placeholder="Your Review"></textarea>
-													<div class="input-rating">
-														<span>Your Rating: </span>
-														<div class="stars">
-															<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
-															<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
-															<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
-															<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
-															<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
-														</div>
-													</div>
-													<button type="submit" class="primary-btn">Submit</button>
-												</form>
-											</div>
-										</div>
-										<!-- /Review Form -->
 									</div>
 								</div>
 								<!-- /tab3  -->
@@ -419,7 +398,7 @@
 			<div class="container">
 				<div class="row">
 					<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_BUSINESS','ROLE_USER')">
-						<form action="./productReview.do" method="POST" id="join" class="joinForm" enctype="multipart/form-data">
+						<form action="./productReview.do" method="POST" id="join" class="joinForm">
 								<div class="form-group row">
 									<label class="col-sm-3">리뷰 제목</label>
 									<div class="com-sm-3">

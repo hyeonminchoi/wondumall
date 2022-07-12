@@ -23,4 +23,8 @@
 		INSERT INTO review (p_no, u_no, r_rating, r_title, r_content)
 		VALUES (#{p_no}, #{u_no}, #{r_rating}, #{r_title}, #{r_content})
 	</insert>
+	<insert id="cartAdd" parameterType="cartDTO">
+		INSERT INTO cart (p_no, u_no, p_count)
+		VALUES (#{p_no}, #{u_no}, #{p_count})
+	</insert>
 </mapper>
