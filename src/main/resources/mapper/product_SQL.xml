@@ -14,4 +14,13 @@
 		INSERT INTO product (p_name, cate_no, p_description, p_price, p_stock, p_img)
 	 	VALUES (#{p_name}, #{cate_no}, #{p_description}, #{p_price}, #{p_stock}, #{p_img})
 	</insert>
+	<select id="productDetail" parameterType="integer" resultType="productDTO">
+		SELECT *
+		FROM product
+		WHERE p_no = #{p_no}
+	</select>
+	<insert id="productReview" parameterType="reviewDTO">
+		INSERT INTO review (r_title, r_content)
+		VALUES (#{r_title}, #{r_content})
+	</insert>
 </mapper>
