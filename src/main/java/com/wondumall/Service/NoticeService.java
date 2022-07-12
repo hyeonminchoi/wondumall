@@ -36,6 +36,10 @@ public class NoticeService {
 	public int edit(NoticeDTO noticeDTO) {
 		return noticeDAO.edit(noticeDTO);
 	}
+
+	public void countUp(int n_no) {
+		noticeDAO.countUp(n_no);
+	}
 	
 	
 }

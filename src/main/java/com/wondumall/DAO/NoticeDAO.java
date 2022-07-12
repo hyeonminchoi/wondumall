@@ -36,4 +36,8 @@ public class NoticeDAO {
 	public int edit(NoticeDTO noticeDTO) {
 		return sqlSession.update("notice.edit", noticeDTO);
 	}
+
+	public void countUp(int n_no) {
+		sqlSession.update("notice.countUp", n_no);
+	}
 }

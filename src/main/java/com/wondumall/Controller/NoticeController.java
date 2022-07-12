@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -69,8 +70,35 @@ public class NoticeController {
 	}
 
 	@GetMapping("/noticeDetail.do")
-	public ModelAndView noticeDetail(@RequestParam("n_no") int n_no, @RequestParam("pageNo") int pageNo) {
+	public ModelAndView noticeDetail(@RequestParam("n_no") int n_no, @RequestParam("pageNo") int pageNo, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("noticeDetail");
+		
+		//조회수 중복방지
+		Cookie cookie = null;
+		Cookie[] cookies = request.getCookies();
+		if(cookies!=null) {
+			for(Cookie c:cookies)
+				if(c.getName().equals("noticeView")) {
+					cookie = c;
+					break;
+				}
+		}
+		
+		if(cookie!=null) {
+			if(!cookie.getValue().contains("[" + n_no + "]")) {
+				noticeService.countUp(n_no);
+				cookie.setValue(cookie.getValue() + "_[" + n_no + "]");
+				cookie.setMaxAge(60*60);
+				response.addCookie(cookie);
+			}
+		} else {
+			noticeService.countUp(n_no);
+			Cookie newCookie = new Cookie("noticeView", "[" + n_no + "]");
+			newCookie.setMaxAge(60*60);
+			response.addCookie(newCookie);
+		}
+		
+		
 		mv.addObject("detail", noticeService.getDetail(n_no));
 		mv.addObject("pageNo", pageNo);
 		mv.addObject("commentList", noticeCommentService.getCommentList(n_no));

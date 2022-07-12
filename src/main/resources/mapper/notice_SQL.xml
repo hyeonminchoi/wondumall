@@ -59,4 +59,9 @@
 		UPDATE notice SET n_title=#{n_title}, n_content=#{n_content}, n_date=current_timestamp()
 		WHERE n_no = #{n_no} AND u_no = (SELECT u_no FROM user WHERE u_nickname=#{u_nickname})
 	</update>
+	
+	<update id="countUp">
+		UPDATE notice SET n_count = n_count + 1
+		WHERE n_no = #{n_no}
+	</update>
 </mapper>
