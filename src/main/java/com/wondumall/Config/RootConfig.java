@@ -22,8 +22,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com..Util.ImagePaginationRenderer;
 
 @Configuration
-@ComponentScan("com..*")
 @EnableWebMvc
+@ComponentScan("com..*")
 public class RootConfig {
 	@Autowired private ApplicationContext applicationContext;
 	

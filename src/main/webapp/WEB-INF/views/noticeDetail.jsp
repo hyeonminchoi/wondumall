@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
+<sec:authentication property="principal" var="user" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -90,6 +91,25 @@
 	background-color: black;
 	color: white;
 }
+#noticeComment{
+	width: 100%;
+}
+pre{
+	width: 100%;
+	min-height: 50px;
+	height : auto;
+	box-sizing:border-box;
+	white-space: pre-wrap;
+}
+td:nth-child(1){
+	width:10%;
+}
+th{
+	text-align: right;
+}
+td:nth-child(2){
+	width:90%;
+}
 </style>
 <script type="text/javascript">
 	function notice() {
@@ -107,42 +127,6 @@
 			} else{
 				location.href = "./noticeDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}";
 			}
-		}
-	}
-	
-	function noticeCommentDelete(nc_no){
-		if(confirm("댓글을 삭제하겠습니까?")){
-			if(${not empty param.searchColumn} && ${not empty param.searchValue}){
-				location.href = "./noticeCommentDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}&nc_no=" + nc_no + "&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
-			} else{
-				location.href = "./noticeCommentDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}&nc_no=" + nc_no;
-			}
-		}
-	}
-	
-	function noticeCommentEdit(nc_no, nc_comment){
-		if(confirm("댓글을 수정하겠습니까?")){
-			var oldComment = nc_comment.trim();
-			var temp = ''; 
-			temp += '<div id="ceditform">'
-			temp += '<form action="./noticeCommentEdit.do" method="post">';
-			temp += '<input type="hidden" name="n_no" value="${detail.n_no }">'
-			temp += '<input type="hidden" name="nc_no" value="' + nc_no + '">'
-			temp += '<textarea name="nc_comment" id="nc_comment" required>' + nc_comment +'</textarea>'
-			temp += '<input type="hidden" name="pageNo" value="${pageNo }">'
-			temp += '<c:if test="${not empty param.searchColumn && not empty param.searchValue}">'
-			temp += '<input type="hidden" name="searchColumn" value="${param.searchColumn }">'
-			temp += '<input type="hidden" name="searchValue" value="${param.searchValue }">'
-			temp += '</c:if>'
-			temp += '<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">'
-			temp += '<button type="submit" id="commentCount1">댓글수정<br>(' + nc_comment.length + '/300)</button>'
-			temp += '</form>'
-			temp += '</div>'
-			$('#commentList').empty().html(temp);
-			$(".commentEdit").remove();
-			$(".commentDelete").remove();
-			$('#noticeComment').remove();
-			$("#cwriteform").remove();
 		}
 	}
 	
@@ -190,6 +174,47 @@
 		$("#commentCount1").html("댓글수정<br>(" + $(this).val().length + "/300)");
 	});
 </script>
+<c:if test="${user ne 'anonymousUser' and user.nickname eq c.u_nickname }">
+<script>
+
+function noticeCommentDelete(nc_no){
+	if(confirm("댓글을 삭제하겠습니까?")){
+		if(${not empty param.searchColumn} && ${not empty param.searchValue}){
+			location.href = "./noticeCommentDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}&nc_no=" + nc_no + "&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
+		} else{
+			location.href = "./noticeCommentDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}&nc_no=" + nc_no;
+		}
+	}
+}
+
+function noticeCommentEdit(nc_no, nc_comment){
+	if(confirm("댓글을 수정하겠습니까?")){
+		var oldComment = nc_comment.trim();
+		var temp = ''; 
+		temp += '<div id="ceditform">'
+		temp += '<form action="./noticeCommentEdit.do" method="post">';
+		temp += '<input type="hidden" name="n_no" value="${detail.n_no }">'
+		temp += '<input type="hidden" name="nc_no" value="' + nc_no + '">'
+		temp += '<textarea name="nc_comment" id="nc_comment" required>' + nc_comment +'</textarea>'
+		temp += '<input type="hidden" name="pageNo" value="${pageNo }">'
+		temp += '<c:if test="${not empty param.searchColumn && not empty param.searchValue}">'
+		temp += '<input type="hidden" name="searchColumn" value="${param.searchColumn }">'
+		temp += '<input type="hidden" name="searchValue" value="${param.searchValue }">'
+		temp += '</c:if>'
+		temp += '<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">'
+		temp += '<button type="submit" id="commentCount1">댓글수정<br>(' + nc_comment.length + '/300)</button>'
+		temp += '</form>'
+		temp += '</div>'
+		$('#commentList').empty().html(temp);
+		$(".commentEdit").remove();
+		$(".commentDelete").remove();
+		$('#noticeComment').remove();
+		$("#cwriteform").remove();
+	}
+}
+
+</script>
+</c:if>
 </head>
 <body>
 	<!-- HEADER -->
@@ -222,13 +247,12 @@
 		<!-- container -->
 		<div class="container">
 			<div id="back">
-				<button type="button" onclick="notice()">뒤로가기</button>
-				<sec:authentication property="principal" var="user" />
+				<button type="button" onclick="notice()"><i class="fa fa-arrow-left" aria-hidden="true"></i>뒤로가기</button>
 				<c:if test="${user ne 'anonymousUser' and user.nickname eq detail.u_nickname }">
-					<button type="button" onclick="showNoticeEditDialog()">수정</button>
+					<button type="button" onclick="showNoticeEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>수정</button>
 				</c:if>
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<button type="button" onclick="noticeDelete()">삭제</button>
+					<button type="button" onclick="noticeDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</button>
 				</sec:authorize>
 			</div>
 			<table class="table table-bordered">
@@ -292,7 +316,7 @@
 											pattern="yyyy-MM-dd HH:mm:ss.S" />
 										<fmt:formatDate value="${time}" var="time"
 											pattern="yyyy-MM-dd HH:mm:ss" />
-										${c.u_nickname } / ${time } <c:if test="${user.nickname eq c.u_nickname }">
+										<strong>${c.u_nickname }</strong> / ${time } <c:if test="${user ne 'anonymousUser' and user.nickname eq c.u_nickname }">
 											<i class="fa fa-pencil commentEdit" aria-hidden="true" onclick="noticeCommentEdit(${c.nc_no}, '${c.nc_comment }')"></i><i class="fa fa-trash-o commentDelete" aria-hidden="true" onclick="noticeCommentDelete(${c.nc_no})"></i>
 										</c:if>
 									</div>

@@ -188,17 +188,17 @@
 						<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>작성자</option>
 					</select>
 					<input type="text" name="searchValue" value="${searchValue}">
-					<button type="submit">검색</button>
+					<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
 				</form>
 			</div>
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<div style="float:right;">
-					<button type="button" onclick="showWriteDialog()">글쓰기</button>
+					<button type="button" onclick="showWriteDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>글쓰기</button>
 				</div>
 			</sec:authorize>
 			<sec:authorize access="not authenticated">
 				<div style="float:right;">
-					<button type="button" onclick="location.href='./login.do'">로그인</button>
+					<button type="button" onclick="location.href='./login.do'"><i class="fa fa-user" aria-hidden="true"></i>로그인</button>
 				</div>
 			</sec:authorize>
 		</div>
