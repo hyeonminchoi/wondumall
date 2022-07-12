@@ -110,7 +110,8 @@ public class NoticeController {
 	public void noticeCommentWrite(NoticecommentDTO noticecommentDTO, @RequestParam("pageNo") int pageNo,
 			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
 			@RequestParam(name="searchValue", required=false) String searchValue) throws Exception {
-
+		if(noticecommentDTO.getNc_comment().equals(""))
+			noticecommentDTO.setNc_comment(null);
 		int result = noticeCommentService.writeComment(noticecommentDTO);
 		response.setContentType("text/html; charset=UTF-8");
 		if (result > 0) {
@@ -134,10 +135,8 @@ public class NoticeController {
 	@PostMapping("/noticeWrite.do")
 	public void noticeWrite(@RequestParam("pageNo") int pageNo, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		NoticeDTO noticeDTO = new NoticeDTO();
-		noticeDTO.setN_title(Util.xss_clean_check(request.getParameter("n_title")));
-		noticeDTO.setN_content(Util.xss_clean_check(request.getParameter("n_content"), request));
-		noticeDTO.setU_nickname(request.getParameter("u_nickname"));
+		NoticeDTO noticeDTO = new NoticeDTO(Util.xss_clean_check(request.getParameter("n_title")), Util.xss_clean_check(request.getParameter("n_content"), request),
+				request.getParameter("u_nickname"));
 		int result = noticeService.write(noticeDTO);
 		response.setContentType("text/html; charset=UTF-8");
 		if (result > 0) {
@@ -190,11 +189,9 @@ public class NoticeController {
 	public void noticeEdit(@RequestParam("pageNo") int pageNo, @RequestParam("n_no") int n_no, HttpServletRequest request,
 			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
 			@RequestParam(name="searchValue", required=false) String searchValue) throws Exception {
-		NoticeDTO noticeDTO = new NoticeDTO();
+		NoticeDTO noticeDTO = new NoticeDTO(Util.xss_clean_check(request.getParameter("n_title")), Util.xss_clean_check(request.getParameter("n_content"), request),
+				request.getParameter("u_nickname"));
 		noticeDTO.setN_no(n_no);
-		noticeDTO.setN_title(Util.xss_clean_check(request.getParameter("n_title")));
-		noticeDTO.setN_content(Util.xss_clean_check(request.getParameter("n_content"), request));
-		noticeDTO.setU_nickname(request.getParameter("u_nickname"));
 		int result = noticeService.edit(noticeDTO);
 		response.setContentType("text/html; charset=UTF-8");
 		if (result > 0) {
@@ -247,6 +244,8 @@ public class NoticeController {
 	public void noticeCommentEdit(NoticecommentDTO noticecommentDTO, @RequestParam("pageNo") int pageNo,
 			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
 			@RequestParam(name="searchValue", required=false) String searchValue) throws Exception {
+		if(noticecommentDTO.getNc_comment().equals(""))
+			noticecommentDTO.setNc_comment(null);
 		int result = noticeCommentService.edit(noticecommentDTO);
 		response.setContentType("text/html; charset=UTF-8");
 		if (result > 0) {

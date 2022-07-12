@@ -228,7 +228,7 @@
 				</div>
 				<div style="padding-bottom: 10px;">
 					<h4><label>내용</label></h4>
-					<textarea id="summernote" name="n_content"></textarea>
+					<textarea id="summernote" name="n_content" required></textarea>
 				</div>
 				<input type="hidden" name="pageNo" value="${pageNo }">
 				<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">

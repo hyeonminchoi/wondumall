@@ -174,9 +174,9 @@ td:nth-child(2){
 		$("#commentCount1").html("댓글수정<br>(" + $(this).val().length + "/300)");
 	});
 </script>
-<c:if test="${user ne 'anonymousUser' and user.nickname eq c.u_nickname }">
-<script>
 
+<c:if test="${user ne 'anonymousUser'}">
+<script>
 function noticeCommentDelete(nc_no){
 	if(confirm("댓글을 삭제하겠습니까?")){
 		if(${not empty param.searchColumn} && ${not empty param.searchValue}){
@@ -362,7 +362,7 @@ function noticeCommentEdit(nc_no, nc_comment){
 					<h4>
 						<label>내용</label>
 					</h4>
-					<textarea id="summernote" name="n_content"><c:out value="${detail.n_content}" /></textarea>
+					<textarea id="summernote" name="n_content" required><c:out value="${detail.n_content}" /></textarea>
 				</div>
 				<input type="hidden" name="pageNo" value="${pageNo }"> <input
 					type="hidden" name="n_no" value="${detail.n_no }">
