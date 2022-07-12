@@ -168,7 +168,10 @@
 									</div>
 								</div>
 								<input type="hidden" value="${productDetail.p_no }" name="p_no">
-								<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
+								<sec:authentication property="principal" var="user"/>
+								<c:if test="${user ne 'anonymousUser'}">
+									<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
+								</c:if>
 								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
 							</div>
 							</form>

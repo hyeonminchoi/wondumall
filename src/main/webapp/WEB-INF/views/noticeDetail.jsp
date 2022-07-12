@@ -111,6 +111,12 @@ th{
 td:nth-child(2){
 	width:90%;
 }
+label{
+	margin-right: 10px;
+}
+label:hover{
+	color: #BDBDBD;
+}
 </style>
 <script type="text/javascript">
 	function notice() {
@@ -269,12 +275,12 @@ function noticeCommentEdit(nc_no, nc_comment){
 		<!-- container -->
 		<div class="container">
 			<div id="back">
-				<button type="button" onclick="notice()"><i class="fa fa-arrow-left" aria-hidden="true"></i>뒤로가기</button>
+				<label onclick="notice()"><i class="fa fa-arrow-left" aria-hidden="true"></i>뒤로가기</label>
 				<c:if test="${user ne 'anonymousUser' and user.nickname eq detail.u_nickname }">
-					<button type="button" onclick="showNoticeEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>수정</button>
+					<label onclick="showNoticeEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>수정</label>
 				</c:if>
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<button type="button" onclick="noticeDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</button>
+					<label onclick="noticeDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</label>
 				</sec:authorize>
 			</div>
 			<table class="table table-bordered">
