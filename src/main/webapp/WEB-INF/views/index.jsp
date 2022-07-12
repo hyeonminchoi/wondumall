@@ -61,7 +61,7 @@
 					<div class="col-md-4 col-xs-6">
 						<div class="shop">
 							<div class="shop-img">
-								<img src="./img/coffeeBean.png" alt="">
+								<img src="./img/coffeeBean.png" alt="" onclick="location.href='./category.do?cate_no=2';" style="cursor: pointer;">
 							</div>
 							<div class="shop-body">
 								<h3>Coffee Beans<br>Collection</h3>
@@ -75,7 +75,7 @@
 					<div class="col-md-4 col-xs-6">
 						<div class="shop">
 							<div class="shop-img">
-								<img src="./img/coffeeMachine.png" alt="">
+								<img src="./img/coffeeMachine.png" alt="" onclick="location.href='./category.do?cate_no=3';" style="cursor: pointer;">
 							</div>
 							<div class="shop-body">
 								<h3>Coffee Machine<br>Collection</h3>
@@ -89,7 +89,7 @@
 					<div class="col-md-4 col-xs-6">
 						<div class="shop">
 							<div class="shop-img">
-								<img src="./img/Accessory.png" alt="">
+								<img src="./img/Accessory.png" alt="" onclick="location.href='./category.do?cate_no=4';" style="cursor: pointer;">
 							</div>
 							<div class="shop-body">
 								<h3>Accessories<br>Collection</h3>
