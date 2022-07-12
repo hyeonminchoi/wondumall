@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
@@ -172,7 +173,11 @@
 							<td>${n.u_nickname }</td>
 							<td>${n.n_count }</td>
 							<td>${n.n_like }</td>
-							<td>${n.n_date }</td>
+							<fmt:parseDate value="${n.n_date}" var="time"
+								pattern="yyyy-MM-dd HH:mm:ss.S" />
+							<fmt:formatDate value="${time}" var="time"
+								pattern="yyyy-MM-dd HH:mm:ss" />
+							<td>${time }</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -188,17 +193,17 @@
 						<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>작성자</option>
 					</select>
 					<input type="text" name="searchValue" value="${searchValue}">
-					<button type="submit">검색</button>
+					<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
 				</form>
 			</div>
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<div style="float:right;">
-					<button type="button" onclick="showWriteDialog()">글쓰기</button>
+					<button type="button" onclick="showWriteDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>글쓰기</button>
 				</div>
 			</sec:authorize>
 			<sec:authorize access="not authenticated">
 				<div style="float:right;">
-					<button type="button" onclick="location.href='./login.do'">로그인</button>
+					<button type="button" onclick="location.href='./login.do'"><i class="fa fa-user" aria-hidden="true"></i>로그인</button>
 				</div>
 			</sec:authorize>
 		</div>
@@ -223,7 +228,7 @@
 				</div>
 				<div style="padding-bottom: 10px;">
 					<h4><label>내용</label></h4>
-					<textarea id="summernote" name="n_content"></textarea>
+					<textarea id="summernote" name="n_content" required></textarea>
 				</div>
 				<input type="hidden" name="pageNo" value="${pageNo }">
 				<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">

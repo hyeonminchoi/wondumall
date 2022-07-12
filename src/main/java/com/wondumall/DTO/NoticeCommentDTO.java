@@ -6,12 +6,13 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
 @NoArgsConstructor
-public class NoticeDTO {
-	private int n_no, n_count, n_like, u_no;
-	private String n_date;
+@RequiredArgsConstructor
+public class NoticeCommentDTO {
+	private int nc_no, u_no, n_no;
+	private String nc_date;
 	
 	@NonNull
-	private String n_title, n_content, u_nickname;
+	private String nc_comment, u_nickname;
+	
 }

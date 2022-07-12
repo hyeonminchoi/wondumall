@@ -92,7 +92,7 @@
 	background-color: black;
 	color: white;
 }
-#noticeComment{
+#boardComment{
 	width: 100%;
 }
 pre{
@@ -119,20 +119,20 @@ label:hover{
 }
 </style>
 <script type="text/javascript">
-	function notice() {
+	function board() {
 		if(${not empty param.searchColumn} && ${not empty param.searchValue}){
-			location.href = "./notice.do?pageNo=" + ${pageNo} + "&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
+			location.href = "./board.do?pageNo=" + ${pageNo} + "&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
 		} else{
-			location.href = "./notice.do?pageNo=" + ${pageNo};
+			location.href = "./board.do?pageNo=" + ${pageNo};
 		}
 	}
 	
-	function noticeDelete(){
-		if(confirm("공지사항을 삭제하겠습니까?")){
+	function boardDelete(){
+		if(confirm("글을 삭제하겠습니까?")){
 			if(${not empty param.searchColumn} && ${not empty param.searchValue}){
-				location.href = "./noticeDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
+				location.href = "./boardDelete.do?pageNo=" + ${pageNo} + "&b_no=${detail.b_no}&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
 			} else{
-				location.href = "./noticeDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}";
+				location.href = "./boardDelete.do?pageNo=" + ${pageNo} + "&b_no=${detail.b_no}";
 			}
 		}
 	}
@@ -156,7 +156,7 @@ label:hover{
 		$.ajax({
 			data : form_data,
 			type : "POST",
-			url : './noticeImage.do',
+			url : './boardImage.do',
 			cache : false,
 			contentType : false,
 			enctype : 'multipart/form-data',
@@ -170,7 +170,7 @@ label:hover{
 	}
 	
 	//댓글 글자수 제한
-	$(document).on("input","#nc_comment",function(){
+	$(document).on("input","#c_comment",function(){
 		if($(this).val().length>=300){
 			$(this).val($(this).val().substring(0,300));
 			$("#commentCount").html("댓글쓰기<br>(300/300)");
@@ -185,19 +185,19 @@ label:hover{
 <c:if test="${user ne 'anonymousUser'}">
 <script>
 
-function noticeLike(u_nickname){
+function boardLike(u_nickname){
 	$.ajax({
 		  type: 'post',
-		  url: './noticeLikeAjax.do',
+		  url: './boardLikeAjax.do',
 		  data:{
-			  "n_no" : ${detail.n_no},
+			  "b_no" : ${detail.b_no},
 			  "u_nickname":u_nickname},
 		  dataType: 'json',
 		  success: function(map){
 			  if(map.result == 0){
-			  	$('#noticeLikeImg').html(map.count + ' <i class="fa fa-heart" aria-hidden="true" onclick="noticeLike(\'${user.nickname}\')"></i>');
+			  	$('#boardLikeImg').html(map.count + ' <i class="fa fa-heart" aria-hidden="true" onclick="boardLike(\'${user.nickname}\')"></i>');
 			  } else{
-				$('#noticeLikeImg').html(map.count + ' <i class="fa fa-heart-o" aria-hidden="true" onclick="noticeLike(\'${user.nickname}\')"></i>');
+				$('#boardLikeImg').html(map.count + ' <i class="fa fa-heart-o" aria-hidden="true" onclick="boardLike(\'${user.nickname}\')"></i>');
 			  }
 		  },
 		  error: function(error){
@@ -206,38 +206,38 @@ function noticeLike(u_nickname){
 	})
 }
 
-function noticeCommentDelete(nc_no){
+function boardCommentDelete(c_no){
 	if(confirm("댓글을 삭제하겠습니까?")){
 		if(${not empty param.searchColumn} && ${not empty param.searchValue}){
-			location.href = "./noticeCommentDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}&nc_no=" + nc_no + "&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
+			location.href = "./boardCommentDelete.do?pageNo=" + ${pageNo} + "&b_no=${detail.b_no}&c_no=" + c_no + "&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
 		} else{
-			location.href = "./noticeCommentDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}&nc_no=" + nc_no;
+			location.href = "./boardCommentDelete.do?pageNo=" + ${pageNo} + "&b_no=${detail.b_no}&c_no=" + c_no;
 		}
 	}
 }
 
-function noticeCommentEdit(nc_no, nc_comment){
+function boardCommentEdit(c_no, c_comment){
 	if(confirm("댓글을 수정하겠습니까?")){
-		var oldComment = nc_comment.trim();
+		var oldComment = c_comment.trim();
 		var temp = ''; 
 		temp += '<div id="ceditform">'
-		temp += '<form action="./noticeCommentEdit.do" method="post">';
-		temp += '<input type="hidden" name="n_no" value="${detail.n_no }">'
-		temp += '<input type="hidden" name="nc_no" value="' + nc_no + '">'
-		temp += '<textarea name="nc_comment" id="nc_comment" required>' + nc_comment +'</textarea>'
+		temp += '<form action="./boardCommentEdit.do" method="post">';
+		temp += '<input type="hidden" name="b_no" value="${detail.b_no }">'
+		temp += '<input type="hidden" name="c_no" value="' + c_no + '">'
+		temp += '<textarea name="c_comment" id="c_comment" required>' + c_comment +'</textarea>'
 		temp += '<input type="hidden" name="pageNo" value="${pageNo }">'
 		temp += '<c:if test="${not empty param.searchColumn && not empty param.searchValue}">'
 		temp += '<input type="hidden" name="searchColumn" value="${param.searchColumn }">'
 		temp += '<input type="hidden" name="searchValue" value="${param.searchValue }">'
 		temp += '</c:if>'
 		temp += '<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">'
-		temp += '<button type="submit" id="commentCount1">댓글수정<br>(' + nc_comment.length + '/300)</button>'
+		temp += '<button type="submit" id="commentCount1">댓글수정<br>(' + c_comment.length + '/300)</button>'
 		temp += '</form>'
 		temp += '</div>'
 		$('#commentList').empty().html(temp);
 		$(".commentEdit").remove();
 		$(".commentDelete").remove();
-		$('#noticeComment').remove();
+		$('#boardComment').remove();
 		$("#cwriteform").remove();
 	}
 }
@@ -275,22 +275,22 @@ function noticeCommentEdit(nc_no, nc_comment){
 		<!-- container -->
 		<div class="container">
 			<div id="back">
-				<label onclick="notice()"><i class="fa fa-arrow-left" aria-hidden="true"></i>뒤로가기</label>
+				<label onclick="board()"><i class="fa fa-arrow-left" aria-hidden="true"></i>뒤로가기</label>
 				<c:if test="${user ne 'anonymousUser' and user.nickname eq detail.u_nickname }">
-					<label onclick="showNoticeEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>수정</label>
+					<label onclick="showBoardEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>수정</label>
 				</c:if>
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<label onclick="noticeDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</label>
+					<label onclick="boardDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</label>
 				</sec:authorize>
 			</div>
 			<table class="table table-bordered">
 				<tr>
 					<th>번호</th>
-					<td>${detail.n_no }</td>
+					<td>${detail.b_no }</td>
 				</tr>
 				<tr>
 					<th>제목</th>
-					<td>${detail.n_title }</td>
+					<td>${detail.b_title }</td>
 				</tr>
 				<tr>
 					<th>글쓴이</th>
@@ -298,7 +298,7 @@ function noticeCommentEdit(nc_no, nc_comment){
 				</tr>
 				<tr>
 					<th>작성일</th>
-					<fmt:parseDate value="${detail.n_date}" var="time"
+					<fmt:parseDate value="${detail.b_date}" var="time"
 						pattern="yyyy-MM-dd HH:mm:ss.S" />
 					<fmt:formatDate value="${time}" var="time"
 						pattern="yyyy-MM-dd HH:mm:ss" />
@@ -306,19 +306,19 @@ function noticeCommentEdit(nc_no, nc_comment){
 				</tr>
 				<tr>
 					<th>조회수</th>
-					<td>${detail.n_count }</td>
+					<td>${detail.b_count }</td>
 				</tr>
 				<tr>
 					<th>좋아요</th>
-					<td id="noticeLikeImg">
-						${detail.n_like }
+					<td id="boardLikeImg">
+						${detail.b_like }
 						<c:if test="${user ne 'anonymousUser'}">
 							<c:choose>
 								<c:when test="${not empty likeStatus and likeStatus == true }">
-									<i class="fa fa-heart" aria-hidden="true" onclick="noticeLike('${user.nickname}')"></i>
+									<i class="fa fa-heart" aria-hidden="true" onclick="boardLike('${user.nickname}')"></i>
 								</c:when>
 								<c:otherwise>
-									<i class="fa fa-heart-o" aria-hidden="true" onclick="noticeLike('${user.nickname}')"></i>
+									<i class="fa fa-heart-o" aria-hidden="true" onclick="boardLike('${user.nickname}')"></i>
 								</c:otherwise>
 							</c:choose>
 						</c:if>
@@ -326,15 +326,15 @@ function noticeCommentEdit(nc_no, nc_comment){
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td>${detail.n_content }</td>
+					<td>${detail.b_content }</td>
 				</tr>
 				<tr>
 					<th style="vertical-align: middle;">댓글</th>
 					<td><sec:authorize access="authenticated">
 							<div id="cwriteform">
-								<form action="./noticeComment.do" method="post">
-									<input type="hidden" name="n_no" value="${detail.n_no }">
-									<textarea name="nc_comment" id="nc_comment" required></textarea>
+								<form action="./boardComment.do" method="post">
+									<input type="hidden" name="b_no" value="${detail.b_no }">
+									<textarea name="c_comment" id="c_comment" required></textarea>
 									<input type="hidden" name="pageNo" value="${pageNo }">
 									<c:if
 										test="${not empty param.searchColumn && not empty param.searchValue}">
@@ -352,15 +352,15 @@ function noticeCommentEdit(nc_no, nc_comment){
 							<c:when test="${fn:length(commentList) gt 0 }">
 								<c:forEach var="c" items="${commentList }">
 									<div id="commentList">
-										<fmt:parseDate value="${c.nc_date}" var="time"
+										<fmt:parseDate value="${c.c_date}" var="time"
 											pattern="yyyy-MM-dd HH:mm:ss.S" />
 										<fmt:formatDate value="${time}" var="time"
 											pattern="yyyy-MM-dd HH:mm:ss" />
 										<strong>${c.u_nickname }</strong> / ${time } <c:if test="${user ne 'anonymousUser' and user.nickname eq c.u_nickname }">
-											<i class="fa fa-pencil commentEdit" aria-hidden="true" onclick="noticeCommentEdit(${c.nc_no}, '${c.nc_comment }')"></i><i class="fa fa-trash-o commentDelete" aria-hidden="true" onclick="noticeCommentDelete(${c.nc_no})"></i>
+											<i class="fa fa-pencil commentEdit" aria-hidden="true" onclick="boardCommentEdit(${c.c_no}, '${c.c_comment }')"></i><i class="fa fa-trash-o commentDelete" aria-hidden="true" onclick="boardCommentDelete(${c.c_no})"></i>
 										</c:if>
 									</div>
-									<div id="noticeComment"><pre>${c.nc_comment }</pre></div>
+									<div id="boardComment"><pre>${c.c_comment }</pre></div>
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
@@ -380,26 +380,25 @@ function noticeCommentEdit(nc_no, nc_comment){
 	</footer>
 	<!-- /FOOTER -->
 
-
-	<sec:authorize access="hasRole('ROLE_ADMIN')">
-		<dialog id="noticeEditDialog">
+	<sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN','ROLE_BUSINESS')">
+		<dialog id="boardEditDialog">
 		<div>
-			<form action="./noticeEdit.do" method="post">
+			<form action="./boardEdit.do" method="post">
 				<div style="padding-bottom: 10px;">
 					<h2>
 						<label>제목</label>
 					</h2>
-					<input style="width: 100%;" type="text" name="n_title"
-						value="${detail.n_title }" required>
+					<input style="width: 100%;" type="text" name="b_title"
+						value="${detail.b_title }" required>
 				</div>
 				<div style="padding-bottom: 10px;">
 					<h4>
 						<label>내용</label>
 					</h4>
-					<textarea id="summernote" name="n_content" required><c:out value="${detail.n_content}" /></textarea>
+					<textarea id="summernote" name="b_content" required><c:out value="${detail.b_content}" /></textarea>
 				</div>
 				<input type="hidden" name="pageNo" value="${pageNo }"> <input
-					type="hidden" name="n_no" value="${detail.n_no }">
+					type="hidden" name="b_no" value="${detail.b_no }">
 				<c:if
 					test="${not empty param.searchColumn && not empty param.searchValue}">
 					<input type="hidden" name="searchColumn"
@@ -411,7 +410,7 @@ function noticeCommentEdit(nc_no, nc_comment){
 					value="<sec:authentication property="principal.nickname" />">
 				<div>
 					<button type="submit">수정</button>
-					<button type="button" onclick="hideNoticeEditDialog()">닫기</button>
+					<button type="button" onclick="hideBoardEditDialog()">닫기</button>
 				</div>
 			</form>
 		</div>
@@ -419,13 +418,13 @@ function noticeCommentEdit(nc_no, nc_comment){
 
 		<script>
 
-var noticeEditDialog = document.getElementById('noticeEditDialog');
+var boardEditDialog = document.getElementById('boardEditDialog');
 
-function showNoticeEditDialog(){
-	noticeEditDialog.showModal();
+function showBoardEditDialog(){
+	boardEditDialog.showModal();
 }
-function hideNoticeEditDialog(){
-	noticeEditDialog.close();
+function hideBoardEditDialog(){
+	boardEditDialog.close();
 }
 </script>
 	</sec:authorize>

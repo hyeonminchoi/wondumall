@@ -8,14 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com..Config.MyUserDetails;
+import com..DTO.CartDTO;
 import com..DTO.CategoryDTO;
 import com..DTO.ProductDTO;
 import com..DTO.ReviewDTO;
@@ -38,27 +43,55 @@ public class ProductController {
 	@Autowired
 	private ServletContext servletContext;
 	
-//	@PostMapping(value = "/productReview.do")
-//	public String productReview(HttpServletRequest request) throws UnsupportedEncodingException {
-//		request.setCharacterEncoding("UTF-8");
-//		
-//		HttpSession session = request.getSession();
-//		if(session.getAttribute("u_email") != null
-//				&& request.getParameter("p_no") != null
-//				&& request.getParameter("r_title") != null) {
-//			
-//			ReviewDTO dto = new ReviewDTO();
-//			
-//			dto.setP_no(util.str2Int(request.getParameter("p_no")));
-//			dto.setR_title(request.getParameter("r_title"));
-//			dto.setR_content(request.getParameter("r_content"));
-//			
-//			dto.setU_no((int)(session.getAttribute("u_no")));
-//			
-//			productService.productReview(dto);
-//		}
-//		return "redirect:/productDetail?p_no=" + request.getParameter("p_no");
-//	}
+	@GetMapping(value = "/cart.do")
+	public ModelAndView cart(@RequestParam(name = "u_no", required = false, defaultValue = "-1") int u_no) {
+		ModelAndView mv = new ModelAndView("cart");
+		if(u_no ==-1) {
+			mv.addObject("cart", 0);
+		} else {
+			List<CartDTO> cart = productService.cart(u_no);
+			mv.addObject("cart", cart);
+		}
+		return mv;
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/cartCount.do")
+	public int cartHeader(@RequestParam("u_no") int u_no) {
+		int count = productService.cartCount(u_no);
+		
+		return count;
+	}
+	
+	@PostMapping(value = "/cartAdd.do")
+	public String cartAdd(HttpServletRequest request, CartDTO dto,@AuthenticationPrincipal MyUserDetails myUserDetails) {
+		myUserDetails.getNickname();
+		
+		productService.cartAdd(dto);
+		
+		return "redirect:/productDetail.do?p_no=" + request.getParameter("p_no");
+	}
+	
+	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
+	@PostMapping(value = "/productReview.do")
+	public String productReview(HttpServletRequest request, @AuthenticationPrincipal MyUserDetails myUserDetails) throws UnsupportedEncodingException {
+		request.setCharacterEncoding("UTF-8");
+			myUserDetails.getNickname();
+		if(request.getParameter("p_no") != null
+				&& request.getParameter("r_title") != null) {
+			ReviewDTO dto = new ReviewDTO();
+			
+			dto.setP_no(util.str2Int(request.getParameter("p_no")));
+			dto.setU_no(util.str2Int(request.getParameter("u_no")));
+			dto.setR_title(request.getParameter("r_title"));
+			dto.setR_content(request.getParameter("r_content"));
+			dto.setR_rating(util.str2Int(request.getParameter("r_rating")));
+			
+			productService.productReview(dto);
+		}
+		
+		return "redirect:/productDetail.do?p_no=" + request.getParameter("p_no");
+	}
 	
 	@GetMapping(value = "/productDetail.do")
 	public ModelAndView productDetail(@RequestParam("p_no") int p_no) {
@@ -138,8 +171,5 @@ public class ProductController {
 		} else {
 			return "redirect:/join";
 		}
-		
-		
-		
 	}
 }

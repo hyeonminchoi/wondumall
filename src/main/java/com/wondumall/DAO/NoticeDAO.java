@@ -36,4 +36,28 @@ public class NoticeDAO {
 	public int edit(NoticeDTO noticeDTO) {
 		return sqlSession.update("notice.edit", noticeDTO);
 	}
+
+	public void countUp(int n_no) {
+		sqlSession.update("notice.countUp", n_no);
+	}
+
+	public int containLike(NoticeDTO noticeDTO) {
+		return sqlSession.selectOne("notice.containLike", noticeDTO);
+	}
+
+	public void deleteLike(NoticeDTO noticeDTO) {
+		sqlSession.delete("notice.deleteLike", noticeDTO);
+	}
+
+	public void insertLike(NoticeDTO noticeDTO) {
+		sqlSession.insert("notice.insertLike", noticeDTO);
+	}
+
+	public int like(int n_no) {
+		return sqlSession.selectOne("notice.like", n_no);
+	}
+
+	public void updateLike(int n_no) {
+		sqlSession.update("notice.updateLike", n_no);
+	}
 }

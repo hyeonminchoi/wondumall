@@ -6,8 +6,9 @@
 	<select id="productList" parameterType="categoryDTO" resultType="productDTO">
 		select * 
 		from product
+		WHERE p_del = 0 AND p_confirm = 1
 		<if test="cate_no != 1">
-			WHERE cate_no=#{cate_no};
+			AND cate_no=#{cate_no} ;
 		</if>
 	</select>
 	<insert id="productAdd" parameterType="productDTO">
@@ -20,7 +21,21 @@
 		WHERE p_no = #{p_no}
 	</select>
 	<insert id="productReview" parameterType="reviewDTO">
-		INSERT INTO review (r_title, r_content)
-		VALUES (#{r_title}, #{r_content})
+		INSERT INTO review (p_no, u_no, r_rating, r_title, r_content)
+		VALUES (#{p_no}, #{u_no}, #{r_rating}, #{r_title}, #{r_content})
 	</insert>
+	<insert id="cartAdd" parameterType="cartDTO">
+		INSERT INTO cart (p_no, u_no, p_count)
+		VALUES (#{p_no}, #{u_no}, #{p_count})
+	</insert>
+	<select id="cart" parameterType="integer" resultType="cartDTO">
+		SELECT *
+		FROM cart
+		WHERE u_no = #{u_no}
+	</select>
+	<select id="cartCount" parameterType="integer" resultType="integer">
+		SELECT COUNT(*)
+		FROM cart
+		WHERE u_no = #{u_no}
+	</select>
 </mapper>

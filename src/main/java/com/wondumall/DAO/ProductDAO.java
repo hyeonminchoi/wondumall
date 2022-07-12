@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com..DTO.CartDTO;
 import com..DTO.CategoryDTO;
 import com..DTO.ProductDTO;
 import com..DTO.ReviewDTO;
@@ -30,5 +31,17 @@ public class ProductDAO {
 
 	public void productReview(ReviewDTO dto) {
 		sqlSession.insert("product.productReview", dto);
+	}
+
+	public void cartAdd(CartDTO dto) {
+		sqlSession.insert("product.cartAdd", dto);
+	}
+
+	public List<CartDTO> cartAdd(int u_no) {
+		return sqlSession.selectList("product.cart", u_no);
+	}
+
+	public int cartCount(int u_no) {
+		return sqlSession.selectOne("product.cartCount", u_no);
 	}
 }

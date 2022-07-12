@@ -14,6 +14,8 @@ public class Util {
 	}
 
 	public static String xss_clean_check(String value) {
+		if(value.equals("") || value==null)
+			return null;
 		String safe_value = Jsoup.clean(value, Safelist.none());
 		if (safe_value.equals("") || safe_value == null) {
 			safe_value = "XSS 공격이 감지되었습니다.";
@@ -22,6 +24,8 @@ public class Util {
 	}
 	
 	public static String xss_clean_check(String value, HttpServletRequest request) {
+		if(value.equals("") || value==null)
+			return null;
 		String safe_value = Jsoup.clean(value, request.getRequestURL().toString(), Safelist.relaxed().preserveRelativeLinks(true));
 		if (safe_value.equals("") || safe_value == null) {
 			safe_value = "XSS 공격이 감지되었습니다.";

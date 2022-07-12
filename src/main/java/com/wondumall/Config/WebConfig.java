@@ -3,7 +3,9 @@ package com..Config;
 
 import javax.servlet.Filter;
 
+import org.egovframe.rte.ptl.mvc.filter.HTMLTagFilterRequestWrapper;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.multipart.support.MultipartFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import com..Util.HTMLTagFilter;
@@ -35,7 +37,9 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 		CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
 		encodingFilter.setEncoding("UTF-8");
 		HTMLTagFilter htmlTagFilter = new HTMLTagFilter();
-		return new Filter[] {encodingFilter, htmlTagFilter};
+		MultipartFilter multipartFilter = new MultipartFilter();
+		multipartFilter.setMultipartResolverBeanName("multipartResolver");
+		return new Filter[] {encodingFilter, multipartFilter, htmlTagFilter};
 	}
 	
 }
