@@ -222,11 +222,11 @@ function iamport(){
         	},
         	success : function(data){
         		alert("데이터전송성공!");
-        		location.href = "/paysuccess.do";
+        		location.href = "./paysuccess.do";
         	},
         	error : function(error){
         		alert("에러");
-        		location.href = "/payfailure.do";
+        		location.href = "./payfailure.do";
         	}
         }).done(function(data) {
         	

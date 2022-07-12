@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -417,31 +418,41 @@
 		<div class="section">
 			<div class="container">
 				<div class="row">
-					<form action="./productReview.do" method="POST" id="join" class="joinForm" enctype="multipart/form-data">
-							<div class="form-group row">
-								<label class="col-sm-3">리뷰 제목</label>
-								<div class="com-sm-3">
-									<input type="text" id="r_title" name="r_title" class="form-control">
+					<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_BUSINESS','ROLE_USER')">
+						<form action="./productReview.do" method="POST" id="join" class="joinForm" enctype="multipart/form-data">
+								<div class="form-group row">
+									<label class="col-sm-3">리뷰 제목</label>
+									<div class="com-sm-3">
+										<input type="text" id="r_title" name="r_title" class="form-control">
+									</div>
 								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-3">리뷰 설명</label>
-								<div class="com-sm-5">
-									<textarea name="r_content" cols="50" rows="2" class="form-control"></textarea>
+								<div class="form-group row">
+									<label class="col-sm-3">리뷰 내용</label>
+									<div class="com-sm-5">
+										<textarea name="r_content" cols="50" rows="2" class="form-control"></textarea>
+									</div>
 								</div>
-							</div>
-							<!-- <div class="input-rating">
-								<span>Your Rating: </span>
-								<div class="stars">
-									<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
-									<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
-									<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
-									<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
-									<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+								<div class="form-group row">
+									<label class="col-sm-3">별점</label>
+									<div class="com-sm-5">
+										<input type="number" id="r_rating" name="r_rating" class="form-control">
+									</div>
 								</div>
-							</div> -->
-						<input type="submit" id="Btn" class="primary-btn" value="등록하기" />
-					</form>
+								<!-- <div class="input-rating">
+									<span>Your Rating: </span>
+									<div class="stars">
+										<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
+										<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
+										<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
+										<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
+										<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+									</div>
+								</div> -->
+								<input type="hidden" value="${productDetail.p_no }" name="p_no">
+								<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
+							<input type="submit" id="Btn" class="primary-btn" value="등록하기" />
+						</form>
+					</sec:authorize>
 				</div>
 			</div>
 		</div>

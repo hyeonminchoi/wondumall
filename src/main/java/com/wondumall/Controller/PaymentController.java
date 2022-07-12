@@ -95,4 +95,16 @@ public class PaymentController {
 
 		return mv;
 	}
+	
+	@GetMapping(value = "/paysuccess.do")
+	public String paysuccess() {
+		
+		return "paysuccess";
+	}
+	
+	@GetMapping(value = "/payfailure.do")
+	public String payfailure() {
+		
+		return "payfailure";
+	}
 }
