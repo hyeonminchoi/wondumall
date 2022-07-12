@@ -38,7 +38,7 @@
 		</div>
 	</div>
 	
-	<footer>
+	<footer id="footer">
 		<c:import url="./footer.jsp"></c:import>
 	</footer>
 		<!-- jQuery Plugins -->

@@ -6,7 +6,7 @@
 	<div id="responsive-nav">
 		<!-- NAV -->
 		<ul class="main-nav nav navbar-nav">
-			<li class="active"><a href="#">user</a></li>
+			<li><a href="#">user</a></li>
 			<li><a href="./adminproduct.do">product</a></li>
 			<li><a href="#">board</a></li>
 			<li><a href="#">Laptops</a></li>

@@ -29,7 +29,8 @@ public class AdminController {
 	}
 	
 	@GetMapping(value = "/adminproduct.do")
-	public ModelAndView adminproduct(@RequestParam(name = "pageNo", required = false, defaultValue = "1") int pageNo) {
+	public ModelAndView adminproduct(@RequestParam(name = "pageNo", required = false, defaultValue = "1") int pageNo, @RequestParam(name="searchColumn", required = false) String searchColumn,
+			@RequestParam(name="searchValue", required=false) String searchValue) {
 		
 		ModelAndView mv = new ModelAndView("adminproduct");
 		
@@ -37,6 +38,11 @@ public class AdminController {
 		paginationInfo.setCurrentPageNo(pageNo); //현재 페이지 번호
 		paginationInfo.setRecordCountPerPage(10); //한 페이지에 게시되는 게시물 건수
 		paginationInfo.setPageSize(10); //페이징 리스트의 사이즈
+		
+		if(searchColumn != null && searchValue != null) {
+			
+		}
+		
 		paginationInfo.setTotalRecordCount(adminService.getCount());
 		
 		int startPage = paginationInfo.getFirstRecordIndex();

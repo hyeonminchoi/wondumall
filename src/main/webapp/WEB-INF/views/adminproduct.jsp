@@ -78,14 +78,18 @@
 				<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
 			</div>
 			
-			<div id="search" style="margin: 0 auto; text-align: center; display: block;">
+			<form action="./adminproduct.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center;">
+				<select name="searchColumn">
+					<option value="p_name" ${searchColumn eq 'p_name'?'selected':'' }>제품이름</option>
+					<option value="u_name" ${searchColumn eq 'u_name'?'selected':''}>작성자</option>
+				</select>
 				<input type="text" name="searchValue" value="${searchValue}">
 				<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
-			</div>
+			</form>
 		</div>
 	</div>
 	
-	<footer>
+	<footer id="footer">
 		<c:import url="./footer.jsp"></c:import>
 	</footer>
 		<!-- jQuery Plugins -->
