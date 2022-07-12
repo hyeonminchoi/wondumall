@@ -188,19 +188,15 @@ function noticeLike(u_nickname){
 		  dataType: 'json',
 		  success: function(map){
 			  if(map.result == 0){
-			  	$('#noticeLikeImg').html(map.count + ' <i class="fa fa-heart" aria-hidden="true" onclick="noticeLike(${user.nickname})"></i>');
+			  	$('#noticeLikeImg').html(map.count + ' <i class="fa fa-heart" aria-hidden="true" onclick="noticeLike(\'${user.nickname}\')"></i>');
 			  } else{
-				$('#noticeLikeImg').html(map.count + ' <i class="fa fa-heart-o" aria-hidden="true" onclick="noticeLike(${user.nickname})"></i>');
+				$('#noticeLikeImg').html(map.count + ' <i class="fa fa-heart-o" aria-hidden="true" onclick="noticeLike(\'${user.nickname}\')"></i>');
 			  }
 		  },
 		  error: function(error){
 			  console.log(error);
 		  }
 	})
-}
-
-window.onload = function(){
-	noticeLike(${user.nickname});
 }
 
 function noticeCommentDelete(nc_no){
@@ -307,8 +303,18 @@ function noticeCommentEdit(nc_no, nc_comment){
 				</tr>
 				<tr>
 					<th>좋아요</th>
-					<td  id="noticeLikeImg">
+					<td id="noticeLikeImg">
 						${detail.n_like }
+						<c:if test="${user ne 'anonymousUser'}">
+							<c:choose>
+								<c:when test="${not empty likeStatus and likeStatus == true }">
+									<i class="fa fa-heart" aria-hidden="true" onclick="noticeLike('${user.nickname}')"></i>
+								</c:when>
+								<c:otherwise>
+									<i class="fa fa-heart-o" aria-hidden="true" onclick="noticeLike('${user.nickname}')"></i>
+								</c:otherwise>
+							</c:choose>
+						</c:if>
 					</td>
 				</tr>
 				<tr>

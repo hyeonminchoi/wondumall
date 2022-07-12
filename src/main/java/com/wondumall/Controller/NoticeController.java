@@ -71,7 +71,7 @@ public class NoticeController {
 	}
 
 	@GetMapping("/noticeDetail.do")
-	public ModelAndView noticeDetail(@RequestParam("n_no") int n_no, @RequestParam("pageNo") int pageNo, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView noticeDetail(@RequestParam("n_no") int n_no, @RequestParam("pageNo") int pageNo, HttpServletRequest request, HttpServletResponse response,@AuthenticationPrincipal MyUserDetails myUserDetails) {
 		ModelAndView mv = new ModelAndView("noticeDetail");
 		
 		//조회수 중복방지
@@ -99,6 +99,16 @@ public class NoticeController {
 			response.addCookie(newCookie);
 		}
 		
+		if(myUserDetails != null) {
+			NoticeDTO temp = new NoticeDTO();
+			temp.setN_no(n_no);
+			temp.setU_nickname(myUserDetails.getNickname());
+			int like = noticeService.containLike(temp);
+			if(like > 0)
+				mv.addObject("likeStatus", true);
+			else
+				mv.addObject("likeStatus", false);
+		}
 		
 		mv.addObject("detail", noticeService.getDetail(n_no));
 		mv.addObject("pageNo", pageNo);
