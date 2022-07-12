@@ -1,6 +1,8 @@
 package com..Controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,19 +40,22 @@ public class AdminController {
 		paginationInfo.setRecordCountPerPage(10); //한 페이지에 게시되는 게시물 건수
 		paginationInfo.setPageSize(10); //페이징 리스트의 사이즈
 		
+		Map<String, Object> map = new HashMap<>();
 		if(searchColumn != null && searchValue != null) {
-			
+			map.put("searchColumn", searchColumn);
+			map.put("searchValue", searchValue);
+			mv.addObject("searchColumr", searchColumn);
+			mv.addObject("searchValue", searchValue);
 		}
 		
 		paginationInfo.setTotalRecordCount(adminService.getCount());
 		
 		int startPage = paginationInfo.getFirstRecordIndex();
 		int lastPage = paginationInfo.getRecordCountPerPage();
-		
 		PageDTO page = new PageDTO();
 		page.setStartPage(startPage);
 		page.setLastPage(lastPage);
-		
+		map.put("page", page);
 		List<ProductDTO> productList = adminService.productList(page);
 		
 		mv.addObject("productList", productList);
