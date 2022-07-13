@@ -76,6 +76,10 @@
 	width: 100%;
 }
 
+.answer {
+	display: none;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -107,7 +111,19 @@
 	        $(this).addClass('current');
 	        $("#"+tab_id).addClass('current');
 	    });
+	    
+	    $('.question').on('click',function(){
+	    	if($(this).children('i').hasClass('fa-angle-down')){
+	    		$(this).children('i').removeClass('fa-angle-down');
+	    		$(this).children('i').addClass('fa-angle-up');
+	    	} else{
+	    		$(this).children('i').addClass('fa-angle-down');
+	    		$(this).children('i').removeClass('fa-angle-up');
+	    	}
+	    	$(this).parent().children('.answer').toggle(500);
+	    });
 	});
+	
 </script>
 </head>
 <body>
@@ -134,15 +150,27 @@
 			</ul>
 			<div id="tab-0" class="tab-content current owl-example owl-carousel">
 					<c:forEach var="i" items="${faqAll}">
-						<div class="item">
-							${i.faq_question}
+						<div class="items">
+							<div class="question">
+								${i.faq_question}<i class="fa fa-angle-down" aria-hidden="true"></i>
+							</div>
+							<div class="answer">
+								${i.faq_answer }
+							</div>
 						</div>
 					</c:forEach>
 			</div>
 			<c:forEach var="j" items="${faqCategoryDetail}" varStatus="status" >
 				<div id="tab-${status.count}" class="tab-content owl-example owl-carousel">
 					<c:forEach var="k" items="${j}">
-						${k.faq_question }<br>
+						<div class="items">
+							<div class="question">
+								${k.faq_question }<i class="fa fa-angle-down" aria-hidden="true"></i>
+							</div>
+							<div class="answer">
+								${k.faq_answer }
+							</div>
+						</div>
 					</c:forEach>
 				</div>
 			</c:forEach>

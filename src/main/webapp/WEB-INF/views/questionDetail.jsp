@@ -157,7 +157,7 @@ label:hover{
 	}
 	
 	//답변 글자수 제한
-	$(document).on("input","#answer",function(){
+	$(document).on("input","#a_answer",function(){
 		if($(this).val().length>=300){
 			$(this).val($(this).val().substring(0,300));
 			$("#answerCount").html("답변쓰기<br>(300/300)");
