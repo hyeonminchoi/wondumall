@@ -31,6 +31,9 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
+			.antMatchers("/admin*/**").access("hasRole('ROLE_ADMIN')");
+		
 		http.csrf().disable().formLogin().loginPage("/login.do").loginProcessingUrl("/login.do")
 				.usernameParameter("u_email").passwordParameter("u_pw").defaultSuccessUrl("/")
 				.failureUrl("/login.do?error");

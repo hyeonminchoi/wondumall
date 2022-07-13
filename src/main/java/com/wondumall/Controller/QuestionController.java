@@ -76,15 +76,17 @@ public class QuestionController {
 		ModelAndView mv = new ModelAndView("questionDetail");
 		
 		QuestionDTO detail = questionService.getDetail(q_no);
+		//비로그인 회원일 경우 접근 에러
 		if(myUserDetails== null) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
-		if(!(myUserDetails.getAuthorities().stream()
-			      .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) && (detail.getU_nickname() != myUserDetails.getNickname())) {
-			System.out.println("test");
-			//이부분 수정 필요
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-		}
+		
+		//관리자가 아니거나 작성자가 아닐 경우 접근 에러
+		boolean adminCheck = !myUserDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")); 
+		
+		if(adminCheck && !detail.getU_nickname().equals(myUserDetails.getNickname())) {
+	         throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+	      }
 		
 		mv.addObject("detail", detail);
 		mv.addObject("pageNo", pageNo);

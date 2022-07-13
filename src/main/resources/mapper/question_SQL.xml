@@ -21,7 +21,7 @@
 	</select>
 	
 	<select id="getQuestionList" parameterType="map" resultType="questionDTO">
-		SELECT question.*, user.u_nickname, (SELECT COUNT(*) FROM answer WHERE answer.q_no = question.q_no AND answer.a_del = 0) as n_commentCount FROM question 
+		SELECT question.*, user.u_nickname, (SELECT COUNT(*) FROM answer WHERE answer.q_no = question.q_no AND answer.a_del = 0) as q_commentCount FROM question 
 		JOIN user ON user.u_no = question.u_no
 		LEFT JOIN answer ON answer.q_no = question.q_no
 		WHERE question.q_del = 0
