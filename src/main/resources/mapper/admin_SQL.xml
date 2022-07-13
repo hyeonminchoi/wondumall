@@ -3,8 +3,47 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="admin">
-	<select id="productList" resultType="productDTO" parameterType="pageDTO">
-		SELECT * FROM productview LIMIT #{startPage}, #{lastPage}
+	<select id="userList" resultType="loginDTO" parameterType="map">
+		SELECT *
+		FROM user
+		<choose>
+			<when test='searchColumn == "u_name"'>
+				WHERE u_name like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_nickname"'>
+				WHERE u_nickname like CONCAT('%',#{searchValue},'%')
+			</when>
+		</choose>
+		GROUP BY u_no
+		ORDER BY u_joindate DESC
+		LIMIT #{page.startPage}, #{page.lastPage}
+	</select>
+	<select id="getUserCount" resultType="integer" parameterType="map">
+		SELECT count(*)
+		FROM user
+		<choose>
+			<when test='searchColumn == "u_name"'>
+				WHERE u_name like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_nickname"'>
+				WHERE u_nickname like CONCAT('%',#{searchValue},'%')
+			</when>
+		</choose>
+	</select>
+	<select id="productList" resultType="productDTO" parameterType="map">
+		SELECT *
+		FROM productview
+		<choose>
+			<when test='searchColumn == "p_name"'>
+				WHERE p_name like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_name"'>
+				WHERE u_name like CONCAT('%',#{searchValue},'%')
+			</when>
+		</choose>
+		GROUP BY p_no
+		ORDER BY p_date DESC
+		LIMIT #{page.startPage}, #{page.lastPage}
 	</select>
 	<update id="del" parameterType="productDTO">
 		UPDATE product SET p_del=1 WHERE p_no=#{p_no}
@@ -21,8 +60,17 @@
 	<update id="adcancel" parameterType="productDTO">
 		UPDATE product SET p_confirm=0 WHERE p_no=#{p_no}
 	</update>
-	<select id="getCount" parameterType="integer" resultType="integer">
-		SELECT count(*) AS count
+	<select id="getCount" parameterType="map" resultType="integer">
+		SELECT count(*)
 		FROM product
+		JOIN user ON user.u_no = product.u_no
+		<choose>
+			<when test='searchColumn == "p_name"'>
+				WHERE product.p_name like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_name"'>
+				WHERE user.u_name like CONCAT('%',#{searchValue},'%')
+			</when>
+		</choose>
 	</select>
 </mapper>

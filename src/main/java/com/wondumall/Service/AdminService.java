@@ -1,13 +1,15 @@
 package com..Service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com..DAO.AdminDAO;
-import com..DTO.PageDTO;
+import com..DTO.LoginDTO;
 import com..DTO.ProductDTO;
+import com..DTO.UserDTO;
 
 @Service
 public class AdminService {
@@ -15,9 +17,9 @@ public class AdminService {
 	@Autowired
 	private AdminDAO adminDAO;
 
-	public List<ProductDTO> productList(PageDTO page) {
+	public List<ProductDTO> productList(Map<String, Object> map) {
 		
-		return adminDAO.productList(page);
+		return adminDAO.productList(map);
 	}
 
 	public void del(int p_no) {
@@ -45,8 +47,18 @@ public class AdminService {
 		adminDAO.adcancel(p_no);
 	}
 
-	public int getCount() {
+	public int getCount(Map<String, Object> map) {
 		
-		return adminDAO.getCount();
+		return adminDAO.getCount(map);
+	}
+
+	public List<LoginDTO> userList(Map<String, Object> map) {
+		
+		return adminDAO.userList(map);
+	}
+
+	public int getUserCount(Map<String, Object> map) {
+		
+		return adminDAO.getUserCount(map);
 	}
 }

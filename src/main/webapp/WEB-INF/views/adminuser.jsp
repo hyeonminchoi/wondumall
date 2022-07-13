@@ -39,35 +39,35 @@
 				<thead>
 					<tr>
 						<th scope="col">#</th>
-						<th scope="col">제품이름</th>
-						<th scope="col">작성자</th>
-						<th scope="col">제품가격</th>
-						<th scope="col">등록날짜</th>
+						<th scope="col">이름</th>
+						<th scope="col">닉네임</th>
+						<th scope="col">가입날짜</th>
+						<th scope="col">등급</th>
 						<th scope="col">승인여부</th>
-						<th scope="col">삭제여부</th>
-						<th scope="col">삭제</th>
-						<th scope="col">완전삭제</th>
+						<th scope="col">탈퇴여부</th>
+						<th scope="col">탈퇴</th>
+						<th scope="col">완전탈퇴</th>
 						<th scope="col">승인</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${productList }" var="p">
+					<c:forEach items="${userList }" var="u">
 						<tr>
-							<th scope='row'>${p.p_no }</th>
-							<td>${p.p_name }</td>
-							<td>${p.u_name }</td>
-							<td>${p.p_price }</td>
-							<td>${p.p_date }</td>
-							<td>${p.p_confirm }</td>
-							<td>${p.p_del }</td>
+							<th scope='row'>${u.u_no }</th>
+							<td>${u.u_name }</td>
+							<td>${u.u_nickname }</td>
+							<td>${u.u_joindate }</td>
+							<td>${u.u_grade }</td>
+							<td>${u.u_confirm }</td>
+							<td>${u.u_resign }</td>
 							<td>
-							<button onclick="del(${p.p_no})">삭제</button>
-							<button onclick="repair(${p.p_no})">복구</button>
+							<button onclick="del(${u.u_no})">탈퇴</button>
+							<button onclick="repair(${u.u_no})">복구</button>
 							</td>
-							<td><button onclick="pdelete(${p.p_no})">완전삭제</button></td>
+							<td><button onclick="pdelete(${u.u_no})">완전탈퇴</button></td>
 							<td>
-							<button onclick="admission(${p.p_no})">승인</button>
-							<button onclick="adcancel(${p.p_no})">취소</button>
+							<button onclick="admission(${u.u_no})">승인</button>
+							<button onclick="adcancel(${u.u_no})">취소</button>
 							</td>
 						</tr>
 					</c:forEach>
@@ -77,17 +77,16 @@
 			<div id="pagination" style="text-align: center;">
 				<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
 			</div>
-			<form action="//admin/product.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center;">
+			<form action="//admin/user.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center;">
 				<select name="searchColumn">
-					<option value="p_name" ${searchColumn eq 'p_name'?'selected':'' }>제품이름</option>
-					<option value="u_name" ${searchColumn eq 'u_name'?'selected':''}>작성자</option>
+					<option value="u_name" ${searchColumn eq 'u_name'?'selected':'' }>이름</option>
+					<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>별명</option>
 				</select>
 				<input type="text" name="searchValue" value="${searchValue}">
 				<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
 			</form>
 		</div>
 	</div>
-	
 	<footer id="footer">
 		<c:import url="./footer.jsp"></c:import>
 	</footer>
@@ -101,43 +100,8 @@
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-function del(p_no){
-	if (confirm("삭제하시겠습니까?")){
-		location.href = "//admin/del/" + p_no;
-	} else {
-		
-	}
-}
-function repair(p_no){
-	if (confirm("복구하시겠습니까?")){
-		location.href = "//admin/repair/" + p_no;
-	} else {
-		
-	}
-}
-function pdelete(p_no){
-	if (confirm("삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?")){
-		location.href = "//admin/pdelete/" + p_no;
-	} else {
-		
-	}	
-}
-function admission(p_no){
-	if (confirm("승인하시겠습니까?")){
-		location.href = "//admin/admission/" + p_no;
-	} else {
-		
-	}
-}
-function adcancel(p_no){
-	if (confirm("승인을 취소하시겠습니까?")){
-		location.href = "//admin/adcancel/" + p_no;
-	} else {
-		
-	}
-}
 function linkPage(pageNo) {
-	location.href = "//admin/product.do?pageNo=" + pageNo;
+	location.href = "//admin/user.do?pageNo=" + pageNo;
 }
 </script>
 </body>
