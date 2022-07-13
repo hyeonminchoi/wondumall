@@ -1,0 +1,27 @@
+<?xml version="1.0"	encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"	
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="answer">
+	<insert id="writeAnswer">
+		INSERT INTO answer(a_answer, u_no, q_no)
+		VALUES(#{a_answer}, (SELECT u_no FROM user WHERE u_nickname=#{u_nickname}), #{q_no})
+	</insert>
+
+	<select id="getAnswerList" parameterType="integer" resultType="answerDTO">
+		SELECT answer.*, user.u_nickname FROM answer
+		JOIN user ON user.u_no = answer.u_no
+		WHERE answer.q_no = #{q_no} AND answer.a_del = 0
+		ORDER BY answer.a_date DESC
+	</select>	
+	
+	<update id="delete" parameterType="answerDTO">
+		UPDATE answer SET a_del = 1
+		WHERE q_no = #{q_no} AND a_no = #{a_no} AND u_no = (SELECT u_no FROM user WHERE u_nickname=#{u_nickname})
+	</update>
+	
+	<update id="edit" parameterType="answerDTO">
+		UPDATE answer SET a_answer = #{a_answer}, a_date = current_timestamp()
+		WHERE q_no = #{q_no} AND a_no = #{a_no} AND u_no = (SELECT u_no FROM user WHERE u_nickname=#{u_nickname})
+	</update>
+</mapper>

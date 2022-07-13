@@ -1,0 +1,64 @@
+<?xml version="1.0"	encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"	
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="question">
+	<select id="getCount" resultType="integer" parameterType="map">
+		SELECT COUNT(*) FROM question
+		JOIN user ON user.u_no = question.u_no
+		WHERE question.q_del = 0
+		<choose>
+			<when test='searchColumn == "q_title"'>
+				AND question.q_title like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "q_content"'>
+				AND question.q_content like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_nickname"'>
+				AND user.u_nickname like #{searchValue}
+			</when>
+		</choose>
+	</select>
+	
+	<select id="getQuestionList" parameterType="map" resultType="questionDTO">
+		SELECT question.*, user.u_nickname, (SELECT COUNT(*) FROM answer WHERE answer.q_no = question.q_no AND answer.a_del = 0) as n_commentCount FROM question 
+		JOIN user ON user.u_no = question.u_no
+		LEFT JOIN answer ON answer.q_no = question.q_no
+		WHERE question.q_del = 0
+		<choose>
+			<when test='searchColumn == "q_title"'>
+				AND question.q_title like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "q_content"'>
+				AND question.q_content like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_nickname"'>
+				AND user.u_nickname like #{searchValue}
+			</when>
+		</choose>
+		GROUP BY question.q_no
+		ORDER BY question.q_date DESC
+		LIMIT #{firstIndex}, #{recordCountPerPage}
+	</select>
+	
+	<select id="getDetail" resultType="questionDTO" parameterType="integer">
+		SELECT question.*, user.u_nickname FROM question
+		JOIN user ON user.u_no = question.u_no
+		WHERE q_no = #{q_no}
+	</select>
+	
+	<insert id="write" parameterType="questionDTO">
+		INSERT INTO question(q_title, q_content, u_no)
+		VALUES(#{q_title}, #{q_content}, (SELECT u_no FROM user WHERE u_nickname=#{u_nickname}))
+	</insert>
+	
+	<update id="delete" parameterType="questionDTO">
+		UPDATE question SET q_del = 1
+		WHERE q_no = #{q_no}
+	</update>
+	
+	<update id="edit" parameterType="questionDTO">
+		UPDATE question SET q_title=#{q_title}, q_content=#{q_content}, q_date=current_timestamp()
+		WHERE q_no = #{q_no} AND u_no = (SELECT u_no FROM user WHERE u_nickname=#{u_nickname})
+	</update>
+</mapper>

@@ -62,13 +62,13 @@
 	td:nth-child(2){
 		text-align: left;
 	}
-	th:nth-child(1), th:nth-child(3), th:nth-child(4), th:nth-child(5){
+	th:nth-child(1), th:nth-child(3){
 		width: 10%;
 	}
 	th:nth-child(2){
-		width: 40%;
+		width: 60%;
 	}
-	th:nth-child(6){
+	th:nth-child(4){
 		width: 20%;
 	}
 	td:nth-child(2){
@@ -78,17 +78,17 @@
 <script type="text/javascript">
 	function linkPage(pageNo) {
 		if(${not empty searchColumn} && ${not empty searchValue}){
-			location.href = "./notice.do?pageNo=" + pageNo + "&searchColumn=${searchColumn}&searchValue=${searchValue}";
+			location.href = "./question.do?pageNo=" + pageNo + "&searchColumn=${searchColumn}&searchValue=${searchValue}";
 		} else{
-			location.href = "./notice.do?pageNo=" + pageNo;
+			location.href = "./question.do?pageNo=" + pageNo;
 		}
 	}
 	
-	function noticeDetail(n_no) {
+	function questionDetail(q_no) {
 		if(${not empty searchColumn} && ${not empty searchValue}){
-			location.href = "./noticeDetail.do?n_no=" + n_no + "&pageNo=" + ${pageNo} + "&searchColumn=${searchColumn}&searchValue=${searchValue}";
+			location.href = "./questionDetail.do?q_no=" + q_no + "&pageNo=" + ${pageNo} + "&searchColumn=${searchColumn}&searchValue=${searchValue}";
 		} else{
-			location.href = "./noticeDetail.do?n_no=" + n_no + "&pageNo=" + ${pageNo};
+			location.href = "./questionDetail.do?q_no=" + q_no + "&pageNo=" + ${pageNo};
 		}
 	}
 	
@@ -98,7 +98,7 @@
 		$.ajax({
 			data : form_data,
 			type : "POST",
-			url : './noticeImage.do',
+			url : './questionImage.do',
 			cache : false,
 			contentType : false,
 			enctype : 'multipart/form-data',
@@ -148,20 +148,28 @@
 						<th scope="col">번호</th>
 						<th scope="col">제목</th>
 						<th scope="col">글쓴이</th>
-						<th scope="col">조회수</th>
-						<th scope="col">좋아요</th>
 						<th scope="col">작성일</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="n" items="${noticeList}">
+					<c:forEach var="q" items="${questionList}">
 						<tr>
-							<td>${n.n_no }</td>
-							<td onclick="noticeDetail(${n.n_no})">${n.n_title } <small style="color:red;">${n.n_commentCount }</small></td>
-							<td>${n.u_nickname }</td>
-							<td>${n.n_count }</td>
-							<td>${n.n_like }</td>
-							<fmt:parseDate value="${n.n_date}" var="time"
+							<td>${q.q_no }</td>
+							<sec:authorize access="not authenticated">
+								<td >${q.q_title } <small style="color:red;">${q.q_commentCount }</small></td>
+							</sec:authorize>
+							<sec:authorize access="authenticated">
+								<sec:authorize access="!hasRole('ROLE_ADMIN') && !(principal.nickname == '${q.u_nickname }')">
+									<td>${q.q_title } <small style="color:red;">${q.q_commentCount }</small></td>
+								</sec:authorize>
+							</sec:authorize>
+							<sec:authorize access="authenticated">
+								<sec:authorize access="hasRole('ROLE_ADMIN') || principal.nickname == '${q.u_nickname }'">
+									<td onclick="questionDetail(${q.q_no})">${q.q_title } <small style="color:red;">${q.q_commentCount }</small></td>
+								</sec:authorize>
+							</sec:authorize>
+							<td>${q.u_nickname }</td>
+							<fmt:parseDate value="${q.q_date}" var="time"
 								pattern="yyyy-MM-dd HH:mm:ss.S" />
 							<fmt:formatDate value="${time}" var="time"
 								pattern="yyyy-MM-dd HH:mm:ss" />
@@ -174,17 +182,18 @@
 				<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
 			</div>
 			<div style="text-align: center;">
-				<form action="./notice.do?pageNo=${pageNo }">
+				<form action="./question.do?pageNo=${pageNo }">
 					<select name="searchColumn">
-						<option value="n_title" ${searchColumn eq 'n_title'?'selected':'' }>제목</option>
-						<option value="n_content" ${searchColumn eq 'n_content'?'selected':''}>내용</option>
+						<option value="q_title" ${searchColumn eq 'q_title'?'selected':'' }>제목</option>
+						<option value="q_content" ${searchColumn eq 'q_content'?'selected':''}>내용</option>
 						<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>작성자</option>
 					</select>
 					<input type="text" name="searchValue" value="${searchValue}">
 					<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
 				</form>
 			</div>
-			<sec:authorize access="hasRole('ROLE_ADMIN')">
+			
+			<sec:authorize access="authenticated">
 				<div style="float:right;">
 					<button type="button" onclick="showWriteDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>글쓰기</button>
 				</div>
@@ -205,18 +214,18 @@
 	</footer>
 	<!-- /FOOTER -->
 
-<!-- 관리자만 공지사항 작성 가능 -->
-<sec:authorize access="hasRole('ROLE_ADMIN')">
-	<dialog id="noticeWriteDialog">
+<!-- 로그인한 유저는 글쓰기 가능 -->
+<sec:authorize access="authenticated">
+	<dialog id="questionWriteDialog">
 		<div>
-			<form action="./noticeWrite.do" method="post">
+			<form action="./questionWrite.do" method="post">
 				<div style="padding-bottom: 10px;">
 					<h2><label>제목</label></h2>
-					<input style="width: 100%;" type="text" name="n_title" required>
+					<input style="width: 100%;" type="text" name="q_title" required>
 				</div>
 				<div style="padding-bottom: 10px;">
 					<h4><label>내용</label></h4>
-					<textarea id="summernote" name="n_content" required></textarea>
+					<textarea id="summernote" name="q_content" required></textarea>
 				</div>
 				<input type="hidden" name="pageNo" value="${pageNo }">
 				<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">
@@ -229,13 +238,13 @@
 	</dialog>
 	
 <script>
-var noticeWriteDialog = document.getElementById('noticeWriteDialog');
+var questionWriteDialog = document.getElementById('questionWriteDialog');
 
 function showWriteDialog(){
-	noticeWriteDialog.showModal();
+	questionWriteDialog.showModal();
 }
 function hideWriteDialog(){
-	noticeWriteDialog.close();
+	questionWriteDialog.close();
 }
 
 $(document).ready(function() {

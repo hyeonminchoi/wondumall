@@ -21,8 +21,9 @@
 	</select>
 	
 	<select id="getNoticeList" parameterType="map" resultType="noticeDTO">
-		SELECT notice.*, user.u_nickname FROM notice 
+		SELECT notice.*, user.u_nickname, (SELECT COUNT(*) FROM notice_comment WHERE notice_comment.n_no = notice.n_no AND notice_comment.nc_del = 0) as n_commentCount FROM notice 
 		JOIN user ON user.u_no = notice.u_no
+		LEFT JOIN notice_comment ON notice_comment.n_no = notice.n_no
 		WHERE notice.n_del = 0
 		<choose>
 			<when test='searchColumn == "n_title"'>
@@ -35,6 +36,7 @@
 				AND user.u_nickname like #{searchValue}
 			</when>
 		</choose>
+		GROUP BY notice.n_no
 		ORDER BY notice.n_date DESC
 		LIMIT #{firstIndex}, #{recordCountPerPage}
 	</select>
