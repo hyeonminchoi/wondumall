@@ -25,5 +25,9 @@ public class FaqService {
 	public List<FaqDTO> getFaqCategoryDetail(String fc_category) {
 		return faqDAO.getFaqCategoryDetail(fc_category);
 	}
+
+	public int delete(FaqDTO faqDTO) {
+		return faqDAO.delete(faqDTO);
+	}
 	
 }

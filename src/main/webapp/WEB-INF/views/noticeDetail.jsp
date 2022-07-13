@@ -357,38 +357,38 @@ function noticeCommentEdit(nc_no, nc_comment){
 
 	<sec:authorize access="hasRole('ROLE_ADMIN')">
 		<dialog id="noticeEditDialog">
-		<div>
-			<form action="./noticeEdit.do" method="post">
-				<div style="padding-bottom: 10px;">
-					<h2>
-						<label>제목</label>
-					</h2>
-					<input style="width: 100%;" type="text" name="n_title"
-						value="${detail.n_title }" required>
-				</div>
-				<div style="padding-bottom: 10px;">
-					<h4>
-						<label>내용</label>
-					</h4>
-					<textarea id="summernote" name="n_content" required><c:out value="${detail.n_content}" /></textarea>
-				</div>
-				<input type="hidden" name="pageNo" value="${pageNo }"> <input
-					type="hidden" name="n_no" value="${detail.n_no }">
-				<c:if
-					test="${not empty param.searchColumn && not empty param.searchValue}">
-					<input type="hidden" name="searchColumn"
-						value="${param.searchColumn }">
-					<input type="hidden" name="searchValue"
-						value="${param.searchValue }">
-				</c:if>
-				<input type="hidden" name="u_nickname"
-					value="<sec:authentication property="principal.nickname" />">
-				<div>
-					<button type="submit">수정</button>
-					<button type="button" onclick="hideNoticeEditDialog()">닫기</button>
-				</div>
-			</form>
-		</div>
+			<div>
+				<form action="./noticeEdit.do" method="post">
+					<div style="padding-bottom: 10px;">
+						<h2>
+							<label>제목</label>
+						</h2>
+						<input style="width: 100%;" type="text" name="n_title"
+							value="${detail.n_title }" required>
+					</div>
+					<div style="padding-bottom: 10px;">
+						<h4>
+							<label>내용</label>
+						</h4>
+						<textarea id="summernote" name="n_content" required><c:out value="${detail.n_content}" /></textarea>
+					</div>
+					<input type="hidden" name="pageNo" value="${pageNo }"> <input
+						type="hidden" name="n_no" value="${detail.n_no }">
+					<c:if
+						test="${not empty param.searchColumn && not empty param.searchValue}">
+						<input type="hidden" name="searchColumn"
+							value="${param.searchColumn }">
+						<input type="hidden" name="searchValue"
+							value="${param.searchValue }">
+					</c:if>
+					<input type="hidden" name="u_nickname"
+						value="<sec:authentication property="principal.nickname" />">
+					<div>
+						<button type="submit">수정</button>
+						<button type="button" onclick="hideNoticeEditDialog()">닫기</button>
+					</div>
+				</form>
+			</div>
 		</dialog>
 
 		<script>

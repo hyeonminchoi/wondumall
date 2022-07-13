@@ -25,5 +25,9 @@ public class FaqDAO {
 	public List<FaqDTO> getFaqCategoryDetail(String fc_category) {
 		return sqlSession.selectList("faq.getFaqCategoryDetail", fc_category);
 	}
+
+	public int delete(FaqDTO faqDTO) {
+		return sqlSession.delete("faq.delete", faqDTO);
+	}
 	
 }

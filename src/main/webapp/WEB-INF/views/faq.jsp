@@ -43,15 +43,17 @@
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
 <!-- jQuery Plugins -->
+<script src="./js/jquery.min.js"></script>
 <script src="./js/jquery.min.js"></script>
 <script src="./js/slick.min.js"></script>
 <script src="./js/nouislider.min.js"></script>
 <script src="./js/jquery.zoom.min.js"></script>
 <script src="./js/main.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
@@ -147,19 +149,25 @@
 						<c:forEach var="k" items="${j}" varStatus="index">
 							<h2 class="accordion-header" id="headingOne">
 						      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${status.count }${index.count }" aria-expanded="true" aria-controls="collapse${status.count }${index.count }">
-						        <h4>${k.faq_question }</h4>
+						        <h4 id="question">${k.faq_question }</h4>
 						      </button>
 						    </h2>
 						    <div id="collapse${status.count }${index.count }" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent=".accordion">
-						      <div class="accordion-body">
-						        ${k.faq_answer }
-						      </div>
+						    	<div class="accordion-body">
+						        	${k.faq_answer }
+							    </div>
+								<sec:authorize access="authenticated">
+									<sec:authorize access="hasRole('ROLE_ADMIN')">
+										<label onclick="showFaqEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>수정</label>
+									</sec:authorize>
+									<sec:authorize access="hasRole('ROLE_ADMIN')">
+										<label onclick="faqDelete(${k.faq_no})"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</label>
+									</sec:authorize>
+								</sec:authorize>
 						    </div>
 						</c:forEach>
 					</div>
 				</c:forEach>
-								
-				
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 					<div style="float:right;">
 						<button type="button" onclick="showFaqWriteDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>글쓰기</button>
@@ -214,6 +222,35 @@
 		</div>
 	</dialog>
 	
+	<dialog id="faqEditDialog">
+		<div>
+			<form action="./faqEdit.do" method="post">
+				<div style="padding-bottom: 10px;">
+					<label>카테고리
+						<select style="width: 100%;" name="fc_category" required>
+							<option value="">카테고리를 선택해주세요</option>
+							<c:forEach var="category" items="${faqCategory }">
+								<option value="${category.fc_category }">${category.fc_category }</option>
+							</c:forEach>
+						</select>
+					</label>
+				</div>
+				<div style="padding-bottom: 10px;">
+					<h2><label>제목</label></h2>
+					<input style="width: 100%;" type="text" name="faq_question" id="faq_question" required>
+				</div>
+				<div style="padding-bottom: 10px;">
+					<h4><label>내용</label></h4>
+					<textarea id="summernote2" name="faq_answer" id="faq_answer" required></textarea>
+				</div>
+				<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">
+				<div>
+					<button type="submit">글쓰기</button>
+					<button type="button" onclick="hideFaqEditDialog()">닫기</button>
+				</div>
+			</form>
+		</div>
+	</dialog>
 <script>
 var faqWriteDialog = document.getElementById('faqWriteDialog');
 
@@ -222,6 +259,15 @@ function showFaqWriteDialog(){
 }
 function hideFaqWriteDialog(){
 	faqWriteDialog.close();
+}
+
+var faqEditDialog = document.getElementById('faqEditDialog');
+
+function showFaqEditDialog(){
+	faqEditDialog.showModal();
+}
+function hideFaqEditDialog(){
+	faqEditDialog.close();
 }
 
 $(document).ready(function() {
@@ -235,7 +281,24 @@ $(document).ready(function() {
 				}
 			}
 	  });
+	  $('#summernote2').summernote({
+		  height: 400,
+		  callbacks : {
+				onImageUpload : function(files, editor, welEditable) {       
+					for (var i = 0; i < files.length; i++) {
+						sendFile(files[i], this);
+					}
+				}
+			}
+	  });
 });
+
+function faqDelete(faq_no){
+	if(confirm("자주묻는질문을 삭제하겠습니까?")){
+		location.href="./faqDelete.do?faq_no=" + faq_no;
+	}
+}
+
 </script>
 </sec:authorize>
 

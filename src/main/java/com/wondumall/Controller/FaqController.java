@@ -15,11 +15,13 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com..DTO.FaqCategoryDTO;
 import com..DTO.FaqDTO;
+import com..DTO.NoticeDTO;
 import com..Service.FaqService;
 import com..Util.FileSave;
 import com..Util.Util;
@@ -83,6 +85,21 @@ public class FaqController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().build();
+		}
+	}
+	
+	@Secured("ROLE_ADMIN")
+	@GetMapping("/faqDelete.do")
+	public void faqDelete(@RequestParam("faq_no") int faq_no, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		FaqDTO faqDTO = new FaqDTO();
+		faqDTO.setFaq_no(faq_no);
+		int result = faqService.delete(faqDTO);
+		response.setContentType("text/html; charset=UTF-8");
+		if (result > 0) {
+				response.getWriter().println("<script> alert('자주묻는질문 삭제에 성공했습니다'); location.href='./faq.do'</script>");
+		} else {
+				response.getWriter().println("<script> alert('자주묻는질문 삭제에 실패했습니다'); location.href='./faq.do'</script>");
 		}
 	}
 }

@@ -19,4 +19,9 @@
 		JOIN faq_category ON faq.fc_no = faq_category.fc_no
 		WHERE faq_category.fc_category = #{fc_category}
 	</select>
+	
+	<delete id="delete" parameterType="faqDTO">
+		DELETE FROM faq
+		WHERE faq_no = #{faq_no}
+	</delete>
 </mapper>
