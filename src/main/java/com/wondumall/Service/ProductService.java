@@ -52,4 +52,8 @@ public class ProductService {
 	public int cartUpdate(CartDTO dto) {
 		return productDAO.cartUpdate(dto);
 	}
+
+	public void cartDelete(CartDTO cartDTO) {
+		productDAO.cartDelete(cartDTO);
+	}
 }

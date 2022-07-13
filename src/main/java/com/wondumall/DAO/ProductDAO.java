@@ -52,4 +52,8 @@ public class ProductDAO {
 	public int cartUpdate(CartDTO dto) {
 		return sqlSession.update("product.cartUpdate", dto);
 	}
+
+	public void cartDelete(CartDTO cartDTO) {
+		sqlSession.delete("product.cartDelete", cartDTO);
+	}
 }
