@@ -36,7 +36,27 @@
 		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
-
+		
+		<!-- jQuery Plugins -->
+		<script src="./js/jquery.min.js"></script>
+		<script src="./js/bootstrap.min.js"></script>
+		<script src="./js/slick.min.js"></script>
+		<script src="./js/nouislider.min.js"></script>
+		<script src="./js/jquery.zoom.min.js"></script>
+		<script src="./js/main.js"></script>
+	<script>
+		$(function(){
+			if(${not empty param.result} && ${param.result == 1}){
+				alert("장바구니 추가 성공")
+			} else if(${not empty param.result} && ${param.result == 0}){
+				alert("장바구니 추가 실패")
+			} 
+		})
+		function loginBtn(){
+			alert('로그인을 하세요');
+			location.href='./login.do';
+		}
+	</script>
     </head>
 	<body>
 		<!-- HEADER -->
@@ -172,7 +192,12 @@
 								<c:if test="${user ne 'anonymousUser'}">
 									<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
 								</c:if>
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+								<sec:authorize access="authenticated">
+									<button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+								</sec:authorize>
+								<sec:authorize access="not authenticated">
+									<button type="button" class="add-to-cart-btn" onclick="loginBtn()"><i class="fa fa-shopping-cart"></i> add to cart</button>
+								</sec:authorize>
 							</div>
 							</form>
 
@@ -582,14 +607,6 @@
 			<c:import url="./footer.jsp"></c:import>
 		</footer>
 		<!-- /FOOTER -->
-
-		<!-- jQuery Plugins -->
-		<script src="./js/jquery.min.js"></script>
-		<script src="./js/bootstrap.min.js"></script>
-		<script src="./js/slick.min.js"></script>
-		<script src="./js/nouislider.min.js"></script>
-		<script src="./js/jquery.zoom.min.js"></script>
-		<script src="./js/main.js"></script>
 
 	</body>
 </html>

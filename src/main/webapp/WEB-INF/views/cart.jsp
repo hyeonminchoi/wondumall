@@ -38,7 +38,25 @@
 		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
-
+		<script src="./js/jquery.min.js"></script>  
+		<script src="./js/bootstrap.min.js"></script>
+		<script src="./js/slick.min.js"></script>
+		<script src="./js/nouislider.min.js"></script>
+		<script src="./js/jquery.zoom.min.js"></script>
+		<script src="./js/main.js"></script>
+		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script type="text/javascript">
+			function del(cart_no){
+				if (confirm("삭제하시겠습니까?")){
+					location.href = "./cartDelete.do?cart_no=" + cart_no;
+				} else {
+					
+				}
+			}
+		</script>
     </head>
 	<body>
 		<!-- HEADER -->
@@ -59,7 +77,7 @@
 				<!-- row -->
 				<div class="row">
 					<div class="col-md-12">
-						<h3 class="breadcrumb-header">결제주문</h3>
+						<h3 class="breadcrumb-header">장바구니</h3>
 						<ul class="breadcrumb-tree">
 							<li><a href="./">Home</a></li>
 							<li class="active">Cart</li>
@@ -237,8 +255,49 @@
 						</div>
 					</div>
 				</form>
-
-
+				
+				
+				<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">제품이름</th>
+						<th scope="col">작성자</th>
+						<th scope="col">제품가격</th>
+						<th scope="col">등록날짜</th>
+						<th scope="col">승인여부</th>
+						<th scope="col">삭제여부</th>
+						<th scope="col">삭제</th>
+						<th scope="col">완전삭제</th>
+						<th scope="col">승인</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${cart}" var="c">
+						<tr>
+							<th scope='row'>${c.cart_no }</th>
+							<td>${p.p_name }</td>
+							<td>${p.u_name }</td>
+							<td>${p.p_price }</td>
+							<td>${p.p_date }</td>
+							<td>${p.p_confirm }</td>
+							<td>${p.p_del }</td>
+							<td>
+							<button onclick="del(${c.cart_no})">삭제</button>
+							<button onclick="repair(${p.p_no})">복구</button>
+							</td>
+							<td><button onclick="pdelete(${p.p_no})">완전삭제</button></td>
+							<td>
+							<button onclick="admission(${p.p_no})">승인</button>
+							<button onclick="adcancel(${p.p_no})">취소</button>
+							</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+					 <%-- <td><a href="./cartDelete.do?cart_no=${cart.cart_no}">[삭제]</a></td> --%>
+					<!-- 삭제 버튼을 누르면 delete.do로 장바구니 개별 id (삭제하길원하는 장바구니 id)를 보내서 삭제한다. -->
+				
 				${cart}
 					
 					

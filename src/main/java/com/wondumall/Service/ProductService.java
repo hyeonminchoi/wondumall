@@ -33,8 +33,8 @@ public class ProductService {
 		productDAO.productReview(dto);
 	}
 
-	public void cartAdd(CartDTO dto) {
-		productDAO.cartAdd(dto);
+	public int cartAdd(CartDTO dto) {
+		return productDAO.cartAdd(dto);
 	}
 
 	public List<CartDTO> cart(int u_no) {
@@ -43,5 +43,17 @@ public class ProductService {
 
 	public int cartCount(int u_no) {
 		return productDAO.cartCount(u_no);
+	}
+
+	public int containProduct(CartDTO dto) {
+		return productDAO.containProduct(dto);
+	}
+
+	public int cartUpdate(CartDTO dto) {
+		return productDAO.cartUpdate(dto);
+	}
+
+	public void cartDelete(CartDTO cartDTO) {
+		productDAO.cartDelete(cartDTO);
 	}
 }

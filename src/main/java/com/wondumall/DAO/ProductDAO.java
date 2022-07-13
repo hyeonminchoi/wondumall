@@ -33,8 +33,8 @@ public class ProductDAO {
 		sqlSession.insert("product.productReview", dto);
 	}
 
-	public void cartAdd(CartDTO dto) {
-		sqlSession.insert("product.cartAdd", dto);
+	public int cartAdd(CartDTO dto) {
+		return sqlSession.insert("product.cartAdd", dto);
 	}
 
 	public List<CartDTO> cartAdd(int u_no) {
@@ -43,5 +43,17 @@ public class ProductDAO {
 
 	public int cartCount(int u_no) {
 		return sqlSession.selectOne("product.cartCount", u_no);
+	}
+
+	public int containProduct(CartDTO dto) {
+		return sqlSession.selectOne("product.containProduct", dto);
+	}
+
+	public int cartUpdate(CartDTO dto) {
+		return sqlSession.update("product.cartUpdate", dto);
+	}
+
+	public void cartDelete(CartDTO cartDTO) {
+		sqlSession.delete("product.cartDelete", cartDTO);
 	}
 }
