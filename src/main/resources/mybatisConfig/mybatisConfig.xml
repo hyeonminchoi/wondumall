@@ -21,5 +21,6 @@
 		<typeAlias type="com..DTO.UserDTO" alias="userDTO" />
 		<typeAlias type="com..DTO.LoginDTO" alias="loginDTO" />
 		<typeAlias type="com..DTO.PageDTO" alias="pageDTO"/>
+		<typeAlias type="com..DTO.FaqCategoryDTO" alias="faqCategoryDTO"/>
 	</typeAliases>
   </configuration>

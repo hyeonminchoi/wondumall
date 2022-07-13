@@ -1,0 +1,28 @@
+<?xml version="1.0"	encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"	
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="faq">
+	<select id="getFaqAll" resultType="faqDTO">
+		SELECT faq.*, faq_category.fc_category
+		FROM faq
+		JOIN faq_category ON faq.fc_no = faq_category.fc_no
+	</select>
+	
+	<select id="getFaqCategory" resultType="faqCategoryDTO">
+		SELECT *
+		FROM faq_category
+	</select>
+	
+	<insert id="write" parameterType="faqDTO">
+		INSERT INTO faq(faq_question, faq_answer, u_no, fc_no)
+		VALUES(#{faq_question}, #{faq_answer}, (SELECT u_no FROM user WHERE u_nickname=#{u_nickname}), (SELECT fc_no FROM faq_category WHERE fc_category = #{fc_category}))
+	</insert>
+	
+	<select id="getFaqCategoryDetail" parameterType="string" resultType="faqDTO">
+		SELECT faq.*, faq_category.fc_category
+		FROM faq
+		JOIN faq_category ON faq.fc_no = faq_category.fc_no
+		WHERE faq_category.fc_category = #{fc_category}
+	</select>
+</mapper>

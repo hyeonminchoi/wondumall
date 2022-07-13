@@ -56,41 +56,29 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <style>
-	th, td{
-		text-align: center;
-	}
-	td:nth-child(2){
-		text-align: left;
-	}
-	th:nth-child(1), th:nth-child(3), th:nth-child(4), th:nth-child(5){
-		width: 10%;
-	}
-	th:nth-child(2){
-		width: 40%;
-	}
-	th:nth-child(6){
-		width: 20%;
-	}
-	td:nth-child(2){
-		text-align: left;
-	}
+
+.webtong_tab_type02 { display:table; width:100%; table-layout:fixed; border-left:1px solid #e7e7e7;position:relative;background-color: #f1f1f1}
+.webtong_tab_type02 li { display:table-cell; height:50px}
+.webtong_tab_type02 li a { display:block;position:relative;height:50px;border-top:1px solid #e7e7e7;border-bottom:1px solid #e7e7e7;line-height:50px;text-align:center;background-color: #fff}
+.webtong_tab_type02 li a:after { content:''; display:block; position:absolute; top:0; right:0; bottom:0; width:1px; background:#e6e3df}
+.webtong_tab_type02 li.current a, .webtong_tab_type02 li:hover a {border-bottom-color:#f34b53; border-top:1px solid #f34b53;z-index: 1;background-color: #fd7c82;color:#fff}
+.webtong_tab_type02 li.current a:after, .webtong_tab_type02 li:hover a:after { content:''; display:block; position:absolute; top:0; right:0; bottom:-1px; width:1px; background:#f34b53}
+.webtong_tab_type02 li.current a:before, .webtong_tab_type02 li:hover a:before { content:''; display:block; position:absolute; top:0; left:0; bottom:-1px; width:1px; background:#f34b53}
+
+.tab-content{
+  	display: none;
+  	background-color: rgba(255,255,255,0.4);
+}
+.tab-content.current{
+	background-color: rgba(255,255,255,0.4);
+ 	display: block;
+ 	height: 350px;
+	width: 100%;
+}
+
 </style>
+
 <script type="text/javascript">
-	function linkPage(pageNo) {
-		if(${not empty searchColumn} && ${not empty searchValue}){
-			location.href = "./board.do?pageNo=" + pageNo + "&searchColumn=${searchColumn}&searchValue=${searchValue}";
-		} else{
-			location.href = "./board.do?pageNo=" + pageNo;
-		}
-	}
-	
-	function boardDetail(b_no) {
-		if(${not empty searchColumn} && ${not empty searchValue}){
-			location.href = "./boardDetail.do?b_no=" + b_no + "&pageNo=" + ${pageNo} + "&searchColumn=${searchColumn}&searchValue=${searchValue}";
-		} else{
-			location.href = "./boardDetail.do?b_no=" + b_no + "&pageNo=" + ${pageNo};
-		}
-	}
 	
 	function sendFile(file, el) {
 		var form_data = new FormData();
@@ -98,7 +86,7 @@
 		$.ajax({
 			data : form_data,
 			type : "POST",
-			url : './boardImage.do',
+			url : './faqImage.do',
 			cache : false,
 			contentType : false,
 			enctype : 'multipart/form-data',
@@ -110,6 +98,16 @@
 			}
 		});
 	}
+	
+	$(document).ready(function(){
+	    $('ul.tabs li').click(function(){
+	        var tab_id = $(this).attr('data-tab');
+	        $('ul.tabs li').removeClass('current');
+	        $('.tab-content').removeClass('current');
+	        $(this).addClass('current');
+	        $("#"+tab_id).addClass('current');
+	    });
+	});
 </script>
 </head>
 <body>
@@ -127,52 +125,32 @@
 	<div class="section">
 		<!-- container -->
 		<div class="container">
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<th scope="col">번호</th>
-						<th scope="col">제목</th>
-						<th scope="col">글쓴이</th>
-						<th scope="col">조회수</th>
-						<th scope="col">좋아요</th>
-						<th scope="col">작성일</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="b" items="${boardList}">
-						<tr>
-							<td>${b.b_no }</td>
-							<td onclick="boardDetail(${b.b_no})">${b.b_title } <small style="color:red;">${b.b_commentCount }</small></td>
-							<td>${b.u_nickname }</td>
-							<td>${b.b_count }</td>
-							<td>${b.b_like }</td>
-							<fmt:parseDate value="${b.b_date}" var="time"
-								pattern="yyyy-MM-dd HH:mm:ss.S" />
-							<fmt:formatDate value="${time}" var="time"
-								pattern="yyyy-MM-dd HH:mm:ss" />
-							<td>${time }</td>
-						</tr>
+			<h2 class="title01">자주묻는질문</h2>
+			<ul class="webtong_tab_type02 tabs">
+				<li class="tab-link current" data-tab="tab-0"><a>전체</a></li>
+				<c:forEach var="fc" items="${faqCategory }" varStatus="status">
+					<li class="tab-link" data-tab="tab-${status.count}"><a>${fc.fc_category }</a>
+				</c:forEach>
+			</ul>
+			<div id="tab-0" class="tab-content current owl-example owl-carousel">
+					<c:forEach var="i" items="${faqAll}">
+						<div class="item">
+							${i.faq_question}
+						</div>
 					</c:forEach>
-				</tbody>
-			</table>
-			<div style="text-align: center; margin-bottom: 10px;">
-				<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
 			</div>
-			<div style="text-align: center;">
-				<form action="./board.do?pageNo=${pageNo }">
-					<select name="searchColumn">
-						<option value="b_title" ${searchColumn eq 'b_title'?'selected':'' }>제목</option>
-						<option value="b_content" ${searchColumn eq 'b_content'?'selected':''}>내용</option>
-						<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>작성자</option>
-					</select>
-					<input type="text" name="searchValue" value="${searchValue}">
-					<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
-				</form>
-			</div>
+			<c:forEach var="j" items="${faqCategoryDetail}" varStatus="status" >
+				<div id="tab-${status.count}" class="tab-content owl-example owl-carousel">
+					<c:forEach var="k" items="${j}">
+						${k.faq_question }<br>
+					</c:forEach>
+				</div>
+			</c:forEach>
+							
 			
-			<sec:authorize access="authenticated">
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<div style="float:right;">
-					<button type="button" onclick="showWriteDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>글쓰기</button>
+					<button type="button" onclick="showFaqWriteDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>글쓰기</button>
 				</div>
 			</sec:authorize>
 			<sec:authorize access="not authenticated">
@@ -191,37 +169,46 @@
 	</footer>
 	<!-- /FOOTER -->
 
-<!-- 로그인한 유저는 글쓰기 가능 -->
-<sec:authorize access="authenticated">
-	<dialog id="boardWriteDialog">
+<!-- 관리자만 자주묻는 질문 작성 가능 -->
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+	<dialog id="faqWriteDialog">
 		<div>
-			<form action="./boardWrite.do" method="post">
+			<form action="./faqWrite.do" method="post">
+				<div style="padding-bottom: 10px;">
+					<label>카테고리
+						<select style="width: 100%;" name="fc_category" required>
+							<option value="">카테고리를 선택해주세요</option>
+							<c:forEach var="category" items="${faqCategory }">
+								<option value="${category.fc_category }">${category.fc_category }</option>
+							</c:forEach>
+						</select>
+					</label>
+				</div>
 				<div style="padding-bottom: 10px;">
 					<h2><label>제목</label></h2>
-					<input style="width: 100%;" type="text" name="b_title" required>
+					<input style="width: 100%;" type="text" name="faq_question" required>
 				</div>
 				<div style="padding-bottom: 10px;">
 					<h4><label>내용</label></h4>
-					<textarea id="summernote" name="b_content" required></textarea>
+					<textarea id="summernote" name="faq_answer" required></textarea>
 				</div>
-				<input type="hidden" name="pageNo" value="${pageNo }">
 				<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">
 				<div>
 					<button type="submit">글쓰기</button>
-					<button type="button" onclick="hideWriteDialog()">닫기</button>
+					<button type="button" onclick="hideFaqWriteDialog()">닫기</button>
 				</div>
 			</form>
 		</div>
 	</dialog>
 	
 <script>
-var boardWriteDialog = document.getElementById('boardWriteDialog');
+var faqWriteDialog = document.getElementById('faqWriteDialog');
 
-function showWriteDialog(){
-	boardWriteDialog.showModal();
+function showFaqWriteDialog(){
+	faqWriteDialog.showModal();
 }
-function hideWriteDialog(){
-	boardWriteDialog.close();
+function hideFaqWriteDialog(){
+	faqWriteDialog.close();
 }
 
 $(document).ready(function() {

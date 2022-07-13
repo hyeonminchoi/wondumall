@@ -218,24 +218,9 @@ function answerEdit(a_no, answer){
 	<!-- /HEADER -->
 
 	<!-- NAVIGATION -->
-	<nav id="navigation">
-		<div class="container">
-			<!-- responsive-nav -->
-			<div id="responsive-nav">
-				<!-- NAV -->
-				<ul class="main-nav nav navbar-nav" id="nav">
-					<li><a href="./notice.do">공지사항</a></li>
-					<li><a href="./board.do">자유게시판</a></li>
-					<li><a href="./question.do">질문게시판</a></li>
-					<li><a href="#">자주묻는질문</a></li>
-					<li><a href="#">실시간문의</a></li>
-				</ul>
-				<!-- /NAV -->
-			</div>
-			<!-- /responsive-nav -->
-		</div>
-	</nav>
+		<c:import url="./communityNav.jsp"></c:import>
 	<!-- /NAVIGATION -->
+	
 	<!-- SECTION -->
 	<div class="section">
 		<!-- container -->

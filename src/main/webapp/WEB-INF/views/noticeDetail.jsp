@@ -128,7 +128,7 @@ label:hover{
 	}
 	
 	function noticeDelete(){
-		if(confirm("ê³µì??‚¬?•­?„ ?‚­? œ?•˜ê² ìŠµ?‹ˆê¹??")){
+		if(confirm("ê³µì§€ì‚¬í•­ì„ ì‚­ì œí•˜ê² ìŠµë‹ˆê¹Œ?")){
 			if(${not empty param.searchColumn} && ${not empty param.searchValue}){
 				location.href = "./noticeDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
 			} else{
@@ -156,16 +156,16 @@ label:hover{
 		});
 	}
 	
-	//?Œ“ê¸? ê¸???ˆ˜ ? œ?•œ
+	//ëŒ“ê¸€ ê¸€ììˆ˜ ì œí•œ
 	$(document).on("input","#nc_comment",function(){
 		if($(this).val().length>=300){
 			$(this).val($(this).val().substring(0,300));
-			$("#commentCount").html("?Œ“ê¸??“°ê¸?<br>(300/300)");
-			$("#commentCount1").html("?Œ“ê¸??ˆ˜? •<br>(300/300)");
+			$("#commentCount").html("ëŒ“ê¸€ì“°ê¸°<br>(300/300)");
+			$("#commentCount1").html("ëŒ“ê¸€ìˆ˜ì •<br>(300/300)");
 			return;
 		}
-		$("#commentCount").html("?Œ“ê¸??“°ê¸?<br>(" + $(this).val().length + "/300)");
-		$("#commentCount1").html("?Œ“ê¸??ˆ˜? •<br>(" + $(this).val().length + "/300)");
+		$("#commentCount").html("ëŒ“ê¸€ì“°ê¸°<br>(" + $(this).val().length + "/300)");
+		$("#commentCount1").html("ëŒ“ê¸€ìˆ˜ì •<br>(" + $(this).val().length + "/300)");
 	});
 </script>
 
@@ -194,7 +194,7 @@ function noticeLike(u_nickname){
 }
 
 function noticeCommentDelete(nc_no){
-	if(confirm("?Œ“ê¸??„ ?‚­? œ?•˜ê² ìŠµ?‹ˆê¹??")){
+	if(confirm("ëŒ“ê¸€ì„ ì‚­ì œí•˜ê² ìŠµë‹ˆê¹Œ?")){
 		if(${not empty param.searchColumn} && ${not empty param.searchValue}){
 			location.href = "./noticeCommentDelete.do?pageNo=" + ${pageNo} + "&n_no=${detail.n_no}&nc_no=" + nc_no + "&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
 		} else{
@@ -204,7 +204,7 @@ function noticeCommentDelete(nc_no){
 }
 
 function noticeCommentEdit(nc_no, nc_comment){
-	if(confirm("?Œ“ê¸??„ ?ˆ˜? •?•˜ê² ìŠµ?‹ˆê¹??")){
+	if(confirm("ëŒ“ê¸€ì„ ìˆ˜ì •í•˜ê² ìŠµë‹ˆê¹Œ?")){
 		var oldComment = nc_comment.trim();
 		var temp = ''; 
 		temp += '<div id="ceditform">'
@@ -218,7 +218,7 @@ function noticeCommentEdit(nc_no, nc_comment){
 		temp += '<input type="hidden" name="searchValue" value="${param.searchValue }">'
 		temp += '</c:if>'
 		temp += '<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">'
-		temp += '<button type="submit" id="commentCount1">?Œ“ê¸??ˆ˜? •<br>(' + nc_comment.length + '/300)</button>'
+		temp += '<button type="submit" id="commentCount1">ëŒ“ê¸€ìˆ˜ì •<br>(' + nc_comment.length + '/300)</button>'
 		temp += '</form>'
 		temp += '</div>'
 		$('#commentList').empty().html(temp);
@@ -239,36 +239,21 @@ function noticeCommentEdit(nc_no, nc_comment){
 	<!-- /HEADER -->
 
 	<!-- NAVIGATION -->
-	<nav id="navigation">
-		<div class="container">
-			<!-- responsive-nav -->
-			<div id="responsive-nav">
-				<!-- NAV -->
-				<ul class="main-nav nav navbar-nav" id="nav">
-					<li><a href="./notice.do">ê³µì??‚¬?•­</a></li>
-					<li><a href="./board.do">??œ ê²Œì‹œ?Œ</a></li>
-					<li><a href="./question.do">ì§ˆë¬¸ê²Œì‹œ?Œ</a></li>
-					<li><a href="#">?ì£¼ë¬»?Š”ì§ˆë¬¸</a></li>
-					<li><a href="#">?‹¤?‹œê°„ë¬¸?˜</a></li>
-				</ul>
-				<!-- /NAV -->
-			</div>
-			<!-- /responsive-nav -->
-		</div>
-	</nav>
+		<c:import url="./communityNav.jsp"></c:import>
 	<!-- /NAVIGATION -->
+	
 	<!-- SECTION -->
 	<div class="section">
 		<!-- container -->
 		<div class="container">
 			<div id="back">
-				<label onclick="notice()"><i class="fa fa-arrow-left" aria-hidden="true"></i>?’¤ë¡œê?ê¸?</label>
+				<label onclick="notice()"><i class="fa fa-arrow-left" aria-hidden="true"></i>ë’¤ë¡œê°€ê¸°</label>
 				<sec:authorize access="authenticated">
 					<sec:authorize access="hasRole('ROLE_ADMIN') || principal != null && principal.nickname == '${detail.u_nickname }' ">
-						<label onclick="showNoticeEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>?ˆ˜? •</label>
+						<label onclick="showNoticeEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>ìˆ˜ì •</label>
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
-						<label onclick="noticeDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i>?‚­? œ</label>
+						<label onclick="noticeDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i>ì‚­ì œ</label>
 					</sec:authorize>
 				</sec:authorize>
 			</div>
@@ -278,15 +263,15 @@ function noticeCommentEdit(nc_no, nc_comment){
 					<td>${detail.n_no }</td>
 				</tr>
 				<tr>
-					<th>? œëª?</th>
+					<th>ì œëª©</th>
 					<td>${detail.n_title }</td>
 				</tr>
 				<tr>
-					<th>ê¸??“´?´</th>
+					<th>ê¸€ì“´ì´</th>
 					<td>${detail.u_nickname }</td>
 				</tr>
 				<tr>
-					<th>?‘?„±?¼</th>
+					<th>ì‘ì„±ì¼</th>
 					<fmt:parseDate value="${detail.n_date}" var="time"
 						pattern="yyyy-MM-dd HH:mm:ss.S" />
 					<fmt:formatDate value="${time}" var="time"
@@ -294,11 +279,11 @@ function noticeCommentEdit(nc_no, nc_comment){
 					<td>${time }</td>
 				</tr>
 				<tr>
-					<th>ì¡°íšŒ?ˆ˜</th>
+					<th>ì¡°íšŒìˆ˜</th>
 					<td>${detail.n_count }</td>
 				</tr>
 				<tr>
-					<th>ì¢‹ì•„?š”</th>
+					<th>ì¢‹ì•„ìš”</th>
 					<td id="noticeLikeImg">
 						${detail.n_like }
 						<c:if test="${user ne 'anonymousUser'}">
@@ -314,11 +299,11 @@ function noticeCommentEdit(nc_no, nc_comment){
 					</td>
 				</tr>
 				<tr>
-					<th>?‚´?š©</th>
+					<th>ë‚´ìš©</th>
 					<td>${detail.n_content }</td>
 				</tr>
 				<tr>
-					<th style="vertical-align: middle;">?Œ“ê¸?</th>
+					<th style="vertical-align: middle;">ëŒ“ê¸€</th>
 					<td><sec:authorize access="authenticated">
 							<div id="cwriteform">
 								<form action="./noticeComment.do" method="post">
@@ -334,7 +319,7 @@ function noticeCommentEdit(nc_no, nc_comment){
 									</c:if>
 									<input type="hidden" name="u_nickname"
 										value="<sec:authentication property="principal.nickname" />">
-									<button type="submit" id="commentCount">?Œ“ê¸??“°ê¸?<br>(0/300)</button>
+									<button type="submit" id="commentCount">ëŒ“ê¸€ì“°ê¸°<br>(0/300)</button>
 								</form>
 							</div>
 						</sec:authorize> <c:choose>
@@ -353,7 +338,7 @@ function noticeCommentEdit(nc_no, nc_comment){
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
-								?Œ“ê¸??´ ?—†?Šµ?‹ˆ?‹¤.
+								ëŒ“ê¸€ì´ ì—†ìŠµë‹ˆë‹¤.
 							</c:otherwise>
 						</c:choose></td>
 				</tr>
@@ -376,14 +361,14 @@ function noticeCommentEdit(nc_no, nc_comment){
 			<form action="./noticeEdit.do" method="post">
 				<div style="padding-bottom: 10px;">
 					<h2>
-						<label>? œëª?</label>
+						<label>ì œëª©</label>
 					</h2>
 					<input style="width: 100%;" type="text" name="n_title"
 						value="${detail.n_title }" required>
 				</div>
 				<div style="padding-bottom: 10px;">
 					<h4>
-						<label>?‚´?š©</label>
+						<label>ë‚´ìš©</label>
 					</h4>
 					<textarea id="summernote" name="n_content" required><c:out value="${detail.n_content}" /></textarea>
 				</div>
@@ -399,8 +384,8 @@ function noticeCommentEdit(nc_no, nc_comment){
 				<input type="hidden" name="u_nickname"
 					value="<sec:authentication property="principal.nickname" />">
 				<div>
-					<button type="submit">?ˆ˜? •</button>
-					<button type="button" onclick="hideNoticeEditDialog()">?‹«ê¸?</button>
+					<button type="submit">ìˆ˜ì •</button>
+					<button type="button" onclick="hideNoticeEditDialog()">ë‹«ê¸°</button>
 				</div>
 			</form>
 		</div>
