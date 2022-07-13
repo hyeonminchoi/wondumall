@@ -39,7 +39,6 @@ public class FaqController {
 	public ModelAndView faq() {
 		ModelAndView mv = new ModelAndView("faq");
 
-		List<FaqDTO> faqAll = faqService.getFaqAll();
 		List<FaqCategoryDTO> faqCategory = faqService.getFaqCategory();
 		List<List<FaqDTO>> faqCategoryDetail = new ArrayList<>();
 		
@@ -48,7 +47,6 @@ public class FaqController {
 			faqCategoryDetail.add(temp);
 		}
 		
-		mv.addObject("faqAll", faqAll);
 		mv.addObject("faqCategory", faqCategory);
 		mv.addObject("faqCategoryDetail", faqCategoryDetail);
 

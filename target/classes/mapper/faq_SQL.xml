@@ -3,12 +3,6 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="faq">
-	<select id="getFaqAll" resultType="faqDTO">
-		SELECT faq.*, faq_category.fc_category
-		FROM faq
-		JOIN faq_category ON faq.fc_no = faq_category.fc_no
-	</select>
-	
 	<select id="getFaqCategory" resultType="faqCategoryDTO">
 		SELECT *
 		FROM faq_category

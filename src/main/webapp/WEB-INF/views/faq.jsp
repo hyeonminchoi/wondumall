@@ -20,6 +20,7 @@
 	rel="stylesheet">
 
 <!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link type="text/css" rel="stylesheet" href="./css/bootstrap.min.css" />
 
 <!-- Slick -->
@@ -44,12 +45,13 @@
 
 <!-- jQuery Plugins -->
 <script src="./js/jquery.min.js"></script>
-<script src="./js/bootstrap.min.js"></script>
 <script src="./js/slick.min.js"></script>
 <script src="./js/nouislider.min.js"></script>
 <script src="./js/jquery.zoom.min.js"></script>
 <script src="./js/main.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
@@ -72,7 +74,7 @@
 .tab-content.current{
 	background-color: rgba(255,255,255,0.4);
  	display: block;
- 	height: 350px;
+ 	height: auto;
 	width: 100%;
 }
 
@@ -80,6 +82,9 @@
 	display: none;
 }
 
+.navbar-nav{
+	flex-direction: inherit;
+}
 </style>
 
 <script type="text/javascript">
@@ -111,19 +116,7 @@
 	        $(this).addClass('current');
 	        $("#"+tab_id).addClass('current');
 	    });
-	    
-	    $('.question').on('click',function(){
-	    	if($(this).children('i').hasClass('fa-angle-down')){
-	    		$(this).children('i').removeClass('fa-angle-down');
-	    		$(this).children('i').addClass('fa-angle-up');
-	    	} else{
-	    		$(this).children('i').addClass('fa-angle-down');
-	    		$(this).children('i').removeClass('fa-angle-up');
-	    	}
-	    	$(this).parent().children('.answer').toggle(500);
-	    });
 	});
-	
 </script>
 </head>
 <body>
@@ -141,51 +134,43 @@
 	<div class="section">
 		<!-- container -->
 		<div class="container">
-			<h2 class="title01">자주묻는질문</h2>
-			<ul class="webtong_tab_type02 tabs">
-				<li class="tab-link current" data-tab="tab-0"><a>전체</a></li>
-				<c:forEach var="fc" items="${faqCategory }" varStatus="status">
-					<li class="tab-link" data-tab="tab-${status.count}"><a>${fc.fc_category }</a>
+			<div class="accordion">
+				<h2 class="title01">자주묻는질문</h2>
+				<ul class="webtong_tab_type02 tabs">
+					<c:forEach var="fc" items="${faqCategory }" varStatus="status">
+						<li class="tab-link" data-tab="tab-${status.count}"><strong><a>${fc.fc_category }</a></strong>
+					</c:forEach>
+				</ul>
+				
+				<c:forEach var="j" items="${faqCategoryDetail}" varStatus="status" >
+					<div id="tab-${status.count}" class="tab-content accordion-item ${status.count eq 1?'current':'' }">
+						<c:forEach var="k" items="${j}" varStatus="index">
+							<h2 class="accordion-header" id="headingOne">
+						      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${status.count }${index.count }" aria-expanded="true" aria-controls="collapse${status.count }${index.count }">
+						        <h4>${k.faq_question }</h4>
+						      </button>
+						    </h2>
+						    <div id="collapse${status.count }${index.count }" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent=".accordion">
+						      <div class="accordion-body">
+						        ${k.faq_answer }
+						      </div>
+						    </div>
+						</c:forEach>
+					</div>
 				</c:forEach>
-			</ul>
-			<div id="tab-0" class="tab-content current owl-example owl-carousel">
-					<c:forEach var="i" items="${faqAll}">
-						<div class="items">
-							<div class="question">
-								${i.faq_question}<i class="fa fa-angle-down" aria-hidden="true"></i>
-							</div>
-							<div class="answer">
-								${i.faq_answer }
-							</div>
-						</div>
-					</c:forEach>
+								
+				
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<div style="float:right;">
+						<button type="button" onclick="showFaqWriteDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>글쓰기</button>
+					</div>
+				</sec:authorize>
+				<sec:authorize access="not authenticated">
+					<div style="float:right;">
+						<button type="button" onclick="location.href='./login.do'"><i class="fa fa-user" aria-hidden="true"></i>로그인</button>
+					</div>
+				</sec:authorize>
 			</div>
-			<c:forEach var="j" items="${faqCategoryDetail}" varStatus="status" >
-				<div id="tab-${status.count}" class="tab-content owl-example owl-carousel">
-					<c:forEach var="k" items="${j}">
-						<div class="items">
-							<div class="question">
-								${k.faq_question }<i class="fa fa-angle-down" aria-hidden="true"></i>
-							</div>
-							<div class="answer">
-								${k.faq_answer }
-							</div>
-						</div>
-					</c:forEach>
-				</div>
-			</c:forEach>
-							
-			
-			<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<div style="float:right;">
-					<button type="button" onclick="showFaqWriteDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>글쓰기</button>
-				</div>
-			</sec:authorize>
-			<sec:authorize access="not authenticated">
-				<div style="float:right;">
-					<button type="button" onclick="location.href='./login.do'"><i class="fa fa-user" aria-hidden="true"></i>로그인</button>
-				</div>
-			</sec:authorize>
 		</div>
 		<!-- /container -->
 	</div>

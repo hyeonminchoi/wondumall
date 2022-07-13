@@ -14,10 +14,6 @@ import com..DTO.FaqDTO;
 public class FaqService {
 	@Autowired private FaqDAO faqDAO;
 
-	public List<FaqDTO> getFaqAll() {
-		return faqDAO.getFaqAll();
-	}
-
 	public int write(FaqDTO faqDTO) {
 		return faqDAO.write(faqDTO);
 	}

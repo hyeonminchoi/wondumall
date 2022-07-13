@@ -14,10 +14,6 @@ import com..DTO.FaqDTO;
 public class FaqDAO {
 	@Autowired SqlSession sqlSession;
 
-	public List<FaqDTO> getFaqAll() {
-		return sqlSession.selectList("faq.getFaqAll");
-	}
-
 	public int write(FaqDTO faqDTO) {
 		return sqlSession.insert("faq.write", faqDTO);
 	}
