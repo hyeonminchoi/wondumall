@@ -1,12 +1,15 @@
 package com..Controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -43,13 +46,16 @@ public class ProductController {
 	@Autowired
 	private ServletContext servletContext;
 	
-	@GetMapping(value = "/cart.do")
+	@RequestMapping(value = "/cart.do")
 	public ModelAndView cart(@RequestParam(name = "u_no", required = false, defaultValue = "-1") int u_no) {
 		ModelAndView mv = new ModelAndView("cart");
+		Map<String, Object> map = new HashMap<>();
+		
 		if(u_no ==-1) {
 			mv.addObject("cart", 0);
 		} else {
 			List<CartDTO> cart = productService.cart(u_no);
+			
 			mv.addObject("cart", cart);
 		}
 		return mv;
@@ -63,13 +69,17 @@ public class ProductController {
 		return count;
 	}
 	
+	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@PostMapping(value = "/cartAdd.do")
-	public String cartAdd(HttpServletRequest request, CartDTO dto,@AuthenticationPrincipal MyUserDetails myUserDetails) {
+	public String cartAdd(HttpServletRequest request, CartDTO dto, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 		myUserDetails.getNickname();
-		
-		productService.cartAdd(dto);
-		
-		return "redirect:/productDetail.do?p_no=" + request.getParameter("p_no");
+		int result = 0;
+		if(productService.containProduct(dto)>0) { //카트에 존재할 경우
+			result = productService.cartUpdate(dto);
+		} else { //카트에 존재하지 않을 경우
+			result = productService.cartAdd(dto);
+		}
+		return "redirect:/productDetail.do?p_no=" + request.getParameter("p_no")+"&result=" + result;
 	}
 	
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})

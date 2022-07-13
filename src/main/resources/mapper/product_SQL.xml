@@ -30,7 +30,7 @@
 	</insert>
 	<select id="cart" parameterType="integer" resultType="cartDTO">
 		SELECT *
-		FROM cart
+		FROM cartview
 		WHERE u_no = #{u_no}
 	</select>
 	<select id="cartCount" parameterType="integer" resultType="integer">
@@ -38,4 +38,13 @@
 		FROM cart
 		WHERE u_no = #{u_no}
 	</select>
+	<select id="containProduct" parameterType="cartDTO" resultType="integer">
+		SELECT COUNT(*)
+		FROM cart
+		WHERE p_no = #{p_no} AND u_no = #{u_no}
+	</select>
+	<update id="cartUpdate"  parameterType="cartDTO">
+		UPDATE cart SET p_count = p_count + #{p_count}
+		WHERE p_no = #{p_no} AND u_no = #{u_no}
+	</update>
 </mapper>
