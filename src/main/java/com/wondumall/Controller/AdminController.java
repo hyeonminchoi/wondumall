@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com..DTO.BoardDTO;
 import com..DTO.LoginDTO;
 import com..DTO.PageDTO;
 import com..DTO.ProductDTO;
-import com..DTO.UserDTO;
 import com..Service.AdminService;
 
 @Controller
@@ -142,10 +142,121 @@ public class AdminController {
 		page.setLastPage(lastPage);
 		map.put("page", page);
 		List<LoginDTO> userList = adminService.userList(map);
-		System.out.println(userList);
 		mv.addObject("userList", userList);
 		mv.addObject("paginationInfo", paginationInfo);
 		mv.addObject("pageNo", pageNo);
 		return mv;
+	}
+	
+	@GetMapping(value = "/admin/sec/{u_no}")
+	public String sec(@PathVariable("u_no") int u_no) {
+		
+		LoginDTO dto = new LoginDTO();
+		dto.setU_no(u_no);
+		adminService.sec(u_no);
+		
+		return "redirect:/admin/user.do";
+	}
+	
+	@GetMapping(value = "/admin/rep/{u_no}")
+	public String rep(@PathVariable("u_no") int u_no) {
+		
+		LoginDTO dto = new LoginDTO();
+		dto.setU_no(u_no);
+		adminService.rep(u_no);
+		
+		return "redirect:/admin/user.do";
+	}
+	
+	@GetMapping(value = "/admin/comsec/{u_no}")
+	public String comsec(@PathVariable("u_no") int u_no) {
+		
+		LoginDTO dto = new LoginDTO();
+		dto.setU_no(u_no);
+		adminService.comsec(u_no);
+		
+		return "redirect:/admin/user.do";
+	}
+	
+	@GetMapping(value = "/admin/admiss/{u_no}")
+	public String admiss(@PathVariable("u_no") int u_no) {
+		
+		LoginDTO dto = new LoginDTO();
+		dto.setU_no(u_no);
+		adminService.admiss(u_no);
+		
+		return "redirect:/admin/user.do";
+	}
+	
+	@GetMapping(value = "/admin/adcan/{u_no}")
+	public String adcan(@PathVariable("u_no") int u_no) {
+		
+		LoginDTO dto = new LoginDTO();
+		dto.setU_no(u_no);
+		adminService.adcan(u_no);
+		
+		return "redirect:/admin/user.do";
+	}
+	
+	@GetMapping(value = "/admin/board.do")
+	public ModelAndView adminboard(@RequestParam(name = "pageNo", required = false, defaultValue = "1") int pageNo, @RequestParam(name="searchColumn", required = false) String searchColumn,
+			@RequestParam(name="searchValue", required=false) String searchValue) {
+		ModelAndView mv = new ModelAndView("adminboard");
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(pageNo); //현재 페이지 번호
+		paginationInfo.setRecordCountPerPage(10); //한 페이지에 게시되는 게시물 건수
+		paginationInfo.setPageSize(10); //페이징 리스트의 사이즈
+		
+		Map<String, Object> map = new HashMap<>();
+		if(searchColumn != null && searchValue != null) {
+			map.put("searchColumn", searchColumn);
+			map.put("searchValue", searchValue);
+			mv.addObject("searchColumn", searchColumn);
+			mv.addObject("searchValue", searchValue);
+		}
+		
+		paginationInfo.setTotalRecordCount(adminService.getBoardCount(map));
+		
+		int startPage = paginationInfo.getFirstRecordIndex();
+		int lastPage = paginationInfo.getRecordCountPerPage();
+		PageDTO page = new PageDTO();
+		page.setStartPage(startPage);
+		page.setLastPage(lastPage);
+		map.put("page", page);
+		List<BoardDTO> boardList = adminService.boardList(map);
+		mv.addObject("boardList", boardList);
+		mv.addObject("paginationInfo", paginationInfo);
+		mv.addObject("pageNo", pageNo);
+		return mv;
+	}
+	
+	@GetMapping(value = "/admin/bdel/{b_no}")
+	public String bdel(@PathVariable("b_no") int b_no) {
+		
+		BoardDTO dto = new BoardDTO();
+		dto.setB_no(b_no);
+		adminService.bdel(b_no);
+		
+		return "redirect:/admin/board.do";
+	}
+	
+	@GetMapping(value = "/admin/rpr/{b_no}")
+	public String rpr(@PathVariable("b_no") int b_no) {
+		
+		BoardDTO dto = new BoardDTO();
+		dto.setB_no(b_no);
+		adminService.rpr(b_no);
+		
+		return "redirect:/admin/board.do";
+	}
+	
+	@GetMapping(value = "/admin/compledel/{b_no}")
+	public String compledel(@PathVariable("b_no") int b_no) {
+		
+		BoardDTO dto = new BoardDTO();
+		dto.setB_no(b_no);
+		adminService.compledel(b_no);
+		
+		return "redirect:/admin/board.do";
 	}
 }

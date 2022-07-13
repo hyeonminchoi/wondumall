@@ -3,6 +3,57 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="admin">
+	<delete id="compledel" parameterType="boardDTO">
+		DELETE FROM board WHERE b_no=#{b_no}
+	</delete>
+	<update id="bdel" parameterType="boardDTO">
+		UPDATE board SET b_del=1 WHERE b_no=#{b_no} 
+	</update>
+	<update id="rpr" parameterType="boardDTO">
+		UPDATE board SET b_del=0 WHERE b_no=#{b_no} 
+	</update>
+	<select id="getBoardCount" resultType="integer" parameterType="map">
+		SELECT count(*)
+		FROM boardview
+		<choose>
+			<when test='searchColumn == "b_title"'>
+				WHERE b_title like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_nickname"'>
+				WHERE u_nickname like CONCAT('%',#{searchValue},'%')
+			</when>
+		</choose>
+	</select>
+	<select id="boardList" resultType="boardDTO" parameterType="map">
+		SELECT *
+		FROM boardview
+		<choose>
+			<when test='searchColumn == "b_title"'>
+				WHERE b_title like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_nickname"'>
+				WHERE u_nickname like CONCAT('%',#{searchValue},'%')
+			</when>
+		</choose>
+		GROUP BY b_no
+		ORDER BY b_date DESC
+		LIMIT #{page.startPage}, #{page.lastPage}
+	</select>
+	<update id="adcan" parameterType="loginDTO">
+		UPDATE user SET u_confirm=0 WHERE u_no=#{u_no} 
+	</update>
+	<update id="admiss" parameterType="loginDTO">
+		UPDATE user SET u_confirm=1 WHERE u_no=#{u_no} 
+	</update>
+	<delete id="comsec" parameterType="loginDTO">
+		DELETE FROM user WHERE u_no=#{u_no}
+	</delete>
+	<update id="rep" parameterType="loginDTO">
+		UPDATE user SET u_resign=0 WHERE u_no=#{u_no} 
+	</update>
+	<update id="sec" parameterType="loginDTO">
+		UPDATE user SET u_resign=1 WHERE u_no=#{u_no} 
+	</update>
 	<select id="userList" resultType="loginDTO" parameterType="map">
 		SELECT *
 		FROM user

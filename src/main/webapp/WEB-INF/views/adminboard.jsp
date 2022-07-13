@@ -45,56 +45,38 @@ td, th{
 				<thead>
 					<tr>
 						<th scope="col">#</th>
-						<th scope="col">제품이름</th>
-						<th scope="col">작성자</th>
-						<th scope="col">제품가격</th>
-						<th scope="col">등록날짜</th>
-						<th scope="col">승인여부</th>
+						<th scope="col">글제목</th>
+						<th scope="col">이름</th>
+						<th scope="col">쓴날짜</th>
 						<th scope="col">삭제여부</th>
 						<th scope="col">삭제</th>
 						<th scope="col">완전삭제</th>
-						<th scope="col">승인</th>
 						<th scope="col">상세보기</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${productList }" var="p">
+					<c:forEach items="${boardList }" var="b">
 						<tr>
-							<th scope='row'>${p.p_no }</th>
-							<td>${p.p_name }</td>
-							<td>${p.u_name }</td>
-							<td>${p.p_price }</td>
-							<td>${p.p_date }</td>
+							<th scope='row'>${b.b_no }</th>
+							<td>${b.b_title }</td>
+							<td>${b.u_nickname }</td>
+							<td>${b.b_date }</td>
 							<td>
 							<c:choose>
-								<c:when test="${p.p_confirm eq 1}">
-									승인
+								<c:when test="${b.b_del eq 1}">
+									삭제됨
 								</c:when>
 								<c:otherwise>
-									미승인
+									삭제안됨
 								</c:otherwise>
 							</c:choose>
 							</td>
 							<td>
-							<c:choose>
-								<c:when test="${p.p_del eq 1}">
-									삭제함
-								</c:when>
-								<c:otherwise>
-									삭제안함
-								</c:otherwise>
-							</c:choose>
+							<button onclick="bdel(${b.b_no})">삭제</button>
+							<button onclick="rpr(${b.b_no})">복구</button>
 							</td>
-							<td>
-							<button onclick="del(${p.p_no})">삭제</button>
-							<button onclick="repair(${p.p_no})">복구</button>
-							</td>
-							<td><button onclick="pdelete(${p.p_no})">완전삭제</button></td>
-							<td>
-							<button onclick="admission(${p.p_no})">승인</button>
-							<button onclick="adcancel(${p.p_no})">취소</button>
-							</td>
-							<td><button onclick="detail(${p.p_no})">상세보기</button></td>
+							<td><button onclick="compledel(${b.b_no})">완전삭제</button></td>
+							<td><button onclick="detail(${b.b_no}, ${pageNo })">상세보기</button></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -103,17 +85,16 @@ td, th{
 			<div id="pagination" style="text-align: center;">
 				<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
 			</div>
-			<form action="//admin/product.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center;">
+			<form action="//admin/board.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center;">
 				<select name="searchColumn">
-					<option value="p_name" ${searchColumn eq 'p_name'?'selected':'' }>제품이름</option>
-					<option value="u_name" ${searchColumn eq 'u_name'?'selected':''}>작성자</option>
+					<option value="b_title" ${searchColumn eq 'b_title'?'selected':'' }>글제목</option>
+					<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>작성자</option>
 				</select>
 				<input type="text" name="searchValue" value="${searchValue}">
 				<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
 			</form>
 		</div>
 	</div>
-	
 	<footer id="footer">
 		<c:import url="./footer.jsp"></c:import>
 	</footer>
@@ -127,46 +108,32 @@ td, th{
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-function del(p_no){
+function linkPage(pageNo) {
+	location.href = "//admin/board.do?pageNo=" + pageNo;
+}
+function bdel(b_no){
 	if (confirm("삭제하시겠습니까?")){
-		location.href = "//admin/del/" + p_no;
+		location.href = "//admin/bdel/" + b_no;
 	} else {
 		
 	}
 }
-function repair(p_no){
+function rpr(b_no){
 	if (confirm("복구하시겠습니까?")){
-		location.href = "//admin/repair/" + p_no;
+		location.href = "//admin/rpr/" + b_no;
 	} else {
 		
 	}
 }
-function pdelete(p_no){
+function compledel(b_no){
 	if (confirm("삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?")){
-		location.href = "//admin/pdelete/" + p_no;
+		location.href = "//admin/compledel/" + b_no;
 	} else {
 		
 	}	
 }
-function admission(p_no){
-	if (confirm("승인하시겠습니까?")){
-		location.href = "//admin/admission/" + p_no;
-	} else {
-		
-	}
-}
-function adcancel(p_no){
-	if (confirm("승인을 취소하시겠습니까?")){
-		location.href = "//admin/adcancel/" + p_no;
-	} else {
-		
-	}
-}
-function linkPage(pageNo) {
-	location.href = "//admin/product.do?pageNo=" + pageNo;
-}
-function detail(p_no){
-	location.href= "//productDetail.do?p_no=" + p_no;
+function detail(b_no, pageNo){
+	location.href = "//boardDetail.do?b_no=" + b_no + "&pageNo=" + pageNo;
 }
 </script>
 </body>

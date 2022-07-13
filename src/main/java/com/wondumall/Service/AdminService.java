@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com..DAO.AdminDAO;
+import com..DTO.BoardDTO;
 import com..DTO.LoginDTO;
 import com..DTO.ProductDTO;
-import com..DTO.UserDTO;
 
 @Service
 public class AdminService {
@@ -60,5 +60,55 @@ public class AdminService {
 	public int getUserCount(Map<String, Object> map) {
 		
 		return adminDAO.getUserCount(map);
+	}
+
+	public void sec(int u_no) {
+		
+		adminDAO.sec(u_no);
+	}
+
+	public void rep(int u_no) {
+		
+		adminDAO.rep(u_no);
+	}
+
+	public void comsec(int u_no) {
+		
+		adminDAO.comsec(u_no);
+	}
+
+	public void admiss(int u_no) {
+		
+		adminDAO.admiss(u_no);
+	}
+
+	public void adcan(int u_no) {
+		
+		adminDAO.adcan(u_no);
+	}
+
+	public int getBoardCount(Map<String, Object> map) {
+		
+		return adminDAO.getBoardCount(map);
+	}
+
+	public List<BoardDTO> boardList(Map<String, Object> map) {
+		
+		return adminDAO.boardList(map);
+	}
+
+	public void bdel(int b_no) {
+		
+		adminDAO.bdel(b_no);
+	}
+
+	public void rpr(int b_no) {
+		
+		adminDAO.rpr(b_no);
+	}
+
+	public void compledel(int b_no) {
+		
+		adminDAO.compledel(b_no);
 	}
 }
