@@ -31,6 +31,13 @@ public class LoginController {
 			int result = loginService.nicknameCheck(nickname);
 			return result;
 		}
+	//일반, 사업자 구분
+		@PostMapping(value = "/gradeCheck") //ResposeBody => 결과값을 내상태에서 출력
+		@ResponseBody
+		public int gradeCheck(@RequestParam("grade") String grade) {
+			int result = loginService.gradeCheck(grade);
+			return result;
+		}
 	
 	
 	//2.join 화면 불러오기

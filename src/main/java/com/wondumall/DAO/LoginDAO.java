@@ -31,4 +31,8 @@ public class LoginDAO {
 		return sqlSession.selectOne("login.nicknameCheck", nickname);
 	}
 
+	public int gradeCheck(String grade) {
+		return sqlSession.selectOne("login.gradeCheck", grade);
+	}
+
 }

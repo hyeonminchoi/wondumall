@@ -67,12 +67,13 @@
 				<span class="email_already">사용중인 이메일 입니다.</span>
 				
 				<div class="textForm">
-					<input autocomplete="off" name="u_pw" type="password" id="pw1" required="required" class="pw" placeholder="비밀번호">
+					<input autocomplete="off" name="u_pw" type="password" id="pw1" required="required" class="pw" placeholder="비밀번호" onkeyup="passlength()" pattern="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$">
 				</div>
 				<div class="textForm">
-					<input autocomplete="off" name="loginPwConfirm" type="password" minlength="4" required="required" id="pw2" class="pw" placeholder="비밀번호 확인" onkeyup="passConfirm()">
+					<input autocomplete="off" name="loginPwConfirm" type="password" minlength="4" required="required" id="pw2" class="pw" placeholder="비밀번호 확인" onkeyup="passConfirm()" pattern="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$">
 				</div>
-				<span id ="confirmMsg"></span>
+				<span id ="confirmMsg"><br></span> 
+				<span id ="confirmMsg2"></span>
 				
 				<div class="textForm">
 					<input autocomplete="off" name="u_name" minlength="2" type="text" class="name" required="required" placeholder="이름">
@@ -80,6 +81,17 @@
 				<div class="textForm">
 					<input autocomplete="off" name="u_tel" type="text" minlength="10" class="name" required="required" placeholder="핸드폰번호 ( - 없이 입력)">
 				</div>
+				
+				<div class="textForm">
+					<select name="u_grade" required="required" class="nickname" id="grade" onchange="gradeText()">
+						<option value="">가입 유형을 선택하세요</option>
+						<option value="0">일반</option>
+						<option value="1">사업자</option>
+					</select>
+				</div>
+				<span class="normal" ></span>
+				<span class="company" style="display: none;">사업자 등록은 관리자에게 승인을 받아야 합니다. 약 1~2일 정도 시간이 소요 되며 자세한건 관리자에게 문의 바랍니다.</span>
+				
 				<div class="textForm">
 					<input autocomplete="off" name="u_nickname" type="text" id="nickname" minlength="1" required="required" class="nickname" placeholder="닉네임" oninput = "checknickname()">
 				</div>
@@ -194,27 +206,30 @@
 		if(password.value == passwordConfirm.value){//password 변수의 값과 passwordConfirm 변수의 값과 동일하다.
 			confirmMsg.style.color = correctColor;/* span 태그의 ID(confirmMsg) 사용  */
 			confirmMsg.innerHTML ="비밀번호 일치";/* innerHTML : HTML 내부에 추가적인 내용을 넣을 때 사용하는 것. */
+			$('#joinbtn').attr('disabled', false);
 		}else{
 			confirmMsg.style.color = wrongColor;
 			confirmMsg.innerHTML ="비밀번호 불일치";
+			$('#joinbtn').attr('disabled', true);
 		}
 	}
 	
-	/* function passConfirm() {
+	/*  function passlength() {
 		
 	 	var pattern1 = /[0-9]/; //숫자
 		var pattern2 = /[a-zA-Z]/; //문자
-		var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/; //특수문자
+		var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/; //특수문자                   
 		var armColor = "#191970"
 		
 		if(!pattern1.test() || !pattern2.test() || !pattern3.test() || str.lenghth < 8) {
-			confirmMsg.style.color = armColor;
-			confirmMsg.innerHTML ="비밀번호는 8자리 이상 문자,숫자,특수문자로 구성하여야 합니다.";
+			
 			return false;
 		}else{
+			confirmMsg2.style.color = armColor;
+			confirmMsg2.innerHTML ="비밀번호는 8자리 이상 문자,숫자,특수문자로 구성하여야 합니다.";
 			return true;
 	}
-	}	 */
+	} */
 	
 	 function checkemail(){
 		
@@ -260,6 +275,17 @@
 		            }
 		        });
 		        };
+		        
+		        function gradeText(){
+			        var grade = $('#grade').val(); //id값이 "id"인 입력란의 값을 저장
+			        if(grade==0){
+			        	$('.company').css("display", "none");
+			        	$('.normal').css("display", "inline-block");
+			        } else if(grade==1){
+			        	$('.company').css("display", "inline-block");
+			        	$('.normal').css("display", "none");
+			        }
+			        };
 </script>
 
 

@@ -33,6 +33,10 @@ public class LoginService {
 		return loginDAO.nicknameCheck(nickname);
 	}
 
+	public int gradeCheck(String grade) {
+		return loginDAO.gradeCheck(grade);
+	}
+
 		
 		
 	

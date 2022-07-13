@@ -4,8 +4,16 @@
 
 <mapper namespace="login">
 	<insert id="join" parameterType="loginDTO">
-		INSERT INTO user(u_email, u_pw, u_name, u_postcode, u_roadAddress, u_detailAddress, u_extraAddress, u_nickname, u_tel)
-		VALUES(#{u_email}, #{u_pw}, #{u_name}, #{u_postcode}, #{u_roadAddress}, #{u_detailAddress}, #{u_extraAddress}, #{u_nickname}, #{u_tel} )
+		<choose>
+			<when test="u_grade == 0">
+				INSERT INTO user(u_email, u_pw, u_name, u_postcode, u_roadAddress, u_detailAddress, u_extraAddress, u_nickname, u_tel)
+				VALUES(#{u_email}, #{u_pw}, #{u_name}, #{u_postcode}, #{u_roadAddress}, #{u_detailAddress}, #{u_extraAddress}, #{u_nickname}, #{u_tel} )
+			</when>
+			<otherwise>
+				INSERT INTO user(u_email, u_pw, u_name, u_postcode, u_roadAddress, u_detailAddress, u_extraAddress, u_nickname, u_tel, u_grade, u_confirm)
+				VALUES(#{u_email}, #{u_pw}, #{u_name}, #{u_postcode}, #{u_roadAddress}, #{u_detailAddress}, #{u_extraAddress}, #{u_nickname}, #{u_tel}, #{u_grade}, 0 )
+			</otherwise>
+		</choose>
 	</insert>
 	
 	<select id="login" parameterType="loginDTO" resultType="loginDTO">
