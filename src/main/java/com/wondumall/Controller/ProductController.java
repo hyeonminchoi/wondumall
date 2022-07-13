@@ -50,9 +50,6 @@ public class ProductController {
 		cartDTO.setCart_no(cart_no);
 		cartDTO.setU_no(myUserDetails.getNo());
 		
-		System.out.println(request.getParameter("cart_no"));
-		System.out.println(request.getParameter("u_no"));
-		
 		productService.cartDelete(cartDTO);
 		return "redirect:/cart.do?u_no=" + myUserDetails.getNo();
 	}
@@ -70,6 +67,7 @@ public class ProductController {
 		return mv;
 	}
 	
+	//header.jsp에 장바구니에 있는 숫자 표현
 	@ResponseBody
 	@PostMapping(value = "/cartCount.do")
 	public int cartHeader(@RequestParam("u_no") int u_no) {
@@ -78,6 +76,7 @@ public class ProductController {
 		return count;
 	}
 	
+	//장바구니에 추가하기
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@PostMapping(value = "/cartAdd.do")
 	public String cartAdd(HttpServletRequest request, CartDTO dto, @AuthenticationPrincipal MyUserDetails myUserDetails) {

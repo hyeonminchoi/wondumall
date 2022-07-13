@@ -49,6 +49,6 @@
 	</update>
 	<delete id="cartDelete" parameterType="cartDTO">
 		DELETE FROM cart
-		WHERE cart_no = #{cart_no}
+		WHERE cart_no = #{cart_no} AND u_no = #{u_no}
 	</delete>
 </mapper>
