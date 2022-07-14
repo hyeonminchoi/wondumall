@@ -289,10 +289,10 @@ function noticeCommentEdit(nc_no, nc_comment){
 						<c:if test="${user ne 'anonymousUser'}">
 							<c:choose>
 								<c:when test="${not empty likeStatus and likeStatus == true }">
-									<i class="fa fa-heart" aria-hidden="true" onclick="noticeLike('${user.nickname}')"></i>
+									<i class="fa fa-heart" aria-hidden="true" onclick="noticeLike('<c:out value="${user.nickname}"/>')"></i>
 								</c:when>
 								<c:otherwise>
-									<i class="fa fa-heart-o" aria-hidden="true" onclick="noticeLike('${user.nickname}')"></i>
+									<i class="fa fa-heart-o" aria-hidden="true" onclick="noticeLike('<c:out value="${user.nickname}"/>')"></i>
 								</c:otherwise>
 							</c:choose>
 						</c:if>
@@ -331,7 +331,7 @@ function noticeCommentEdit(nc_no, nc_comment){
 										<fmt:formatDate value="${time}" var="time"
 											pattern="yyyy-MM-dd HH:mm:ss" />
 										<strong>${c.u_nickname }</strong> / ${time } <c:if test="${user ne 'anonymousUser' and user.nickname eq c.u_nickname }">
-											<i class="fa fa-pencil commentEdit" aria-hidden="true" onclick="noticeCommentEdit(${c.nc_no}, '${c.nc_comment }')"></i><i class="fa fa-trash-o commentDelete" aria-hidden="true" onclick="noticeCommentDelete(${c.nc_no})"></i>
+											<i class="fa fa-pencil commentEdit" aria-hidden="true" onclick="noticeCommentEdit(${c.nc_no}, '<c:out value="${c.nc_comment }"/>')"></i><i class="fa fa-trash-o commentDelete" aria-hidden="true" onclick="noticeCommentDelete(${c.nc_no})"></i>
 										</c:if>
 									</div>
 									<div id="noticeComment"><pre>${c.nc_comment }</pre></div>

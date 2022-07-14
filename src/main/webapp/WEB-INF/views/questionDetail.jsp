@@ -290,7 +290,7 @@ function answerEdit(a_no, answer){
 										<fmt:formatDate value="${time}" var="time"
 											pattern="yyyy-MM-dd HH:mm:ss" />
 										<strong>${a.u_nickname }</strong> / ${time } <c:if test="${user ne 'anonymousUser' and user.nickname eq a.u_nickname }">
-											<i class="fa fa-pencil answerEdit" aria-hidden="true" onclick="answerEdit(${a.a_no}, '${a.a_answer }')"></i><i class="fa fa-trash-o answerDelete" aria-hidden="true" onclick="answerDelete(${a.a_no})"></i>
+											<i class="fa fa-pencil answerEdit" aria-hidden="true" onclick="answerEdit(${a.a_no}, '<c:out value="${a.a_answer }"/>')"></i><i class="fa fa-trash-o answerDelete" aria-hidden="true" onclick="answerDelete(${a.a_no})"></i>
 										</c:if>
 									</div>
 									<div id="answer"><pre>${a.a_answer }</pre></div>
