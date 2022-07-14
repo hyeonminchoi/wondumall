@@ -39,90 +39,92 @@ td, th{
 	<nav id="navigation">
 		<c:import url="./adminnav.jsp"></c:import>
 	</nav>
-	<div id="section">
-		<div id="container">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">이름</th>
-						<th scope="col">닉네임</th>
-						<th scope="col">가입날짜</th>
-						<th scope="col">등급</th>
-						<th scope="col">승인여부</th>
-						<th scope="col">탈퇴여부</th>
-						<th scope="col">탈퇴</th>
-						<th scope="col">완전탈퇴</th>
-						<th scope="col">승인</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${userList }" var="u">
+	<section>
+		<div id="section">
+			<div id="container">
+				<table class="table" style="width:90%; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;">
+					<thead>
 						<tr>
-							<th scope='row'>${u.u_no }</th>
-							<td>${u.u_name }</td>
-							<td>${u.u_nickname }</td>
-							<td>${u.u_joindate }</td>
-							<td>
-							<c:choose>
-								<c:when test="${u.u_grade eq 2}">
-									관리자	
-								</c:when>
-								<c:when test="${u.u_grade eq 1}">
-									사업자
-								</c:when>
-								<c:when test="${u.u_grade eq 0}">
-									일반
-								</c:when>
-							</c:choose>
-							</td>
-							<td>
-							<c:choose>
-								<c:when test="${u.u_confirm eq 1}">
-									승인
-								</c:when>
-								<c:otherwise>
-									미승인
-								</c:otherwise>
-							</c:choose>
-							</td>
-							<td>
-							<c:choose>
-								<c:when test="${u.u_resign eq 1}">
-									탈퇴함
-								</c:when>
-								<c:otherwise>
-									탈퇴안함
-								</c:otherwise>
-							</c:choose>
-							</td>
-							<td>
-							<button onclick="sec(${u.u_no})">탈퇴</button>
-							<button onclick="rep(${u.u_no})">복구</button>
-							</td>
-							<td><button onclick="comsec(${u.u_no})">완전탈퇴</button></td>
-							<td>
-							<button onclick="admiss(${u.u_no})">승인</button>
-							<button onclick="adcan(${u.u_no})">취소</button>
-							</td>
+							<th scope="col">#</th>
+							<th scope="col">이름</th>
+							<th scope="col">닉네임</th>
+							<th scope="col">가입날짜</th>
+							<th scope="col">등급</th>
+							<th scope="col">승인여부</th>
+							<th scope="col">탈퇴여부</th>
+							<th scope="col">탈퇴</th>
+							<th scope="col">완전탈퇴</th>
+							<th scope="col">승인</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			
-			<div id="pagination" style="text-align: center;">
-				<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
+					</thead>
+					<tbody>
+						<c:forEach items="${userList }" var="u">
+							<tr>
+								<th scope='row'>${u.u_no }</th>
+								<td>${u.u_name }</td>
+								<td>${u.u_nickname }</td>
+								<td>${u.u_joindate }</td>
+								<td>
+								<c:choose>
+									<c:when test="${u.u_grade eq 2}">
+										관리자	
+									</c:when>
+									<c:when test="${u.u_grade eq 1}">
+										사업자
+									</c:when>
+									<c:when test="${u.u_grade eq 0}">
+										일반
+									</c:when>
+								</c:choose>
+								</td>
+								<td>
+								<c:choose>
+									<c:when test="${u.u_confirm eq 1}">
+										승인
+									</c:when>
+									<c:otherwise>
+										미승인
+									</c:otherwise>
+								</c:choose>
+								</td>
+								<td>
+								<c:choose>
+									<c:when test="${u.u_resign eq 1}">
+										O
+									</c:when>
+									<c:otherwise>
+										X
+									</c:otherwise>
+								</c:choose>
+								</td>
+								<td>
+								<button onclick="sec(${u.u_no})">탈퇴</button>
+								<button onclick="rep(${u.u_no})">복구</button>
+								</td>
+								<td><button onclick="comsec(${u.u_no})">완전탈퇴</button></td>
+								<td>
+								<button onclick="admiss(${u.u_no})">승인</button>
+								<button onclick="adcan(${u.u_no})">취소</button>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				
+				<div id="pagination" style="text-align: center; margin-bottom: 20px;">
+					<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
+				</div>
+				<form action="//admin/user.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center; margin-bottom: 20px;">
+					<select name="searchColumn">
+						<option value="u_name" ${searchColumn eq 'u_name'?'selected':'' }>이름</option>
+						<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>별명</option>
+					</select>
+					<input type="text" name="searchValue" value="${searchValue}">
+					<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
+				</form>
 			</div>
-			<form action="//admin/user.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center;">
-				<select name="searchColumn">
-					<option value="u_name" ${searchColumn eq 'u_name'?'selected':'' }>이름</option>
-					<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>별명</option>
-				</select>
-				<input type="text" name="searchValue" value="${searchValue}">
-				<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
-			</form>
 		</div>
-	</div>
+	</section>
 	<footer id="footer">
 		<c:import url="./footer.jsp"></c:import>
 	</footer>

@@ -39,62 +39,64 @@ td, th{
 	<nav id="navigation">
 		<c:import url="./adminnav.jsp"></c:import>
 	</nav>
-	<div id="section">
-		<div id="container">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">질문제목</th>
-						<th scope="col">작성자</th>
-						<th scope="col">쓴날짜</th>
-						<th scope="col">삭제여부</th>
-						<th scope="col">삭제</th>
-						<th scope="col">완전삭제</th>
-						<th scope="col">상세보기</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${questionList }" var="q">
+	<section>
+		<div id="section">
+			<div id="container">
+				<table class="table" style="width:90%; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;">
+					<thead>
 						<tr>
-							<th scope='row'>${q.q_no }</th>
-							<td>${q.q_title }</td>
-							<td>${q.u_nickname }</td>
-							<td>${q.q_date }</td>
-							<td>
-							<c:choose>
-								<c:when test="${q.q_del eq 1}">
-									삭제됨
-								</c:when>
-								<c:otherwise>
-									삭제안됨
-								</c:otherwise>
-							</c:choose>
-							</td>
-							<td>
-							<button onclick="qdel(${q.q_no})">삭제</button>
-							<button onclick="qrpr(${q.q_no})">복구</button>
-							</td>
-							<td><button onclick="qcompledel(${q.q_no})">완전삭제</button></td>
-							<td><button onclick="detail(${q.q_no}, ${pageNo })">상세보기</button></td>
+							<th scope="col">#</th>
+							<th scope="col">질문제목</th>
+							<th scope="col">작성자</th>
+							<th scope="col">쓴날짜</th>
+							<th scope="col">삭제여부</th>
+							<th scope="col">삭제</th>
+							<th scope="col">완전삭제</th>
+							<th scope="col">상세보기</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			
-			<div id="pagination" style="text-align: center;">
-				<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
+					</thead>
+					<tbody>
+						<c:forEach items="${questionList }" var="q">
+							<tr>
+								<th scope='row'>${q.q_no }</th>
+								<td>${q.q_title }</td>
+								<td>${q.u_nickname }</td>
+								<td>${q.q_date }</td>
+								<td>
+								<c:choose>
+									<c:when test="${q.q_del eq 1}">
+										O
+									</c:when>
+									<c:otherwise>
+										X
+									</c:otherwise>
+								</c:choose>
+								</td>
+								<td>
+								<button onclick="qdel(${q.q_no})">삭제</button>
+								<button onclick="qrpr(${q.q_no})">복구</button>
+								</td>
+								<td><button onclick="qcompledel(${q.q_no})">완전삭제</button></td>
+								<td><button onclick="detail(${q.q_no}, ${pageNo })">상세보기</button></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				
+				<div id="pagination" style="text-align: center; margin-bottom: 20px;">
+					<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
+				</div>
+				<form action="//admin/question.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center; margin-bottom: 20px;">
+					<select name="searchColumn">
+						<option value="q_title" ${searchColumn eq 'q_title'?'selected':'' }>글제목</option>
+						<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>작성자</option>
+					</select>
+					<input type="text" name="searchValue" value="${searchValue}">
+					<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
+				</form>
 			</div>
-			<form action="//admin/question.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center;">
-				<select name="searchColumn">
-					<option value="q_title" ${searchColumn eq 'q_title'?'selected':'' }>글제목</option>
-					<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>작성자</option>
-				</select>
-				<input type="text" name="searchValue" value="${searchValue}">
-				<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
-			</form>
 		</div>
-	</div>
+	</section>
 	<footer id="footer">
 		<c:import url="./footer.jsp"></c:import>
 	</footer>

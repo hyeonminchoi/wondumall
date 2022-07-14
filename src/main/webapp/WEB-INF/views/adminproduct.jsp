@@ -39,80 +39,82 @@ td, th{
 	<nav id="navigation">
 		<c:import url="./adminnav.jsp"></c:import>
 	</nav>
-	<div id="section">
-		<div id="container">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">제품이름</th>
-						<th scope="col">작성자</th>
-						<th scope="col">제품가격</th>
-						<th scope="col">등록날짜</th>
-						<th scope="col">승인여부</th>
-						<th scope="col">삭제여부</th>
-						<th scope="col">삭제</th>
-						<th scope="col">완전삭제</th>
-						<th scope="col">승인</th>
-						<th scope="col">상세보기</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${productList }" var="p">
+	<section>
+		<div id="section">
+			<div id="container">
+				<table class="table" style="width:90%; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;">
+					<thead>
 						<tr>
-							<th scope='row'>${p.p_no }</th>
-							<td>${p.p_name }</td>
-							<td>${p.u_name }</td>
-							<td>${p.p_price }</td>
-							<td>${p.p_date }</td>
-							<td>
-							<c:choose>
-								<c:when test="${p.p_confirm eq 1}">
-									승인
-								</c:when>
-								<c:otherwise>
-									미승인
-								</c:otherwise>
-							</c:choose>
-							</td>
-							<td>
-							<c:choose>
-								<c:when test="${p.p_del eq 1}">
-									삭제함
-								</c:when>
-								<c:otherwise>
-									삭제안함
-								</c:otherwise>
-							</c:choose>
-							</td>
-							<td>
-							<button onclick="del(${p.p_no})">삭제</button>
-							<button onclick="repair(${p.p_no})">복구</button>
-							</td>
-							<td><button onclick="pdelete(${p.p_no})">완전삭제</button></td>
-							<td>
-							<button onclick="admission(${p.p_no})">승인</button>
-							<button onclick="adcancel(${p.p_no})">취소</button>
-							</td>
-							<td><button onclick="detail(${p.p_no})">상세보기</button></td>
+							<th scope="col">#</th>
+							<th scope="col">제품이름</th>
+							<th scope="col">작성자</th>
+							<th scope="col">제품가격</th>
+							<th scope="col">등록날짜</th>
+							<th scope="col">승인여부</th>
+							<th scope="col">삭제여부</th>
+							<th scope="col">삭제</th>
+							<th scope="col">완전삭제</th>
+							<th scope="col">승인</th>
+							<th scope="col">상세보기</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			
-			<div id="pagination" style="text-align: center;">
-				<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
+					</thead>
+					<tbody>
+						<c:forEach items="${productList }" var="p">
+							<tr>
+								<th scope='row'>${p.p_no }</th>
+								<td>${p.p_name }</td>
+								<td>${p.u_name }</td>
+								<td>${p.p_price }</td>
+								<td>${p.p_date }</td>
+								<td>
+								<c:choose>
+									<c:when test="${p.p_confirm eq 1}">
+										승인
+									</c:when>
+									<c:otherwise>
+										미승인
+									</c:otherwise>
+								</c:choose>
+								</td>
+								<td>
+								<c:choose>
+									<c:when test="${p.p_del eq 1}">
+										O
+									</c:when>
+									<c:otherwise>
+										X
+									</c:otherwise>
+								</c:choose>
+								</td>
+								<td>
+								<button onclick="del(${p.p_no})">삭제</button>
+								<button onclick="repair(${p.p_no})">복구</button>
+								</td>
+								<td><button onclick="pdelete(${p.p_no})">완전삭제</button></td>
+								<td>
+								<button onclick="admission(${p.p_no})">승인</button>
+								<button onclick="adcancel(${p.p_no})">취소</button>
+								</td>
+								<td><button onclick="detail(${p.p_no})">상세보기</button></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				
+				<div id="pagination" style="text-align: center; margin-bottom: 20px;">
+					<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
+				</div>
+				<form action="//admin/product.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center; margin-bottom: 20px;">
+					<select name="searchColumn">
+						<option value="p_name" ${searchColumn eq 'p_name'?'selected':'' }>제품이름</option>
+						<option value="u_name" ${searchColumn eq 'u_name'?'selected':''}>작성자</option>
+					</select>
+					<input type="text" name="searchValue" value="${searchValue}">
+					<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
+				</form>
 			</div>
-			<form action="//admin/product.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center;">
-				<select name="searchColumn">
-					<option value="p_name" ${searchColumn eq 'p_name'?'selected':'' }>제품이름</option>
-					<option value="u_name" ${searchColumn eq 'u_name'?'selected':''}>작성자</option>
-				</select>
-				<input type="text" name="searchValue" value="${searchValue}">
-				<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
-			</form>
 		</div>
-	</div>
+	</section>
 	
 	<footer id="footer">
 		<c:import url="./footer.jsp"></c:import>
