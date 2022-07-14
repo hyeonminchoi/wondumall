@@ -39,62 +39,65 @@ td, th{
 	<nav id="navigation">
 		<c:import url="./adminnav.jsp"></c:import>
 	</nav>
-	<div id="section">
-		<div id="container">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">글제목</th>
-						<th scope="col">이름</th>
-						<th scope="col">쓴날짜</th>
-						<th scope="col">삭제여부</th>
-						<th scope="col">삭제</th>
-						<th scope="col">완전삭제</th>
-						<th scope="col">상세보기</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${boardList }" var="b">
+	<section>
+		<div id="section">
+			<div id="container">
+				<table class="table" style="width:90%; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;">
+					<thead>
 						<tr>
-							<th scope='row'>${b.b_no }</th>
-							<td>${b.b_title }</td>
-							<td>${b.u_nickname }</td>
-							<td>${b.b_date }</td>
-							<td>
-							<c:choose>
-								<c:when test="${b.b_del eq 1}">
-									삭제됨
-								</c:when>
-								<c:otherwise>
-									삭제안됨
-								</c:otherwise>
-							</c:choose>
-							</td>
-							<td>
-							<button onclick="bdel(${b.b_no})">삭제</button>
-							<button onclick="rpr(${b.b_no})">복구</button>
-							</td>
-							<td><button onclick="compledel(${b.b_no})">완전삭제</button></td>
-							<td><button onclick="detail(${b.b_no}, ${pageNo })">상세보기</button></td>
+							<th scope="col">#</th>
+							<th scope="col">글제목</th>
+							<th scope="col">이름</th>
+							<th scope="col">쓴날짜</th>
+							<th scope="col">삭제여부</th>
+							<th scope="col">삭제</th>
+							<th scope="col">완전삭제</th>
+							<th scope="col">상세보기</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			
-			<div id="pagination" style="text-align: center;">
-				<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
+					</thead>
+					<tbody>
+						<c:forEach items="${boardList }" var="b">
+							<tr>
+								<th scope='row'>${b.b_no }</th>
+								<td>${b.b_title }</td>
+								<td>${b.u_nickname }</td>
+								<td>${b.b_date }</td>
+								<td>
+								<c:choose>
+									<c:when test="${b.b_del eq 1}">
+										O
+									</c:when>
+									<c:otherwise>
+										X
+									</c:otherwise>
+								</c:choose>
+								</td>
+								<td>
+								<button onclick="bdel(${b.b_no})">삭제</button>
+								<button onclick="rpr(${b.b_no})">복구</button>
+								</td>
+								<td><button onclick="compledel(${b.b_no})">완전삭제</button></td>
+								<td><button onclick="detail(${b.b_no}, ${pageNo })">상세보기</button></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				
+				<div id="pagination" style="text-align: center; margin-bottom: 20px;">
+					<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
+				</div>
+				<form action="//admin/board.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center; margin-bottom: 20px;">
+					<select name="searchColumn">
+						<option value="b_title" ${searchColumn eq 'b_title'?'selected':'' }>글제목</option>
+						<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>작성자</option>
+					</select>
+					<input type="text" name="searchValue" value="${searchValue}">
+					<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
+				</form>
 			</div>
-			<form action="//admin/board.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center;">
-				<select name="searchColumn">
-					<option value="b_title" ${searchColumn eq 'b_title'?'selected':'' }>글제목</option>
-					<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>작성자</option>
-				</select>
-				<input type="text" name="searchValue" value="${searchValue}">
-				<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
-			</form>
 		</div>
-	</div>
+	</section>
+	
 	<footer id="footer">
 		<c:import url="./footer.jsp"></c:import>
 	</footer>

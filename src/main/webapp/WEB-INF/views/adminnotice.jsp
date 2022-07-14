@@ -39,46 +39,48 @@ td, th{
 	<nav id="navigation">
 		<c:import url="./adminnav.jsp"></c:import>
 	</nav>
-	<div id="section">
-		<div id="container">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">글제목</th>
-						<th scope="col">작성자</th>
-						<th scope="col">쓴날짜</th>
-						<th scope="col">삭제</th>
-						<th scope="col">상세보기</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${noticeList }" var="n">
+	<section>
+		<div id="section">
+			<div id="container">
+				<table class="table" style="width:90%; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;">
+					<thead>
 						<tr>
-							<th scope='row'>${n.n_no }</th>
-							<td>${n.n_title }</td>
-							<td>${n.u_nickname }</td>
-							<td>${n.n_date }</td>
-							<td><button onclick="noticecomdel(${n.n_no})">삭제</button></td>
-							<td><button onclick="noticedetail(${n.n_no}, ${pageNo })">상세보기</button></td>
+							<th scope="col">#</th>
+							<th scope="col">글제목</th>
+							<th scope="col">작성자</th>
+							<th scope="col">쓴날짜</th>
+							<th scope="col">삭제</th>
+							<th scope="col">상세보기</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			
-			<div id="pagination" style="text-align: center;">
-				<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
+					</thead>
+					<tbody>
+						<c:forEach items="${noticeList }" var="n">
+							<tr>
+								<th scope='row'>${n.n_no }</th>
+								<td>${n.n_title }</td>
+								<td>${n.u_nickname }</td>
+								<td>${n.n_date }</td>
+								<td><button onclick="noticecomdel(${n.n_no})">삭제</button></td>
+								<td><button onclick="noticedetail(${n.n_no}, ${pageNo })">상세보기</button></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				
+				<div id="pagination" style="text-align: center; margin-bottom: 20px;">
+					<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
+				</div>
+				<form action="//admin/notice.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center; margin-bottom: 20px;">
+					<select name="searchColumn">
+						<option value="n_title" ${searchColumn eq 'n_title'?'selected':'' }>글제목</option>
+						<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>작성자</option>
+					</select>
+					<input type="text" name="searchValue" value="${searchValue}">
+					<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
+				</form>
 			</div>
-			<form action="//admin/notice.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center;">
-				<select name="searchColumn">
-					<option value="n_title" ${searchColumn eq 'n_title'?'selected':'' }>글제목</option>
-					<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>작성자</option>
-				</select>
-				<input type="text" name="searchValue" value="${searchValue}">
-				<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
-			</form>
 		</div>
-	</div>
+	</section>
 	<footer id="footer">
 		<c:import url="./footer.jsp"></c:import>
 	</footer>

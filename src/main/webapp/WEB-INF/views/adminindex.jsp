@@ -32,11 +32,13 @@
 	<nav id="navigation">
 		<c:import url="./adminnav.jsp"></c:import>
 	</nav>
-	<div id="section">
-		<div id="container">
-			
-		</div>   
-	</div>
+	<section>
+		<div id="section">
+			<div id="container">
+				
+			</div>   
+		</div>
+	</section>
 	
 	<footer id="footer">
 		<c:import url="./footer.jsp"></c:import>
