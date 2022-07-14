@@ -14,8 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com..DTO.BoardDTO;
 import com..DTO.LoginDTO;
+import com..DTO.NoticeDTO;
 import com..DTO.PageDTO;
 import com..DTO.ProductDTO;
+import com..DTO.QuestionDTO;
 import com..Service.AdminService;
 
 @Controller
@@ -258,5 +260,111 @@ public class AdminController {
 		adminService.compledel(b_no);
 		
 		return "redirect:/admin/board.do";
+	}
+	
+	@GetMapping(value = "/admin/notice.do")
+	public ModelAndView adminnotice(@RequestParam(name = "pageNo", required = false, defaultValue = "1") int pageNo, @RequestParam(name="searchColumn", required = false) String searchColumn,
+			@RequestParam(name="searchValue", required=false) String searchValue) {
+		ModelAndView mv = new ModelAndView("adminnotice");
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(pageNo); //현재 페이지 번호
+		paginationInfo.setRecordCountPerPage(10); //한 페이지에 게시되는 게시물 건수
+		paginationInfo.setPageSize(10); //페이징 리스트의 사이즈
+		
+		Map<String, Object> map = new HashMap<>();
+		if(searchColumn != null && searchValue != null) {
+			map.put("searchColumn", searchColumn);
+			map.put("searchValue", searchValue);
+			mv.addObject("searchColumn", searchColumn);
+			mv.addObject("searchValue", searchValue);
+		}
+		
+		paginationInfo.setTotalRecordCount(adminService.getNoticeCount(map));
+		
+		int startPage = paginationInfo.getFirstRecordIndex();
+		int lastPage = paginationInfo.getRecordCountPerPage();
+		PageDTO page = new PageDTO();
+		page.setStartPage(startPage);
+		page.setLastPage(lastPage);
+		map.put("page", page);
+		List<NoticeDTO> noticeList = adminService.noticeList(map);
+		mv.addObject("noticeList", noticeList);
+		mv.addObject("paginationInfo", paginationInfo);
+		mv.addObject("pageNo", pageNo);
+		return mv;
+	}
+	
+	@GetMapping(value = "/admin/noticecomdel/{n_no}")
+	public String noticecomdel(@PathVariable("n_no") int n_no) {
+		
+		NoticeDTO dto = new NoticeDTO();
+				
+		dto.setU_no(n_no);
+		adminService.noticecomdel(n_no);
+		
+		return "redirect:/admin/notice.do";
+	}
+	
+	@GetMapping(value = "/admin/question.do")
+	public ModelAndView adminquestion(@RequestParam(name = "pageNo", required = false, defaultValue = "1") int pageNo, @RequestParam(name="searchColumn", required = false) String searchColumn,
+			@RequestParam(name="searchValue", required=false) String searchValue) {
+		ModelAndView mv = new ModelAndView("adminquestion");
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(pageNo); //현재 페이지 번호
+		paginationInfo.setRecordCountPerPage(10); //한 페이지에 게시되는 게시물 건수
+		paginationInfo.setPageSize(10); //페이징 리스트의 사이즈
+		
+		Map<String, Object> map = new HashMap<>();
+		if(searchColumn != null && searchValue != null) {
+			map.put("searchColumn", searchColumn);
+			map.put("searchValue", searchValue);
+			mv.addObject("searchColumn", searchColumn);
+			mv.addObject("searchValue", searchValue);
+		}
+		
+		paginationInfo.setTotalRecordCount(adminService.getQuestionCount(map));
+		
+		int startPage = paginationInfo.getFirstRecordIndex();
+		int lastPage = paginationInfo.getRecordCountPerPage();
+		PageDTO page = new PageDTO();
+		page.setStartPage(startPage);
+		page.setLastPage(lastPage);
+		map.put("page", page);
+		List<QuestionDTO> questionList = adminService.questionList(map);
+		mv.addObject("questionList", questionList);
+		mv.addObject("paginationInfo", paginationInfo);
+		mv.addObject("pageNo", pageNo);
+		
+		return mv;
+	}
+	
+	@GetMapping(value = "/admin/qdel/{q_no}")
+	public String qdel(@PathVariable("q_no") int q_no) {
+		
+		QuestionDTO dto = new QuestionDTO();
+		dto.setQ_no(q_no);
+		adminService.qdel(q_no);
+		
+		return "redirect:/admin/question.do";
+	}
+	
+	@GetMapping(value = "/admin/qrpr/{q_no}")
+	public String qrpr(@PathVariable("q_no") int q_no) {
+		
+		QuestionDTO dto = new QuestionDTO();
+		dto.setQ_no(q_no);
+		adminService.qrpr(q_no);
+		
+		return "redirect:/admin/question.do";
+	}
+	
+	@GetMapping(value = "/admin/qcompledel/{q_no}")
+	public String qcompledel(@PathVariable("q_no") int q_no) {
+		
+		QuestionDTO dto = new QuestionDTO();
+		dto.setQ_no(q_no);
+		adminService.qcompledel(q_no);
+		
+		return "redirect:/admin/question.do";
 	}
 }

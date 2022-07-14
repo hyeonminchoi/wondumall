@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 
 import com..DTO.BoardDTO;
 import com..DTO.LoginDTO;
+import com..DTO.NoticeDTO;
 import com..DTO.ProductDTO;
+import com..DTO.QuestionDTO;
 
 @Component
 public class AdminDAO {
@@ -110,5 +112,45 @@ public class AdminDAO {
 	public void compledel(int b_no) {
 		
 		sqlSession.delete("admin.compledel", b_no);
+	}
+
+	public int getNoticeCount(Map<String, Object> map) {
+		
+		return sqlSession.selectOne("admin.getNoticeCount", map);
+	}
+
+	public List<NoticeDTO> noticeList(Map<String, Object> map) {
+		
+		return sqlSession.selectList("admin.noticeList", map);
+	}
+
+	public void noticecomdel(int n_no) {
+	
+		sqlSession.delete("admin.noticecomdel", n_no);
+	}
+
+	public int getQuestionCount(Map<String, Object> map) {
+		
+		return sqlSession.selectOne("admin.getQuestionCount", map);
+	}
+
+	public List<QuestionDTO> questionList(Map<String, Object> map) {
+		
+		return sqlSession.selectList("admin.questionList", map);
+	}
+
+	public void qdel(int q_no) {
+		
+		sqlSession.update("admin.qdel", q_no);
+	}
+
+	public void qrpr(int q_no) {
+		
+		sqlSession.update("admin.qrpr", q_no);
+	}
+
+	public void qcompledel(int q_no) {
+		
+		sqlSession.delete("admin.qcompledel", q_no);
 	}
 }

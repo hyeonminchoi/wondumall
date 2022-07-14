@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import com..DAO.AdminDAO;
 import com..DTO.BoardDTO;
 import com..DTO.LoginDTO;
+import com..DTO.NoticeDTO;
 import com..DTO.ProductDTO;
+import com..DTO.QuestionDTO;
 
 @Service
 public class AdminService {
@@ -110,5 +112,45 @@ public class AdminService {
 	public void compledel(int b_no) {
 		
 		adminDAO.compledel(b_no);
+	}
+
+	public int getNoticeCount(Map<String, Object> map) {
+		
+		return adminDAO.getNoticeCount(map);
+	}
+
+	public List<NoticeDTO> noticeList(Map<String, Object> map) {
+		
+		return adminDAO.noticeList(map);
+	}
+
+	public void noticecomdel(int n_no) {
+		
+		adminDAO.noticecomdel(n_no);
+	}
+
+	public int getQuestionCount(Map<String, Object> map) {
+		
+		return adminDAO.getQuestionCount(map);
+	}
+
+	public List<QuestionDTO> questionList(Map<String, Object> map) {
+		
+		return adminDAO.questionList(map);
+	}
+
+	public void qdel(int q_no) {
+		
+		adminDAO.qdel(q_no);
+	}
+
+	public void qrpr(int q_no) {
+		
+		adminDAO.qrpr(q_no);
+	}
+
+	public void qcompledel(int q_no) {
+		
+		adminDAO.qcompledel(q_no);
 	}
 }

@@ -3,6 +3,72 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="admin">
+	<delete id="qcompledel" parameterType="questionDTO">
+		DELETE FROM question WHERE q_no=#{q_no}
+	</delete>
+	<update id="qdel" parameterType="questionDTO">
+		UPDATE question SET q_del=1 WHERE q_no=#{q_no} 
+	</update>
+	<update id="qrpr" parameterType="questionDTO">
+		UPDATE question SET q_del=0 WHERE q_no=#{q_no} 
+	</update>
+	<select id="getQuestionCount" resultType="integer" parameterType="map">
+		SELECT count(*)
+		FROM question JOIN user ON user.u_no = question.u_no
+		<choose>
+			<when test='searchColumn == "q_title"'>
+				WHERE q_title like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_nickname"'>
+				WHERE u_nickname like CONCAT('%',#{searchValue},'%')
+			</when>
+		</choose>
+	</select>
+	<select id="questionList" resultType="questionDTO" parameterType="map">
+		SELECT question.*, user.u_nickname
+		FROM question JOIN user ON user.u_no = question.u_no
+		<choose>
+			<when test='searchColumn == "q_title"'>
+				WHERE q_title like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_nickname"'>
+				WHERE u_nickname like CONCAT('%',#{searchValue},'%')
+			</when>
+		</choose>
+		GROUP BY q_no
+		ORDER BY q_date DESC
+		LIMIT #{page.startPage}, #{page.lastPage}
+	</select>
+	<delete id="noticecomdel" parameterType="noticeDTO">
+		DELETE FROM notice WHERE n_no=#{n_no}
+	</delete>
+	<select id="getNoticeCount" resultType="integer" parameterType="map">
+		SELECT count(*)
+		FROM notice JOIN user ON user.u_no = notice.u_no
+		<choose>
+			<when test='searchColumn == "n_title"'>
+				WHERE n_title like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_nickname"'>
+				WHERE u_nickname like CONCAT('%',#{searchValue},'%')
+			</when>
+		</choose>
+	</select>
+	<select id="noticeList" resultType="noticeDTO" parameterType="map">
+		SELECT notice.*, user.u_nickname
+		FROM notice JOIN user ON user.u_no = notice.u_no
+		<choose>
+			<when test='searchColumn == "n_title"'>
+				WHERE n_title like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_nickname"'>
+				WHERE u_nickname like CONCAT('%',#{searchValue},'%')
+			</when>
+		</choose>
+		GROUP BY n_no
+		ORDER BY n_date DESC
+		LIMIT #{page.startPage}, #{page.lastPage}
+	</select>
 	<delete id="compledel" parameterType="boardDTO">
 		DELETE FROM board WHERE b_no=#{b_no}
 	</delete>
