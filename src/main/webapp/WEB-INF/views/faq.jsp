@@ -146,6 +146,12 @@ label{
 			<div class="container">
 				<div class="accordion">
 					<h2 class="title01">자주묻는질문</h2>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<div style="float:right; margin-bottom: 20px;">
+							<button type="button" onclick="showFaqWriteDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>글쓰기</button>
+						</div>
+					</sec:authorize>
+					
 					<ul class="webtong_tab_type02 tabs">
 						<c:forEach var="fc" items="${faqCategory }" varStatus="fcvar">
 							<li class="tab-link ${fcvar.index eq 0 ? 'current':'' }" data-tab="tab-${fcvar.index}"><strong><a>${fc.fc_category }</a></strong>
@@ -174,16 +180,6 @@ label{
 							</c:forEach>
 						</div>
 					</c:forEach>
-					<sec:authorize access="hasRole('ROLE_ADMIN')">
-						<div style="float:right;">
-							<button type="button" onclick="showFaqWriteDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>글쓰기</button>
-						</div>
-					</sec:authorize>
-					<sec:authorize access="not authenticated">
-						<div style="float:right;">
-							<button type="button" onclick="location.href='./login.do'"><i class="fa fa-user" aria-hidden="true"></i>로그인</button>
-						</div>
-					</sec:authorize>
 				</div>
 			</div>
 			<!-- /container -->

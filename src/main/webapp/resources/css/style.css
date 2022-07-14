@@ -2137,7 +2137,7 @@ textarea.input {
 
 @media only screen and (min-width: 992px) {
   section{
-    min-height: 50vh;
+    min-height: 40vw;
   }
 }
 
