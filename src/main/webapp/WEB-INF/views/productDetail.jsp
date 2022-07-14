@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -29,7 +31,24 @@
 
  		<!-- Custom stlylesheet -->
  		<link type="text/css" rel="stylesheet" href="./css/style.css"/>
+<style type="text/css">
+textarea {
+	resize: none;
+}
+/* 이모지 별점 */
+#myform fieldset{
+    display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+    border: 0; /* 필드셋 테두리 제거 */
+}
 
+#myform label:hover {
+	text-shadow: 0 0 0 #a00; /* 마우스 호버 */
+}
+
+#myform label:hover ~ label {
+	text-shadow: 0 0 0 #a00; /* 마우스 호버 뒤에오는 이모지들 */
+}
+</style>
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -56,8 +75,17 @@
 			alert('로그인을 하세요');
 			location.href='./login.do';
 		}
+		/* $(document).ready(function(){
+			$("#Btn").click(function(){
+				alert('리뷰 등륵 완료하였습니다!');
+			});
+		}); */
+		function linkPage(reviewPageNo){
+			location.href = "./productDetail.do?p_no=${param.p_no}&reviewPageNo=" + reviewPageNo;
+		}
 	</script>
-    </head>
+
+</head>
 	<body>
 		<!-- HEADER -->
 		<header>
@@ -421,49 +449,199 @@
 			<!-- /container -->
 		</div>
 		<!-- /SECTION -->
-		
-		<div class="section">
+	<div class="section">
 			<div class="container">
 				<div class="row">
-					<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_BUSINESS','ROLE_USER')">
-						<form action="./productReview.do" method="POST" id="join" class="joinForm">
-								<div class="form-group row">
-									<label class="col-sm-3">리뷰 제목</label>
-									<div class="com-sm-3">
-										<input type="text" id="r_title" name="r_title" class="form-control" required>
-									</div>
-								</div>
-								<div class="form-group row">
-									<label class="col-sm-3">리뷰 내용</label>
-									<div class="com-sm-5">
-										<textarea name="r_content" cols="50" rows="2" class="form-control" required></textarea>
-									</div>
-								</div>
-								<div class="form-group row">
-									<label class="col-sm-3">별점</label>
-									<div class="com-sm-5">
-										<input type="number" id="r_rating" name="r_rating" class="form-control" required>
-									</div>
-								</div>
-								<!-- <div class="input-rating">
-									<span>Your Rating: </span>
-									<div class="stars">
-										<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
-										<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
-										<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
-										<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
-										<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
-									</div>
-								</div> -->
-								<input type="hidden" value="${productDetail.p_no }" name="p_no">
-								<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
-							<input type="submit" id="Btn" class="primary-btn" value="등록하기" />
-						</form>
+						<div id="product-tab">
+					<ul class="tab-nav">
+						<li><a href="#tab3">Reviews (3)</a></li>
+					</ul>
+					</div>
+						<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_BUSINESS','ROLE_USER')">
+						<c:choose>
+							<c:when test="${not empty reviewStatus and reviewStatus eq 0}">
+								<form action="./productReview.do" method="POST" id="join" class="joinForm" name="reviewAdd">
+										<div class="form-group row">
+											<label class="col-sm-3">리뷰 제목</label>
+											<div class="com-sm-3">
+												<input type="text" id="r_title" name="r_title" class="form-control" required>
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-sm-3">리뷰 내용</label>
+											<div class="com-sm-5">
+												<textarea name="r_content" cols="50" rows="2" class="form-control" required></textarea>
+											</div>
+										</div>
+										<div class="form-group row">
+											<fieldset name="myform" id="myform">
+												<legend>이모지 별점</legend>
+												<input type="radio" name="r_rating" value="1" id="rate1"><label for="rate1">⭐</label>
+												<input type="radio" name="r_rating" value="2" id="rate2"><label for="rate2">⭐⭐</label>
+												<input type="radio" name="r_rating" value="3" id="rate3"><label for="rate3">⭐⭐⭐</label>
+												<input type="radio" name="r_rating" value="4" id="rate4"><label for="rate4">⭐⭐⭐⭐</label>
+												<input type="radio" name="r_rating" value="5" id="rate5"><label for="rate5">⭐⭐⭐⭐⭐</label>
+											</fieldset>
+										</div>
+										<br>
+									<input type="hidden" value="${productDetail.p_no }" name="p_no">
+										<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
+									<button type="submit" id="Btn" class="primary-btn" value="등록하기" onclick="reviewAdd()">등록하기</button>
+								</form>
+							</c:when>
+							<c:otherwise>
+								<form action="./productReview.do" method="POST" id="join" class="joinForm" name="reviewAdd">
+										<div class="form-group row">
+											<label class="col-sm-3">리뷰 제목</label>
+											<div class="com-sm-3">
+												<input type="text" id="r_title" name="r_title" class="form-control" disabled="disabled" placeholder="리뷰를 등록한 상품입니다.">
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-sm-3">리뷰 내용</label>
+											<div class="com-sm-5">
+												<textarea name="r_content" cols="50" rows="2" class="form-control" disabled="disabled"></textarea>
+											</div>
+										</div>
+										<div class="form-group row">
+											<fieldset name="myform" id="myform" disabled="disabled">
+												<legend>별점</legend>
+												<input type="radio" name="r_rating" value="1" id="rate1"><label for="rate1">⭐</label>
+												<input type="radio" name="r_rating" value="2" id="rate2"><label for="rate2">⭐⭐</label>
+												<input type="radio" name="r_rating" value="3" id="rate3"><label for="rate3">⭐⭐⭐</label>
+												<input type="radio" name="r_rating" value="4" id="rate4"><label for="rate4">⭐⭐⭐⭐</label>
+												<input type="radio" name="r_rating" value="5" id="rate5"><label for="rate5">⭐⭐⭐⭐⭐</label>
+											</fieldset>
+										</div>
+										<br>
+										<input type="hidden" value="${productDetail.p_no }" name="p_no">
+										<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
+									<button type="button" id="Btn" class="primary-btn" value="등록하기">등록하기</button>
+								</form>
+							</c:otherwise>
+						</c:choose>
 					</sec:authorize>
+					
 				</div>
 			</div>
 		</div>
-		
+			<!-- Section -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div id="tab3" class="tab-pane fade in">
+						<div class="row">
+							<!-- Rating -->
+							<div class="col-md-3">
+								<div id="rating">
+									<div class="rating-avg">
+										<span>점수 들어 갈 것</span>
+										<div class="rating-stars">
+											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+												class="fa fa-star-o"></i>
+										</div>
+									</div>
+									<ul class="rating">
+										<li>
+											<div class="rating-stars">
+												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star"></i>
+											</div>
+											<div class="rating-progress">
+												<div style="width: 80%;"></div>
+											</div> <span class="sum">3</span>
+										</li>
+										<li>
+											<div class="rating-stars">
+												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star-o"></i>
+											</div>
+											<div class="rating-progress">
+												<div style="width: 60%;"></div>
+											</div> <span class="sum">2</span>
+										</li>
+										<li>
+											<div class="rating-stars">
+												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i
+													class="fa fa-star-o"></i>
+											</div>
+											<div class="rating-progress">
+												<div></div>
+											</div> <span class="sum">0</span>
+										</li>
+										<li>
+											<div class="rating-stars">
+												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i
+													class="fa fa-star-o"></i>
+											</div>
+											<div class="rating-progress">
+												<div></div>
+											</div> <span class="sum">0</span>
+										</li>
+										<li>
+											<div class="rating-stars">
+												<i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i
+													class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i
+													class="fa fa-star-o"></i>
+											</div>
+											<div class="rating-progress">
+												<div></div>
+											</div> <span class="sum">0</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+	
+							<!-- /Rating -->
+							<!-- Reviews -->
+							<div class="col-md-6">
+								<div id="reviews">
+									<table class="table table-bordered">
+										<c:forEach items="${reviewList}" var="r">
+											<ul class="reviews">
+												<li>
+													<div class="review-heading">
+														<h5 class="name">${r.u_nickname}</h5>
+														<p class="date">
+														<fmt:parseDate value="${r.r_date}" var="time"
+															pattern="yyyy-MM-dd HH:mm:ss.S" />
+														<fmt:formatDate value="${time}" var="time"
+															pattern="yyyy-MM-dd HH:mm:ss" />
+														${time }
+														<%-- ${r.r_date} --%>
+														</p>
+														<div class="review-rating">
+															<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+																class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+																class="fa fa-star-o empty"></i>
+														</div>
+													</div>
+													<div class="review-body">
+														<h6>${r.r_title}</h6>
+														<p>${r.r_content}</p>
+													</div>
+												</li>
+											</ul>
+										</c:forEach>
+									</table>
+									<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage"/>
+								</div>
+							</div>
+	
+							<!-- /Reviews -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
 		<!-- Section -->
 		<div class="section">
 			<!-- container -->
@@ -601,6 +779,8 @@
 			<!-- /container -->
 		</div>
 		<!-- /Section -->
+		
+		
 
 		<!-- FOOTER -->
 		<footer id="footer">
