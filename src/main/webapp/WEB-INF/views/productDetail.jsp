@@ -56,6 +56,11 @@
 			alert('로그인을 하세요');
 			location.href='./login.do';
 		}
+		$(document).ready(function(){
+			$("#Btn").click(function(){
+				alert('리뷰 등륵 완료하였습니다!');
+			});
+		});
 	</script>
 <style type="text/css">
 /* 이모지 별점 */
@@ -436,39 +441,77 @@
 			<!-- /container -->
 		</div>
 		<!-- /SECTION -->
-		
-		<div class="section">
+	<div class="section">
 			<div class="container">
 				<div class="row">
-					<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_BUSINESS','ROLE_USER')">
-						<form action="./productReview.do" method="POST" id="join" class="joinForm">
-								<div class="form-group row">
-									<label class="col-sm-3">리뷰 제목</label>
-									<div class="com-sm-3">
-										<input type="text" id="r_title" name="r_title" class="form-control" required>
-									</div>
-								</div>
-								<div class="form-group row">
-									<label class="col-sm-3">리뷰 내용</label>
-									<div class="com-sm-5">
-										<textarea name="r_content" cols="50" rows="2" class="form-control" required></textarea>
-									</div>
-								</div>
-								<div class="form-group row">
-									<fieldset name="myform" id="myform">
-										<legend>이모지 별점</legend>
-										<input type="radio" name="r_rating" value="1" id="rate1"><label for="rate1">⭐</label>
-										<input type="radio" name="r_rating" value="2" id="rate2"><label for="rate2">⭐⭐</label>
-										<input type="radio" name="r_rating" value="3" id="rate3"><label for="rate3">⭐⭐⭐</label>
-										<input type="radio" name="r_rating" value="4" id="rate4"><label for="rate4">⭐⭐⭐⭐</label>
-										<input type="radio" name="r_rating" value="5" id="rate5"><label for="rate5">⭐⭐⭐⭐⭐</label>
-									</fieldset>
-								</div>
-								<br>
-							<input type="hidden" value="${productDetail.p_no }" name="p_no">
-								<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
-							<input type="submit" id="Btn" class="primary-btn" value="등록하기" />
-						</form>
+						<div id="product-tab">
+					<ul class="tab-nav">
+						<li><a href="#tab3">Reviews (3)</a></li>
+					</ul>
+					</div>
+						<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_BUSINESS','ROLE_USER')">
+						<c:choose>
+							<c:when test="${not empty reviewStatus and reviewStatus eq 0}">
+								<form action="./productReview.do" method="POST" id="join" class="joinForm" name="reviewAdd">
+										<div class="form-group row">
+											<label class="col-sm-3">리뷰 제목</label>
+											<div class="com-sm-3">
+												<input type="text" id="r_title" name="r_title" class="form-control" required>
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-sm-3">리뷰 내용</label>
+											<div class="com-sm-5">
+												<textarea name="r_content" cols="50" rows="2" class="form-control" required></textarea>
+											</div>
+										</div>
+										<div class="form-group row">
+											<fieldset name="myform" id="myform">
+												<legend>이모지 별점</legend>
+												<input type="radio" name="r_rating" value="1" id="rate1"><label for="rate1">⭐</label>
+												<input type="radio" name="r_rating" value="2" id="rate2"><label for="rate2">⭐⭐</label>
+												<input type="radio" name="r_rating" value="3" id="rate3"><label for="rate3">⭐⭐⭐</label>
+												<input type="radio" name="r_rating" value="4" id="rate4"><label for="rate4">⭐⭐⭐⭐</label>
+												<input type="radio" name="r_rating" value="5" id="rate5"><label for="rate5">⭐⭐⭐⭐⭐</label>
+											</fieldset>
+										</div>
+										<br>
+									<input type="hidden" value="${productDetail.p_no }" name="p_no">
+										<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
+									<button type="submit" id="Btn" class="primary-btn" value="등록하기" onclick="reviewAdd()">등록하기</button>
+								</form>
+							</c:when>
+							<c:otherwise>
+								<form action="./productReview.do" method="POST" id="join" class="joinForm" name="reviewAdd">
+										<div class="form-group row">
+											<label class="col-sm-3">리뷰 제목</label>
+											<div class="com-sm-3">
+												<input type="text" id="r_title" name="r_title" class="form-control" disabled="disabled" placeholder="리뷰를 등록한 상품입니다.">
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-sm-3">리뷰 내용</label>
+											<div class="com-sm-5">
+												<textarea name="r_content" cols="50" rows="2" class="form-control" disabled="disabled"></textarea>
+											</div>
+										</div>
+										<div class="form-group row">
+											<fieldset name="myform" id="myform" disabled="disabled">
+												<legend>별점</legend>
+												<input type="radio" name="r_rating" value="1" id="rate1"><label for="rate1">⭐</label>
+												<input type="radio" name="r_rating" value="2" id="rate2"><label for="rate2">⭐⭐</label>
+												<input type="radio" name="r_rating" value="3" id="rate3"><label for="rate3">⭐⭐⭐</label>
+												<input type="radio" name="r_rating" value="4" id="rate4"><label for="rate4">⭐⭐⭐⭐</label>
+												<input type="radio" name="r_rating" value="5" id="rate5"><label for="rate5">⭐⭐⭐⭐⭐</label>
+											</fieldset>
+										</div>
+										<br>
+										<input type="hidden" value="${productDetail.p_no }" name="p_no">
+										<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
+									<button type="button" id="Btn" class="primary-btn" value="등록하기">등록하기</button>
+								</form>
+							</c:otherwise>
+						</c:choose>
 					</sec:authorize>
 				</div>
 			</div>

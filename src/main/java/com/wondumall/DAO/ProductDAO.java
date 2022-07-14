@@ -56,4 +56,8 @@ public class ProductDAO {
 	public void cartDelete(CartDTO cartDTO) {
 		sqlSession.delete("product.cartDelete", cartDTO);
 	}
+
+	public int reviewStatus(ReviewDTO dto) {
+		return sqlSession.selectOne("product.reviewStatus", dto);
+	}
 }

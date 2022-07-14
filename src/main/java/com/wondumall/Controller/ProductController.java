@@ -112,10 +112,15 @@ public class ProductController {
 	}
 	
 	@GetMapping(value = "/productDetail.do")
-	public ModelAndView productDetail(@RequestParam("p_no") int p_no) {
+	public ModelAndView productDetail(@RequestParam("p_no") int p_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 		ModelAndView mv = new ModelAndView("productDetail");
 		mv.addObject("productDetail", productService.productDetail(p_no));
-		
+		if(myUserDetails !=null) {
+			ReviewDTO dto = new ReviewDTO();
+			dto.setP_no(p_no);
+			dto.setU_no(myUserDetails.getNo());
+			mv.addObject("reviewStatus", productService.reviewStatus(dto));
+		}
 		return mv;
 	}
 	

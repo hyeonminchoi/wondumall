@@ -56,4 +56,8 @@ public class ProductService {
 	public void cartDelete(CartDTO cartDTO) {
 		productDAO.cartDelete(cartDTO);
 	}
+
+	public int reviewStatus(ReviewDTO dto) {
+		return productDAO.reviewStatus(dto);
+	}
 }
