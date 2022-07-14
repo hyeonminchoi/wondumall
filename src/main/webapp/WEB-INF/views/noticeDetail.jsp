@@ -247,111 +247,113 @@ function noticeCommentEdit(nc_no, nc_comment){
 		<c:import url="./communityNav.jsp"></c:import>
 	<!-- /NAVIGATION -->
 	
-	<!-- SECTION -->
-	<div class="section">
-		<!-- container -->
-		<div class="container">
-			<div id="back">
-				<label onclick="notice()"><i class="fa fa-arrow-left" aria-hidden="true"></i>뒤로가기</label>
-				<sec:authorize access="authenticated">
-					<sec:authorize access="hasRole('ROLE_ADMIN') || principal != null && principal.nickname == '${detail.u_nickname }' ">
-						<label onclick="showNoticeEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>수정</label>
+	<section>
+		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<div id="back">
+					<label onclick="notice()"><i class="fa fa-arrow-left" aria-hidden="true"></i>뒤로가기</label>
+					<sec:authorize access="authenticated">
+						<sec:authorize access="hasRole('ROLE_ADMIN') || principal != null && principal.nickname == '${detail.u_nickname }' ">
+							<label onclick="showNoticeEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>수정</label>
+						</sec:authorize>
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+							<label onclick="noticeDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</label>
+						</sec:authorize>
 					</sec:authorize>
-					<sec:authorize access="hasRole('ROLE_ADMIN')">
-						<label onclick="noticeDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</label>
-					</sec:authorize>
-				</sec:authorize>
-			</div>
-			<table class="table table-bordered">
-				<tr>
-					<th>번호</th>
-					<td>${detail.n_no }</td>
-				</tr>
-				<tr>
-					<th>제목</th>
-					<td>${detail.n_title }</td>
-				</tr>
-				<tr>
-					<th>글쓴이</th>
-					<td>${detail.u_nickname }</td>
-				</tr>
-				<tr>
-					<th>작성일</th>
-					<fmt:parseDate value="${detail.n_date}" var="time"
-						pattern="yyyy-MM-dd HH:mm:ss.S" />
-					<fmt:formatDate value="${time}" var="time"
-						pattern="yyyy-MM-dd HH:mm:ss" />
-					<td>${time }</td>
-				</tr>
-				<tr>
-					<th>조회수</th>
-					<td>${detail.n_count }</td>
-				</tr>
-				<tr>
-					<th>좋아요</th>
-					<td id="noticeLikeImg">
-						${detail.n_like }
-						<c:if test="${user ne 'anonymousUser'}">
-							<c:choose>
-								<c:when test="${not empty likeStatus and likeStatus == true }">
-									<i class="fa fa-heart" aria-hidden="true" onclick="noticeLike('<c:out value="${user.nickname}"/>')"></i>
+				</div>
+				<table class="table table-bordered">
+					<tr>
+						<th>번호</th>
+						<td>${detail.n_no }</td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td>${detail.n_title }</td>
+					</tr>
+					<tr>
+						<th>글쓴이</th>
+						<td>${detail.u_nickname }</td>
+					</tr>
+					<tr>
+						<th>작성일</th>
+						<fmt:parseDate value="${detail.n_date}" var="time"
+							pattern="yyyy-MM-dd HH:mm:ss.S" />
+						<fmt:formatDate value="${time}" var="time"
+							pattern="yyyy-MM-dd HH:mm:ss" />
+						<td>${time }</td>
+					</tr>
+					<tr>
+						<th>조회수</th>
+						<td>${detail.n_count }</td>
+					</tr>
+					<tr>
+						<th>좋아요</th>
+						<td id="noticeLikeImg">
+							${detail.n_like }
+							<c:if test="${user ne 'anonymousUser'}">
+								<c:choose>
+									<c:when test="${not empty likeStatus and likeStatus == true }">
+										<i class="fa fa-heart" aria-hidden="true" onclick="noticeLike('<c:out value="${user.nickname}"/>')"></i>
+									</c:when>
+									<c:otherwise>
+										<i class="fa fa-heart-o" aria-hidden="true" onclick="noticeLike('<c:out value="${user.nickname}"/>')"></i>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+						</td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td>${detail.n_content }</td>
+					</tr>
+					<tr>
+						<th style="vertical-align: middle;">댓글</th>
+						<td><sec:authorize access="authenticated">
+								<div id="cwriteform">
+									<form action="./noticeComment.do" method="post">
+										<input type="hidden" name="n_no" value="${detail.n_no }">
+										<textarea name="nc_comment" id="nc_comment" required></textarea>
+										<input type="hidden" name="pageNo" value="${pageNo }">
+										<c:if
+											test="${not empty param.searchColumn && not empty param.searchValue}">
+											<input type="hidden" name="searchColumn"
+												value="${param.searchColumn }">
+											<input type="hidden" name="searchValue"
+												value="${param.searchValue }">
+										</c:if>
+										<input type="hidden" name="u_nickname"
+											value="<sec:authentication property="principal.nickname" />">
+										<button type="submit" id="commentCount">댓글쓰기<br>(0/300)</button>
+									</form>
+								</div>
+							</sec:authorize> <c:choose>
+								<c:when test="${fn:length(commentList) gt 0 }">
+									<c:forEach var="c" items="${commentList }">
+										<div id="commentList">
+											<fmt:parseDate value="${c.nc_date}" var="time"
+												pattern="yyyy-MM-dd HH:mm:ss.S" />
+											<fmt:formatDate value="${time}" var="time"
+												pattern="yyyy-MM-dd HH:mm:ss" />
+											<strong>${c.u_nickname }</strong> / ${time } <c:if test="${user ne 'anonymousUser' and user.nickname eq c.u_nickname }">
+												<i class="fa fa-pencil commentEdit" aria-hidden="true" onclick="noticeCommentEdit(${c.nc_no}, '<c:out value="${c.nc_comment }"/>')"></i><i class="fa fa-trash-o commentDelete" aria-hidden="true" onclick="noticeCommentDelete(${c.nc_no})"></i>
+											</c:if>
+										</div>
+										<div id="noticeComment"><pre>${c.nc_comment }</pre></div>
+									</c:forEach>
 								</c:when>
 								<c:otherwise>
-									<i class="fa fa-heart-o" aria-hidden="true" onclick="noticeLike('<c:out value="${user.nickname}"/>')"></i>
+									댓글이 없습니다.
 								</c:otherwise>
-							</c:choose>
-						</c:if>
-					</td>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td>${detail.n_content }</td>
-				</tr>
-				<tr>
-					<th style="vertical-align: middle;">댓글</th>
-					<td><sec:authorize access="authenticated">
-							<div id="cwriteform">
-								<form action="./noticeComment.do" method="post">
-									<input type="hidden" name="n_no" value="${detail.n_no }">
-									<textarea name="nc_comment" id="nc_comment" required></textarea>
-									<input type="hidden" name="pageNo" value="${pageNo }">
-									<c:if
-										test="${not empty param.searchColumn && not empty param.searchValue}">
-										<input type="hidden" name="searchColumn"
-											value="${param.searchColumn }">
-										<input type="hidden" name="searchValue"
-											value="${param.searchValue }">
-									</c:if>
-									<input type="hidden" name="u_nickname"
-										value="<sec:authentication property="principal.nickname" />">
-									<button type="submit" id="commentCount">댓글쓰기<br>(0/300)</button>
-								</form>
-							</div>
-						</sec:authorize> <c:choose>
-							<c:when test="${fn:length(commentList) gt 0 }">
-								<c:forEach var="c" items="${commentList }">
-									<div id="commentList">
-										<fmt:parseDate value="${c.nc_date}" var="time"
-											pattern="yyyy-MM-dd HH:mm:ss.S" />
-										<fmt:formatDate value="${time}" var="time"
-											pattern="yyyy-MM-dd HH:mm:ss" />
-										<strong>${c.u_nickname }</strong> / ${time } <c:if test="${user ne 'anonymousUser' and user.nickname eq c.u_nickname }">
-											<i class="fa fa-pencil commentEdit" aria-hidden="true" onclick="noticeCommentEdit(${c.nc_no}, '<c:out value="${c.nc_comment }"/>')"></i><i class="fa fa-trash-o commentDelete" aria-hidden="true" onclick="noticeCommentDelete(${c.nc_no})"></i>
-										</c:if>
-									</div>
-									<div id="noticeComment"><pre>${c.nc_comment }</pre></div>
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								댓글이 없습니다.
-							</c:otherwise>
-						</c:choose></td>
-				</tr>
-			</table>
+							</c:choose></td>
+					</tr>
+				</table>
+			</div>
+			<!-- /container -->
 		</div>
-		<!-- /container -->
-	</div>
-	<!-- /SECTION -->
+		<!-- /SECTION -->
+	</section>
 
 	<!-- FOOTER -->
 	<footer id="footer">

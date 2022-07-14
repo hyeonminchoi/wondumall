@@ -226,91 +226,93 @@ function answerEdit(a_no, answer){
 		<c:import url="./communityNav.jsp"></c:import>
 	<!-- /NAVIGATION -->
 	
-	<!-- SECTION -->
-	<div class="section">
-		<!-- container -->
-		<div class="container">
-			<div id="back">
-				<label onclick="answer()"><i class="fa fa-arrow-left" aria-hidden="true"></i>뒤로가기</label>
-				<sec:authorize access="authenticated">
-					<sec:authorize access="principal.nickname == '${detail.u_nickname }' ">
-						<label onclick="showQuestionEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>수정</label>
+	<section>
+		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<div id="back">
+					<label onclick="answer()"><i class="fa fa-arrow-left" aria-hidden="true"></i>뒤로가기</label>
+					<sec:authorize access="authenticated">
+						<sec:authorize access="principal.nickname == '${detail.u_nickname }' ">
+							<label onclick="showQuestionEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>수정</label>
+						</sec:authorize>
+						<sec:authorize access="hasRole('ROLE_ADMIN') || principal.nickname == '${detail.u_nickname }' ">
+							<label onclick="questionDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</label>
+						</sec:authorize>
 					</sec:authorize>
-					<sec:authorize access="hasRole('ROLE_ADMIN') || principal.nickname == '${detail.u_nickname }' ">
-						<label onclick="questionDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</label>
-					</sec:authorize>
-				</sec:authorize>
-			</div>
-			<table class="table table-bordered">
-				<tr>
-					<th>번호</th>
-					<td>${detail.q_no }</td>
-				</tr>
-				<tr>
-					<th>제목</th>
-					<td>${detail.q_title }</td>
-				</tr>
-				<tr>
-					<th>글쓴이</th>
-					<td>${detail.u_nickname }</td>
-				</tr>
-				<tr>
-					<th>작성일</th>
-					<fmt:parseDate value="${detail.q_date}" var="time"
-						pattern="yyyy-MM-dd HH:mm:ss.S" />
-					<fmt:formatDate value="${time}" var="time"
-						pattern="yyyy-MM-dd HH:mm:ss" />
-					<td>${time }</td>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td>${detail.q_content }</td>
-				</tr>
-				<tr>
-					<th style="vertical-align: middle;">답변</th>
-					<td><sec:authorize access="authenticated">
-							<div id="awriteform">
-								<form action="./answer.do" method="post">
-									<input type="hidden" name="q_no" value="${detail.q_no }">
-									<textarea name="a_answer" id="a_answer" required></textarea>
-									<input type="hidden" name="pageNo" value="${pageNo }">
-									<c:if
-										test="${not empty param.searchColumn && not empty param.searchValue}">
-										<input type="hidden" name="searchColumn"
-											value="${param.searchColumn }">
-										<input type="hidden" name="searchValue"
-											value="${param.searchValue }">
-									</c:if>
-									<input type="hidden" name="u_nickname"
-										value="<sec:authentication property="principal.nickname" />">
-									<button type="submit" id="answerCount">답변쓰기<br>(0/300)</button>
-								</form>
-							</div>
-						</sec:authorize> <c:choose>
-							<c:when test="${fn:length(answerList) gt 0 }">
-								<c:forEach var="a" items="${answerList }">
-									<div id="answerList">
-										<fmt:parseDate value="${a.a_date}" var="time"
-											pattern="yyyy-MM-dd HH:mm:ss.S" />
-										<fmt:formatDate value="${time}" var="time"
-											pattern="yyyy-MM-dd HH:mm:ss" />
-										<strong>${a.u_nickname }</strong> / ${time } <c:if test="${user ne 'anonymousUser' and user.nickname eq a.u_nickname }">
-											<i class="fa fa-pencil answerEdit" aria-hidden="true" onclick="answerEdit(${a.a_no}, '<c:out value="${a.a_answer }"/>')"></i><i class="fa fa-trash-o answerDelete" aria-hidden="true" onclick="answerDelete(${a.a_no})"></i>
+				</div>
+				<table class="table table-bordered">
+					<tr>
+						<th>번호</th>
+						<td>${detail.q_no }</td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td>${detail.q_title }</td>
+					</tr>
+					<tr>
+						<th>글쓴이</th>
+						<td>${detail.u_nickname }</td>
+					</tr>
+					<tr>
+						<th>작성일</th>
+						<fmt:parseDate value="${detail.q_date}" var="time"
+							pattern="yyyy-MM-dd HH:mm:ss.S" />
+						<fmt:formatDate value="${time}" var="time"
+							pattern="yyyy-MM-dd HH:mm:ss" />
+						<td>${time }</td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td>${detail.q_content }</td>
+					</tr>
+					<tr>
+						<th style="vertical-align: middle;">답변</th>
+						<td><sec:authorize access="authenticated">
+								<div id="awriteform">
+									<form action="./answer.do" method="post">
+										<input type="hidden" name="q_no" value="${detail.q_no }">
+										<textarea name="a_answer" id="a_answer" required></textarea>
+										<input type="hidden" name="pageNo" value="${pageNo }">
+										<c:if
+											test="${not empty param.searchColumn && not empty param.searchValue}">
+											<input type="hidden" name="searchColumn"
+												value="${param.searchColumn }">
+											<input type="hidden" name="searchValue"
+												value="${param.searchValue }">
 										</c:if>
-									</div>
-									<div id="answer"><pre>${a.a_answer }</pre></div>
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								답변이 없습니다.
-							</c:otherwise>
-						</c:choose></td>
-				</tr>
-			</table>
+										<input type="hidden" name="u_nickname"
+											value="<sec:authentication property="principal.nickname" />">
+										<button type="submit" id="answerCount">답변쓰기<br>(0/300)</button>
+									</form>
+								</div>
+							</sec:authorize> <c:choose>
+								<c:when test="${fn:length(answerList) gt 0 }">
+									<c:forEach var="a" items="${answerList }">
+										<div id="answerList">
+											<fmt:parseDate value="${a.a_date}" var="time"
+												pattern="yyyy-MM-dd HH:mm:ss.S" />
+											<fmt:formatDate value="${time}" var="time"
+												pattern="yyyy-MM-dd HH:mm:ss" />
+											<strong>${a.u_nickname }</strong> / ${time } <c:if test="${user ne 'anonymousUser' and user.nickname eq a.u_nickname }">
+												<i class="fa fa-pencil answerEdit" aria-hidden="true" onclick="answerEdit(${a.a_no}, '<c:out value="${a.a_answer }"/>')"></i><i class="fa fa-trash-o answerDelete" aria-hidden="true" onclick="answerDelete(${a.a_no})"></i>
+											</c:if>
+										</div>
+										<div id="answer"><pre>${a.a_answer }</pre></div>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									답변이 없습니다.
+								</c:otherwise>
+							</c:choose></td>
+					</tr>
+				</table>
+			</div>
+			<!-- /container -->
 		</div>
-		<!-- /container -->
-	</div>
-	<!-- /SECTION -->
+		<!-- /SECTION -->
+	</section>
 
 	<!-- FOOTER -->
 	<footer id="footer">

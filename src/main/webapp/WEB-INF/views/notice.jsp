@@ -123,67 +123,69 @@
 		<c:import url="./communityNav.jsp"></c:import>
 	<!-- /NAVIGATION -->
 	
-	<!-- SECTION -->
-	<div class="section">
-		<!-- container -->
-		<div class="container">
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<th scope="col">번호</th>
-						<th scope="col">제목</th>
-						<th scope="col">글쓴이</th>
-						<th scope="col">조회수</th>
-						<th scope="col">좋아요</th>
-						<th scope="col">작성일</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="n" items="${noticeList}">
+	<section>
+		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<table class="table table-bordered">
+					<thead>
 						<tr>
-							<td>${n.n_no }</td>
-							<td onclick="noticeDetail(${n.n_no})">${n.n_title } <small style="color:red;">${n.n_commentCount }</small></td>
-							<td>${n.u_nickname }</td>
-							<td>${n.n_count }</td>
-							<td>${n.n_like }</td>
-							<fmt:parseDate value="${n.n_date}" var="time"
-								pattern="yyyy-MM-dd HH:mm:ss.S" />
-							<fmt:formatDate value="${time}" var="time"
-								pattern="yyyy-MM-dd HH:mm:ss" />
-							<td>${time }</td>
+							<th scope="col">번호</th>
+							<th scope="col">제목</th>
+							<th scope="col">글쓴이</th>
+							<th scope="col">조회수</th>
+							<th scope="col">좋아요</th>
+							<th scope="col">작성일</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			<div style="text-align: center; margin-bottom: 10px;">
-				<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
-			</div>
-			<div style="text-align: center;">
-				<form action="./notice.do?pageNo=${pageNo }">
-					<select name="searchColumn">
-						<option value="n_title" ${searchColumn eq 'n_title'?'selected':'' }>제목</option>
-						<option value="n_content" ${searchColumn eq 'n_content'?'selected':''}>내용</option>
-						<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>작성자</option>
-					</select>
-					<input type="text" name="searchValue" value="${searchValue}">
-					<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
-				</form>
-			</div>
-			<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<div style="float:right;">
-					<button type="button" onclick="showWriteDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>글쓰기</button>
+					</thead>
+					<tbody>
+						<c:forEach var="n" items="${noticeList}">
+							<tr>
+								<td>${n.n_no }</td>
+								<td onclick="noticeDetail(${n.n_no})">${n.n_title } <small style="color:red;">${n.n_commentCount }</small></td>
+								<td>${n.u_nickname }</td>
+								<td>${n.n_count }</td>
+								<td>${n.n_like }</td>
+								<fmt:parseDate value="${n.n_date}" var="time"
+									pattern="yyyy-MM-dd HH:mm:ss.S" />
+								<fmt:formatDate value="${time}" var="time"
+									pattern="yyyy-MM-dd HH:mm:ss" />
+								<td>${time }</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				<div style="text-align: center; margin-bottom: 10px;">
+					<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
 				</div>
-			</sec:authorize>
-			<sec:authorize access="not authenticated">
-				<div style="float:right;">
-					<button type="button" onclick="location.href='./login.do'"><i class="fa fa-user" aria-hidden="true"></i>로그인</button>
+				<div style="text-align: center;">
+					<form action="./notice.do?pageNo=${pageNo }">
+						<select name="searchColumn">
+							<option value="n_title" ${searchColumn eq 'n_title'?'selected':'' }>제목</option>
+							<option value="n_content" ${searchColumn eq 'n_content'?'selected':''}>내용</option>
+							<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>작성자</option>
+						</select>
+						<input type="text" name="searchValue" value="${searchValue}">
+						<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
+					</form>
 				</div>
-			</sec:authorize>
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<div style="float:right;">
+						<button type="button" onclick="showWriteDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>글쓰기</button>
+					</div>
+				</sec:authorize>
+				<sec:authorize access="not authenticated">
+					<div style="float:right;">
+						<button type="button" onclick="location.href='./login.do'"><i class="fa fa-user" aria-hidden="true"></i>로그인</button>
+					</div>
+				</sec:authorize>
+			</div>
+			<!-- /container -->
 		</div>
-		<!-- /container -->
-	</div>
-	<!-- /SECTION -->
-
+		<!-- /SECTION -->
+	</section>
+	
 	<!-- FOOTER -->
 	<footer id="footer">
 		<c:import url="./footer.jsp"></c:import>
