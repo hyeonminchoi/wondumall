@@ -14,7 +14,7 @@
 		</ul>
 		<ul class="header-links pull-right">
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<li><a href="./index.do">관리자페이지</a></li>
+				<li><a href="./index.do"><i class="fa fa-lock"></i>관리자페이지</a></li>
 			</sec:authorize>
 			<li><a href="//notice.do"><i class="fa fa-users"></i> 커뮤니티</a></li>
 			<li><a href="#"><i class="fa fa-dollar"></i> WON</a></li>
