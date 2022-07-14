@@ -1,6 +1,7 @@
 package com..Service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,7 +62,11 @@ public class ProductService {
 		return productDAO.reviewStatus(dto);
 	}
 
-	public List<ReviewDTO> reviewList(ReviewDTO dto) {
-		return productDAO.reviewList(dto);
+	public List<ReviewDTO> reviewList(Map<String, Object> map) {
+		return productDAO.reviewList(map);
+	}
+
+	public int reviewCount(int p_no) {
+		return productDAO.reviewCount(p_no);
 	}
 }

@@ -1,12 +1,15 @@
 package com..Controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com..Config.MyUserDetails;
 import com..DTO.CartDTO;
 import com..DTO.CategoryDTO;
+import com..DTO.PageDTO;
 import com..DTO.ProductDTO;
 import com..DTO.ReviewDTO;
 import com..Service.ProductService;
@@ -112,17 +116,56 @@ public class ProductController {
 	}
 	
 	@GetMapping(value = "/productDetail.do")
-	public ModelAndView productDetail(@RequestParam("p_no") int p_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+	public ModelAndView productDetail(HttpServletRequest request, @RequestParam("p_no") int p_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 		ModelAndView mv = new ModelAndView("productDetail");
-		mv.addObject("productDetail", productService.productDetail(p_no));
+		ReviewDTO dto = new ReviewDTO();
+		dto.setP_no(p_no);
+		
+		// 전자정부페이징 사용하기
+		int reviewPageNo = 1;
+		if (request.getParameter("reviewPageNo") != null) {
+			reviewPageNo = Integer.parseInt(request.getParameter("reviewPageNo"));
+		}
+
+		// recordCountPageNo 한 페이지당 게시되는 게시물 수 yes
+		int listScale = 3;
+		// pageSize = 페이지 리스트에 게시되는 페이지 수 yes
+		int pageScale = 5;
+		// totalRecordCount 전체 게시물 건수 yes
+		int totalCount = productService.reviewCount(p_no);
+
+		// 전자정부페이징 호출
+		PaginationInfo paginationInfo = new PaginationInfo();
+		// 값대입
+		paginationInfo.setCurrentPageNo(reviewPageNo);
+		paginationInfo.setRecordCountPerPage(listScale);
+		paginationInfo.setPageSize(pageScale);
+		paginationInfo.setTotalRecordCount(totalCount);
+		// 전자정부 계산하기
+		int startPage = paginationInfo.getFirstRecordIndex();
+		int recordCountPerPage = paginationInfo.getRecordCountPerPage();
+
+		// 서버로 보내기
+		PageDTO page = new PageDTO();
+		page.setStartPage(startPage);
+		page.setRecordCountPerPage(recordCountPerPage);
+		
+		//
+		Map<String, Object> map = new HashMap<>();
+		map.put("page", page);
+		map.put("dto",dto);
+		List<ReviewDTO> reviewList = productService.reviewList(map);
+		
+		//
 		if(myUserDetails !=null) {
-			ReviewDTO dto = new ReviewDTO();
-			dto.setP_no(p_no);
 			dto.setU_no(myUserDetails.getNo());
 			mv.addObject("reviewStatus", productService.reviewStatus(dto));
-			List<ReviewDTO> reviewList = productService.reviewList(dto);
-			mv.addObject("reviewList",reviewList);
-		}
+		} 
+		
+		mv.addObject("productDetail", productService.productDetail(p_no));
+		mv.addObject("reviewList",reviewList);
+		mv.addObject("paginationInfo", paginationInfo);
+		mv.addObject("reviewPageNo", reviewPageNo);
 		return mv;
 	}
 	

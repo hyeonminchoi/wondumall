@@ -56,9 +56,15 @@
 		FROM review
 		WHERE p_no = #{p_no} AND u_no = #{u_no}
 	</select>
-	<select id="reviewList" parameterType="reviewDTO" resultType="reviewDTO">
+	<select id="reviewList" parameterType="map" resultType="reviewDTO">
 		select review.*, user.u_nickname
 		from review join user ON review.u_no = user.u_no
-		WHERE r_del = 0
+		WHERE r_del = 0 AND p_no = #{dto.p_no}
+		LIMIT #{page.startPage}, #{page.recordCountPerPage}
 	</select>
+	<select id="reviewCount" parameterType="integer" resultType="integer">
+  		SELECT count(*) as count
+  		FROM review
+  		WHERE p_no=#{p_no}
+  	</select>
 </mapper>

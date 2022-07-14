@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -29,7 +31,24 @@
 
  		<!-- Custom stlylesheet -->
  		<link type="text/css" rel="stylesheet" href="./css/style.css"/>
+<style type="text/css">
+textarea {
+	resize: none;
+}
+/* 이모지 별점 */
+#myform fieldset{
+    display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+    border: 0; /* 필드셋 테두리 제거 */
+}
 
+#myform label:hover {
+	text-shadow: 0 0 0 #a00; /* 마우스 호버 */
+}
+
+#myform label:hover ~ label {
+	text-shadow: 0 0 0 #a00; /* 마우스 호버 뒤에오는 이모지들 */
+}
+</style>
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -61,25 +80,11 @@
 				alert('리뷰 등륵 완료하였습니다!');
 			});
 		}); */
+		function linkPage(reviewPageNo){
+			location.href = "./productDetail.do?p_no=${param.p_no}&reviewPageNo=" + reviewPageNo;
+		}
 	</script>
-<style type="text/css">
-textarea {
-	resize: none;
-}
-/* 이모지 별점 */
-#myform fieldset{
-    display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
-    border: 0; /* 필드셋 테두리 제거 */
-}
 
-#myform label:hover {
-	text-shadow: 0 0 0 #a00; /* 마우스 호버 */
-}
-
-#myform label:hover ~ label {
-	text-shadow: 0 0 0 #a00; /* 마우스 호버 뒤에오는 이모지들 */
-}
-</style>
 </head>
 	<body>
 		<!-- HEADER -->
@@ -511,26 +516,132 @@ textarea {
 										<br>
 										<input type="hidden" value="${productDetail.p_no }" name="p_no">
 										<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
-									<button type="button" id="Btn" class="primary-btn" value="등록하기" >등록하기</button>
+									<button type="button" id="Btn" class="primary-btn" value="등록하기">등록하기</button>
 								</form>
 							</c:otherwise>
 						</c:choose>
 					</sec:authorize>
-					${reviewList}
-					<table class="table table-bordered">
-					<c:forEach items="${reviewList}" var="r">
-						<tr>
-							<td> 작성자</td>
-							<td> 상품번호 : ${p.p_no} &nbsp; </td>
-							<td> 상품명 : ${p.p_name} &nbsp; </td>
-							<td> 카테고리 번호 : ${p.cate_no} / </td>
-						</tr>
-					</c:forEach>
-				</table>
+					
 				</div>
 			</div>
 		</div>
-		
+			<!-- Section -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div id="tab3" class="tab-pane fade in">
+						<div class="row">
+							<!-- Rating -->
+							<div class="col-md-3">
+								<div id="rating">
+									<div class="rating-avg">
+										<span>점수 들어 갈 것</span>
+										<div class="rating-stars">
+											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+												class="fa fa-star-o"></i>
+										</div>
+									</div>
+									<ul class="rating">
+										<li>
+											<div class="rating-stars">
+												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star"></i>
+											</div>
+											<div class="rating-progress">
+												<div style="width: 80%;"></div>
+											</div> <span class="sum">3</span>
+										</li>
+										<li>
+											<div class="rating-stars">
+												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star-o"></i>
+											</div>
+											<div class="rating-progress">
+												<div style="width: 60%;"></div>
+											</div> <span class="sum">2</span>
+										</li>
+										<li>
+											<div class="rating-stars">
+												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i
+													class="fa fa-star-o"></i>
+											</div>
+											<div class="rating-progress">
+												<div></div>
+											</div> <span class="sum">0</span>
+										</li>
+										<li>
+											<div class="rating-stars">
+												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i
+													class="fa fa-star-o"></i>
+											</div>
+											<div class="rating-progress">
+												<div></div>
+											</div> <span class="sum">0</span>
+										</li>
+										<li>
+											<div class="rating-stars">
+												<i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i
+													class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i
+													class="fa fa-star-o"></i>
+											</div>
+											<div class="rating-progress">
+												<div></div>
+											</div> <span class="sum">0</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+	
+							<!-- /Rating -->
+							<!-- Reviews -->
+							<div class="col-md-6">
+								<div id="reviews">
+									<table class="table table-bordered">
+										<c:forEach items="${reviewList}" var="r">
+											<ul class="reviews">
+												<li>
+													<div class="review-heading">
+														<h5 class="name">${r.u_nickname}</h5>
+														<p class="date">
+														<fmt:parseDate value="${r.r_date}" var="time"
+															pattern="yyyy-MM-dd HH:mm:ss.S" />
+														<fmt:formatDate value="${time}" var="time"
+															pattern="yyyy-MM-dd HH:mm:ss" />
+														${time }
+														<%-- ${r.r_date} --%>
+														</p>
+														<div class="review-rating">
+															<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+																class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+																class="fa fa-star-o empty"></i>
+														</div>
+													</div>
+													<div class="review-body">
+														<h6>${r.r_title}</h6>
+														<p>${r.r_content}</p>
+													</div>
+												</li>
+											</ul>
+										</c:forEach>
+									</table>
+									<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage"/>
+								</div>
+							</div>
+	
+							<!-- /Reviews -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
 		<!-- Section -->
 		<div class="section">
 			<!-- container -->
@@ -668,6 +779,8 @@ textarea {
 			<!-- /container -->
 		</div>
 		<!-- /Section -->
+		
+		
 
 		<!-- FOOTER -->
 		<footer id="footer">
