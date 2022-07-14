@@ -56,13 +56,16 @@
 			alert('로그인을 하세요');
 			location.href='./login.do';
 		}
-		$(document).ready(function(){
+		/* $(document).ready(function(){
 			$("#Btn").click(function(){
 				alert('리뷰 등륵 완료하였습니다!');
 			});
-		});
+		}); */
 	</script>
 <style type="text/css">
+textarea {
+	resize: none;
+}
 /* 이모지 별점 */
 #myform fieldset{
     display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
@@ -508,11 +511,22 @@
 										<br>
 										<input type="hidden" value="${productDetail.p_no }" name="p_no">
 										<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
-									<button type="button" id="Btn" class="primary-btn" value="등록하기">등록하기</button>
+									<button type="button" id="Btn" class="primary-btn" value="등록하기" >등록하기</button>
 								</form>
 							</c:otherwise>
 						</c:choose>
 					</sec:authorize>
+					${reviewList}
+					<table class="table table-bordered">
+					<c:forEach items="${reviewList}" var="r">
+						<tr>
+							<td> 작성자</td>
+							<td> 상품번호 : ${p.p_no} &nbsp; </td>
+							<td> 상품명 : ${p.p_name} &nbsp; </td>
+							<td> 카테고리 번호 : ${p.cate_no} / </td>
+						</tr>
+					</c:forEach>
+				</table>
 				</div>
 			</div>
 		</div>

@@ -120,6 +120,8 @@ public class ProductController {
 			dto.setP_no(p_no);
 			dto.setU_no(myUserDetails.getNo());
 			mv.addObject("reviewStatus", productService.reviewStatus(dto));
+			List<ReviewDTO> reviewList = productService.reviewList(dto);
+			mv.addObject("reviewList",reviewList);
 		}
 		return mv;
 	}

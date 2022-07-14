@@ -6,5 +6,5 @@ import lombok.Data;
 public class ReviewDTO {
 	private int r_no, p_no, u_no;
 	private double r_rating;
-	private String r_title, r_content;
+	private String r_title, r_content, r_date, u_nickname;
 }

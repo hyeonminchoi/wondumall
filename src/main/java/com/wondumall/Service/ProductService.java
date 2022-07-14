@@ -60,4 +60,8 @@ public class ProductService {
 	public int reviewStatus(ReviewDTO dto) {
 		return productDAO.reviewStatus(dto);
 	}
+
+	public List<ReviewDTO> reviewList(ReviewDTO dto) {
+		return productDAO.reviewList(dto);
+	}
 }

@@ -60,4 +60,8 @@ public class ProductDAO {
 	public int reviewStatus(ReviewDTO dto) {
 		return sqlSession.selectOne("product.reviewStatus", dto);
 	}
+
+	public List<ReviewDTO> reviewList(ReviewDTO dto) {
+		return sqlSession.selectList("product.reviewList", dto);
+	}
 }

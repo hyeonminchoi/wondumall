@@ -56,4 +56,9 @@
 		FROM review
 		WHERE p_no = #{p_no} AND u_no = #{u_no}
 	</select>
+	<select id="reviewList" parameterType="reviewDTO" resultType="reviewDTO">
+		select review.*, user.u_nickname
+		from review join user ON review.u_no = user.u_no
+		WHERE r_del = 0
+	</select>
 </mapper>
