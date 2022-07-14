@@ -24,4 +24,17 @@
 		DELETE FROM faq
 		WHERE faq_no = #{faq_no}
 	</delete>
+	
+	<select id="getFaqDetail" parameterType="integer" resultType="faqDTO">
+		SELECT faq.*, faq_category.fc_category
+		FROM faq
+		JOIN faq_category ON faq.fc_no = faq_category.fc_no
+		WHERE faq_no = #{faq_no}
+	</select>
+	
+	<update id="edit" parameterType="faqDTO">
+		UPDATE faq 
+		SET faq_question = #{faq_question}, faq_answer = #{faq_answer}, faq_date = current_timestamp(), u_no = (SELECT u_no FROM user WHERE u_nickname = #{u_nickname}), fc_no = (SELECT fc_no FROM faq_category WHERE fc_category = #{fc_category})
+		WHERE faq_no = #{faq_no}
+	</update>
 </mapper>

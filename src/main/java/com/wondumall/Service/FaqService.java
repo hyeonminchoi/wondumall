@@ -29,5 +29,13 @@ public class FaqService {
 	public int delete(FaqDTO faqDTO) {
 		return faqDAO.delete(faqDTO);
 	}
+
+	public FaqDTO getFaqDetail(int faq_no) {
+		return faqDAO.getFaqDetail(faq_no);
+	}
+
+	public int edit(FaqDTO faqDTO) {
+		return faqDAO.edit(faqDTO);
+	}
 	
 }

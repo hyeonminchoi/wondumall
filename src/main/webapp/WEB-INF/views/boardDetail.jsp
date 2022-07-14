@@ -226,6 +226,7 @@ function boardCommentEdit(c_no, c_comment){
 		$(".commentDelete").remove();
 		$('#boardComment').remove();
 		$("#cwriteform").remove();
+		$('#c_comment').trigger('input');
 	}
 }
 </script>

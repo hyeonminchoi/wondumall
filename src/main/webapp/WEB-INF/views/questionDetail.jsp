@@ -205,6 +205,7 @@ function answerEdit(a_no, answer){
 		$(".answerDelete").remove();
 		$('#answer').remove();
 		$("#awriteform").remove();
+		$('#a_answer').trigger('input');
 	}
 }
 </script>

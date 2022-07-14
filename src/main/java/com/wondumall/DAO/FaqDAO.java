@@ -29,5 +29,13 @@ public class FaqDAO {
 	public int delete(FaqDTO faqDTO) {
 		return sqlSession.delete("faq.delete", faqDTO);
 	}
+
+	public FaqDTO getFaqDetail(int faq_no) {
+		return sqlSession.selectOne("faq.getFaqDetail", faq_no);
+	}
+
+	public int edit(FaqDTO faqDTO) {
+		return sqlSession.update("faq.edit", faqDTO);
+	}
 	
 }

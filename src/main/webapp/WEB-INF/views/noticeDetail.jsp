@@ -226,6 +226,7 @@ function noticeCommentEdit(nc_no, nc_comment){
 		$(".commentDelete").remove();
 		$('#noticeComment').remove();
 		$("#cwriteform").remove();
+		$('#nc_comment').trigger('input');
 	}
 }
 </script>

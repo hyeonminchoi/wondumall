@@ -139,26 +139,26 @@
 			<div class="accordion">
 				<h2 class="title01">자주묻는질문</h2>
 				<ul class="webtong_tab_type02 tabs">
-					<c:forEach var="fc" items="${faqCategory }" varStatus="status">
-						<li class="tab-link" data-tab="tab-${status.count}"><strong><a>${fc.fc_category }</a></strong>
+					<c:forEach var="fc" items="${faqCategory }" varStatus="fcvar">
+						<li class="tab-link ${fcvar.index eq 0 ? 'current':'' }" data-tab="tab-${fcvar.index}"><strong><a>${fc.fc_category }</a></strong>
 					</c:forEach>
 				</ul>
 				
-				<c:forEach var="j" items="${faqCategoryDetail}" varStatus="status" >
-					<div id="tab-${status.count}" class="tab-content accordion-item ${status.count eq 1?'current':'' }">
-						<c:forEach var="k" items="${j}" varStatus="index">
+				<c:forEach var="j" items="${faqCategoryDetail}" varStatus="jvar" >
+					<div id="tab-${jvar.index}" class="tab-content accordion-item ${jvar.index eq 0 ?'current':'' }">
+						<c:forEach var="k" items="${j}" varStatus="kvar">
 							<h2 class="accordion-header" id="headingOne">
-						      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${status.count }${index.count }" aria-expanded="true" aria-controls="collapse${status.count }${index.count }">
+						      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${jvar.index }${kvar.index }" aria-expanded="true" aria-controls="collapse${jvar.index }${kvar.index }">
 						        <h4 id="question">${k.faq_question }</h4>
 						      </button>
 						    </h2>
-						    <div id="collapse${status.count }${index.count }" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent=".accordion">
+						    <div id="collapse${jvar.index }${kvar.index }" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent=".accordion">
 						    	<div class="accordion-body">
 						        	${k.faq_answer }
 							    </div>
 								<sec:authorize access="authenticated">
 									<sec:authorize access="hasRole('ROLE_ADMIN')">
-										<label onclick="showFaqEditDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>수정</label>
+										<label onclick="showFaqEditDialog(${k.faq_no})"><i class="fa fa-pencil" aria-hidden="true"></i>수정</label>
 									</sec:authorize>
 									<sec:authorize access="hasRole('ROLE_ADMIN')">
 										<label onclick="faqDelete(${k.faq_no})"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</label>
@@ -227,7 +227,7 @@
 			<form action="./faqEdit.do" method="post">
 				<div style="padding-bottom: 10px;">
 					<label>카테고리
-						<select style="width: 100%;" name="fc_category" required>
+						<select style="width: 100%;" name="fc_category" id="fc_category" required>
 							<option value="">카테고리를 선택해주세요</option>
 							<c:forEach var="category" items="${faqCategory }">
 								<option value="${category.fc_category }">${category.fc_category }</option>
@@ -241,11 +241,12 @@
 				</div>
 				<div style="padding-bottom: 10px;">
 					<h4><label>내용</label></h4>
-					<textarea id="summernote2" name="faq_answer" id="faq_answer" required></textarea>
+					<textarea id="summernote2" name="faq_answer" required></textarea>
 				</div>
 				<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">
+				<input type="hidden" name="faq_no" id="faq_no">
 				<div>
-					<button type="submit">글쓰기</button>
+					<button type="submit">수정</button>
 					<button type="button" onclick="hideFaqEditDialog()">닫기</button>
 				</div>
 			</form>
@@ -263,8 +264,23 @@ function hideFaqWriteDialog(){
 
 var faqEditDialog = document.getElementById('faqEditDialog');
 
-function showFaqEditDialog(){
-	faqEditDialog.showModal();
+function showFaqEditDialog(faq_no){
+	$.ajax({
+		url : './faqDetailAjax.do',
+		type : "GET",
+		dataType: "json",
+		data:{ faq_no : faq_no},
+		success : function(detail) {
+			$('#faq_question').val(detail.faq_question);
+			$("#fc_category").val(detail.fc_category).prop("selected",true);
+			$("#faq_no").attr('value',detail.faq_no);
+			$('#summernote2').summernote('code', detail.faq_answer);
+			faqEditDialog.showModal();
+		},
+		error:function(){
+			console.log("error");
+		}
+	})
 }
 function hideFaqEditDialog(){
 	faqEditDialog.close();

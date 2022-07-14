@@ -1,9 +1,7 @@
 package com..Controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -16,12 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com..DTO.FaqCategoryDTO;
 import com..DTO.FaqDTO;
-import com..DTO.NoticeDTO;
 import com..Service.FaqService;
 import com..Util.FileSave;
 import com..Util.Util;
@@ -100,6 +98,33 @@ public class FaqController {
 				response.getWriter().println("<script> alert('자주묻는질문 삭제에 성공했습니다'); location.href='./faq.do'</script>");
 		} else {
 				response.getWriter().println("<script> alert('자주묻는질문 삭제에 실패했습니다'); location.href='./faq.do'</script>");
+		}
+	}
+	
+	@Secured("ROLE_ADMIN")
+	@GetMapping("/faqDetailAjax.do")
+	@ResponseBody
+	public FaqDTO getfaqDetail(@RequestParam("faq_no")int faq_no) throws Exception {
+		return faqService.getFaqDetail(faq_no);
+	}
+	
+	@Secured("ROLE_ADMIN")
+	@PostMapping("/faqEdit.do")
+	public void faqEdit(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		FaqDTO faqDTO = new FaqDTO();
+		faqDTO.setFaq_question(Util.xss_clean_check(request.getParameter("faq_question")));
+		faqDTO.setFaq_answer(Util.xss_clean_check(request.getParameter("faq_answer"), request));
+		faqDTO.setU_nickname(request.getParameter("u_nickname"));
+		faqDTO.setFaq_no(Integer.parseInt(request.getParameter("faq_no")));
+		faqDTO.setFc_category(request.getParameter("fc_category"));
+		int result = faqService.edit(faqDTO);
+		response.setContentType("text/html; charset=UTF-8");
+		if (result > 0) {
+			response.getWriter().println(
+					"<script> alert('자주묻는질문 수정에 성공했습니다'); location.href='./faq.do'</script>");
+		} else {
+			response.getWriter().println(
+					"<script> alert('자주묻는질문 수정에 실패했습니다'); location.href='./faq.do'</script>");
 		}
 	}
 }
