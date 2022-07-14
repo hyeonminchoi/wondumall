@@ -1,6 +1,7 @@
 package com..DAO;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +56,17 @@ public class ProductDAO {
 
 	public void cartDelete(CartDTO cartDTO) {
 		sqlSession.delete("product.cartDelete", cartDTO);
+	}
+
+	public int reviewStatus(ReviewDTO dto) {
+		return sqlSession.selectOne("product.reviewStatus", dto);
+	}
+
+	public List<ReviewDTO> reviewList(Map<String, Object> map) {
+		return sqlSession.selectList("product.reviewList", map);
+	}
+
+	public int reviewCount(int p_no) {
+		return sqlSession.selectOne("product.reviewCount", p_no);
 	}
 }
