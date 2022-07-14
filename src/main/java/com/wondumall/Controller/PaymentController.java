@@ -47,7 +47,8 @@ public class PaymentController {
 			Model model
 			, Locale locale
 			, HttpSession session
-			, @PathVariable(value= "imp_uid") String imp_uid) throws IamportResponseException, IOException
+			, @PathVariable(value= "imp_uid") String imp_uid
+			, @PathVariable("u_no") int u_no) throws IamportResponseException, IOException
 	{	
 		String name = request.getParameter("o_name");
 		String email = request.getParameter("o_email");
@@ -71,6 +72,7 @@ public class PaymentController {
 		orderInfo.setO_request(o_request);
 		orderInfo.setImp_uid(imp_uid);
 		orderInfo.setMerchant_uid(merchant_uid);
+		orderInfo.setU_no(u_no);
 		
 		paymentService.checkout(orderInfo);	
 		

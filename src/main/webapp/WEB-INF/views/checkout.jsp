@@ -85,6 +85,7 @@
 							</div>
 							<div class="form-group">
 								<input class="input" type="text" id="o_name" name="o_name" placeholder="이름">
+								<input type="hidden" value="${user.u_no }" id="u_no">
 							</div>
 							<div class="form-group">
 								<input class="input" type="text" id="o_email" name="o_email" placeholder="이메일">
@@ -187,8 +188,7 @@ function iamport(){
 	var postcode = $("#o_postcode").val();
 	var tel = $("#o_tel").val();
 	var request = $("#o_request").val();
-	
-	alert(roadAddress);
+	var u_no = $("#u_no").val();
 	
 	//가맹점 식별코드
 	IMP.init('imp56561187');
@@ -218,7 +218,8 @@ function iamport(){
         		"o_detailAddress" : detailAddress,
         		"o_tel" : tel,
         		"o_request" : request,
-        		"merchant_uid" : rsp.merchant_uid
+        		"merchant_uid" : rsp.merchant_uid,
+        		"u_no" : u_no
         	},
         	success : function(data){
         		alert("데이터전송성공!");

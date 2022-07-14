@@ -48,14 +48,15 @@
 		<c:import url="./nav.jsp"></c:import>
 	</nav>
 	<!-- /NAVIGATION -->
-	
-	<div class="section">
-		<div class="container">
-			<h1 style="margin: 0 auto; text-align: center;">성공</h1>
-			<br>
-			<a href="./" class="primary-btn" style="margin: auto; text-align: center;  display: block;">메인으로</a>
+	<section>
+		<div class="section">
+			<div class="container">
+				<h1 style="margin: 0 auto; text-align: center;">성공</h1>
+				<br>
+				<a href="./" class="primary-btn" style="margin: auto; text-align: center;  display: block;">메인으로</a>
+			</div>
 		</div>
-	</div>
+	</section>
 	<!-- FOOTER -->
 	<footer id="footer">
 		<c:import url="./footer.jsp"></c:import>
