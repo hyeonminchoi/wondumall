@@ -30,10 +30,12 @@
 		<!-- NAV -->
 		<ul class="main-nav nav navbar-nav" id="nav">
 		</ul>
-		<ul>
-		<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_BUSINESS')">
-			<a href="./productAdd.do" style="float: right;">제품 등록</a>
-		</sec:authorize>
+		<ul class="main-nav nav navbar-nav" id="nav" style="float: right;">
+			<li>
+				<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_BUSINESS')">
+					<a href="./productAdd.do">제품 등록</a>
+				</sec:authorize>
+			</li>
 		</ul>
 		<!-- /NAV -->
 	</div>

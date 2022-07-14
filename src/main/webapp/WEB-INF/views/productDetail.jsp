@@ -57,7 +57,22 @@
 			location.href='./login.do';
 		}
 	</script>
-    </head>
+<style type="text/css">
+/* 이모지 별점 */
+#myform fieldset{
+    display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+    border: 0; /* 필드셋 테두리 제거 */
+}
+
+#myform label:hover {
+	text-shadow: 0 0 0 #a00; /* 마우스 호버 */
+}
+
+#myform label:hover ~ label {
+	text-shadow: 0 0 0 #a00; /* 마우스 호버 뒤에오는 이모지들 */
+}
+</style>
+</head>
 	<body>
 		<!-- HEADER -->
 		<header>
@@ -440,22 +455,17 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label class="col-sm-3">별점</label>
-									<div class="com-sm-5">
-										<input type="number" id="r_rating" name="r_rating" class="form-control" required>
-									</div>
+									<fieldset name="myform" id="myform">
+										<legend>이모지 별점</legend>
+										<input type="radio" name="r_rating" value="1" id="rate1"><label for="rate1">⭐</label>
+										<input type="radio" name="r_rating" value="2" id="rate2"><label for="rate2">⭐⭐</label>
+										<input type="radio" name="r_rating" value="3" id="rate3"><label for="rate3">⭐⭐⭐</label>
+										<input type="radio" name="r_rating" value="4" id="rate4"><label for="rate4">⭐⭐⭐⭐</label>
+										<input type="radio" name="r_rating" value="5" id="rate5"><label for="rate5">⭐⭐⭐⭐⭐</label>
+									</fieldset>
 								</div>
-								<!-- <div class="input-rating">
-									<span>Your Rating: </span>
-									<div class="stars">
-										<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
-										<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
-										<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
-										<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
-										<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
-									</div>
-								</div> -->
-								<input type="hidden" value="${productDetail.p_no }" name="p_no">
+								<br>
+							<input type="hidden" value="${productDetail.p_no }" name="p_no">
 								<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
 							<input type="submit" id="Btn" class="primary-btn" value="등록하기" />
 						</form>
