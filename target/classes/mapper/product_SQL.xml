@@ -12,8 +12,8 @@
 		</if>
 	</select>
 	<insert id="productAdd" parameterType="productDTO">
-		INSERT INTO product (p_name, cate_no, p_description, p_price, p_stock, p_img)
-	 	VALUES (#{p_name}, #{cate_no}, #{p_description}, #{p_price}, #{p_stock}, #{p_img})
+		INSERT INTO product (p_name, cate_no, p_description, p_price, p_stock, p_img, u_no)
+	 	VALUES (#{p_name}, #{cate_no}, #{p_description}, #{p_price}, #{p_stock}, #{p_img}, #{u_no})
 	</insert>
 	<select id="productDetail" parameterType="integer" resultType="productDTO">
 		SELECT *

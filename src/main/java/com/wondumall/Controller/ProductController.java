@@ -28,6 +28,7 @@ import com..DTO.CategoryDTO;
 import com..DTO.PageDTO;
 import com..DTO.ProductDTO;
 import com..DTO.ReviewDTO;
+import com..Service.CategoryService;
 import com..Service.ProductService;
 import com..Util.FileSave;
 import com..Util.Util;
@@ -37,6 +38,8 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired private CategoryService categoryService;
 	
 	@Autowired
 	private Util util;
@@ -150,13 +153,13 @@ public class ProductController {
 		page.setStartPage(startPage);
 		page.setRecordCountPerPage(recordCountPerPage);
 		
-		//
+		//pageDTO도 넘겨줘야 하고 page도 넘겨줘야 해서 map 사용
 		Map<String, Object> map = new HashMap<>();
 		map.put("page", page);
 		map.put("dto",dto);
 		List<ReviewDTO> reviewList = productService.reviewList(map);
 		
-		//
+		//로그인 되있을 경우 리뷰 썼는지 안썼는지 확인
 		if(myUserDetails !=null) {
 			dto.setU_no(myUserDetails.getNo());
 			mv.addObject("reviewStatus", productService.reviewStatus(dto));
@@ -193,17 +196,17 @@ public class ProductController {
 	}
 	
 	//상품등록 화면 나오게 하기
+	@Secured({"ROLE_BUSINESS", "ROLE_ADMIN"})
 	@GetMapping(value = "/productAdd.do")
-	public String productAdd(HttpSession session) {
-		if(session.getAttribute("u_email") != null) {
-			return "productAdd";
-		} else {
-			return "productAdd";
-		}
+	public ModelAndView productAdd(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("productAdd");
+		
+		mv.addObject("categoryList", categoryService.getCategoryList());
+		return mv;
 	}
 	
 	@PostMapping(value = "/productAdd.do")
-	public String productAdd(HttpServletRequest request, MultipartFile[] files) throws Exception {
+	public String productAdd(HttpServletRequest request, MultipartFile[] files ,@AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
 		// 한글 입력 UTF-8로 set.
 		request.setCharacterEncoding("UTF-8");
 		
@@ -217,6 +220,7 @@ public class ProductController {
 			add.setP_description(request.getParameter("p_description"));
 			add.setP_price(util.str2Int(request.getParameter("p_price")));
 			add.setP_stock(util.str2Int(request.getParameter("p_stock")));
+			add.setU_no(myUserDetails.getNo());
 			// 상품 이미지 추가하기
 			for(MultipartFile file: files) {
 				if(!(file.getOriginalFilename().isEmpty())) {

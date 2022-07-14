@@ -40,8 +40,14 @@
 		<![endif]-->
 
 <link type="text/css" rel="stylesheet" href="./css/join.css" />
-
-
+<style type="text/css">
+#flex{
+	display: flex;
+}
+textarea {
+	resize: none;
+}
+</style>
 </head>
 <body>
 	<header>
@@ -90,8 +96,10 @@
 	
 					<div class="form-group row">
 						<label class="col-sm-3">분류 번호</label>
-						<div class="com-sm-3">
-							<input type="number" id="cate_no" name="cate_no" class="form-control" required>
+						<div class="com-sm-3" id="flex">
+							<c:forEach var="c" items="${categoryList }" begin="1">
+								<input style="margin-left: 10px;" type="radio" id="cate_no" name="cate_no" value="${c.cate_no }" required>${c.category }					
+							</c:forEach>
 						</div>
 					</div>
 	
@@ -122,13 +130,15 @@
 						<!-- <button type="button" class="btn_upload">
 							<img src="">
 						</button> -->
-							<input 
+						<label for="input-file" style="float: left;">
+							<img src="./img/ico_camera.png">	업로드
+						</label>
+							<input id="input-file" style="display:none;"
 								type="file" name="files" class="form-control" 
 								accept=".png, .jpg, .gif, .jpeg, .ico" multiple="multiple" required
 							>
 						</div>
 					</div>
-	
 					<input type="submit"  id="addBtn" class="btn" value="등록하기" />
 				</form>
 			</div>
