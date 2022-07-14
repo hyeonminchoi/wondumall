@@ -2135,7 +2135,11 @@ textarea.input {
 	13 -> RESPONSIVE
 ===========================================================*/
 
-@media only screen and (max-width: 1201px) {}
+@media only screen and (min-width: 992px) {
+  section{
+    min-height: 50vh;
+  }
+}
 
 @media only screen and (max-width: 991px) {
   #top-header .header-links.pull-left {

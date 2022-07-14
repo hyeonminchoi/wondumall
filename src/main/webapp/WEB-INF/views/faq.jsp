@@ -87,6 +87,13 @@
 .navbar-nav{
 	flex-direction: inherit;
 }
+img{
+	width: 70%;
+	height: auto;
+}
+label{
+	margin-left: 20px;
+}
 </style>
 
 <script type="text/javascript">
@@ -133,55 +140,55 @@
 	<!-- /NAVIGATION -->
 	
 	<!-- SECTION -->
-	<div class="section">
-		<!-- container -->
-		<div class="container">
-			<div class="accordion">
-				<h2 class="title01">자주묻는질문</h2>
-				<ul class="webtong_tab_type02 tabs">
-					<c:forEach var="fc" items="${faqCategory }" varStatus="fcvar">
-						<li class="tab-link ${fcvar.index eq 0 ? 'current':'' }" data-tab="tab-${fcvar.index}"><strong><a>${fc.fc_category }</a></strong>
-					</c:forEach>
-				</ul>
-				
-				<c:forEach var="j" items="${faqCategoryDetail}" varStatus="jvar" >
-					<div id="tab-${jvar.index}" class="tab-content accordion-item ${jvar.index eq 0 ?'current':'' }">
-						<c:forEach var="k" items="${j}" varStatus="kvar">
-							<h2 class="accordion-header" id="headingOne">
-						      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${jvar.index }${kvar.index }" aria-expanded="true" aria-controls="collapse${jvar.index }${kvar.index }">
-						        <h4 id="question">${k.faq_question }</h4>
-						      </button>
-						    </h2>
-						    <div id="collapse${jvar.index }${kvar.index }" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent=".accordion">
-						    	<div class="accordion-body">
-						        	${k.faq_answer }
-							    </div>
-								<sec:authorize access="authenticated">
-									<sec:authorize access="hasRole('ROLE_ADMIN')">
-										<label onclick="showFaqEditDialog(${k.faq_no})"><i class="fa fa-pencil" aria-hidden="true"></i>수정</label>
-									</sec:authorize>
-									<sec:authorize access="hasRole('ROLE_ADMIN')">
-										<label onclick="faqDelete(${k.faq_no})"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</label>
-									</sec:authorize>
-								</sec:authorize>
-						    </div>
+	<section>
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<div class="accordion">
+					<h2 class="title01">자주묻는질문</h2>
+					<ul class="webtong_tab_type02 tabs">
+						<c:forEach var="fc" items="${faqCategory }" varStatus="fcvar">
+							<li class="tab-link ${fcvar.index eq 0 ? 'current':'' }" data-tab="tab-${fcvar.index}"><strong><a>${fc.fc_category }</a></strong>
 						</c:forEach>
-					</div>
-				</c:forEach>
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<div style="float:right;">
-						<button type="button" onclick="showFaqWriteDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>글쓰기</button>
-					</div>
-				</sec:authorize>
-				<sec:authorize access="not authenticated">
-					<div style="float:right;">
-						<button type="button" onclick="location.href='./login.do'"><i class="fa fa-user" aria-hidden="true"></i>로그인</button>
-					</div>
-				</sec:authorize>
+					</ul>
+					
+					<c:forEach var="j" items="${faqCategoryDetail}" varStatus="jvar" >
+						<div id="tab-${jvar.index}" class="tab-content accordion-item ${jvar.index eq 0 ?'current':'' }">
+							<c:forEach var="k" items="${j}" varStatus="kvar">
+								<h2 class="accordion-header" id="headingOne">
+							      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${jvar.index }${kvar.index }" aria-expanded="true" aria-controls="collapse${jvar.index }${kvar.index }">
+							        <h4 id="question">${k.faq_question }</h4>
+							      </button>
+							    </h2>
+							    <div id="collapse${jvar.index }${kvar.index }" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent=".accordion">
+							    	<div class="accordion-body">
+							        	${k.faq_answer }
+								    </div>
+									<sec:authorize access="authenticated">
+										<sec:authorize access="hasRole('ROLE_ADMIN')">
+											<label onclick="showFaqEditDialog(${k.faq_no})"><i class="fa fa-pencil" aria-hidden="true"></i>수정</label>
+											<label onclick="faqDelete(${k.faq_no})"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</label>
+										</sec:authorize>
+									</sec:authorize>
+							    </div>
+							</c:forEach>
+						</div>
+					</c:forEach>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<div style="float:right;">
+							<button type="button" onclick="showFaqWriteDialog()"><i class="fa fa-pencil" aria-hidden="true"></i>글쓰기</button>
+						</div>
+					</sec:authorize>
+					<sec:authorize access="not authenticated">
+						<div style="float:right;">
+							<button type="button" onclick="location.href='./login.do'"><i class="fa fa-user" aria-hidden="true"></i>로그인</button>
+						</div>
+					</sec:authorize>
+				</div>
 			</div>
+			<!-- /container -->
 		</div>
-		<!-- /container -->
-	</div>
+	</section>
 	<!-- /SECTION -->
 
 	<!-- FOOTER -->

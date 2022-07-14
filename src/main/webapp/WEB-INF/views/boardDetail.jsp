@@ -117,6 +117,10 @@ label{
 label:hover{
 	color: #BDBDBD;
 }
+img{
+	width: 70%;
+	height: auto;
+}
 </style>
 <script type="text/javascript">
 	function board() {
