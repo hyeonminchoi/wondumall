@@ -106,58 +106,59 @@ session.setAttribute("state", state);
 		<nav id="navigation">
 			<c:import url="./nav.jsp"></c:import>
 		</nav>
+		<section>
+			<div class="limiter">
+				<div class="container-login100"
+					style="background-image: url('images/bg-01.jpg');">
+					<div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+						<form action="./login.do" method="post"
+							class="login100-form validate-form flex-sb flex-w">
+							<input type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}" /> <span
+								class="login100-form-title p-b-53"> 로그인 같이할수있다리 </span> <a
+								href="<%=apiURL%>" class="btn-google m-b-20"><img
+								src="./img/btnG_아이콘원형.png" aria-hidden="true" />aver</a>
+							<!-- 	<a href="#" class="btn-face m-b-20"> <i class="fa fa-facebook-official"></i> Facebook </a> -->
+							<a href="#" class="btn-google m-b-20"> <i
+								class="fa fa-google" aria-hidden="true"></i> oolge
+							</a> <br> <br>
 
-		<div class="limiter">
-			<div class="container-login100"
-				style="background-image: url('images/bg-01.jpg');">
-				<div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
-					<form action="./login.do" method="post"
-						class="login100-form validate-form flex-sb flex-w">
-						<input type="hidden" name="${_csrf.parameterName}"
-							value="${_csrf.token}" /> <span
-							class="login100-form-title p-b-53"> 로그인 같이할수있다리 </span> <a
-							href="<%=apiURL%>" class="btn-google m-b-20"><img
-							src="./img/btnG_아이콘원형.png" aria-hidden="true" />aver</a>
-						<!-- 	<a href="#" class="btn-face m-b-20"> <i class="fa fa-facebook-official"></i> Facebook </a> -->
-						<a href="#" class="btn-google m-b-20"> <i class="fa fa-google"
-							aria-hidden="true"></i> oolge
-						</a> <br> <br>
+							<div class="p-t-31 p-b-9">
+								<span class="txt1"> 아이디 (ex) Jex@jex.com </span>
+							</div>
+							<div class="wrap-input100 validate-input"
+								data-validate="Username is required">
+								<input class="input100" type="email" name="u_email"> <span
+									class="focus-input100"></span>
+							</div>
 
-						<div class="p-t-31 p-b-9">
-							<span class="txt1"> 아이디 (ex) Jex@jex.com </span>
-						</div>
-						<div class="wrap-input100 validate-input"
-							data-validate="Username is required">
-							<input class="input100" type="email" name="u_email"> <span
-								class="focus-input100"></span>
-						</div>
+							<div class="p-t-13 p-b-9">
+								<span class="txt1"> 비밀번호 </span> <a href="#"
+									class="txt2 bo1 m-l-5"> 잊으셨나요? </a>
+							</div>
+							<div class="wrap-input100 validate-input"
+								data-validate="Password is required">
+								<input class="input100" type="password" name="u_pw"> <span
+									class="focus-input100"></span>
+							</div>
 
-						<div class="p-t-13 p-b-9">
-							<span class="txt1"> 비밀번호 </span> <a href="#"
-								class="txt2 bo1 m-l-5"> 잊으셨나요? </a>
-						</div>
-						<div class="wrap-input100 validate-input"
-							data-validate="Password is required">
-							<input class="input100" type="password" name="u_pw"> <span
-								class="focus-input100"></span>
-						</div>
+							<input type="hidden" value="" name="u_provider">
 
-						<input type="hidden" value="" name="u_provider">
+							<div class="container-login100-form-btn m-t-17">
+								<button type="submit" class="login100-form-btn">로그인</button>
+							</div>
 
-						<div class="container-login100-form-btn m-t-17">
-							<button type="submit" class="login100-form-btn">로그인</button>
-						</div>
-
-						<div class="w-full text-center p-t-55">
-							<span class="txt2"> 아직 회원이 아니신가요? </span> <a href="./join.do"
-								class="txt2 bo1"> 회원가입 </a>
-						</div>
-					</form>
+							<div class="w-full text-center p-t-55">
+								<span class="txt2"> 아직 회원이 아니신가요? </span> <a href="./join.do"
+									class="txt2 bo1"> 회원가입 </a>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
-		</div>
+			</section>
 	</div>
-
+	
 
 	<div id="dropDownSelect1"></div>
 
@@ -177,6 +178,8 @@ session.setAttribute("state", state);
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 	<!--===============================================================================================-->
 	<script src="js/loginmain.js"></script>
+
+	
 
 	<!-- FOOTER -->
 	<footer id="footer">
