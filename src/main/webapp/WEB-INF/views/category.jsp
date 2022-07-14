@@ -55,27 +55,25 @@ margin-bottom: 20px;
 			<c:import url="./nav.jsp"></c:import>
 		</nav>
 	<!-- /NAVIGATION -->
-	
-	<br>
-	<%-- ${productList} --%>
-	<div class="section">
-		<div class="container">
-			<div class="row">
-				<h2>category test</h2>
-				<table class="table table-bordered">
-					<c:forEach items="${productList}" var="p">
-						<tr onclick="location.href='./productDetail.do?p_no=${p.p_no}'">
-							<td><img src="./productUpload/${p.p_img}" style="width: 200px; height: 200px;" alt="이미지 준비중입니다."></td>
-							<td> 상품번호 : ${p.p_no} &nbsp; </td>
-							<td> 상품명 : ${p.p_name} &nbsp; </td>
-							<td> 카테고리 번호 : ${p.cate_no} / </td>
-						</tr>
-					</c:forEach>
-				</table>
+	<section>
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<h2>category test</h2>
+					<table class="table table-bordered">
+						<c:forEach items="${productList}" var="p">
+							<tr onclick="location.href='./productDetail.do?p_no=${p.p_no}'">
+								<td><img src="./productUpload/${p.p_img}" style="width: 200px; height: 200px;" alt="이미지 준비중입니다."></td>
+								<td> 상품번호 : ${p.p_no} &nbsp; </td>
+								<td> 상품명 : ${p.p_name} &nbsp; </td>
+								<td> 카테고리 번호 : ${p.cate_no} / </td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
 			</div>
 		</div>
-	</div>
-	
+	</section>	
 	<!-- FOOTER -->
 	<footer id="footer">
 		<c:import url="./footer.jsp"></c:import>
