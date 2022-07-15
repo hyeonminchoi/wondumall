@@ -215,7 +215,6 @@
 					<textarea id="summernote" name="q_content" required></textarea>
 				</div>
 				<input type="hidden" name="pageNo" value="${pageNo }">
-				<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">
 				<div>
 					<button type="submit">글쓰기</button>
 					<button type="button" onclick="hideWriteDialog()">닫기</button>

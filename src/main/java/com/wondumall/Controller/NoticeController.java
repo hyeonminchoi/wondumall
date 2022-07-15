@@ -155,9 +155,12 @@ public class NoticeController {
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/noticeWrite.do")
 	public void noticeWrite(@RequestParam("pageNo") int pageNo, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response, @AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
+		if(myUserDetails== null) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
 		NoticeDTO noticeDTO = new NoticeDTO(Util.xss_clean_check(request.getParameter("n_title")), Util.xss_clean_check(request.getParameter("n_content"), request),
-				request.getParameter("u_nickname"));
+				myUserDetails.getNickname());
 		int result = noticeService.write(noticeDTO);
 		response.setContentType("text/html; charset=UTF-8");
 		if (result > 0) {

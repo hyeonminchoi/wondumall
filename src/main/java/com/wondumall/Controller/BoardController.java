@@ -150,9 +150,14 @@ public class BoardController {
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@PostMapping("/boardWrite.do")
 	public void boardWrite(@RequestParam("pageNo") int pageNo, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response,@AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
+		
+		if(myUserDetails== null) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+		
 		BoardDTO boardDTO = new BoardDTO(Util.xss_clean_check(request.getParameter("b_title")), Util.xss_clean_check(request.getParameter("b_content"), request),
-				request.getParameter("u_nickname"));
+				myUserDetails.getNickname());
 		int result = boardService.write(boardDTO);
 		response.setContentType("text/html; charset=UTF-8");
 		if (result > 0) {

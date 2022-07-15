@@ -125,9 +125,12 @@ public class QuestionController {
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@PostMapping("/questionWrite.do")
 	public void questionWrite(@RequestParam("pageNo") int pageNo, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response, @AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
+		if(myUserDetails== null) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
 		QuestionDTO questionDTO = new QuestionDTO(Util.xss_clean_check(request.getParameter("q_title")), Util.xss_clean_check(request.getParameter("q_content"), request),
-				request.getParameter("u_nickname"));
+				myUserDetails.getNickname());
 		int result = questionService.write(questionDTO);
 		response.setContentType("text/html; charset=UTF-8");
 		if (result > 0) {

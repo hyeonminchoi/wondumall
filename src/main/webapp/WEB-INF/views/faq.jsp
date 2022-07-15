@@ -216,7 +216,6 @@ label{
 					<h4><label>내용</label></h4>
 					<textarea id="summernote" name="faq_answer" required></textarea>
 				</div>
-				<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">
 				<div>
 					<button type="submit">글쓰기</button>
 					<button type="button" onclick="hideFaqWriteDialog()">닫기</button>

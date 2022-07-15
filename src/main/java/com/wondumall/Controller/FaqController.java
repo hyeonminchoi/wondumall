@@ -8,16 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
+import com..Config.MyUserDetails;
 import com..DTO.FaqCategoryDTO;
 import com..DTO.FaqDTO;
 import com..Service.FaqService;
@@ -55,11 +59,14 @@ public class FaqController {
 	
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/faqWrite.do")
-	public void faqWrite(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void faqWrite(HttpServletRequest request, HttpServletResponse response, @AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
+		if(myUserDetails== null) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
 		FaqDTO faqDTO = new FaqDTO();
 		faqDTO.setFaq_question(Util.xss_clean_check(request.getParameter("faq_question")));
 		faqDTO.setFaq_answer(Util.xss_clean_check(request.getParameter("faq_answer"), request));
-		faqDTO.setU_nickname(request.getParameter("u_nickname"));
+		faqDTO.setU_nickname(myUserDetails.getNickname());
 		faqDTO.setFc_category(request.getParameter("fc_category"));
 		int result = faqService.write(faqDTO);
 		response.setContentType("text/html; charset=UTF-8");
