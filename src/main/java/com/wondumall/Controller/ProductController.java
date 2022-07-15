@@ -1,6 +1,7 @@
 package com..Controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -296,5 +297,15 @@ public class ProductController {
 		} else {
 			return "redirect:/join";
 		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/recentlySee.do")
+	public List<ProductDTO> recentlySee(@RequestParam("arr[]") List<Integer> arr){
+		List<ProductDTO> list = new ArrayList<>();
+		for(int i=0;i<arr.size();i++) {
+			list.add(productService.productDetail(arr.get(i)));
+		}
+		return list;
 	}
 }
