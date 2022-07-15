@@ -379,17 +379,13 @@ function boardCommentEdit(c_no, c_comment){
 					</h4>
 					<textarea id="summernote" name="b_content" required><c:out value="${detail.b_content}" /></textarea>
 				</div>
-				<input type="hidden" name="pageNo" value="${pageNo }"> <input
-					type="hidden" name="b_no" value="${detail.b_no }">
-				<c:if
-					test="${not empty param.searchColumn && not empty param.searchValue}">
-					<input type="hidden" name="searchColumn"
-						value="${param.searchColumn }">
-					<input type="hidden" name="searchValue"
-						value="${param.searchValue }">
+				<input type="hidden" name="pageNo" value="${pageNo }">
+				<input type="hidden" name="b_no" value="${detail.b_no }">
+				<input type="hidden" name="u_nickname" value="${detail.u_nickname }">
+				<c:if test="${not empty param.searchColumn && not empty param.searchValue}">
+					<input type="hidden" name="searchColumn" value="${param.searchColumn }">
+					<input type="hidden" name="searchValue" value="${param.searchValue }">
 				</c:if>
-				<input type="hidden" name="u_nickname"
-					value="<sec:authentication property="principal.nickname" />">
 				<div>
 					<button type="submit">수정</button>
 					<button type="button" onclick="hideBoardEditDialog()">닫기</button>

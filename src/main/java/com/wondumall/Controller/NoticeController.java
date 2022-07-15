@@ -220,11 +220,20 @@ public class NoticeController {
 	
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/noticeEdit.do")
-	public void noticeEdit(@RequestParam("pageNo") int pageNo, @RequestParam("n_no") int n_no, HttpServletRequest request,
+	public void noticeEdit(@RequestParam("pageNo") int pageNo, @RequestParam("n_no") int n_no, @RequestParam("u_nickname") String u_nickname, HttpServletRequest request,
 			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
-			@RequestParam(name="searchValue", required=false) String searchValue) throws Exception {
+			@RequestParam(name="searchValue", required=false) String searchValue, @AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
+		//비로그인 회원일 경우 접근 에러
+		if(myUserDetails== null) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+		boolean adminCheck = myUserDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")); 
+		if(!adminCheck && !u_nickname.equals(myUserDetails.getNickname())){ // 관리자가 아니거나 글 작성자가 아닐 경우
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+		
 		NoticeDTO noticeDTO = new NoticeDTO(Util.xss_clean_check(request.getParameter("n_title")), Util.xss_clean_check(request.getParameter("n_content"), request),
-				request.getParameter("u_nickname"));
+				myUserDetails.getNickname());
 		noticeDTO.setN_no(n_no);
 		int result = noticeService.edit(noticeDTO);
 		response.setContentType("text/html; charset=UTF-8");

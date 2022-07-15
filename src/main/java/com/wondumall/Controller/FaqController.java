@@ -117,11 +117,12 @@ public class FaqController {
 	
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/faqEdit.do")
-	public void faqEdit(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void faqEdit(HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam("u_nickname") String u_nickname, @AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
 		FaqDTO faqDTO = new FaqDTO();
 		faqDTO.setFaq_question(Util.xss_clean_check(request.getParameter("faq_question")));
 		faqDTO.setFaq_answer(Util.xss_clean_check(request.getParameter("faq_answer"), request));
-		faqDTO.setU_nickname(request.getParameter("u_nickname"));
+		faqDTO.setU_nickname(myUserDetails.getNickname());
 		faqDTO.setFaq_no(Integer.parseInt(request.getParameter("faq_no")));
 		faqDTO.setFc_category(request.getParameter("fc_category"));
 		int result = faqService.edit(faqDTO);

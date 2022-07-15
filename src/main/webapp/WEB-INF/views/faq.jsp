@@ -245,8 +245,8 @@ label{
 					<h4><label>내용</label></h4>
 					<textarea id="summernote2" name="faq_answer" required></textarea>
 				</div>
-				<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">
 				<input type="hidden" name="faq_no" id="faq_no">
+				<input type="hidden" name="u_nickname" value="${detail.u_nickname }">
 				<div>
 					<button type="submit">수정</button>
 					<button type="button" onclick="hideFaqEditDialog()">닫기</button>

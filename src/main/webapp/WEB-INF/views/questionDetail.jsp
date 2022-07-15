@@ -340,15 +340,11 @@ function answerEdit(a_no, answer){
 				</div>
 				<input type="hidden" name="pageNo" value="${pageNo }"> <input
 					type="hidden" name="q_no" value="${detail.q_no }">
-				<c:if
-					test="${not empty param.searchColumn && not empty param.searchValue}">
-					<input type="hidden" name="searchColumn"
-						value="${param.searchColumn }">
-					<input type="hidden" name="searchValue"
-						value="${param.searchValue }">
+				<c:if test="${not empty param.searchColumn && not empty param.searchValue}">
+					<input type="hidden" name="searchColumn" value="${param.searchColumn }">
+					<input type="hidden" name="searchValue" value="${param.searchValue }">
 				</c:if>
-				<input type="hidden" name="u_nickname"
-					value="<sec:authentication property="principal.nickname" />">
+				<input type="hidden" name="u_nickname" value="${detail.u_nickname }">
 				<div>
 					<button type="submit">수정</button>
 					<button type="button" onclick="hideQuestionEditDialog()">닫기</button>

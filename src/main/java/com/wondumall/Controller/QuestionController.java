@@ -190,11 +190,20 @@ public class QuestionController {
 	
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@PostMapping("/questionEdit.do")
-	public void questionEdit(@RequestParam("pageNo") int pageNo, @RequestParam("q_no") int q_no, HttpServletRequest request,
+	public void questionEdit(@RequestParam("pageNo") int pageNo, @RequestParam("q_no") int q_no, @RequestParam("u_nickname") String u_nickname, HttpServletRequest request,
 			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
-			@RequestParam(name="searchValue", required=false) String searchValue) throws Exception {
+			@RequestParam(name="searchValue", required=false) String searchValue, @AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
+		//비로그인 회원일 경우 접근 에러
+		if(myUserDetails== null) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+		boolean adminCheck = myUserDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")); 
+		if(!adminCheck && !u_nickname.equals(myUserDetails.getNickname())){ // 관리자가 아니거나 글 작성자가 아닐 경우
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+		
 		QuestionDTO questionDTO = new QuestionDTO(Util.xss_clean_check(request.getParameter("q_title")), Util.xss_clean_check(request.getParameter("q_content"), request),
-				request.getParameter("u_nickname"));
+				myUserDetails.getNickname());
 		questionDTO.setQ_no(q_no);
 		int result = questionService.edit(questionDTO);
 		response.setContentType("text/html; charset=UTF-8");

@@ -217,11 +217,20 @@ public class BoardController {
 	
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@PostMapping("/boardEdit.do")
-	public void boardEdit(@RequestParam("pageNo") int pageNo, @RequestParam("b_no") int b_no, HttpServletRequest request,
+	public void boardEdit(@RequestParam("pageNo") int pageNo, @RequestParam("b_no") int b_no, @RequestParam("u_nickname") String u_nickname, HttpServletRequest request,
 			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
-			@RequestParam(name="searchValue", required=false) String searchValue) throws Exception {
+			@RequestParam(name="searchValue", required=false) String searchValue, @AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
+		//비로그인 회원일 경우 접근 에러
+		if(myUserDetails== null) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+		boolean adminCheck = myUserDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")); 
+		if(!adminCheck && !u_nickname.equals(myUserDetails.getNickname())){ // 관리자가 아니거나 글 작성자가 아닐 경우
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+		
 		BoardDTO boardDTO = new BoardDTO(Util.xss_clean_check(request.getParameter("b_title")), Util.xss_clean_check(request.getParameter("b_content"), request),
-				request.getParameter("u_nickname"));
+				myUserDetails.getNickname());
 		boardDTO.setB_no(b_no);
 		int result = boardService.edit(boardDTO);
 		response.setContentType("text/html; charset=UTF-8");
