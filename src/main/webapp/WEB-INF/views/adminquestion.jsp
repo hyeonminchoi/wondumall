@@ -73,11 +73,11 @@ td, th{
 								</c:choose>
 								</td>
 								<td>
-								<button onclick="qdel(${q.q_no})">삭제</button>
-								<button onclick="qrpr(${q.q_no})">복구</button>
+								<button onclick="qdel(${q.q_no})" class="primary-btn order-submit" style="padding: 7px 12px;">삭제</button>
+								<button onclick="qrpr(${q.q_no})" class="primary-btn order-submit" style="padding: 7px 12px;">복구</button>
 								</td>
-								<td><button onclick="qcompledel(${q.q_no})">완전삭제</button></td>
-								<td><button onclick="detail(${q.q_no}, ${pageNo })">상세보기</button></td>
+								<td><button onclick="qcompledel(${q.q_no})" class="primary-btn order-submit" style="padding: 7px 12px;">완전삭제</button></td>
+								<td><button onclick="detail(${q.q_no}, ${pageNo })" class="primary-btn order-submit" style="padding: 7px 12px;">상세보기</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -92,7 +92,7 @@ td, th{
 						<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>작성자</option>
 					</select>
 					<input type="text" name="searchValue" value="${searchValue}">
-					<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
+					<button type="submit" class="primary-btn order-submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
 				</form>
 			</div>
 		</div>

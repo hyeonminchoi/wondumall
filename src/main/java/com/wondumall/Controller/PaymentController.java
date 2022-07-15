@@ -1,18 +1,17 @@
 package com..Controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +21,7 @@ import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
+import com..Config.MyUserDetails;
 import com..DTO.OrderDTO;
 import com..DTO.ProductDTO;
 import com..DTO.UserDTO;
@@ -48,32 +48,10 @@ public class PaymentController {
 			, Locale locale
 			, HttpSession session
 			, @PathVariable(value= "imp_uid") String imp_uid
-			, @PathVariable("u_no") int u_no) throws IamportResponseException, IOException
+			, OrderDTO orderInfo,
+			@AuthenticationPrincipal MyUserDetails myUserDetails) throws IamportResponseException, IOException
 	{	
-		String name = request.getParameter("o_name");
-		String email = request.getParameter("o_email");
-		String postcode = request.getParameter("o_postcode");
-		String roadAddress = request.getParameter("o_roadAddress");
-		String extraAddress = request.getParameter("o_extraAddress");
-		String detailAddress = request.getParameter("o_detailAddress");
-		String tel = request.getParameter("o_tel");
-		String o_request = request.getParameter("o_request");
-		String merchant_uid = request.getParameter("merchant_uid");
-		
-		OrderDTO orderInfo = new OrderDTO();
-		
-		orderInfo.setO_name(name);
-		orderInfo.setO_email(email);
-		orderInfo.setO_postcode(postcode);
-		orderInfo.setO_roadAddress(roadAddress);
-		orderInfo.setO_extraAddress(extraAddress);
-		orderInfo.setO_detailAddress(detailAddress);
-		orderInfo.setO_tel(tel);
-		orderInfo.setO_request(o_request);
-		orderInfo.setImp_uid(imp_uid);
-		orderInfo.setMerchant_uid(merchant_uid);
-		orderInfo.setU_no(u_no);
-		
+		orderInfo.setU_no(myUserDetails.getNo());
 		paymentService.checkout(orderInfo);	
 		
 		

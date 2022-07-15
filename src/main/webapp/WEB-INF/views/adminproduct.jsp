@@ -87,15 +87,15 @@ td, th{
 								</c:choose>
 								</td>
 								<td>
-								<button onclick="del(${p.p_no})">삭제</button>
-								<button onclick="repair(${p.p_no})">복구</button>
+								<button onclick="del(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px;">삭제</button>
+								<button onclick="repair(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px;">복구</button>
 								</td>
-								<td><button onclick="pdelete(${p.p_no})">완전삭제</button></td>
+								<td><button onclick="pdelete(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px;">완전삭제</button></td>
 								<td>
-								<button onclick="admission(${p.p_no})">승인</button>
-								<button onclick="adcancel(${p.p_no})">취소</button>
+								<button onclick="admission(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px;">승인</button>
+								<button onclick="adcancel(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px;">취소</button>
 								</td>
-								<td><button onclick="detail(${p.p_no})">상세보기</button></td>
+								<td><button onclick="detail(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px;">상세보기</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -110,7 +110,7 @@ td, th{
 						<option value="u_name" ${searchColumn eq 'u_name'?'selected':''}>작성자</option>
 					</select>
 					<input type="text" name="searchValue" value="${searchValue}">
-					<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
+					<button type="submit" class="primary-btn order-submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
 				</form>
 			</div>
 		</div>

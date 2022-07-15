@@ -85,7 +85,7 @@
 							</div>
 							<div class="form-group">
 								<input class="input" type="text" id="o_name" name="o_name" placeholder="이름">
-								<input type="hidden" value="${user.u_no }" id="u_no">
+								<input class="input" type="hidden" id="u_no" name="u_no" value="${user.u_no }">
 							</div>
 							<div class="form-group">
 								<input class="input" type="text" id="o_email" name="o_email" placeholder="이메일">
@@ -189,6 +189,7 @@ function iamport(){
 	var tel = $("#o_tel").val();
 	var request = $("#o_request").val();
 	var u_no = $("#u_no").val();
+	var p_no = ${product.p_no};
 	
 	//가맹점 식별코드
 	IMP.init('imp56561187');
@@ -219,15 +220,8 @@ function iamport(){
         		"o_tel" : tel,
         		"o_request" : request,
         		"merchant_uid" : rsp.merchant_uid,
-        		"u_no" : u_no
-        	},
-        	success : function(data){
-        		alert("데이터전송성공!");
-        		location.href = "./paysuccess.do";
-        	},
-        	error : function(error){
-        		alert("에러");
-        		location.href = "./payfailure.do";
+        		"u_no" : u_no,
+        		"p_no" : p_no
         	}
         }).done(function(data) {
         	
@@ -236,8 +230,10 @@ function iamport(){
         	// 위의 rsp.paid_amount 와 data.response.amount를 비교한후 로직 실행 (import 서버검증)
         	if(rsp.paid_amount == data.response.amount){
 	        	alert("결제 및 결제검증완료");
+	        	location.href = "./paysuccess.do";
         	} else {
         		alert("결제 실패");
+        		location.href = "./payfailure.do";
         	}
         });
 	});

@@ -98,13 +98,13 @@ td, th{
 								</c:choose>
 								</td>
 								<td>
-								<button onclick="sec(${u.u_no})">탈퇴</button>
-								<button onclick="rep(${u.u_no})">복구</button>
+								<button onclick="sec(${u.u_no})" class="primary-btn order-submit" style="padding: 7px 12px;">탈퇴</button>
+								<button onclick="rep(${u.u_no})" class="primary-btn order-submit" style="padding: 7px 12px;">복구</button>
 								</td>
-								<td><button onclick="comsec(${u.u_no})">완전탈퇴</button></td>
+								<td><button onclick="comsec(${u.u_no})" class="primary-btn order-submit" style="padding: 7px 12px;">완전탈퇴</button></td>
 								<td>
-								<button onclick="admiss(${u.u_no})">승인</button>
-								<button onclick="adcan(${u.u_no})">취소</button>
+								<button onclick="admiss(${u.u_no})" class="primary-btn order-submit" style="padding: 7px 12px;">승인</button>
+								<button onclick="adcan(${u.u_no})" class="primary-btn order-submit" style="padding: 7px 12px;">취소</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -120,7 +120,7 @@ td, th{
 						<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>별명</option>
 					</select>
 					<input type="text" name="searchValue" value="${searchValue}">
-					<button type="submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
+					<button type="submit" class="primary-btn order-submit"><i class="fa fa-search" aria-hidden="true"></i>검색</button>
 				</form>
 			</div>
 		</div>
