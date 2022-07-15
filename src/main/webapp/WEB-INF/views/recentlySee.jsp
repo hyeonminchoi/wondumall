@@ -3,12 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-		<meta charset="utf-8">
+<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		<title>category</title>
+			<title>recentlySee</title>
 
 		<!-- Google font -->
 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -35,56 +35,6 @@
 		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
-<style type="text/css">
-tr{
-max-width: 996px;
-margin-left: auto;
-margin-right: auto;
-margin-bottom: 20px;
-}
-</style>
-</head>
-<body>
-	<!-- HEADER -->
-		<header>
-			<c:import url="./header.jsp"></c:import>
-		</header>
-	<!-- /HEADER -->
-	<!-- NAVIGATION -->
-		<nav id="navigation">
-			<c:import url="./nav.jsp"></c:import>
-		</nav>
-	<!-- /NAVIGATION -->
-	<!-- HEADER -->
-		<main>
-			<c:import url="./recentlySee.jsp"></c:import>
-		</main>
-	<!-- /HEADER -->
-	<section>
-		<div class="section">
-			<div class="container">
-				<div class="row">
-					<h2>category test</h2>
-					<table class="table table-bordered">
-						<c:forEach items="${productList}" var="p">
-							<tr onclick="location.href='./productDetail.do?p_no=${p.p_no}'">
-								<td><img src="./productUpload/${p.p_img}" style="width: 200px; height: 200px;" alt="이미지 준비중입니다."></td>
-								<td> 상품번호 : ${p.p_no} &nbsp; </td>
-								<td> 상품명 : ${p.p_name} &nbsp; </td>
-								<td> 카테고리 번호 : ${p.cate_no} / </td>
-							</tr>
-						</c:forEach>
-					</table>
-				</div>
-			</div>
-		</div>
-	</section>	
-	<!-- FOOTER -->
-	<footer id="footer">
-		<c:import url="./footer.jsp"></c:import>
-	</footer>
-	<!-- /FOOTER -->
-
 	<!-- jQuery Plugins -->
 	<script src="./js/jquery.min.js"></script>
 	<script src="./js/bootstrap.min.js"></script>
@@ -92,5 +42,40 @@ margin-bottom: 20px;
 	<script src="./js/nouislider.min.js"></script>
 	<script src="./js/jquery.zoom.min.js"></script>
 	<script src="./js/main.js"></script>
+<script type="text/javascript">
+function getCookie(name) { //--가져올 쿠키의 이름을 파라미터 값으로 받고
+     var nameOfCookie = name + "="; //--쿠키는 "쿠키=값" 형태로 가지고 있어서 뒤에 있는 값을 가져오기 위해 = 포함
+     var x = 0; 
+     while (x <= document.cookie.length) {  //--현재 세션에 가지고 있는 쿠키의 총 길이를 가지고 반복
+          var y = (x + nameOfCookie.length); //--substring으로 찾아낼 쿠키의 이름 길이 저장
+          if (document.cookie.substring(x, y) == nameOfCookie) { //--잘라낸 쿠키와 쿠키의 이름이 같다면
+               if ((endOfCookie = document.cookie.indexOf(";", y)) == -1) //--y의 위치로부터 ;값까지 값이 있으면 
+                    endOfCookie = document.cookie.length; //--쿠키의 길이로 적용하고
+               return unescape(document.cookie.substring(y, endOfCookie)); //--쿠키의 시작점과 끝점을 찾아서 값을 반환
+          } 
+          x = document.cookie.indexOf(" ", x) + 1; //--다음 쿠키를 찾기 위해 시작점을 반환
+          if (x == 0) //--쿠키 마지막이면 
+               break; //--반복문 빠져나오기
+     } 
+     return ""; //--빈값 반환
+}
+
+var step;
+var cookie = getCookie('recentlySee'); 
+if (cookie != "") {
+	for(step = 0; step < 5; step++){
+		alert("쿠키값은 : " + cookie);
+	}
+}
+
+</script>
+</head>
+<body>
+	aside 기능으로 하기
+	<div>
+		<aside>
+		${cookie.recentlySee}
+		</aside>
+	</div>
 </body>
 </html>
