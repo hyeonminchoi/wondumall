@@ -242,10 +242,12 @@
 		                if(result == 0){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디 
 		                    $('.email_ok').css("display","inline-block"); 
 		                    $('.email_already').css("display", "none");
+		                    $('#joinbtn').attr('disabled', false);
 		                } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
 		                    $('.email_already').css("display","inline-block");
 		                    $('.email_ok').css("display", "none");
 		                    $('#emailchk').val('');
+		                    $('#joinbtn').attr('disabled', true);
 		                }
 		            },
 		            error:function(){
@@ -264,10 +266,12 @@
 			                if(result == 0){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디 
 			                    $('.nickname_ok').css("display","inline-block"); 
 			                    $('.nickname_already').css("display", "none");
+			                    $('#joinbtn').attr('disabled', false);
 			                } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
 			                    $('.nickname_already').css("display","inline-block");
 			                    $('.nickname_ok').css("display", "none");
 			                    $('#nicknamechk').val('');
+			                    $('#joinbtn').attr('disabled', true);
 			                }
 			            },
 			            error:function(){
