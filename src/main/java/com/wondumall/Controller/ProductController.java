@@ -1,13 +1,17 @@
 package com..Controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,7 +123,7 @@ public class ProductController {
 	}
 	
 	@GetMapping(value = "/productDetail.do")
-	public ModelAndView productDetail(HttpServletRequest request, @RequestParam("p_no") int p_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+	public ModelAndView productDetail(HttpServletRequest request, HttpServletResponse response, @RequestParam("p_no") int p_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 		ModelAndView mv = new ModelAndView("productDetail");
 		ReviewDTO dto = new ReviewDTO();
 		dto.setP_no(p_no);
@@ -164,6 +168,49 @@ public class ProductController {
 			dto.setU_no(myUserDetails.getNo());
 			mv.addObject("reviewStatus", productService.reviewStatus(dto));
 		} 
+		
+		//최근 본 상품
+		Cookie cookie = null;
+		Cookie[] cookies = request.getCookies();
+		if(cookies!=null) {
+			for(Cookie c:cookies)
+				if(c.getName().equals("recentlySee")) {
+					cookie = c;
+					break;
+				}
+		}
+
+		if(cookie!=null) {
+			StringTokenizer st = new StringTokenizer(cookie.getValue(),"_");
+			StringBuilder sb = new StringBuilder();
+			Deque<String> queue = new LinkedList<>();
+			while(st.hasMoreTokens()) {
+				String temp = st.nextToken();
+				if(temp.contains("[" + p_no + "]")) {
+					continue;
+				} else {
+					queue.offer(temp);
+				}
+			}
+			if(queue.size()==5) {
+				queue.pollLast();
+			}
+			while(!queue.isEmpty()) {
+				sb.append(queue.poll()+"_");
+			}
+			
+			String result = "";
+			if(sb.length()>0)
+				result = sb.substring(0, sb.length()-1);
+			
+			cookie.setValue("[" + p_no + "]_" + result);
+			cookie.setMaxAge(60*60*24);
+			response.addCookie(cookie);
+		} else {
+			Cookie newCookie = new Cookie("recentlySee", "[" + p_no + "]");
+			newCookie.setMaxAge(60*60);
+			response.addCookie(newCookie);
+		}
 		
 		mv.addObject("productDetail", productService.productDetail(p_no));
 		mv.addObject("reviewList",reviewList);
