@@ -222,7 +222,6 @@ function boardCommentEdit(c_no, c_comment){
 		temp += '<input type="hidden" name="searchColumn" value="${param.searchColumn }">'
 		temp += '<input type="hidden" name="searchValue" value="${param.searchValue }">'
 		temp += '</c:if>'
-		temp += '<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">'
 		temp += '<button type="submit" id="commentCount1">댓글수정<br>(' + c_comment.length + '/300)</button>'
 		temp += '</form>'
 		temp += '</div>'

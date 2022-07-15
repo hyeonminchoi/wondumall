@@ -258,9 +258,11 @@ public class QuestionController {
 	@PostMapping("/answerEdit.do")
 	public void answerEdit(AnswerDTO answerDTO, @RequestParam("pageNo") int pageNo,
 			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
-			@RequestParam(name="searchValue", required=false) String searchValue) throws Exception {
+			@RequestParam(name="searchValue", required=false) String searchValue,
+			@AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
 		if(answerDTO.getA_answer().equals(""))
 			answerDTO.setA_answer(null);
+		answerDTO.setU_nickname(myUserDetails.getNickname());
 		int result = answerService.edit(answerDTO);
 		response.setContentType("text/html; charset=UTF-8");
 		if (result > 0) {

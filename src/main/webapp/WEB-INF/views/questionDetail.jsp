@@ -201,7 +201,6 @@ function answerEdit(a_no, answer){
 		temp += '<input type="hidden" name="searchColumn" value="${param.searchColumn }">'
 		temp += '<input type="hidden" name="searchValue" value="${param.searchValue }">'
 		temp += '</c:if>'
-		temp += '<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">'
 		temp += '<button type="submit" id="answerCount1">답변수정<br>(' + answer.length + '/1000)</button>'
 		temp += '</form>'
 		temp += '</div>'
