@@ -74,7 +74,7 @@
 }
 
 #awriteform textarea, #aeditform textarea {
-	width: calc(100% - 85px);
+	width: calc(100% - 100px);
 	height: 150px;
 	margin-right: -3px;
 	vertical-align: middle;
@@ -85,7 +85,7 @@
 
 #awriteform button, #aeditform button {
 	vertical-align: middle;
-	width: 80px;
+	width: 95px;
 	height: 150px;
 	margin-left: -2px;
 	border: 0px;
@@ -101,6 +101,7 @@ pre{
 	height : auto;
 	box-sizing:border-box;
 	white-space: pre-wrap;
+	word-break:break-word;
 }
 td:nth-child(1){
 	width:10%;
@@ -134,9 +135,9 @@ img{
 	function questionDelete(){
 		if(confirm("질문을 삭제하겠습니까?")){
 			if(${not empty param.searchColumn} && ${not empty param.searchValue}){
-				location.href = "./questionDelete.do?pageNo=" + ${pageNo} + "&q_no=${detail.q_no}&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
+				location.href = "./questionDelete.do?pageNo=" + ${pageNo} + "&q_no=${detail.q_no}&u_nickname=${detail.u_nickname}&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
 			} else{
-				location.href = "./questionDelete.do?pageNo=" + ${pageNo} + "&q_no=${detail.q_no}";
+				location.href = "./questionDelete.do?pageNo=" + ${pageNo} + "&q_no=${detail.q_no}&u_nickname=${detail.u_nickname}";
 			}
 		}
 	}
@@ -162,14 +163,14 @@ img{
 	
 	//답변 글자수 제한
 	$(document).on("input","#a_answer",function(){
-		if($(this).val().length>=300){
-			$(this).val($(this).val().substring(0,300));
-			$("#answerCount").html("답변쓰기<br>(300/300)");
-			$("#answerCount1").html("답변수정<br>(300/300)");
+		if($(this).val().length>=1000){
+			$(this).val($(this).val().substring(0,1000));
+			$("#answerCount").html("답변쓰기<br>(1000/1000)");
+			$("#answerCount1").html("답변수정<br>(1000/1000)");
 			return;
 		}
-		$("#answerCount").html("답변쓰기<br>(" + $(this).val().length + "/300)");
-		$("#answerCount1").html("답변수정<br>(" + $(this).val().length + "/300)");
+		$("#answerCount").html("답변쓰기<br>(" + $(this).val().length + "/1000)");
+		$("#answerCount1").html("답변수정<br>(" + $(this).val().length + "/1000)");
 	});
 </script>
 
@@ -201,7 +202,7 @@ function answerEdit(a_no, answer){
 		temp += '<input type="hidden" name="searchValue" value="${param.searchValue }">'
 		temp += '</c:if>'
 		temp += '<input type="hidden" name="u_nickname" value="<sec:authentication property="principal.nickname" />">'
-		temp += '<button type="submit" id="answerCount1">답변수정<br>(' + answer.length + '/300)</button>'
+		temp += '<button type="submit" id="answerCount1">답변수정<br>(' + answer.length + '/1000)</button>'
 		temp += '</form>'
 		temp += '</div>'
 		$('#answerList').empty().html(temp);
@@ -284,7 +285,7 @@ function answerEdit(a_no, answer){
 										</c:if>
 										<input type="hidden" name="u_nickname"
 											value="<sec:authentication property="principal.nickname" />">
-										<button type="submit" id="answerCount">답변쓰기<br>(0/300)</button>
+										<button type="submit" id="answerCount">답변쓰기<br>(0/1000)</button>
 									</form>
 								</div>
 							</sec:authorize> <c:choose>

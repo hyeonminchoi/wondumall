@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import com..Config.MyUserDetails;
@@ -179,9 +181,19 @@ public class NoticeController {
 	
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/noticeDelete.do")
-	public void noticeDelete(@RequestParam("pageNo") int pageNo, @RequestParam("n_no") int n_no, HttpServletRequest request,
+	public void noticeDelete(@RequestParam("pageNo") int pageNo, @RequestParam("n_no") int n_no, @RequestParam("u_nickname") String u_nickname, HttpServletRequest request,
 			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
-			@RequestParam(name="searchValue", required=false) String searchValue) throws Exception {
+			@RequestParam(name="searchValue", required=false) String searchValue,
+			@AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
+		//비로그인 회원일 경우 접근 에러
+		if(myUserDetails== null) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+		boolean adminCheck = myUserDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")); 
+		if(!adminCheck && !u_nickname.equals(myUserDetails.getNickname())){ // 관리자가 아니거나 글 작성자가 아닐 경우
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+		
 		NoticeDTO noticeDTO = new NoticeDTO();
 		noticeDTO.setN_no(n_no);
 		int result = noticeService.delete(noticeDTO);

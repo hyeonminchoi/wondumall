@@ -101,6 +101,7 @@ pre{
 	height : auto;
 	box-sizing:border-box;
 	white-space: pre-wrap;
+	word-break:break-word;
 }
 td:nth-child(1){
 	width:10%;
@@ -134,9 +135,9 @@ img{
 	function boardDelete(){
 		if(confirm("글을 삭제하겠습니까?")){
 			if(${not empty param.searchColumn} && ${not empty param.searchValue}){
-				location.href = "./boardDelete.do?pageNo=" + ${pageNo} + "&b_no=${detail.b_no}&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
+				location.href = "./boardDelete.do?pageNo=" + ${pageNo} + "&b_no=${detail.b_no}&u_nickname=${detail.u_nickname}&searchColumn=${param.searchColumn}&searchValue=${param.searchValue}";
 			} else{
-				location.href = "./boardDelete.do?pageNo=" + ${pageNo} + "&b_no=${detail.b_no}";
+				location.href = "./boardDelete.do?pageNo=" + ${pageNo} + "&b_no=${detail.b_no}&u_nickname=${detail.u_nickname}";
 			}
 		}
 	}
