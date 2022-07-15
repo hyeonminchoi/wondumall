@@ -179,7 +179,13 @@ public class ProductController {
 					break;
 				}
 		}
-
+		//queue와 deque의 차이 생각하기
+		//StringTokenizer 찾아보기 <-> split과 차이 있음
+		//속도의 차이가 있다.
+		//얼마 안되는 값은 Tokenizer 가 좋음 / 값이 많아 질수록 split의 속도가 좋음 /
+		
+		//hasMoreTokenizer
+		//StringBuilder 찾아보기
 		if(cookie!=null) {
 			StringTokenizer st = new StringTokenizer(cookie.getValue(),"_");
 			StringBuilder sb = new StringBuilder();
@@ -196,14 +202,14 @@ public class ProductController {
 				queue.pollLast();
 			}
 			while(!queue.isEmpty()) {
-				sb.append(queue.poll()+"_");
+				sb.append(queue.poll());
+				if(!queue.isEmpty())
+					sb.append("_");
 			}
 			
-			String result = "";
-			if(sb.length()>0)
-				result = sb.substring(0, sb.length()-1);
+			String result = sb.toString();
 			
-			cookie.setValue("[" + p_no + "]_" + result);
+			cookie.setValue("[" + p_no + "]" + (result.length()>0? "_" + result:""));
 			cookie.setMaxAge(60*60*24);
 			response.addCookie(cookie);
 		} else {
