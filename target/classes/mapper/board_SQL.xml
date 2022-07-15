@@ -44,7 +44,7 @@
 	<select id="getDetail" resultType="boardDTO" parameterType="integer">
 		SELECT board.*, user.u_nickname FROM board
 		JOIN user ON user.u_no = board.u_no
-		WHERE b_no = #{b_no}
+		WHERE board.b_no = #{b_no} AND board.b_del = 0
 	</select>
 	
 	<insert id="write" parameterType="boardDTO">

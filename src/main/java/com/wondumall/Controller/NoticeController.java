@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com..Config.MyUserDetails;
 import com..DTO.NoticeDTO;
+import com..DTO.BoardDTO;
 import com..DTO.NoticeCommentDTO;
 import com..Service.NoticeCommentService;
 import com..Service.NoticeService;
@@ -115,8 +116,11 @@ public class NoticeController {
 			else
 				mv.addObject("likeStatus", false);
 		}
-		
-		mv.addObject("detail", noticeService.getDetail(n_no));
+		NoticeDTO detail = noticeService.getDetail(n_no);
+		if(detail==null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
+		mv.addObject("detail", detail);
 		mv.addObject("pageNo", pageNo);
 		mv.addObject("commentList", noticeCommentService.getCommentList(n_no));
 		return mv;

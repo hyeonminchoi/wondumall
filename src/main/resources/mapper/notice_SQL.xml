@@ -44,7 +44,7 @@
 	<select id="getDetail" resultType="noticeDTO" parameterType="integer">
 		SELECT notice.*, user.u_nickname FROM notice
 		JOIN user ON user.u_no = notice.u_no
-		WHERE n_no = #{n_no}
+		WHERE notice.n_no = #{n_no} AND notice.n_del = 0
 	</select>
 	
 	<insert id="write" parameterType="noticeDTO">

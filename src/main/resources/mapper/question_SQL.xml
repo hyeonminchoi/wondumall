@@ -44,7 +44,7 @@
 	<select id="getDetail" resultType="questionDTO" parameterType="integer">
 		SELECT question.*, user.u_nickname FROM question
 		JOIN user ON user.u_no = question.u_no
-		WHERE q_no = #{q_no}
+		WHERE question.q_no = #{q_no} AND question.q_del = 0
 	</select>
 	
 	<insert id="write" parameterType="questionDTO">

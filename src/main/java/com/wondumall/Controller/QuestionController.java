@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com..Config.MyUserDetails;
 import com..DTO.AnswerDTO;
+import com..DTO.BoardDTO;
 import com..DTO.QuestionDTO;
 import com..Service.AnswerService;
 import com..Service.QuestionService;
@@ -86,7 +87,9 @@ public class QuestionController {
 		if(!adminCheck && !detail.getU_nickname().equals(myUserDetails.getNickname())){ // 관리자가 아니거나 글 작성자가 아닐 경우
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
-		
+		if(detail==null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
 		mv.addObject("detail", detail);
 		mv.addObject("pageNo", pageNo);
 		mv.addObject("answerList", answerService.getAnswerList(q_no));

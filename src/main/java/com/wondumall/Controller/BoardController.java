@@ -111,8 +111,11 @@ public class BoardController {
 			else
 				mv.addObject("likeStatus", false);
 		}
-		
-		mv.addObject("detail", boardService.getDetail(b_no));
+		BoardDTO detail = boardService.getDetail(b_no);
+		if(detail==null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
+		mv.addObject("detail", detail);
 		mv.addObject("pageNo", pageNo);
 		mv.addObject("commentList", boardCommentService.getCommentList(b_no));
 		return mv;
