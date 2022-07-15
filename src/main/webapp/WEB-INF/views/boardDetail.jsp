@@ -324,8 +324,6 @@ function boardCommentEdit(c_no, c_comment){
 											<input type="hidden" name="searchValue"
 												value="${param.searchValue }">
 										</c:if>
-										<input type="hidden" name="u_nickname"
-											value="<sec:authentication property="principal.nickname" />">
 										<button type="submit" id="commentCount">댓글쓰기<br>(0/300)</button>
 									</form>
 								</div>

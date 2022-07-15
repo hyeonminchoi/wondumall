@@ -283,8 +283,6 @@ function answerEdit(a_no, answer){
 											<input type="hidden" name="searchValue"
 												value="${param.searchValue }">
 										</c:if>
-										<input type="hidden" name="u_nickname"
-											value="<sec:authentication property="principal.nickname" />">
 										<button type="submit" id="answerCount">답변쓰기<br>(0/1000)</button>
 									</form>
 								</div>

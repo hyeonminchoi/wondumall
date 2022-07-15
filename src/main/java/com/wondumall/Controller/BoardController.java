@@ -125,9 +125,12 @@ public class BoardController {
 	@PostMapping("/boardComment.do")
 	public void boardCommentWrite(BoardCommentDTO boardCommentDTO, @RequestParam("pageNo") int pageNo,
 			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
-			@RequestParam(name="searchValue", required=false) String searchValue) throws Exception {
+			@RequestParam(name="searchValue", required=false) String searchValue,
+			@AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
 		if(boardCommentDTO.getC_comment().equals(""))
 			boardCommentDTO.setC_comment(null);
+		
+		boardCommentDTO.setU_nickname(myUserDetails.getNickname());
 		int result = boardCommentService.writeComment(boardCommentDTO);
 		response.setContentType("text/html; charset=UTF-8");
 		if (result > 0) {

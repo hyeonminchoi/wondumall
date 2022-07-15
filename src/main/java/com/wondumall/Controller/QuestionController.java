@@ -98,27 +98,29 @@ public class QuestionController {
 	
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/answer.do")
-	public void answerWrite(AnswerDTO questionanswerDTO, @RequestParam("pageNo") int pageNo,
+	public void answerWrite(AnswerDTO answerDTO, @RequestParam("pageNo") int pageNo,
 			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
-			@RequestParam(name="searchValue", required=false) String searchValue) throws Exception {
-		if(questionanswerDTO.getA_answer().equals(""))
-			questionanswerDTO.setA_answer(null);
-		int result = answerService.writeAnswer(questionanswerDTO);
+			@RequestParam(name="searchValue", required=false) String searchValue,
+			@AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
+		if(answerDTO.getA_answer().equals(""))
+			answerDTO.setA_answer(null);
+		answerDTO.setU_nickname(myUserDetails.getNickname());
+		int result = answerService.writeAnswer(answerDTO);
 		response.setContentType("text/html; charset=UTF-8");
 		if (result > 0) {
 			if(searchColumn!=null && searchValue!=null)
 				response.getWriter().println("<script> alert('답변쓰기에 성공했습니다'); location.href='./questionDetail.do?q_no="
-						+ questionanswerDTO.getQ_no() + "&pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
+						+ answerDTO.getQ_no() + "&pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
 			else
 				response.getWriter().println("<script> alert('답변쓰기에 성공했습니다'); location.href='./questionDetail.do?q_no="
-						+ questionanswerDTO.getQ_no() + "&pageNo=" + pageNo + "'</script>");
+						+ answerDTO.getQ_no() + "&pageNo=" + pageNo + "'</script>");
 		} else {
 			if(searchColumn!=null && searchValue!=null)
 				response.getWriter().println("<script> alert('답변쓰기에 실패했습니다'); location.href='./questionDetail.do?q_no="
-						+ questionanswerDTO.getQ_no() + "&pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
+						+ answerDTO.getQ_no() + "&pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
 			else
 				response.getWriter().println("<script> alert('답변쓰기에 실패했습니다'); location.href='./questionDetail.do?q_no="
-						+ questionanswerDTO.getQ_no() + "&pageNo=" + pageNo + "'</script>");
+						+ answerDTO.getQ_no() + "&pageNo=" + pageNo + "'</script>");
 		}
 	}
 
@@ -229,11 +231,11 @@ public class QuestionController {
 	public void answerDelete(@RequestParam("pageNo") int pageNo, @RequestParam("q_no") int q_no, @RequestParam("a_no") int a_no, HttpServletRequest request,
 			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
 			@RequestParam(name="searchValue", required=false) String searchValue, @AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
-		AnswerDTO questionanswerDTO = new AnswerDTO();
-		questionanswerDTO.setQ_no(q_no);
-		questionanswerDTO.setA_no(a_no);
-		questionanswerDTO.setU_nickname(myUserDetails.getNickname());
-		int result = answerService.delete(questionanswerDTO);
+		AnswerDTO answerDTO = new AnswerDTO();
+		answerDTO.setQ_no(q_no);
+		answerDTO.setA_no(a_no);
+		answerDTO.setU_nickname(myUserDetails.getNickname());
+		int result = answerService.delete(answerDTO);
 		response.setContentType("text/html; charset=UTF-8");
 		if (result > 0) {
 			if(searchColumn!=null && searchValue!=null)
@@ -254,27 +256,27 @@ public class QuestionController {
 	
 	@Secured({"ROLE_ADMIN"})
 	@PostMapping("/answerEdit.do")
-	public void answerEdit(AnswerDTO questionanswerDTO, @RequestParam("pageNo") int pageNo,
+	public void answerEdit(AnswerDTO answerDTO, @RequestParam("pageNo") int pageNo,
 			HttpServletResponse response, @RequestParam(name="searchColumn", required = false) String searchColumn, 
 			@RequestParam(name="searchValue", required=false) String searchValue) throws Exception {
-		if(questionanswerDTO.getA_answer().equals(""))
-			questionanswerDTO.setA_answer(null);
-		int result = answerService.edit(questionanswerDTO);
+		if(answerDTO.getA_answer().equals(""))
+			answerDTO.setA_answer(null);
+		int result = answerService.edit(answerDTO);
 		response.setContentType("text/html; charset=UTF-8");
 		if (result > 0) {
 			if(searchColumn!=null && searchValue!=null)
 				response.getWriter().println("<script> alert('답변수정에 성공했습니다'); location.href='./questionDetail.do?q_no="
-						+ questionanswerDTO.getQ_no() + "&pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
+						+ answerDTO.getQ_no() + "&pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
 			else
 				response.getWriter().println("<script> alert('답변수정에 성공했습니다'); location.href='./questionDetail.do?q_no="
-						+ questionanswerDTO.getQ_no() + "&pageNo=" + pageNo + "'</script>");
+						+ answerDTO.getQ_no() + "&pageNo=" + pageNo + "'</script>");
 		} else {
 			if(searchColumn!=null && searchValue!=null)
 				response.getWriter().println("<script> alert('답변수정에 실패했습니다'); location.href='./questionDetail.do?q_no="
-						+ questionanswerDTO.getQ_no() + "&pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
+						+ answerDTO.getQ_no() + "&pageNo=" + pageNo + "&searchColumn=" + searchColumn + "&searchValue=" + searchValue + "'</script>");
 			else
 				response.getWriter().println("<script> alert('답변수정에 실패했습니다'); location.href='./questionDetail.do?q_no="
-						+ questionanswerDTO.getQ_no() + "&pageNo=" + pageNo + "'</script>");
+						+ answerDTO.getQ_no() + "&pageNo=" + pageNo + "'</script>");
 		}
 	}
 
