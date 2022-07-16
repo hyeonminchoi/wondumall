@@ -9,7 +9,7 @@
 				<li><a href="./board.do">자유게시판</a></li>
 				<li><a href="./question.do">질문게시판</a></li>
 				<li><a href="./faq.do">자주묻는질문</a></li>
-				<li><a href="#">실시간문의</a></li>
+				<li><a href="./chatting.do">실시간문의</a></li>
 			</ul>
 			<!-- /NAV -->
 		</div>
