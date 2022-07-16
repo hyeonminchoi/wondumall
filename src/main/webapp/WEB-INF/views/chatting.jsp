@@ -75,7 +75,7 @@
 		<div class="section">
 			<!-- container -->
 			<div class="container">
-				
+				<button type="button" onclick="connect()">버튼</button>
 			</div>
 			<!-- /container -->
 		</div>
@@ -92,7 +92,7 @@
 	let websocket;
 	
 	function connect(){
-		var URI = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/chatting.do";
+		var URI = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/chat";
 		websocket = new WebSocket(URI);
 		websocket.onopen = onOpen;
 		websocket.onmessage = onMessage;

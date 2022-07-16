@@ -8,23 +8,21 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
-import com..Controller.WebSocketHandler;
+import com..Util.WebSocketHandler;
 
 @Configuration
+@EnableWebSocket
 public class ServletConfig implements WebMvcConfigurer, WebSocketConfigurer {
 	@Bean
 	public MultipartResolver multipartResolver() {
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
 		return multipartResolver;
 	}
-	
-//	@Override
-//	public void addViewControllers(ViewControllerRegistry registry) {
-//		registry.addViewController("/").setViewName("./index");
-//	}
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -48,7 +46,7 @@ public class ServletConfig implements WebMvcConfigurer, WebSocketConfigurer {
 
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(websocketHandler(), "./chatting.do");
+		registry.addHandler(websocketHandler(), "/chat").addInterceptors(new HttpSessionHandshakeInterceptor());
 	}
 	
 	@Bean

@@ -2,8 +2,10 @@
 package com..Config;
 
 import javax.servlet.Filter;
+import javax.servlet.FilterRegistration.Dynamic;
+import javax.servlet.ServletContext;
 
-import org.egovframe.rte.ptl.mvc.filter.HTMLTagFilterRequestWrapper;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.multipart.support.MultipartFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -40,6 +42,12 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 		MultipartFilter multipartFilter = new MultipartFilter();
 		multipartFilter.setMultipartResolverBeanName("multipartResolver");
 		return new Filter[] {encodingFilter, multipartFilter, htmlTagFilter};
+	}
+
+	@Override
+	protected Dynamic registerServletFilter(ServletContext servletContext, Filter filter) {
+		servletContext.addListener(new HttpSessionEventPublisher());
+		return super.registerServletFilter(servletContext, filter);
 	}
 	
 }
