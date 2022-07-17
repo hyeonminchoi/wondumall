@@ -1,5 +1,6 @@
 package com..Util;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,23 +52,17 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		if(!msg.equals("")) { //메시지가 있다면 저장 및 전송
 			int result = chattingService.addChatting(map);
 			if(result>0) { //관리자 및 사업자가 채팅 친 경우
+				Timestamp date = (Timestamp) map.get("chat_date");
 				if(sender.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ROLE_BUSINESS"))) {
 					chattingService.setRoomCountMinus(map);
 				} else { //사용자가 채팅 친 경우
 					chattingService.setRoomCountPlus(map);
 				}
-				message = new TextMessage(senderNickname +"," + msg);
-//				userList.get(roomList.get(receiveNo)).sendMessage(message);
+				message = new TextMessage(senderNickname +"," + msg + "," + date.toString());
+				if(userList.containsKey(roomList.get(receiveNo))) //사용자가 로그인 해 있을 경우 메시지 전송
+					userList.get(roomList.get(receiveNo)).sendMessage(message);
 			}
 		}
-//		if(jsonObject.get("handle").toString().equals("message")) {
-//			
-//			// 채팅 메세지
-//			message = new TextMessage("message" + "," + sender.getNickname() + "," + jsonObject.get("content").toString() + "," + sender.getNo());
-//			// 메세지 전송
-//			userList.get(userList.get(jsonObject.get("no"))).sendMessage(message);
-//			
-//		}
 	}
 
 	@Override

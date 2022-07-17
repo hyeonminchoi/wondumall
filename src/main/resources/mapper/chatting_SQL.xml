@@ -38,6 +38,9 @@
 	<insert id="addChatting" parameterType="map">
 		INSERT INTO chat(chat_msg, u_no, room_no)
 		VALUES(#{message}, #{sender_no}, (SELECT room_no FROM chattingRoom WHERE (user_no = #{sender_no} AND admin_no = #{receive_no}) OR (user_no = #{receive_no} AND admin_no = #{sender_no})))
+		<selectKey keyColumn="chat_date" keyProperty="chat_date" order="AFTER" resultType="java.sql.Timestamp">
+			SELECT chat_date FROM chat WHERE chat_no = LAST_INSERT_ID()
+		</selectKey>
 	</insert>
 	
 	<select id="getAdminNo" parameterType="string" resultType="integer">
@@ -46,14 +49,14 @@
 	
 	<update id="setRoomCountMinus" parameterType="map">
 		<![CDATA[
-			UPDATE chattingRoom SET room_count = IF(room_count>0,-1, room_count - 1)
+			UPDATE chattingRoom SET room_count = IF(room_count>0,-1, room_count - 1), room_lastChattingTime = TIMESTAMP #{chat_date}
 			WHERE room_no = (SELECT room_no FROM chattingRoom WHERE (user_no = #{sender_no} AND admin_no = #{receive_no}) OR (user_no = #{receive_no} AND admin_no = #{sender_no}))
 		]]>
 	</update>
 	
 	<update id="setRoomCountPlus" parameterType="map">
 		<![CDATA[
-			UPDATE chattingRoom SET room_count = IF(room_count<0,1, room_count + 1)
+			UPDATE chattingRoom SET room_count = IF(room_count<0,1, room_count + 1), room_lastChattingTime = TIMESTAMP #{chat_date}
 			WHERE room_no = (SELECT room_no FROM chattingRoom WHERE (user_no = #{sender_no} AND admin_no = #{receive_no}) OR (user_no = #{receive_no} AND admin_no = #{sender_no}))
 		]]>
 	</update>

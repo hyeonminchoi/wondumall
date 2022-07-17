@@ -169,127 +169,133 @@
 	</footer>
 	<!-- /FOOTER -->
 	
-<script>
-	$(function(){
-		if(${not empty sessionScope.user}){
-			connect();
-		}	
-	})
-	
-	let webSocket;
-	
-	function ajaxForHTML(url, data, contentType){
-		let htmlData;
-		$.ajax({
-		    url : url,
-		    data: data,
-		    contentType: contentType,
-		    type:"POST",
-		    dataType: "html",
-		    async: false,
-		    success:function(data){
-		    	htmlData = data;
-		    },
-		    error:function(jqxhr, textStatus, errorThrown){
-		       alert("ajax 처리 실패");
-		    }
-		});
+<sec:authorize access="authenticated">
+	<script>
+		$(function(){
+			if(${not empty sessionScope.user}){
+				connect();
+			}	
+		})
 		
-		return htmlData;
-	}
-	
-	function connect(){
-		var URI = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/chat";
-		webSocket = new WebSocket(URI);
-		webSocket.onopen = onOpen;
-		webSocket.onmessage = onMessage;
-		webSocket.onerror = onError;
-		webSocket.onclose = onClose;
-	}
-	
-	function onOpen(){
-		let list = JSON.parse(ajaxForHTML('./userList.do'));
-		let temp = '';
-		if('${sessionScope.user.authorities}' == '[ROLE_ADMIN]' || '${sessionScope.user.authorities}' == '[ROLE_BUSINESS]'){
-			for(let i=0;i<list.length;i++){
-				temp += "<div id='userInfo' onclick='changeRoom(" + list[i].user_no + ",\"" + list[i].user_nickname + "\")'>";
-				temp += list[i].user_nickname
-				if(list[i].room_count>0)
-					temp += "<small style='color:red; float:right;'>" + list[i].room_count + "</small>";
-				temp += "</div>";
+		let webSocket;
+		
+		function ajaxForHTML(url, data, contentType){
+			let htmlData;
+			$.ajax({
+			    url : url,
+			    data: data,
+			    contentType: contentType,
+			    type:"POST",
+			    dataType: "html",
+			    async: false,
+			    success:function(data){
+			    	htmlData = data;
+			    },
+			    error:function(jqxhr, textStatus, errorThrown){
+			       alert("ajax 처리 실패");
+			    }
+			});
+			
+			return htmlData;
+		}
+		
+		function connect(){
+			var URI = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/chat";
+			webSocket = new WebSocket(URI);
+			webSocket.onopen = onOpen;
+			webSocket.onmessage = onMessage;
+			webSocket.onerror = onError;
+			webSocket.onclose = onClose;
+		}
+		
+		function onOpen(){
+			let list = JSON.parse(ajaxForHTML('./userList.do'));
+			let temp = '';
+			if('${sessionScope.user.authorities}' == '[ROLE_ADMIN]' || '${sessionScope.user.authorities}' == '[ROLE_BUSINESS]'){
+				for(let i=0;i<list.length;i++){
+					temp += "<div id='userInfo' onclick='changeRoom(" + list[i].user_no + ",\"" + list[i].user_nickname + "\")'>";
+					temp += list[i].user_nickname
+					if(list[i].room_count>0)
+						temp += "<small style='color:red; float:right;'>" + list[i].room_count + "</small>";
+					temp += "</div>";
+				}
+			} else{
+				for(let i=0;i<list.length;i++){
+					temp += "<div id='userInfo' onclick='changeRoom(" + list[i].admin_no + ",\"" + list[i].admin_nickname + "\")'>"; 
+					temp += list[i].admin_nickname;
+					if(list[i].room_count<0)
+						temp += "<small style='color:red; float:right;'>" + (list[i].room_count * -1) + "</small>";
+					temp += "</div>";
+				}
 			}
-		} else{
-			for(let i=0;i<list.length;i++){
-				temp += "<div id='userInfo' onclick='changeRoom(" + list[i].admin_no + ",\"" + list[i].admin_nickname + "\")'>"; 
-				temp += list[i].admin_nickname;
-				if(list[i].room_count<0)
-					temp += "<small style='color:red; float:right;'>" + (list[i].room_count * -1) + "</small>";
-				temp += "</div>";
+			$('#userList').html(temp);	
+		}
+		
+		function send(){
+			let message = $('#chat').val();
+			data = {
+					"message" : message,
+					"from" : $('#messageHeader').text()
 			}
-		}
-		$('#userList').html(temp);	
-	}
-	
-	function send(){
-		let message = $('#chat').val();
-		data = {
-				"message" : message,
-				"from" : $('#messageHeader').text()
+			
+			let jsonData = JSON.stringify(data);
+			webSocket.send(jsonData);
+			$('#chat').val("");
 		}
 		
-		let jsonData = JSON.stringify(data);
-		webSocket.send(jsonData);
-		$('#chat').val("");
-	}
-	
-	function changeRoom(no, nickname){
-		let data = {
-				"from" : no, 
-				"to" : ${sessionScope.user.no}
+		function changeRoom(no, nickname){
+			let data = {
+					"from" : no, 
+					"to" : ${sessionScope.user.no}
+			}
+			let list = JSON.parse(ajaxForHTML('./changeRoom.do', JSON.stringify(data), "application/json"));
+			
+			let temp = '';
+			for(let i=0;i<list.length;i++){
+				if(list[i].u_no == ${sessionScope.user.no}){ //내가 쓴 메시지
+					temp += '<div style="clear:both; float: right; margin-bottom: 10px;">'
+					temp += '<h3 style="display:inline-block;">' + list[i].chat_msg + '</h3>'
+					temp += '<small>' + list[i].chat_date + '</small>'
+					temp += '</div>'
+				} else{ //상대방이 쓴 메시지
+					temp += '<div style="clear:both; margin-bottom: 10px;">'
+					temp += '<h3 style="display:inline-block;">' + list[i].chat_msg + '</h3>'
+					temp += '<small>' + list[i].chat_date + '</small>'
+					temp += '</div>'
+				}
+			}
+			$('#message').html(temp);
+			$('#messageHeader').html(nickname);
 		}
-		let list = JSON.parse(ajaxForHTML('./changeRoom.do', JSON.stringify(data), "application/json"));
 		
-		let temp = '';
-		for(let i=0;i<list.length;i++){
-			if(list[i].u_no == ${sessionScope.user.no}){ //내가 쓴 메시지
-				temp += '<div style="clear:both; float: right; margin-bottom: 10px;">'
-				temp += '<h3 style="display:inline-block;">' + list[i].chat_msg + '</h3>'
-				temp += '<small>' + list[i].chat_date + '</small>'
-				temp += '</div>'
-			} else{ //상대방이 쓴 메시지
+		// 엔터로 채팅 전송
+		$(document).on('keydown', '#chat', function(e){
+	        if(e.keyCode == 13 && !e.shiftKey) {
+	        	send('message',true);
+	        }
+	   	});
+	
+		<!-- webSocket 메세지 수신 시 -->
+		function onMessage(event){	
+			let arr = event.data.split(',');
+			if(arr[0] == $('#messageHeader').text()){
+				let temp = '';
 				temp += '<div style="clear:both; margin-bottom: 10px;">'
-				temp += '<h3 style="display:inline-block;">' + list[i].chat_msg + '</h3>'
-				temp += '<small>' + list[i].chat_date + '</small>'
+				temp += '<h3 style="display:inline-block;">' + arr[1] + '</h3>'
+				temp += '<small>' + arr[2] + '</small>'
 				temp += '</div>'
+				$('#message').append(temp);
 			}
 		}
-		$('#message').html(temp);
-		$('#messageHeader').html(nickname);
-	}
-	
-	// 엔터로 채팅 전송
-	$(document).on('keydown', '#chat', function(e){
-        if(e.keyCode == 13 && !e.shiftKey) {
-        	send('message',true);
-        }
-   	});
-
-	<!-- webSocket 메세지 수신 시 -->
-	function onMessage(evt){	
+	    
+		function onError(error){
+			
+		}
 		
-	}
-	
-    // 채팅방 입장
-    function roomEnter(room){ 
-    }
-    
-	function onError(error){
-		
-	}
-	
-	function onClose(){
-		
-	}
-</script>
+		function onClose(){
+			
+		}
+	</script>
+</sec:authorize>
 </body>
 </html>
