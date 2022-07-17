@@ -37,7 +37,7 @@ public class ChattingController {
 	@PostMapping("/userList.do")
 	public List<LoginDTO> userList(@AuthenticationPrincipal MyUserDetails myUserDetails) {
 		
-		if(myUserDetails.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN"))) { //관리자일 경우 마지막 채팅 순으로 방 리스트 출력
+		if(myUserDetails.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ROLE_BUSINESS"))) { //관리자, 사업자일 경우 마지막 채팅 순으로 방 리스트 출력
 			return chattingService.getRoomList(myUserDetails.getNo());
 		} else {
 			return chattingService.getAdminList(myUserDetails.getNo());
@@ -47,7 +47,7 @@ public class ChattingController {
 	@ResponseBody
 	@PostMapping("/changeRoom.do")
 	public List<ChatDTO> changeRoom(@AuthenticationPrincipal MyUserDetails myUserDetails, @RequestBody Map<String, Object> data) {
-		if(myUserDetails.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN"))) { //관리자일 경우 채팅 목록 리턴
+		if(myUserDetails.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ROLE_BUSINESS"))) { //관리자, 사업자일 경우 채팅 목록 리턴
 			return chattingService.getChattingList(data);
 		} else { //사용자일 경우 방이 없다면 생성, 있다면 채팅 리스트 리턴
 			if(chattingService.containRoom(data)==0) {

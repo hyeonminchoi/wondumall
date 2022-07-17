@@ -8,7 +8,7 @@
 		FROM user u
 		LEFT JOIN chattingRoom c
 		ON u.u_no = c.admin_no AND c.user_no = #{u_no}
-		WHERE u.u_grade = 2;
+		WHERE u.u_grade = 2 OR u.u_grade = 1;
 	</select>
 	
 	<select id="getRoomList" parameterType="integer" resultType="chattingRoomDTO">
@@ -34,4 +34,27 @@
 		INSERT INTO chattingRoom(user_no, admin_no)
 		VALUES(#{to}, #{from})
 	</insert>
+	
+	<insert id="addChatting" parameterType="map">
+		INSERT INTO chat(chat_msg, u_no, room_no)
+		VALUES(#{message}, #{sender_no}, (SELECT room_no FROM chattingRoom WHERE (user_no = #{sender_no} AND admin_no = #{receive_no}) OR (user_no = #{receive_no} AND admin_no = #{sender_no})))
+	</insert>
+	
+	<select id="getAdminNo" parameterType="string" resultType="integer">
+		SELECT u_no FROM user WHERE u_nickname = #{receive}
+	</select>
+	
+	<update id="setRoomCountMinus" parameterType="map">
+		<![CDATA[
+			UPDATE chattingRoom SET room_count = IF(room_count>0,-1, room_count - 1)
+			WHERE room_no = (SELECT room_no FROM chattingRoom WHERE (user_no = #{sender_no} AND admin_no = #{receive_no}) OR (user_no = #{receive_no} AND admin_no = #{sender_no}))
+		]]>
+	</update>
+	
+	<update id="setRoomCountPlus" parameterType="map">
+		<![CDATA[
+			UPDATE chattingRoom SET room_count = IF(room_count<0,1, room_count + 1)
+			WHERE room_no = (SELECT room_no FROM chattingRoom WHERE (user_no = #{sender_no} AND admin_no = #{receive_no}) OR (user_no = #{receive_no} AND admin_no = #{sender_no}))
+		]]>
+	</update>
 </mapper>

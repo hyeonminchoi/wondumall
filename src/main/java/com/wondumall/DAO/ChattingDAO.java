@@ -33,6 +33,22 @@ public class ChattingDAO {
 	public void createRoom(Map<String, Object> data) {
 		sqlSession.insert("chatting.createRoom",data);
 	}
+
+	public int addChatting(Map<String, Object> map) {
+		return sqlSession.insert("chatting.addChatting", map);
+	}
+
+	public int getAdminNo(String receive) {
+		return sqlSession.selectOne("chatting.getAdminNo", receive);
+	}
+
+	public void setRoomCountMinus(Map<String, Object> map) {
+		sqlSession.update("chatting.setRoomCountMinus", map);
+	}
+
+	public void setRoomCountPlus(Map<String, Object> map) {
+		sqlSession.update("chatting.setRoomCountPlus", map);
+	}
 	
 	
 }

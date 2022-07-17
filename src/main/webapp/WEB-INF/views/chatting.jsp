@@ -210,7 +210,7 @@
 	function onOpen(){
 		let list = JSON.parse(ajaxForHTML('./userList.do'));
 		let temp = '';
-		if('${sessionScope.user.authorities}' == '[ROLE_ADMIN]'){
+		if('${sessionScope.user.authorities}' == '[ROLE_ADMIN]' || '${sessionScope.user.authorities}' == '[ROLE_BUSINESS]'){
 			for(let i=0;i<list.length;i++){
 				temp += "<div id='userInfo' onclick='changeRoom(" + list[i].user_no + ",\"" + list[i].user_nickname + "\")'>";
 				temp += list[i].user_nickname

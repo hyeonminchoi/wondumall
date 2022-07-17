@@ -33,4 +33,20 @@ public class ChattingService {
 	public void createRoom(Map<String, Object> data) {
 		chattingDAO.createRoom(data);
 	}
+
+	public int addChatting(Map<String, Object> map) {
+		return chattingDAO.addChatting(map);
+	}
+
+	public int getAdminNo(String receive) {
+		return chattingDAO.getAdminNo(receive);
+	}
+
+	public void setRoomCountMinus(Map<String, Object> map) {
+		chattingDAO.setRoomCountMinus(map);
+	}
+
+	public void setRoomCountPlus(Map<String, Object> map) {
+		chattingDAO.setRoomCountPlus(map);		
+	}
 }
