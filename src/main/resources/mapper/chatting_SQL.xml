@@ -1,0 +1,36 @@
+<?xml version="1.0"	encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"	
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="chatting">
+	<select id="getAdminList" resultType="adminDTO" parameterType="integer">
+		SELECT u.u_no AS admin_no, u.u_nickname AS admin_nickname, c.room_count
+		FROM user u
+		LEFT JOIN chattingRoom c
+		ON u.u_no = c.admin_no AND c.user_no = #{u_no}
+		WHERE u.u_grade = 2;
+	</select>
+	
+	<select id="getRoomList" parameterType="integer" resultType="chattingRoomDTO">
+		SELECT c.*, (SELECT u_nickname FROM user u WHERE c.user_no = u.u_no) AS user_nickname
+      		,(SELECT u_nickname FROM user u WHERE c.admin_no = u.u_no) AS admin_nickname
+		FROM chattingRoom c
+	</select>
+	
+	<select id="getChattingList" parameterType="map" resultType="chatDTO">
+		SELECT *
+		FROM chat
+		WHERE room_no = (SELECT room_no FROM chattingRoom WHERE (user_no = #{to} AND admin_no = #{from}) OR (user_no = #{from} AND admin_no = #{to}))
+	</select>
+	
+	<select id="containRoom" parameterType="map" resultType="integer">
+		SELECT COUNT(*)
+		FROM chattingRoom
+		WHERE user_no = (SELECT u_no FROM user WHERE u_no = #{to}) AND admin_no = (SELECT u_no FROM user WHERE u_no = #{from})
+	</select>
+	
+	<insert id="createRoom" parameterType="map">
+		INSERT INTO chattingRoom(user_no, admin_no)
+		VALUES(#{to}, #{from})
+	</insert>
+</mapper>

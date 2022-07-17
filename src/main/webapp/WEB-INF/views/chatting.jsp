@@ -117,6 +117,8 @@
 					</div>
 					<!-- 채팅 컨테이너 -->
 				</sec:authorize>
+				
+				
 				<sec:authorize access="not authenticated">
 					<button type="button" onclick="location.href='./login.do'">로그인</button>
 				</sec:authorize>
@@ -143,7 +145,6 @@
 	
 	function ajaxForHTML(url, data, contentType){
 		let htmlData;
-		
 		$.ajax({
 		    url : url,
 		    data: data,
@@ -162,52 +163,44 @@
 		return htmlData;
 	}
 	
-	if(webSocket === undefined && "${sessionScope.user}" !== ""){
-		connect();
-       	$("#userList").html(ajaxForHTML("./userList.do"));
-	}
-	
 	function connect(){
-		if(webSocket === undefined){
-			var URI = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/chat";
-			webSocket = new WebSocket(URI);
-			webSocket.onopen = onOpen;
-			webSocket.onmessage = onMessage;
-			webSocket.onerror = onError;
-			webSocket.onclose = onClose;
-		} else{
-			document.getElementById("message").innerHTML+="<br/>" + "<b>이미 연결되어 있습니다!!</b>";
-		}
+		var URI = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/chat";
+		webSocket = new WebSocket(URI);
+		webSocket.onopen = onOpen;
+		webSocket.onmessage = onMessage;
+		webSocket.onerror = onError;
+		webSocket.onclose = onClose;
 	}
 	
 	function onOpen(){
-		send('onLineList');
-	}
-	
-	function send(handle, secret){
-		let data = null;
-		let chatMessage = document.getElementById("chat");
-		if(handle === "message"){
-			if(!chatMessage.value){
-				return;
+		let list = JSON.parse(ajaxForHTML('./userList.do'));
+		let temp = '';
+		if('${sessionScope.user.authorities}' == '[ROLE_ADMIN]'){
+			for(let i=0;i<list.length;i++){
+				temp += "<div onclick='changeRoom(" + list[i].user_no + ")'>";
+				temp += list[i].user_nickname
+				if(list[i].room_count>0)
+					temp += "<small style='color:red; float:right;'>" + list[i].room_count + "</small>";
+				temp += "</div>";
 			}
-			data = {
-				"handle" : "message",
-				"content" : chatMessage.value
-			}
-			// 1:1 채팅방의 경우 no 추가
-			if(secret === true){
-				data.no = no;
-			}
-			// 채팅 메세지 초기화
-			chatMessage.value = "";
-		} else if(handle === "onLineList"){
-			data = {
-				"handle" : "onLineList"
+		} else{
+			for(let i=0;i<list.length;i++){
+				temp += "<div onclick='changeRoom(" + list[i].admin_no + ")'>"; 
+				temp += list[i].admin_nickname;
+				if(list[i].room_count<0)
+					temp += "<small style='color:red; float:right;'>" + (list[i].room_count * -1) + "</small>";
+				temp += "</div>";
 			}
 		}
-		let jsonData = JSON.stringify(data);
-		webSocket.send(jsonData);
+		$('#userList').html(temp);	
+	}
+	
+	function changeRoom(param){
+		let data = {
+				"from" : param, 
+				"to" : ${sessionScope.user.no}
+		}
+		ajaxForHTML('./changeRoom.do', JSON.stringify(data), "application/json");
 	}
 	
 	// 엔터로 채팅 전송
@@ -218,83 +211,12 @@
    	});
 
 	<!-- webSocket 메세지 수신 시 -->
-	function onMessage(evt){			
-		// 수신한 메세지 (,)로 자르기
-    	let receive = evt.data.split(",");
-    	let data = {};
-    	let count = 0;
- 		
-    	if(receive[0] === "message"){
-            data = {
-            	 "handle" : receive[0],
-               	 "sender" : receive[1],
-               	 "content" : receive[2],
-               	 "no" : receive[3]
-            }
-    	} else if(receive[0] === "onLineList"){
-    		data.handle = receive[0];
-    		for(let i = 1; i < receive.length; i++){
-    			data[count++] = receive[i];
-    		}
-    	}
-    	
-        writeResponse(data);
+	function onMessage(evt){	
+		
 	}
 	
-	<!-- webSocket 메세지 화면에 표시해주기 -->
-    function writeResponse(data){
-    	if(data.handle === "message"){
-        	// HTML 데이터 받기
-        	let messageData = ajaxForHTML("./message.do", JSON.stringify(data), "application/json");
-        	// 채팅방에 메세지 추가
-        	document.getElementById("message").innerHTML += messageData;
-        	
-        	// 채팅방 목록에 알림 효과
-        	$("#" + data.no).addClass('temp');
-        	
-        	// 스크롤 하단 고정
-        	$('#message').scrollTop($('#message').prop('scrollHeight'));
-        	
-    	} else if(data.handle === "onLineList"){
-    		// [유저 목록 → 나] 로그인 표시
-    		for(let i = 0; i < Object.keys(data).length - 1; i++){
-    			document.getElementById(data[i]).innerHTML = "로그인";
-    		}
-    	}
-    }
-    
-    // 채팅창 공백
-    function chatClear(){
-    	document.getElementById("message").innerHTML=" ";
-    }
-    
     // 채팅방 입장
     function roomEnter(room){ 
-    	let bb = document.getElementsByClassName('active')[0];
-    	
-    	// 1. 채팅방 목록 리스트 CSS 변경
-    	// 활성화 되어 있는 방 클릭 시 [효과 X]
-    	if($(room).hasClass("active")){
-    		return;
-    	}
-    	if(bb !== undefined){
-        	bb.classList.add('list-group-item-light');
-        	bb.classList.remove('active', 'text-white');
-    	}
-    	
-    	room.classList.add('active', 'text-white');
-    	room.classList.remove('list-group-item-light');
-    	
-    	// 2. 현재 열려있는 채팅방 초기화
-    
-		// 3. secret true값으로 메세지 보내기
-		// send('message', true);
-    	
-    	// 3. 상대방 UUID로 session 찾기 (1. 입장과 동시에 채팅방 집어넣기 or 첫 메세지 보낼 때 연결하기)
-    	no = room.dataset.no;
-    	
-    	// 4. 메세지 보내기 onClick 이벤트 변경
-    	$("#sendBtn").attr("onClick", "send('message', true)");
     }
     
 	function onError(error){
