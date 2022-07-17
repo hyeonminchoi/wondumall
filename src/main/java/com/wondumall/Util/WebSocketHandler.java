@@ -3,14 +3,13 @@ package com..Util;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com..Config.MyUserDetails;
@@ -30,22 +29,28 @@ public class WebSocketHandler extends TextWebSocketHandler{
 
 	@Override
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-		JsonParser jParser = new JsonParser();
-		JsonObject jObject = (JsonObject) jParser.parse((String)message.getPayload());
+		JsonParser jsonParser = new JsonParser();
+		Gson gson = new Gson();
+		Map<String, Object> data = gson.fromJson((String)message.getPayload(), Map.class);
 		
+		if(data.get("from").equals(""))
+			return;
 		// 보낸 사람 (나)
 		MyUserDetails sender = (MyUserDetails)session.getAttributes().get("user");
-		String senderName = sender.getNickname();
+		String senderNickname = sender.getNickname();
 		int senderNo = sender.getNo();
-				
-		if(jObject.get("handle").toString().equals("message")) {
-			
-			// 채팅 메세지
-			message = new TextMessage("message" + "," + sender.getNickname() + "," + jObject.get("content").toString() + "," + sender.getNo());
-			// 메세지 전송
-			userList.get(userList.get(jObject.get("no"))).sendMessage(message);
-			
+		String msg = data.get("message").toString();
+		if(!msg.equals("")) {
+			System.out.println(msg);
 		}
+//		if(jsonObject.get("handle").toString().equals("message")) {
+//			
+//			// 채팅 메세지
+//			message = new TextMessage("message" + "," + sender.getNickname() + "," + jsonObject.get("content").toString() + "," + sender.getNo());
+//			// 메세지 전송
+//			userList.get(userList.get(jsonObject.get("no"))).sendMessage(message);
+//			
+//		}
 	}
 
 	@Override

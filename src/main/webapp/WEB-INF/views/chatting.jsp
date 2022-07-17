@@ -60,6 +60,40 @@
 .navbar-nav{
 	flex-direction: inherit;
 }
+#chattingDiv{
+	width: 80%;
+	height: 500px;
+}
+#messageHeader{
+	height: 10%;
+	text-align: center;
+	font-weight: bold;
+	font-size: 2em;
+	border-bottom: 1px solid black;
+	line-height: 200%;
+}
+#message{
+	height: 80%;
+	overflow: auto;
+}
+#messageInput{
+	height: 10%;
+}
+#chat{
+	font-size: 1vw;
+	height: 100%;
+}
+#userList{
+	overflow: auto;
+	height: 100%;
+}
+#userInfo{
+	font-size: 1vw;
+	margin: 10px 0px;
+}
+#chattingBox{
+	height: 100%;
+}
 </style>
 <script type="text/javascript">
 </script>
@@ -81,7 +115,7 @@
 			<div class="container">
 				<sec:authorize access="authenticated">
 					<!-- 채팅 컨테이너 -->
-					<div class="row rounded-lg overflow-hidden shadow">
+					<div class="row rounded-lg overflow-hidden shadow" id="chattingDiv">
 						<!-- 채팅방 목록 -->
 						<div class="col-5 px-0">
 							<div class="bg-white">
@@ -98,20 +132,21 @@
 						<!-- 채팅방 목록 -->
 						
 						<!-- 채팅창 -->
-						<div class="col-7 px-0">
+						<div class="col-7 px-0" id="chattingBox">
+							<div id="messageHeader"></div>
 							<div class="px-4 pt-5 chat-box bg-white" id="message">
 							<%-- 메세지 동적 생성 --%>
 							</div>
-								<!-- 메세지 입력 창 -->
-					        	<div class="input-group">
-						          	<input type="text" id="chat" placeholder="메세지를 입력하세요." class="form-control rounded-0 border-0 py-4 bg-light">
-						          	<div class="input-group-append">
-						            	<button type="button" class="btn btn-link bg-white" id="sendBtn" onclick="send('message');">
-						            		<i class="fa fa-paper-plane"></i>
-						            	</button>
-						          	</div>
-					        	</div>
-								<!-- 메세지 입력 창 -->
+							<!-- 메세지 입력 창 -->
+				        	<div class="input-group" id="messageInput">
+					          	<input type="text" id="chat" placeholder="메세지를 입력하세요." class="form-control rounded-0 border-0 py-4 bg-light">
+					          	<div class="input-group-append">
+					            	<button type="button" class="btn btn-link bg-white" id="sendBtn" onclick="send();">
+					            		<i class="fa fa-paper-plane"></i>
+					            	</button>
+					          	</div>
+				        	</div>
+							<!-- 메세지 입력 창 -->
 				    	</div>
 						<!-- 채팅창 -->
 					</div>
@@ -177,7 +212,7 @@
 		let temp = '';
 		if('${sessionScope.user.authorities}' == '[ROLE_ADMIN]'){
 			for(let i=0;i<list.length;i++){
-				temp += "<div onclick='changeRoom(" + list[i].user_no + ")'>";
+				temp += "<div id='userInfo' onclick='changeRoom(" + list[i].user_no + ",\"" + list[i].user_nickname + "\")'>";
 				temp += list[i].user_nickname
 				if(list[i].room_count>0)
 					temp += "<small style='color:red; float:right;'>" + list[i].room_count + "</small>";
@@ -185,7 +220,7 @@
 			}
 		} else{
 			for(let i=0;i<list.length;i++){
-				temp += "<div onclick='changeRoom(" + list[i].admin_no + ")'>"; 
+				temp += "<div id='userInfo' onclick='changeRoom(" + list[i].admin_no + ",\"" + list[i].admin_nickname + "\")'>"; 
 				temp += list[i].admin_nickname;
 				if(list[i].room_count<0)
 					temp += "<small style='color:red; float:right;'>" + (list[i].room_count * -1) + "</small>";
@@ -195,9 +230,21 @@
 		$('#userList').html(temp);	
 	}
 	
-	function changeRoom(param){
+	function send(){
+		let message = $('#chat').val();
+		data = {
+				"message" : message,
+				"from" : $('#messageHeader').text()
+		}
+		
+		let jsonData = JSON.stringify(data);
+		webSocket.send(jsonData);
+		$('#chat').val("");
+	}
+	
+	function changeRoom(no, nickname){
 		let data = {
-				"from" : param, 
+				"from" : no, 
 				"to" : ${sessionScope.user.no}
 		}
 		let list = JSON.parse(ajaxForHTML('./changeRoom.do', JSON.stringify(data), "application/json"));
@@ -205,18 +252,19 @@
 		let temp = '';
 		for(let i=0;i<list.length;i++){
 			if(list[i].u_no == ${sessionScope.user.no}){ //내가 쓴 메시지
-				temp += '<div style="clear:both; float: right;">'
+				temp += '<div style="clear:both; float: right; margin-bottom: 10px;">'
 				temp += '<h3 style="display:inline-block;">' + list[i].chat_msg + '</h3>'
 				temp += '<small>' + list[i].chat_date + '</small>'
 				temp += '</div>'
 			} else{ //상대방이 쓴 메시지
-				temp += '<div style="clear:both;">'
+				temp += '<div style="clear:both; margin-bottom: 10px;">'
 				temp += '<h3 style="display:inline-block;">' + list[i].chat_msg + '</h3>'
 				temp += '<small>' + list[i].chat_date + '</small>'
 				temp += '</div>'
 			}
 		}
 		$('#message').html(temp);
+		$('#messageHeader').html(nickname);
 	}
 	
 	// 엔터로 채팅 전송
