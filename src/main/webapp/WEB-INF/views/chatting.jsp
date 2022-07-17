@@ -200,7 +200,23 @@
 				"from" : param, 
 				"to" : ${sessionScope.user.no}
 		}
-		ajaxForHTML('./changeRoom.do', JSON.stringify(data), "application/json");
+		let list = JSON.parse(ajaxForHTML('./changeRoom.do', JSON.stringify(data), "application/json"));
+		
+		let temp = '';
+		for(let i=0;i<list.length;i++){
+			if(list[i].u_no == ${sessionScope.user.no}){ //내가 쓴 메시지
+				temp += '<div style="clear:both; float: right;">'
+				temp += '<h3 style="display:inline-block;">' + list[i].chat_msg + '</h3>'
+				temp += '<small>' + list[i].chat_date + '</small>'
+				temp += '</div>'
+			} else{ //상대방이 쓴 메시지
+				temp += '<div style="clear:both;">'
+				temp += '<h3 style="display:inline-block;">' + list[i].chat_msg + '</h3>'
+				temp += '<small>' + list[i].chat_date + '</small>'
+				temp += '</div>'
+			}
+		}
+		$('#message').html(temp);
 	}
 	
 	// 엔터로 채팅 전송

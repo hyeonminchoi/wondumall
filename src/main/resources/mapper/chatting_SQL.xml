@@ -15,6 +15,7 @@
 		SELECT c.*, (SELECT u_nickname FROM user u WHERE c.user_no = u.u_no) AS user_nickname
       		,(SELECT u_nickname FROM user u WHERE c.admin_no = u.u_no) AS admin_nickname
 		FROM chattingRoom c
+		WHERE admin_no = #{u_no}
 	</select>
 	
 	<select id="getChattingList" parameterType="map" resultType="chatDTO">
