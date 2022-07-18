@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <!DOCTYPE html>
 <html>
@@ -538,7 +539,10 @@ textarea {
 								<div class="col-md-3">
 									<div id="rating">
 										<div class="rating-avg">
-											<span>점수 들어 갈 것</span>
+											<span>구매만족도</span>
+											<div>
+												${reviewRating}
+											</div>
 											<div class="rating-stars">
 												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
 													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
@@ -604,38 +608,44 @@ textarea {
 								<!-- Reviews -->
 								<div class="col-md-6">
 									<div id="reviews">
-										<table class="table table-bordered">
-											<c:forEach items="${reviewList}" var="r">
-												<ul class="reviews">
-													<li>
-														<div class="review-heading">
-															<h5 class="name">${r.u_nickname}</h5>
-															<p class="date">
-															<fmt:parseDate value="${r.r_date}" var="time"
-																pattern="yyyy-MM-dd HH:mm:ss.S" />
-															<fmt:formatDate value="${time}" var="time"
-																pattern="yyyy-MM-dd HH:mm:ss" />
-															${time }
-															<%-- ${r.r_date} --%>
-															</p>
-															<div class="review-rating">
-																<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-																	class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-																	class="fa fa-star-o empty"></i>
+										<c:choose>
+											<c:when test="${fn:length(reviewList) > 0}">
+												<c:forEach items="${reviewList}" var="r">
+													<ul class="reviews">
+														<li>
+															<div class="review-heading">
+																<h5 class="name">${r.u_nickname}</h5>
+																<p class="date">
+																<fmt:parseDate value="${r.r_date}" var="time"
+																	pattern="yyyy-MM-dd HH:mm:ss.S" />
+																<fmt:formatDate value="${time}" var="time"
+																	pattern="yyyy-MM-dd HH:mm:ss" />
+																${time }
+																<%-- ${r.r_date} --%>
+																</p>
+																<div class="review-rating">
+																	<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+																		class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+																		class="fa fa-star-o empty"></i>
+																</div>
 															</div>
-														</div>
-														<div class="review-body">
-															<h6>${r.r_title}</h6>
-															<p>${r.r_content}</p>
-														</div>
-													</li>
-												</ul>
-											</c:forEach>
-										</table>
-										<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage"/>
+															<div class="review-body">
+																<h6>${r.r_title}</h6>
+																<p>${r.r_content}</p>
+															</div>
+														</li>
+													</ul>
+													<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage"/>
+												</c:forEach>
+											</c:when>
+											<c:otherwise>
+												<div>
+													<h4>등록된 리뷰가 없습니다.</h4>
+												</div>
+											</c:otherwise>
+										</c:choose>
 									</div>
 								</div>
-		
 								<!-- /Reviews -->
 							</div>
 						</div>

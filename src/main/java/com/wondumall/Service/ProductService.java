@@ -69,4 +69,8 @@ public class ProductService {
 	public int reviewCount(int p_no) {
 		return productDAO.reviewCount(p_no);
 	}
+
+	public double reviewRating(int p_no) {
+		return productDAO.reviewRation(p_no);
+	}
 }

@@ -69,4 +69,8 @@ public class ProductDAO {
 	public int reviewCount(int p_no) {
 		return sqlSession.selectOne("product.reviewCount", p_no);
 	}
+
+	public double reviewRation(int p_no) {
+		return sqlSession.selectOne("product.reviewRating", p_no);
+	}
 }

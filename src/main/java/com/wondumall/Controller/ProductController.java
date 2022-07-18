@@ -55,6 +55,8 @@ public class ProductController {
 	@Autowired
 	private ServletContext servletContext;
 	
+	
+	
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@RequestMapping(value = "/cartDelete.do")
 	public String cartDelete(HttpServletRequest request, @RequestParam int cart_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
@@ -219,6 +221,7 @@ public class ProductController {
 			response.addCookie(newCookie);
 		}
 		
+		mv.addObject("reviewRating", productService.reviewRating(p_no));
 		mv.addObject("productDetail", productService.productDetail(p_no));
 		mv.addObject("reviewList",reviewList);
 		mv.addObject("paginationInfo", paginationInfo);
