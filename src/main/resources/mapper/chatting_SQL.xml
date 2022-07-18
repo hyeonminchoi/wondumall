@@ -19,7 +19,7 @@
 	</select>
 	
 	<select id="getChattingList" parameterType="map" resultType="chatDTO">
-		SELECT *
+		SELECT chat_no, chat_msg, DATE_FORMAT(chat_date,'%Y-%m-%d %H:%i:%s') as chat_date, u_no, room_no
 		FROM chat
 		WHERE room_no = (SELECT room_no FROM chattingRoom WHERE (user_no = #{to} AND admin_no = #{from}) OR (user_no = #{from} AND admin_no = #{to}))
 	</select>

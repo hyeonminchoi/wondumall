@@ -34,7 +34,6 @@
 
 <!-- Custom stlylesheet -->
 <link type="text/css" rel="stylesheet" href="./css/style.css" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -51,11 +50,6 @@
 <script src="./js/jquery.zoom.min.js"></script>
 <script src="./js/main.js"></script>
 
-
-<!-- include summernote css/js -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-
 <style>
 .navbar-nav{
 	flex-direction: inherit;
@@ -63,6 +57,11 @@
 #chattingDiv{
 	width: 80%;
 	height: 500px;
+	border: 1px solid black;
+}
+#userListDiv{
+	width: 40%;
+	display: inline-block;
 }
 #messageHeader{
 	height: 10%;
@@ -80,8 +79,10 @@
 	height: 10%;
 }
 #chat{
+	display: inline-block;
 	font-size: 1vw;
 	height: 100%;
+	width: 90%;
 }
 #userList{
 	overflow: auto;
@@ -92,6 +93,17 @@
 	margin: 10px 0px;
 }
 #chattingBox{
+	float: right;
+	height: 100%;
+	width: 60%;
+	border: 1px solid black;
+}
+.input-group-append{
+	float: right;
+	height: 100%;
+}
+#sendBtn{
+	width: 100%;
 	height: 100%;
 }
 </style>
@@ -117,10 +129,10 @@
 					<!-- 채팅 컨테이너 -->
 					<div class="row rounded-lg overflow-hidden shadow" id="chattingDiv">
 						<!-- 채팅방 목록 -->
-						<div class="col-5 px-0">
+						<div class="col-5 px-0" id="userListDiv">
 							<div class="bg-white">
 							    <div class="bg-gray px-4 py-2 bg-light">
-							      	<p class="h5 mb-0 py-1">User List</p>
+							      	<h3 style="text-align: center;">User List</h3>
 							    </div>
 								<div class="messages-box">
 						      		<div class="list-group rounded-0" id="userList">
@@ -138,7 +150,7 @@
 							<%-- 메세지 동적 생성 --%>
 							</div>
 							<!-- 메세지 입력 창 -->
-				        	<div class="input-group" id="messageInput">
+				        	<div id="messageInput">
 					          	<input type="text" id="chat" placeholder="메세지를 입력하세요." class="form-control rounded-0 border-0 py-4 bg-light">
 					          	<div class="input-group-append">
 					            	<button type="button" class="btn btn-link bg-white" id="sendBtn" onclick="send();">
@@ -237,6 +249,16 @@
 					"message" : message,
 					"from" : $('#messageHeader').text()
 			}
+			var today = new Date();
+		    today.setHours(today.getHours() + 9);
+		
+			let temp = '';
+			temp += '<div style="clear:both; float: right; margin-bottom: 10px;">'
+			temp += '<h3 style="display:inline-block;">' + message + '</h3>'
+			temp += '<small>' + today.toISOString().replace('T', ' ').substring(0, 19) + '</small>'
+			temp += '</div>'
+			$('#message').append(temp);
+			$('#message').scrollTop($('#message')[0].scrollHeight);
 			
 			let jsonData = JSON.stringify(data);
 			webSocket.send(jsonData);
@@ -265,6 +287,7 @@
 				}
 			}
 			$('#message').html(temp);
+			$('#message').scrollTop($('#message')[0].scrollHeight);
 			$('#messageHeader').html(nickname);
 		}
 		
@@ -285,6 +308,7 @@
 				temp += '<small>' + arr[2] + '</small>'
 				temp += '</div>'
 				$('#message').append(temp);
+				$('#message').scrollTop($('#message')[0].scrollHeight);
 			}
 		}
 	    
