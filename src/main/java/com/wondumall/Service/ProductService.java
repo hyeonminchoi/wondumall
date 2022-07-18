@@ -70,7 +70,7 @@ public class ProductService {
 		return productDAO.reviewCount(p_no);
 	}
 
-	public double reviewRating(int p_no) {
-		return productDAO.reviewRation(p_no);
+	public double reviewRating(int p_no) throws Exception{
+		return productDAO.reviewRating(p_no);
 	}
 }

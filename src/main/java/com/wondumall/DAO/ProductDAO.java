@@ -70,7 +70,7 @@ public class ProductDAO {
 		return sqlSession.selectOne("product.reviewCount", p_no);
 	}
 
-	public double reviewRation(int p_no) {
+	public double reviewRating(int p_no) throws Exception {
 		return sqlSession.selectOne("product.reviewRating", p_no);
 	}
 }

@@ -33,6 +33,25 @@
  		<!-- Custom stlylesheet -->
  		<link type="text/css" rel="stylesheet" href="./css/style.css"/>
 <style type="text/css">
+.c_product_title_style2 .title, .c_product_title_style3 .title {
+    color: #111;
+    font-size: 22px;
+}
+.c_product_title .title {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 18px;
+    color: #000;
+}
+body, h1, h2, h3, h4, th, td, input, select, textarea, button {
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: "Noto Sans KR", "Helvetica Neue", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", "돋움", dotum, sans-serif;
+    color: #666;
+    letter-spacing: 0;
+}
+
+
 textarea {
 	resize: none;
 }
@@ -456,7 +475,7 @@ textarea {
 					<div class="row">
 							<div id="product-tab">
 						<ul class="tab-nav">
-							<li><a href="#tab3">Reviews (3)</a></li>
+							<li><a href="#tab3">Reviews (${reviewCount})</a></li>
 						</ul>
 						</div>
 							<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_BUSINESS','ROLE_USER')">
@@ -538,10 +557,17 @@ textarea {
 								<!-- Rating -->
 								<div class="col-md-3">
 									<div id="rating">
+											<c:choose>
+												<c:when test="${reviewRating ne null}">
 										<div class="rating-avg">
-											<span>구매만족도</span>
+													<span>구매만족도</span>
 											<div>
 												${reviewRating}
+												<div style="display: inline;">
+												<i style="font-size: 17px; margin-left: 7px;">${reviewCount}건</i>
+												</div>
+											</div>
+											<div>
 											</div>
 											<div class="rating-stars">
 												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
@@ -601,6 +627,14 @@ textarea {
 												</div> <span class="sum">0</span>
 											</li>
 										</ul>
+												</c:when>
+												<c:otherwise>
+												<h4 class="rTitle">상품리뷰
+													<span class="rSub"><i>0</i>건</span>
+												</h4>
+												</c:otherwise>
+											</c:choose>
+											
 									</div>
 								</div>
 		
@@ -635,8 +669,8 @@ textarea {
 															</div>
 														</li>
 													</ul>
-													<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage"/>
 												</c:forEach>
+												<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage"/>
 											</c:when>
 											<c:otherwise>
 												<div>
