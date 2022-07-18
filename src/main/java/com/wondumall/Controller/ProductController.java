@@ -55,6 +55,8 @@ public class ProductController {
 	@Autowired
 	private ServletContext servletContext;
 	
+	
+	
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@RequestMapping(value = "/cartDelete.do")
 	public String cartDelete(HttpServletRequest request, @RequestParam int cart_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
@@ -124,7 +126,7 @@ public class ProductController {
 	}
 	
 	@GetMapping(value = "/productDetail.do")
-	public ModelAndView productDetail(HttpServletRequest request, HttpServletResponse response, @RequestParam("p_no") int p_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+	public ModelAndView productDetail(HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "p_no", required = false, defaultValue = "-1") int p_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 		ModelAndView mv = new ModelAndView("productDetail");
 		ReviewDTO dto = new ReviewDTO();
 		dto.setP_no(p_no);
@@ -218,7 +220,16 @@ public class ProductController {
 			newCookie.setMaxAge(60*60);
 			response.addCookie(newCookie);
 		}
+		try {
+		mv.addObject("reviewRating", productService.reviewRating(p_no));
+		} catch (Exception e) {
+		}
 		
+		CategoryDTO cdto = new CategoryDTO();
+		cdto.setCategory("category");
+		
+		mv.addObject("cateName", productService.cateName(p_no));
+		mv.addObject("reviewCount", productService.reviewCount(p_no));
 		mv.addObject("productDetail", productService.productDetail(p_no));
 		mv.addObject("reviewList",reviewList);
 		mv.addObject("paginationInfo", paginationInfo);
