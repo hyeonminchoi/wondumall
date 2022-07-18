@@ -49,4 +49,12 @@ public class ChattingService {
 	public void setRoomCountPlus(Map<String, Object> map) {
 		chattingDAO.setRoomCountPlus(map);		
 	}
+
+	public void resetRoomCountPlus(Map<String, Object> map) {
+		chattingDAO.resetRoomCountPlus(map);
+	}
+
+	public void resetRoomCountMinus(Map<String, Object> map) {
+		chattingDAO.resetRoomCountMinus(map);
+	}
 }

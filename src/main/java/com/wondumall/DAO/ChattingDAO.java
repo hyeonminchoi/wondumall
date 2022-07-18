@@ -49,6 +49,14 @@ public class ChattingDAO {
 	public void setRoomCountPlus(Map<String, Object> map) {
 		sqlSession.update("chatting.setRoomCountPlus", map);
 	}
+
+	public void resetRoomCountPlus(Map<String, Object> map) {
+		sqlSession.update("chatting.resetRoomCountPlus", map);
+	}
+
+	public void resetRoomCountMinus(Map<String, Object> map) {
+		sqlSession.update("chatting.resetRoomCountMinus", map);
+	}
 	
 	
 }

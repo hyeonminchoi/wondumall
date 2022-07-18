@@ -48,13 +48,16 @@ public class ChattingController {
 	@PostMapping("/changeRoom.do")
 	public List<ChatDTO> changeRoom(@AuthenticationPrincipal MyUserDetails myUserDetails, @RequestBody Map<String, Object> data) {
 		if(myUserDetails.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ROLE_BUSINESS"))) { //관리자, 사업자일 경우 채팅 목록 리턴
+			chattingService.resetRoomCountPlus(data);
 			return chattingService.getChattingList(data);
 		} else { //사용자일 경우 방이 없다면 생성, 있다면 채팅 리스트 리턴
 			if(chattingService.containRoom(data)==0) {
 				chattingService.createRoom(data);
 				return null;
-			} else
+			} else {
+				chattingService.resetRoomCountMinus(data);
 				return chattingService.getChattingList(data);
+			}
 		}
 	}
 
@@ -78,4 +81,14 @@ public class ChattingController {
 		return mav;
 	}	
 	
+	@ResponseBody
+	@PostMapping("/resetRoomCount.do")
+	public void resetRoomCount(@AuthenticationPrincipal MyUserDetails myUserDetails, @RequestBody Map<String, Object> data) {
+		data.put("from",chattingService.getAdminNo(data.get("from").toString()));
+		if(myUserDetails.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ROLE_BUSINESS"))) {
+			chattingService.resetRoomCountPlus(data);
+		} else {
+			chattingService.resetRoomCountMinus(data);
+		}
+	}
 }

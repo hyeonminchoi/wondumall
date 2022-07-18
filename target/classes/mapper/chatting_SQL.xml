@@ -8,7 +8,8 @@
 		FROM user u
 		LEFT JOIN chattingRoom c
 		ON u.u_no = c.admin_no AND c.user_no = #{u_no}
-		WHERE u.u_grade = 2 OR u.u_grade = 1;
+		WHERE u.u_grade = 2 OR u.u_grade = 1
+		ORDER BY c.room_lastChattingTime DESC, u.u_nickname ASC
 	</select>
 	
 	<select id="getRoomList" parameterType="integer" resultType="chattingRoomDTO">
@@ -16,6 +17,7 @@
       		,(SELECT u_nickname FROM user u WHERE c.admin_no = u.u_no) AS admin_nickname
 		FROM chattingRoom c
 		WHERE admin_no = #{u_no}
+		ORDER BY c.room_lastChattingTime DESC
 	</select>
 	
 	<select id="getChattingList" parameterType="map" resultType="chatDTO">
@@ -58,6 +60,20 @@
 		<![CDATA[
 			UPDATE chattingRoom SET room_count = IF(room_count<0,1, room_count + 1), room_lastChattingTime = TIMESTAMP #{chat_date}
 			WHERE room_no = (SELECT room_no FROM chattingRoom WHERE (user_no = #{sender_no} AND admin_no = #{receive_no}) OR (user_no = #{receive_no} AND admin_no = #{sender_no}))
+		]]>
+	</update>
+	
+	<update id="resetRoomCountMinus" parameterType="map">
+		<![CDATA[
+			UPDATE chattingRoom SET room_count = IF(room_count<0,0, room_count)
+			WHERE room_no = (SELECT room_no FROM chattingRoom WHERE (user_no = #{from} AND admin_no = #{to}) OR (user_no = #{to} AND admin_no = #{from}))
+		]]>
+	</update>
+	
+	<update id="resetRoomCountPlus" parameterType="map">
+		<![CDATA[
+			UPDATE chattingRoom SET room_count = IF(room_count>0,0, room_count)
+			WHERE room_no = (SELECT room_no FROM chattingRoom WHERE (user_no = #{from} AND admin_no = #{to}) OR (user_no = #{to} AND admin_no = #{from}))
 		]]>
 	</update>
 </mapper>

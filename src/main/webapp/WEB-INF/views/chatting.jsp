@@ -106,6 +106,10 @@
 	width: 100%;
 	height: 100%;
 }
+h3{
+	white-space: pre-wrap;
+	word-break:break-word;
+}
 </style>
 <script type="text/javascript">
 </script>
@@ -186,6 +190,7 @@
 		$(function(){
 			if(${not empty sessionScope.user}){
 				connect();
+				proc = setInterval(onOpen, 1000);
 			}	
 		})
 		
@@ -251,15 +256,15 @@
 			}
 			var today = new Date();
 		    today.setHours(today.getHours() + 9);
-		
-			let temp = '';
-			temp += '<div style="clear:both; float: right; margin-bottom: 10px;">'
-			temp += '<h3 style="display:inline-block;">' + message + '</h3>'
-			temp += '<small>' + today.toISOString().replace('T', ' ').substring(0, 19) + '</small>'
-			temp += '</div>'
-			$('#message').append(temp);
-			$('#message').scrollTop($('#message')[0].scrollHeight);
-			
+			if($('#messageHeader').text() != '' && message != ''){
+				let temp = '';
+				temp += '<div style="clear:both; float: right; margin-bottom: 10px; width: 50%;">'
+				temp += '<h3 style="display:inline-block;">' + message + '</h3>'
+				temp += '<small>' + today.toISOString().replace('T', ' ').substring(0, 19) + '</small>'
+				temp += '</div>'
+				$('#message').append(temp);
+				$('#message').scrollTop($('#message')[0].scrollHeight);
+			}
 			let jsonData = JSON.stringify(data);
 			webSocket.send(jsonData);
 			$('#chat').val("");
@@ -275,12 +280,12 @@
 			let temp = '';
 			for(let i=0;i<list.length;i++){
 				if(list[i].u_no == ${sessionScope.user.no}){ //내가 쓴 메시지
-					temp += '<div style="clear:both; float: right; margin-bottom: 10px;">'
+					temp += '<div style="clear:both; float: right; margin-bottom: 10px; width: 50%;">'
 					temp += '<h3 style="display:inline-block;">' + list[i].chat_msg + '</h3>'
 					temp += '<small>' + list[i].chat_date + '</small>'
 					temp += '</div>'
 				} else{ //상대방이 쓴 메시지
-					temp += '<div style="clear:both; margin-bottom: 10px;">'
+					temp += '<div style="clear:both; margin-bottom: 10px; width: 50%;">'
 					temp += '<h3 style="display:inline-block;">' + list[i].chat_msg + '</h3>'
 					temp += '<small>' + list[i].chat_date + '</small>'
 					temp += '</div>'
@@ -303,12 +308,19 @@
 			let arr = event.data.split(',');
 			if(arr[0] == $('#messageHeader').text()){
 				let temp = '';
-				temp += '<div style="clear:both; margin-bottom: 10px;">'
+				temp += '<div style="clear:both; margin-bottom: 10px; width: 50%;">'
 				temp += '<h3 style="display:inline-block;">' + arr[1] + '</h3>'
 				temp += '<small>' + arr[2] + '</small>'
 				temp += '</div>'
 				$('#message').append(temp);
 				$('#message').scrollTop($('#message')[0].scrollHeight);
+				
+				let data = {
+						"from" : arr[0], 
+						"to" : ${sessionScope.user.no}
+				}
+				ajaxForHTML('./resetRoomCount.do', JSON.stringify(data), "application/json");
+				
 			}
 		}
 	    
