@@ -4,26 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <sec:authentication property="principal" var="user"/>
 <!-- TOP HEADER -->
-<sec:authorize access="authenticated">
-<script type="text/javascript">
-function cartCount(u_no){
-	$.ajax({
-		url:'./cartCount.do',
-		type:'post',
-		data:{u_no:u_no},
-		success: function(data){
-			$('.qty').text(data);
-		},
-		error: function(error){
-			console.log(error);
-		}
-	})
-}
-window.onload = function(){
-	cartCount('<sec:authentication property='principal.no'/>')
-}
-</script>
-</sec:authorize>
 <div id="top-header">
 	<div class="container">
 		<ul class="header-links pull-left">
@@ -95,7 +75,7 @@ window.onload = function(){
 					<div>
 						<a href="#"> <i class="fa fa-heart-o"></i> <span>Your
 								Wishlist</span>
-							<div class="qty">2</div>
+							<div class="qty">0</div>
 						</a>
 					</div>
 					<!-- /Wishlist -->
@@ -106,7 +86,7 @@ window.onload = function(){
 							<c:when test="${user ne 'anonymousUser'}">
 								<a href="./cart.do?u_no=<sec:authentication property='principal.no'/>" class="dropdown-toggle" > <i class="fa fa-shopping-cart"></i> 
 								<span>Your Cart</span>
-									<div class="qty">0</div>
+									<div class="qty">${qty}</div>
 								</a>
 							</c:when>
 							<c:otherwise>

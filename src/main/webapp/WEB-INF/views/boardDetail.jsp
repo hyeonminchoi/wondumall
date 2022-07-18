@@ -239,8 +239,8 @@ function boardCommentEdit(c_no, c_comment){
 <body>
 	<!-- HEADER -->
 	<header>
-		<c:import url="./header.jsp"></c:import>
-	</header>
+			<c:import url="/header.do"></c:import>
+		</header>
 	<!-- /HEADER -->
 
 	<!-- NAVIGATION -->

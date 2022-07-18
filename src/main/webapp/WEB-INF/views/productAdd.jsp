@@ -51,7 +51,7 @@ textarea {
 </head>
 <body>
 	<header>
-		<c:import url="./header.jsp"></c:import>
+		<c:import url="/header.do"></c:import>
 	</header>
 	<!-- /HEADER -->
 

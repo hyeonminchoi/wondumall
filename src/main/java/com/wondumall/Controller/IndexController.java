@@ -3,10 +3,12 @@ package com..Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com..Config.MyUserDetails;
 import com..DTO.CategoryDTO;
 import com..DTO.ProductDTO;
 import com..Service.ProductService;
@@ -48,5 +50,12 @@ public class IndexController {
 	public String store() {
 		return "store";
 	}
-
+	
+	@GetMapping("/header.do")
+	public ModelAndView header(@AuthenticationPrincipal MyUserDetails myUserDetails) {
+		ModelAndView mv = new ModelAndView("header");
+		if(myUserDetails!=null)
+			mv.addObject("qty", productService.cartCount(myUserDetails.getNo()));
+		return mv;
+	}
 }

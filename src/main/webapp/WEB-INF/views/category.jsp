@@ -46,9 +46,9 @@ margin-bottom: 20px;
 </head>
 <body>
 	<!-- HEADER -->
-		<header>
-			<c:import url="./header.jsp"></c:import>
-		</header>
+	<header>
+		<c:import url="/header.do"></c:import>
+	</header>
 	<!-- /HEADER -->
 	<!-- NAVIGATION -->
 		<nav id="navigation">
