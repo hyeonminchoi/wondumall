@@ -42,6 +42,7 @@ td, th{
 	<section>
 		<div id="section">
 			<div id="container">
+				<h1 style="margin-top: 20px; margin-bottom: 20px; margin-left: 100px;">유저관리</h1>
 				<table class="table" style="width:90%; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;">
 					<thead>
 						<tr>
@@ -98,13 +99,25 @@ td, th{
 								</c:choose>
 								</td>
 								<td>
-								<button onclick="sec(${u.u_no})" class="primary-btn order-submit" style="padding: 7px 12px;">탈퇴</button>
-								<button onclick="rep(${u.u_no})" class="primary-btn order-submit" style="padding: 7px 12px;">복구</button>
+								<c:choose>
+									<c:when test="${u.u_resign eq 1 }">
+										<button onclick="rep(${u.u_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #A9F5BC;">계정복구</button>
+									</c:when>
+									<c:otherwise>
+										<button onclick="sec(${u.u_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5A9A9;">계정탈퇴</button>
+									</c:otherwise>
+								</c:choose>
 								</td>
-								<td><button onclick="comsec(${u.u_no})" class="primary-btn order-submit" style="padding: 7px 12px;">완전탈퇴</button></td>
+								<td><button onclick="comsec(${u.u_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5A9A9;">완전탈퇴</button></td>
 								<td>
-								<button onclick="admiss(${u.u_no})" class="primary-btn order-submit" style="padding: 7px 12px;">승인</button>
-								<button onclick="adcan(${u.u_no})" class="primary-btn order-submit" style="padding: 7px 12px;">취소</button>
+								<c:choose>
+									<c:when test="${u.u_confirm eq 1 }">
+										<button onclick="adcan(${u.u_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5A9A9;">승인취소</button>
+									</c:when>
+									<c:otherwise>
+										<button onclick="admiss(${u.u_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #A9F5BC;">승인하기</button>
+									</c:otherwise>
+								</c:choose>
 								</td>
 							</tr>
 						</c:forEach>

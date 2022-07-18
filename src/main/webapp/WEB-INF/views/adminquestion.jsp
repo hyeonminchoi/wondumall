@@ -42,6 +42,7 @@ td, th{
 	<section>
 		<div id="section">
 			<div id="container">
+				<h1 style="margin-top: 20px; margin-bottom: 20px; margin-left: 100px;">질문게시판관리</h1>
 				<table class="table" style="width:90%; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;">
 					<thead>
 						<tr>
@@ -73,11 +74,17 @@ td, th{
 								</c:choose>
 								</td>
 								<td>
-								<button onclick="qdel(${q.q_no})" class="primary-btn order-submit" style="padding: 7px 12px;">삭제</button>
-								<button onclick="qrpr(${q.q_no})" class="primary-btn order-submit" style="padding: 7px 12px;">복구</button>
+								<c:choose>
+									<c:when test="${q.q_del eq 1 }">
+										<button onclick="qrpr(${q.q_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #A9F5BC;">복구하기</button>
+									</c:when>
+									<c:otherwise>
+										<button onclick="qdel(${q.q_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5A9A9;">삭제하기</button>
+									</c:otherwise>
+								</c:choose>
 								</td>
-								<td><button onclick="qcompledel(${q.q_no})" class="primary-btn order-submit" style="padding: 7px 12px;">완전삭제</button></td>
-								<td><button onclick="detail(${q.q_no}, ${pageNo })" class="primary-btn order-submit" style="padding: 7px 12px;">상세보기</button></td>
+								<td><button onclick="qcompledel(${q.q_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5A9A9;">완전삭제</button></td>
+								<td><button onclick="detail(${q.q_no}, ${pageNo })" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5D0A9;">상세보기</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>

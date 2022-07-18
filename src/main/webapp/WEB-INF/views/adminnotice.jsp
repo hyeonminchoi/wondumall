@@ -42,6 +42,7 @@ td, th{
 	<section>
 		<div id="section">
 			<div id="container">
+				<h1 style="margin-top: 20px; margin-bottom: 20px; margin-left: 100px;">공지사항관리</h1>
 				<table class="table" style="width:90%; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;">
 					<thead>
 						<tr>
@@ -60,8 +61,8 @@ td, th{
 								<td>${n.n_title }</td>
 								<td>${n.u_nickname }</td>
 								<td>${n.n_date }</td>
-								<td><button onclick="noticecomdel(${n.n_no})" class="primary-btn order-submit" style="padding: 7px 12px;">삭제</button></td>
-								<td><button onclick="noticedetail(${n.n_no}, ${pageNo })" class="primary-btn order-submit" style="padding: 7px 12px;">상세보기</button></td>
+								<td><button onclick="noticecomdel(${n.n_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5A9A9;">삭제하기</button></td>
+								<td><button onclick="noticedetail(${n.n_no}, ${pageNo })" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5D0A9;">상세보기</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>

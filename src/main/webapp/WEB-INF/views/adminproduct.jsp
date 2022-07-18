@@ -42,6 +42,7 @@ td, th{
 	<section>
 		<div id="section">
 			<div id="container">
+				<h1 style="margin-top: 20px; margin-bottom: 20px; margin-left: 100px;">제품관리</h1>
 				<table class="table" style="width:90%; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;">
 					<thead>
 						<tr>
@@ -87,15 +88,27 @@ td, th{
 								</c:choose>
 								</td>
 								<td>
-								<button onclick="del(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px;">삭제</button>
-								<button onclick="repair(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px;">복구</button>
+								<c:choose>
+									<c:when test="${p.p_del eq 1 }">
+										<button onclick="repair(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #A9F5BC;">복구하기</button>
+									</c:when>
+									<c:otherwise>
+										<button onclick="del(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5A9A9;">삭제하기</button>
+									</c:otherwise>
+								</c:choose>
 								</td>
-								<td><button onclick="pdelete(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px;">완전삭제</button></td>
+								<td><button onclick="pdelete(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5A9A9;">완전삭제</button></td>
 								<td>
-								<button onclick="admission(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px;">승인</button>
-								<button onclick="adcancel(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px;">취소</button>
+								<c:choose>
+									<c:when test="${p.p_confirm eq 1 }">
+										<button onclick="adcancel(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5A9A9;">승인취소</button>
+									</c:when>
+									<c:otherwise>
+										<button onclick="admission(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #A9F5BC;">승인하기</button>
+									</c:otherwise>
+								</c:choose>
 								</td>
-								<td><button onclick="detail(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px;">상세보기</button></td>
+								<td><button onclick="detail(${p.p_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5D0A9;">상세보기</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>
