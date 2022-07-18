@@ -73,4 +73,8 @@ public class ProductService {
 	public double reviewRating(int p_no) throws Exception{
 		return productDAO.reviewRating(p_no);
 	}
+
+	public Map<String, Object> cateName(int p_no) {
+		return productDAO.cateName(p_no);
+	}
 }

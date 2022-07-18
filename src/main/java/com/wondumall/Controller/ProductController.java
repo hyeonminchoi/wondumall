@@ -225,6 +225,10 @@ public class ProductController {
 		} catch (Exception e) {
 		}
 		
+		CategoryDTO cdto = new CategoryDTO();
+		cdto.setCategory("category");
+		
+		mv.addObject("cateName", productService.cateName(p_no));
 		mv.addObject("reviewCount", productService.reviewCount(p_no));
 		mv.addObject("productDetail", productService.productDetail(p_no));
 		mv.addObject("reviewList",reviewList);

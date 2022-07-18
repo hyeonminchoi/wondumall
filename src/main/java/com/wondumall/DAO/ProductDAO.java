@@ -73,4 +73,8 @@ public class ProductDAO {
 	public double reviewRating(int p_no) throws Exception {
 		return sqlSession.selectOne("product.reviewRating", p_no);
 	}
+
+	public Map<String, Object> cateName(int p_no) {
+		return sqlSession.selectOne("product.cateName", p_no);
+	}
 }
