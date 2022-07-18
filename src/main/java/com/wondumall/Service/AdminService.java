@@ -12,6 +12,7 @@ import com..DTO.LoginDTO;
 import com..DTO.NoticeDTO;
 import com..DTO.ProductDTO;
 import com..DTO.QuestionDTO;
+import com..DTO.UserDTO;
 
 @Service
 public class AdminService {
@@ -153,4 +154,5 @@ public class AdminService {
 		
 		adminDAO.qcompledel(q_no);
 	}
+
 }

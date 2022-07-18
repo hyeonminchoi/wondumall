@@ -12,6 +12,7 @@ import com..DTO.LoginDTO;
 import com..DTO.NoticeDTO;
 import com..DTO.ProductDTO;
 import com..DTO.QuestionDTO;
+import com..DTO.UserDTO;
 
 @Component
 public class AdminDAO {
@@ -153,4 +154,5 @@ public class AdminDAO {
 		
 		sqlSession.delete("admin.qcompledel", q_no);
 	}
+
 }

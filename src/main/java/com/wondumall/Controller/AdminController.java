@@ -18,6 +18,7 @@ import com..DTO.NoticeDTO;
 import com..DTO.PageDTO;
 import com..DTO.ProductDTO;
 import com..DTO.QuestionDTO;
+import com..DTO.UserDTO;
 import com..Service.AdminService;
 
 @Controller
@@ -26,11 +27,6 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-	@GetMapping(value = "/admin/index.do")
-	public String adminindex() {
-		
-		return "adminindex";
-	}
 	
 	@GetMapping(value = "/admin/product.do")
 	public ModelAndView adminproduct(@RequestParam(name = "pageNo", required = false, defaultValue = "1") int pageNo, @RequestParam(name="searchColumn", required = false) String searchColumn,
@@ -366,5 +362,11 @@ public class AdminController {
 		adminService.qcompledel(q_no);
 		
 		return "redirect:/admin/question.do";
+	}
+	
+	@GetMapping(value = "/admin/index.do")
+	public String adminindex() {
+
+		return "adminindex";
 	}
 }

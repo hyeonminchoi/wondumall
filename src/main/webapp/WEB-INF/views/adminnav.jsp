@@ -6,6 +6,7 @@
 	<div id="responsive-nav">
 		<!-- NAV -->
 		<ul class="main-nav nav navbar-nav">
+			<li><a href="./index.do">메인</a></li>
 			<li><a href="./user.do">유저관리</a></li>
 			<li><a href="./product.do">제품관리</a></li>
 			<li><a href="./board.do">자유게시판관리</a></li>
