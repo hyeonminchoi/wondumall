@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <!DOCTYPE html>
 <html>
@@ -32,6 +33,25 @@
  		<!-- Custom stlylesheet -->
  		<link type="text/css" rel="stylesheet" href="./css/style.css"/>
 <style type="text/css">
+.c_product_title_style2 .title, .c_product_title_style3 .title {
+    color: #111;
+    font-size: 22px;
+}
+.c_product_title .title {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 18px;
+    color: #000;
+}
+body, h1, h2, h3, h4, th, td, input, select, textarea, button {
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: "Noto Sans KR", "Helvetica Neue", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", "돋움", dotum, sans-serif;
+    color: #666;
+    letter-spacing: 0;
+}
+
+
 textarea {
 	resize: none;
 }
@@ -109,9 +129,8 @@ textarea {
 							<ul class="breadcrumb-tree">
 								<li><a href="./">Home</a></li>
 								<li><a href="./category.do">All Categories</a></li>
-								<li><a href="#">Accessories</a></li>
-								<li><a href="#">Headphones</a></li>
-								<li class="active">Product name goes here</li>
+								<li><a href="./category.do?cate_no=${cateName.cate_no }">${cateName.category}</a></li>
+								<li class="active">${productDetail.p_name}</li>
 							</ul>
 						</div>
 					</div>
@@ -130,19 +149,19 @@ textarea {
 						<!-- Product main img -->
 						<div class="col-md-5 col-md-push-2">
 							<div id="product-main-img">
-								<div class="product-preview">
+								<div class="product-preview"  style="display: none;">
 									<img src="./productUpload/${productDetail.p_img}" alt="">
 								</div>
 	
-								<div class="product-preview">
-									<img src="./img/product03.png" alt="">
+								<div class="product-preview" style="display: block;">
+									<img src="./img/coffeeBean.png" alt="">
 								</div>
 	
-								<div class="product-preview">
-									<img src="./img/product06.png" alt="">
+								<div class="product-preview" style="display: none;">
+									<img src="./img/wondu.png" alt="">
 								</div>
 	
-								<div class="product-preview">
+								<div class="product-preview" style="display: none;">
 									<img src="./img/product08.png" alt="">
 								</div>
 							</div>
@@ -152,21 +171,28 @@ textarea {
 						<!-- Product thumb imgs -->
 						<div class="col-md-2  col-md-pull-5">
 							<div id="product-imgs">
-								<div class="product-preview">
-									<img src="./productUpload/${productDetail.p_img}" alt="">
-								</div>
-	
-								<div class="product-preview">
-									<img src="./img/product03.png" alt="">
-								</div>
-	
-								<div class="product-preview">
-									<img src="./img/product06.png" alt="">
-								</div>
-	
-								<div class="product-preview">
-									<img src="./img/product08.png" alt="">
-								</div>
+								<ul>
+									<li>
+										<div class="product-preview">
+											<img src="./productUpload/${productDetail.p_img}" alt="">
+										</div>
+									</li>
+									<li>
+										<div class="product-preview">
+											<img src="./img/coffeeBean.png" alt="">
+										</div>
+									</li>
+									<li>
+										<div class="product-preview">
+											<img src="./img/wondu.png" alt="">
+										</div>
+									</li>
+									<li>
+										<div class="product-preview">
+											<img src="./img/product08.png" alt="">
+										</div>
+									</li>
+								</ul>
 							</div>
 						</div>
 						<!-- /Product thumb imgs -->
@@ -183,27 +209,15 @@ textarea {
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star-o"></i>
 									</div>
-									<a class="review-link" href="#">10 Review(s) | Add your review</a>
+									<a class="review-link" href="#reviewHref">${reviewCount} Review(s) | Add your review</a>
 								</div>
 								<div>
-									<h3 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h3>
-									<span class="product-available">In Stock</span>
+									<h3 class="product-price">${productDetail.p_price}원 <del class="product-old-price">${productDetail.p_price}원</del></h3>
+									<span class="product-available">남은 수량</span> <div class="product-old-price" style="display: inline;">${productDetail.p_stock}개</div>
 								</div>
 								${productDetail.p_description}
 	
 								<div class="product-options">
-									<label>
-										Size
-										<select class="input-select">
-											<option value="0">X</option>
-										</select>
-									</label>
-									<label>
-										Color
-										<select class="input-select">
-											<option value="0">Red</option>
-										</select>
-									</label>
 								</div>
 	
 								<form action="./cartAdd.do" method="post">
@@ -258,9 +272,8 @@ textarea {
 							<div id="product-tab">
 								<!-- product tab nav -->
 								<ul class="tab-nav">
-									<li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
+									<!-- <li class="active"><a data-toggle="tab" href="#tab1">Description</a></li> -->
 									<li><a data-toggle="tab" href="#tab2">Details</a></li>
-									<li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li>
 								</ul>
 								<!-- /product tab nav -->
 	
@@ -270,175 +283,12 @@ textarea {
 									<div id="tab1" class="tab-pane fade in active">
 										<div class="row">
 											<div class="col-md-12">
-												<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+												<p>${productDetail.p_description}</p>
 											</div>
 										</div>
 									</div>
 									<!-- /tab1  -->
 	
-									<!-- tab2  -->
-									<div id="tab2" class="tab-pane fade in">
-										<div class="row">
-											<div class="col-md-12">
-												<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-											</div>
-										</div>
-									</div>
-									<!-- /tab2  -->
-	
-									<!-- tab3  -->
-									<div id="tab3" class="tab-pane fade in">
-										<div class="row">
-											<!-- Rating -->
-											<div class="col-md-3">
-												<div id="rating">
-													<div class="rating-avg">
-														<span>4.5</span>
-														<div class="rating-stars">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o"></i>
-														</div>
-													</div>
-													<ul class="rating">
-														<li>
-															<div class="rating-stars">
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-															</div>
-															<div class="rating-progress">
-																<div style="width: 80%;"></div>
-															</div>
-															<span class="sum">3</span>
-														</li>
-														<li>
-															<div class="rating-stars">
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star-o"></i>
-															</div>
-															<div class="rating-progress">
-																<div style="width: 60%;"></div>
-															</div>
-															<span class="sum">2</span>
-														</li>
-														<li>
-															<div class="rating-stars">
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star-o"></i>
-																<i class="fa fa-star-o"></i>
-															</div>
-															<div class="rating-progress">
-																<div></div>
-															</div>
-															<span class="sum">0</span>
-														</li>
-														<li>
-															<div class="rating-stars">
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star-o"></i>
-																<i class="fa fa-star-o"></i>
-																<i class="fa fa-star-o"></i>
-															</div>
-															<div class="rating-progress">
-																<div></div>
-															</div>
-															<span class="sum">0</span>
-														</li>
-														<li>
-															<div class="rating-stars">
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star-o"></i>
-																<i class="fa fa-star-o"></i>
-																<i class="fa fa-star-o"></i>
-																<i class="fa fa-star-o"></i>
-															</div>
-															<div class="rating-progress">
-																<div></div>
-															</div>
-															<span class="sum">0</span>
-														</li>
-													</ul>
-												</div>
-											</div>
-											<!-- /Rating -->
-	
-											<!-- Reviews -->
-											<div class="col-md-6">
-												<div id="reviews">
-													<ul class="reviews">
-														<li>
-															<div class="review-heading">
-																<h5 class="name">John</h5>
-																<p class="date">27 DEC 2018, 8:0 PM</p>
-																<div class="review-rating">
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star-o empty"></i>
-																</div>
-															</div>
-															<div class="review-body">
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-															</div>
-														</li>
-														<li>
-															<div class="review-heading">
-																<h5 class="name">John</h5>
-																<p class="date">27 DEC 2018, 8:0 PM</p>
-																<div class="review-rating">
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star-o empty"></i>
-																</div>
-															</div>
-															<div class="review-body">
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-															</div>
-														</li>
-														<li>
-															<div class="review-heading">
-																<h5 class="name">John</h5>
-																<p class="date">27 DEC 2018, 8:0 PM</p>
-																<div class="review-rating">
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star-o empty"></i>
-																</div>
-															</div>
-															<div class="review-body">
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-															</div>
-														</li>
-													</ul>
-													<ul class="reviews-pagination">
-														<li class="active">1</li>
-														<li><a href="#">2</a></li>
-														<li><a href="#">3</a></li>
-														<li><a href="#">4</a></li>
-														<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<!-- /Reviews -->
-										</div>
-									</div>
-									<!-- /tab3  -->
 								</div>
 								<!-- /product tab content  -->
 							</div>
@@ -450,79 +300,80 @@ textarea {
 				<!-- /container -->
 			</div>
 			<!-- /SECTION -->
-		<div class="section">
+		<div class="section" >
 				<div class="container">
 					<div class="row">
+						<div id="reviewHref">
 							<div id="product-tab">
-						<ul class="tab-nav">
-							<li><a href="#tab3">Reviews (3)</a></li>
-						</ul>
-						</div>
-							<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_BUSINESS','ROLE_USER')">
-							<c:choose>
-								<c:when test="${not empty reviewStatus and reviewStatus eq 0}">
-									<form action="./productReview.do" method="POST" id="join" class="joinForm" name="reviewAdd">
-											<div class="form-group row">
-												<label class="col-sm-3">리뷰 제목</label>
-												<div class="com-sm-3">
-													<input type="text" id="r_title" name="r_title" class="form-control" required>
+								<ul class="tab-nav">
+									<li><a href="#tab3">Reviews (${reviewCount})</a></li>
+								</ul>
+							</div>
+								<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_BUSINESS','ROLE_USER')">
+								<c:choose>
+									<c:when test="${not empty reviewStatus and reviewStatus eq 0}">
+										<form action="./productReview.do" method="POST" id="join" class="joinForm" name="reviewAdd">
+												<div class="form-group row">
+													<label class="col-sm-3">리뷰 제목</label>
+													<div class="com-sm-3">
+														<input type="text" id="r_title" name="r_title" class="form-control" required>
+													</div>
 												</div>
-											</div>
-											<div class="form-group row">
-												<label class="col-sm-3">리뷰 내용</label>
-												<div class="com-sm-5">
-													<textarea name="r_content" cols="50" rows="2" class="form-control" required></textarea>
+												<div class="form-group row">
+													<label class="col-sm-3">리뷰 내용</label>
+													<div class="com-sm-5">
+														<textarea name="r_content" cols="50" rows="2" class="form-control" required></textarea>
+													</div>
 												</div>
-											</div>
-											<div class="form-group row">
-												<fieldset name="myform" id="myform">
-													<legend>이모지 별점</legend>
-													<input type="radio" name="r_rating" value="1" id="rate1"><label for="rate1">⭐</label>
-													<input type="radio" name="r_rating" value="2" id="rate2"><label for="rate2">⭐⭐</label>
-													<input type="radio" name="r_rating" value="3" id="rate3"><label for="rate3">⭐⭐⭐</label>
-													<input type="radio" name="r_rating" value="4" id="rate4"><label for="rate4">⭐⭐⭐⭐</label>
-													<input type="radio" name="r_rating" value="5" id="rate5"><label for="rate5">⭐⭐⭐⭐⭐</label>
-												</fieldset>
-											</div>
-											<br>
-										<input type="hidden" value="${productDetail.p_no }" name="p_no">
-											<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
-										<button type="submit" id="Btn" class="primary-btn" value="등록하기" onclick="reviewAdd()">등록하기</button>
-									</form>
-								</c:when>
-								<c:otherwise>
-									<form action="./productReview.do" method="POST" id="join" class="joinForm" name="reviewAdd">
-											<div class="form-group row">
-												<label class="col-sm-3">리뷰 제목</label>
-												<div class="com-sm-3">
-													<input type="text" id="r_title" name="r_title" class="form-control" disabled="disabled" placeholder="리뷰를 등록한 상품입니다.">
+												<div class="form-group row">
+													<fieldset name="myform" id="myform">
+														<legend>이모지 별점</legend>
+														<input type="radio" name="r_rating" value="1" id="rate1"><label for="rate1">⭐</label>
+														<input type="radio" name="r_rating" value="2" id="rate2"><label for="rate2">⭐⭐</label>
+														<input type="radio" name="r_rating" value="3" id="rate3"><label for="rate3">⭐⭐⭐</label>
+														<input type="radio" name="r_rating" value="4" id="rate4"><label for="rate4">⭐⭐⭐⭐</label>
+														<input type="radio" name="r_rating" value="5" id="rate5"><label for="rate5">⭐⭐⭐⭐⭐</label>
+													</fieldset>
 												</div>
-											</div>
-											<div class="form-group row">
-												<label class="col-sm-3">리뷰 내용</label>
-												<div class="com-sm-5">
-													<textarea name="r_content" cols="50" rows="2" class="form-control" disabled="disabled"></textarea>
-												</div>
-											</div>
-											<div class="form-group row">
-												<fieldset name="myform" id="myform" disabled="disabled">
-													<legend>별점</legend>
-													<input type="radio" name="r_rating" value="1" id="rate1"><label for="rate1">⭐</label>
-													<input type="radio" name="r_rating" value="2" id="rate2"><label for="rate2">⭐⭐</label>
-													<input type="radio" name="r_rating" value="3" id="rate3"><label for="rate3">⭐⭐⭐</label>
-													<input type="radio" name="r_rating" value="4" id="rate4"><label for="rate4">⭐⭐⭐⭐</label>
-													<input type="radio" name="r_rating" value="5" id="rate5"><label for="rate5">⭐⭐⭐⭐⭐</label>
-												</fieldset>
-											</div>
-											<br>
+												<br>
 											<input type="hidden" value="${productDetail.p_no }" name="p_no">
-											<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
-										<button type="button" id="Btn" class="primary-btn" value="등록하기">등록하기</button>
-									</form>
-								</c:otherwise>
-							</c:choose>
-						</sec:authorize>
-						
+												<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
+											<button type="submit" id="Btn" class="primary-btn" value="등록하기" onclick="reviewAdd()">등록하기</button>
+										</form>
+									</c:when>
+									<c:otherwise>
+										<form action="./productReview.do" method="POST" id="join" class="joinForm" name="reviewAdd">
+												<div class="form-group row">
+													<label class="col-sm-3">리뷰 제목</label>
+													<div class="com-sm-3">
+														<input type="text" id="r_title" name="r_title" class="form-control" disabled="disabled" placeholder="리뷰를 등록한 상품입니다.">
+													</div>
+												</div>
+												<div class="form-group row">
+													<label class="col-sm-3">리뷰 내용</label>
+													<div class="com-sm-5">
+														<textarea name="r_content" cols="50" rows="2" class="form-control" disabled="disabled"></textarea>
+													</div>
+												</div>
+												<div class="form-group row">
+													<fieldset name="myform" id="myform" disabled="disabled">
+														<legend>별점</legend>
+														<input type="radio" name="r_rating" value="1" id="rate1"><label for="rate1">⭐</label>
+														<input type="radio" name="r_rating" value="2" id="rate2"><label for="rate2">⭐⭐</label>
+														<input type="radio" name="r_rating" value="3" id="rate3"><label for="rate3">⭐⭐⭐</label>
+														<input type="radio" name="r_rating" value="4" id="rate4"><label for="rate4">⭐⭐⭐⭐</label>
+														<input type="radio" name="r_rating" value="5" id="rate5"><label for="rate5">⭐⭐⭐⭐⭐</label>
+													</fieldset>
+												</div>
+												<br>
+												<input type="hidden" value="${productDetail.p_no }" name="p_no">
+												<input type="hidden" value="<sec:authentication property="principal.no"/>" name="u_no">
+											<button type="button" id="Btn" class="primary-btn" value="등록하기">등록하기</button>
+										</form>
+									</c:otherwise>
+								</c:choose>
+							</sec:authorize>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -537,8 +388,18 @@ textarea {
 								<!-- Rating -->
 								<div class="col-md-3">
 									<div id="rating">
+											<c:choose>
+												<c:when test="${reviewRating ne null}">
 										<div class="rating-avg">
-											<span>점수 들어 갈 것</span>
+													<span>구매만족도</span>
+											<div>
+												${reviewRating}
+												<div style="display: inline;">
+												<i style="font-size: 17px; margin-left: 7px;">${reviewCount}건</i>
+												</div>
+											</div>
+											<div>
+											</div>
 											<div class="rating-stars">
 												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
 													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
@@ -597,6 +458,14 @@ textarea {
 												</div> <span class="sum">0</span>
 											</li>
 										</ul>
+												</c:when>
+												<c:otherwise>
+												<h4 class="rTitle">상품리뷰
+													<span class="rSub"><i>0</i>건</span>
+												</h4>
+												</c:otherwise>
+											</c:choose>
+											
 									</div>
 								</div>
 		
@@ -604,38 +473,44 @@ textarea {
 								<!-- Reviews -->
 								<div class="col-md-6">
 									<div id="reviews">
-										<table class="table table-bordered">
-											<c:forEach items="${reviewList}" var="r">
-												<ul class="reviews">
-													<li>
-														<div class="review-heading">
-															<h5 class="name">${r.u_nickname}</h5>
-															<p class="date">
-															<fmt:parseDate value="${r.r_date}" var="time"
-																pattern="yyyy-MM-dd HH:mm:ss.S" />
-															<fmt:formatDate value="${time}" var="time"
-																pattern="yyyy-MM-dd HH:mm:ss" />
-															${time }
-															<%-- ${r.r_date} --%>
-															</p>
-															<div class="review-rating">
-																<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-																	class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-																	class="fa fa-star-o empty"></i>
+										<c:choose>
+											<c:when test="${fn:length(reviewList) > 0}">
+												<c:forEach items="${reviewList}" var="r">
+													<ul class="reviews">
+														<li>
+															<div class="review-heading">
+																<h5 class="name">${r.u_nickname}</h5>
+																<p class="date">
+																<fmt:parseDate value="${r.r_date}" var="time"
+																	pattern="yyyy-MM-dd HH:mm:ss.S" />
+																<fmt:formatDate value="${time}" var="time"
+																	pattern="yyyy-MM-dd HH:mm:ss" />
+																${time }
+																<%-- ${r.r_date} --%>
+																</p>
+																<div class="review-rating">
+																	<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+																		class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+																		class="fa fa-star-o empty"></i>
+																</div>
 															</div>
-														</div>
-														<div class="review-body">
-															<h6>${r.r_title}</h6>
-															<p>${r.r_content}</p>
-														</div>
-													</li>
-												</ul>
-											</c:forEach>
-										</table>
-										<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage"/>
+															<div class="review-body">
+																<h6>${r.r_title}</h6>
+																<p>${r.r_content}</p>
+															</div>
+														</li>
+													</ul>
+												</c:forEach>
+												<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage"/>
+											</c:when>
+											<c:otherwise>
+												<div>
+													<h4>등록된 리뷰가 없습니다.</h4>
+												</div>
+											</c:otherwise>
+										</c:choose>
 									</div>
 								</div>
-		
 								<!-- /Reviews -->
 							</div>
 						</div>
