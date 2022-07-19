@@ -13,7 +13,6 @@
 			<li><a href="./notice.do">공지사항관리</a></li>
 			<li><a href="./question.do">질문게시판관리</a></li>
 			<li><a href="./review.do">리뷰관리</a></li>
-			<li><a href="./coupon.do">쿠폰관리</a></li>
 		</ul>
 		<!-- /NAV -->
 	</div>

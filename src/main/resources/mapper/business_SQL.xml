@@ -1,0 +1,36 @@
+<?xml version="1.0"	encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"	
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="business">
+	<insert id="couponWrite" parameterType="couponDTO">
+		INSERT INTO coupon (coupon_description, coupon_minorder, coupon_per) VALUES (#{coupon_description}, #{coupon_minorder}, #{coupon_per})
+	</insert>
+	<select id="couponList" resultType="couponDTO" parameterType="map">
+		SELECT *
+		FROM coupon
+		<choose>
+			<when test='searchColumn == "coupon_description"'>
+				WHERE coupon_description like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "coupon_minorder"'>
+				WHERE coupon_minorder like CONCAT('%',#{searchValue},'%')
+			</when>
+		</choose>
+		GROUP BY Coupon_no
+		ORDER BY Coupon_minorder DESC
+		LIMIT #{page.startPage}, #{page.lastPage}
+	</select>
+	<select id="getCount" resultType="integer" parameterType="map">
+		SELECT count(*)
+		FROM coupon
+		<choose>
+			<when test='searchColumn == "coupon_description"'>
+				WHERE coupon_description like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "coupon_minorder"'>
+				WHERE coupon_minorder like CONCAT('%',#{searchValue},'%')
+			</when>
+		</choose>
+	</select>
+</mapper>
