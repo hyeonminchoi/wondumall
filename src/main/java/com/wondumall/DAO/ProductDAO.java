@@ -77,4 +77,8 @@ public class ProductDAO {
 	public Map<String, Object> cateName(int p_no) {
 		return sqlSession.selectOne("product.cateName", p_no);
 	}
+
+	public int sumPrice(int u_no) {
+		return sqlSession.selectOne("product.sumPrice", u_no);
+	}
 }

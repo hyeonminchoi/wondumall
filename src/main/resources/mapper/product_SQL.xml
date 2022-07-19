@@ -29,7 +29,7 @@
 		VALUES (#{p_no}, #{u_no}, #{p_count})
 	</insert>
 	<select id="cart" parameterType="integer" resultType="cartDTO">
-		SELECT *
+		SELECT *, (p_price * p_count) AS sumPrice
 		FROM cartview
 		WHERE u_no = #{u_no}
 	</select>

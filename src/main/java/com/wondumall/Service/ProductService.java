@@ -77,4 +77,8 @@ public class ProductService {
 	public Map<String, Object> cateName(int p_no) {
 		return productDAO.cateName(p_no);
 	}
+
+	public int sumPrice(int u_no) {
+		return productDAO.sumPrice(u_no);
+	}
 }
