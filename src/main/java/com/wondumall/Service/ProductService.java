@@ -81,4 +81,8 @@ public class ProductService {
 	public int sumPrice(int u_no) {
 		return productDAO.sumPrice(u_no);
 	}
+
+	public void cartAllDel(CartDTO cartDTO) {
+		productDAO.cartAllDel(cartDTO);
+	}
 }

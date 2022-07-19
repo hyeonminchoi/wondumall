@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -57,15 +58,40 @@
 	font-weight: 500;
 }
 </style>
-		<script type="text/javascript">
-			function del(cart_no){
-				if (confirm("삭제하시겠습니까?")){
-					location.href = "./cartDelete.do?cart_no=" + cart_no;
-				} else {
-					
-				}
-			}
-		</script>
+<script type="text/javascript">
+function del(cart_no){
+	if (confirm("삭제하시겠습니까?")){
+		location.href = "./cartDelete.do?cart_no=" + cart_no;
+	} else {
+		
+	}
+}
+function allDel(u_no) {
+	if (confirm("장바구니를 비우시겠습니까?")){
+		location.href = "./cartAllDel.do?cart_no=" + u_no;
+	}
+}
+
+$(document).ready(function(){
+	
+	setTotalInfo();
+});
+function setTotalInfo(){
+	$(document).ready(function(){
+		let sumPrice = 0;
+		let addProduct = 0;
+		$(".cart_info_td").each(function(index, element){
+			// 총 가격
+			sumPrice += parseInt($(element).find(".addPrice").val());
+			
+			addProduct += 1;
+		});
+		$(".addProduct").text(addProduct);
+		$(".totalPrice").text(sumPrice.toLocaleString());
+	});
+}
+
+</script>
     </head>
 	<body>
 		<!-- HEADER -->
@@ -98,7 +124,7 @@
 				<!-- /container -->
 			</div>
 			<!-- /BREADCRUMB -->
-	
+			
 			<!-- SECTION -->
 			<div class="section">
 				<!-- container -->
@@ -120,15 +146,18 @@
 								</thead>
 								<tbody>
 									<c:forEach items="${cart}" var="c">
-										<tr>
+										<tr class="cart_info_td">
 											<th scope='row'>
-												<input type="checkbox" name="buy" value="260" checked=""
-														onclick="javascript:basket.checkItem();"
+												<input type="checkbox" class="chkbox" name="chkbox" checked="checked"
+														onclick="chkbox();"
 												>&nbsp;
+												<input type="hidden" class="c_price" value="${c.p_price }">
+												<input type="hidden" class="c_count" value="${c.p_count }">
+												<input type="hidden" class="addPrice" value="${c.p_count * c.p_price}">
 											</th>
 											<td><img src="./productUpload/${p.p_img}" style="width: 60px;"></td>
 											<td>${c.p_name }</td>
-											<td>${c.p_price }원</td>
+											<td><fmt:formatNumber pattern="###,###,###" value="${c.p_price }" />원</td>
 											<td class="updown">
 												<input type="text" name="p_num3" id="p_num3" size="2"
 														maxlength="4" class="p_num" value="${c.p_count }"
@@ -142,28 +171,28 @@
 													<i class="fas fa-arrow-alt-circle-down down" style="cursor: pointer;"></i>
 												</span>
 											</td>
-											<td>${c.sumPrice}원</td>
+											<td>
+												<fmt:formatNumber pattern="###,###,###" value="${c.sumPrice}" />원
+											</td>
 											<td><button class="abutton" onclick="del(${c.cart_no})">삭제</button></td>
 										</tr>
 									</c:forEach>
 								</tbody>
 							</table>
 							<div class="right-align basketrowcmd">
-								<a href="javascript:void(0)" class="abutton"
-									onclick="javascript:basket.delCheckedItem();">선택상품삭제</a> <a
-									href="javascript:void(0)" class="abutton"
-									onclick="javascript:basket.delAllItem();">장바구니비우기</a>
+								<a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delCheckedItem();">선택상품삭제</a>
+								<button class="abutton" onclick="allDel(${cart[2].u_no})">장바구니비우기</button>
 							</div>
 							<div class="bigtext right-align sumcount" id="sum_p_num">
-								상품갯수:${qty}개
+								상품갯수:<span class="addProduct"></span>개
 							</div>
 							<div class="bigtext right-align box blue summoney" id="sum_p_price">
-								합계금액:74,200원
+								합계금액:<span class="totalPrice"></span>원
 							</div>
 							<div id="goorder" class="">
 								<div class="clear"></div>
 								<div class="buttongroup center-align cmd">
-									<a href="javascript:void(0);">선택한 상품 주문</a>
+									<button class="abutton" onclick="location.href='./checkout.do?p_no=${p.p_no}'">결제하기</button>
 								</div>
 							</div>
 						</form>
@@ -175,7 +204,6 @@
 			<!-- /container -->
 			</div>
 		</section>
-		
 		<!-- FOOTER -->
 		<footer id="footer">
 			<c:import url="./footer.jsp"></c:import>

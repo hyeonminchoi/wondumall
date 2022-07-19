@@ -51,6 +51,10 @@
 		DELETE FROM cart
 		WHERE cart_no = #{cart_no} AND u_no = #{u_no}
 	</delete>
+	<delete id="cartAllDel" parameterType="cartDTO">
+		DELETE FROM cart
+		WHERE u_no = #{u_no}
+	</delete>
 	<select id="reviewStatus" parameterType="reviewDTO" resultType="integer">
 		SELECT COUNT(*)
 		FROM review

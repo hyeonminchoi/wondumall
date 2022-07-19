@@ -56,6 +56,17 @@ public class ProductController {
 	private ServletContext servletContext;
 	
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
+	@RequestMapping(value = "/cartAllDel.do")
+	public String cartAllDel(HttpServletRequest request, @RequestParam int cart_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+		CartDTO cartDTO = new CartDTO();
+		cartDTO.setCart_no(cart_no);
+		cartDTO.setU_no(myUserDetails.getNo());
+		
+		productService.cartAllDel(cartDTO);
+		return "redirect:/cart.do?u_no=" + myUserDetails.getNo();
+	}
+	
+	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@RequestMapping(value = "/cartDelete.do")
 	public String cartDelete(HttpServletRequest request, @RequestParam int cart_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 		CartDTO cartDTO = new CartDTO();
@@ -69,18 +80,14 @@ public class ProductController {
 	@RequestMapping(value = "/cart.do")
 	public ModelAndView cart(@RequestParam(name = "u_no", required = false, defaultValue = "-1") int u_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 		ModelAndView mv = new ModelAndView("cart");
-		
 		if(u_no ==-1) {
 			mv.addObject("cart", 0);
 		} else {
 			List<CartDTO> cart = productService.cart(u_no);
 			mv.addObject("cart", cart);
-			/* mv.addObject("sumPrice", productService.sumPrice(u_no)); */
 		}
 		if(myUserDetails!=null)
 			mv.addObject("qty", productService.cartCount(myUserDetails.getNo()));
-		
-		
 		return mv;
 	}
 	

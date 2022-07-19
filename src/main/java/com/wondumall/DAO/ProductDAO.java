@@ -81,4 +81,8 @@ public class ProductDAO {
 	public int sumPrice(int u_no) {
 		return sqlSession.selectOne("product.sumPrice", u_no);
 	}
+
+	public void cartAllDel(CartDTO cartDTO) {
+		sqlSession.delete("product.cartAllDel", cartDTO);
+	}
 }
