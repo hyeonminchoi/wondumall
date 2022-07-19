@@ -55,8 +55,6 @@ public class ProductController {
 	@Autowired
 	private ServletContext servletContext;
 	
-	
-	
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@RequestMapping(value = "/cartDelete.do")
 	public String cartDelete(HttpServletRequest request, @RequestParam int cart_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
@@ -69,7 +67,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/cart.do")
-	public ModelAndView cart(@RequestParam(name = "u_no", required = false, defaultValue = "-1") int u_no) {
+	public ModelAndView cart(@RequestParam(name = "u_no", required = false, defaultValue = "-1") int u_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 		ModelAndView mv = new ModelAndView("cart");
 		
 		if(u_no ==-1) {
@@ -77,7 +75,12 @@ public class ProductController {
 		} else {
 			List<CartDTO> cart = productService.cart(u_no);
 			mv.addObject("cart", cart);
+			/* mv.addObject("sumPrice", productService.sumPrice(u_no)); */
 		}
+		if(myUserDetails!=null)
+			mv.addObject("qty", productService.cartCount(myUserDetails.getNo()));
+		
+		
 		return mv;
 	}
 	
