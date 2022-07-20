@@ -43,16 +43,17 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		String senderNickname = sender.getNickname();
 		int senderNo = sender.getNo();
 		String msg = data.get("message").toString();
-		Map<String, Object> map = new HashMap<>();
-		map.put("message", msg);
-		map.put("sender_no", senderNo);
-		int receiveNo = chattingService.getAdminNo(from);
-		map.put("receive_no", receiveNo);
 		
 		if(!msg.equals("")) { //메시지가 있다면 저장 및 전송
+			Map<String, Object> map = new HashMap<>();
+			map.put("message", msg.replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
+			map.put("sender_no", senderNo);
+			int receiveNo = chattingService.getAdminNo(from);
+			map.put("receive_no", receiveNo);
+			
 			int result = chattingService.addChatting(map);
 			if(result>0) { //관리자 및 사업자가 채팅 친 경우
-				Timestamp date = (Timestamp) map.get("chat_date");
+				String date = map.get("chat_date").toString();
 				if(sender.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ROLE_BUSINESS"))) {
 					chattingService.setRoomCountMinus(map);
 				} else { //사용자가 채팅 친 경우

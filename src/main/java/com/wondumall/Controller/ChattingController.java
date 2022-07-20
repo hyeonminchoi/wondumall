@@ -35,12 +35,14 @@ public class ChattingController {
 	
 	@ResponseBody
 	@PostMapping("/userList.do")
-	public List<LoginDTO> userList(@AuthenticationPrincipal MyUserDetails myUserDetails) {
-		
+	public List<LoginDTO> userList(@AuthenticationPrincipal MyUserDetails myUserDetails, @RequestBody(required = false) Map<String, Object> data) {
+		if(data==null)
+			data = new HashMap<>();
+		data.put("u_no", myUserDetails.getNo());
 		if(myUserDetails.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ROLE_BUSINESS"))) { //관리자, 사업자일 경우 마지막 채팅 순으로 방 리스트 출력
-			return chattingService.getRoomList(myUserDetails.getNo());
+			return chattingService.getRoomList(data);
 		} else {
-			return chattingService.getAdminList(myUserDetails.getNo());
+			return chattingService.getAdminList(data);
 		}
 	}
 	

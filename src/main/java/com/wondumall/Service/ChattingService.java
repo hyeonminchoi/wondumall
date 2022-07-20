@@ -14,12 +14,12 @@ import com..DTO.LoginDTO;
 public class ChattingService {
 	@Autowired ChattingDAO chattingDAO;
 
-	public List<LoginDTO> getAdminList(int u_no) {
-		return chattingDAO.getAdminList(u_no);
+	public List<LoginDTO> getAdminList(Map<String, Object> data) {
+		return chattingDAO.getAdminList(data);
 	}
 
-	public List<LoginDTO> getRoomList(int u_no) {
-		return chattingDAO.getRoomList(u_no);
+	public List<LoginDTO> getRoomList(Map<String, Object> data) {
+		return chattingDAO.getRoomList(data);
 	}
 
 	public List<ChatDTO> getChattingList(Map<String, Object> data) {

@@ -51,64 +51,63 @@
 <script src="./js/main.js"></script>
 
 <style>
-.navbar-nav{
-	flex-direction: inherit;
+table{
+	margin: 0 auto;
+	height:500px;
+	width: 100%;
+	table-layout: fixed;
 }
-#chattingDiv{
-	width: 80%;
-	height: 500px;
-	border: 1px solid black;
-}
-#userListDiv{
-	width: 40%;
-	display: inline-block;
-}
-#messageHeader{
-	height: 10%;
+th{
 	text-align: center;
-	font-weight: bold;
-	font-size: 2em;
-	border-bottom: 1px solid black;
-	line-height: 200%;
+	font-size: xx-large;
+}
+tr:nth-child(1){
+	height: 10%;
+	border-bottom: 1px double gray;
+}
+tr:nth-child(3) {
+	height: 10%;
+}
+tr:nth-child(2) {
+	height: 80%;
+}
+td:nth-child(1), th:nth-child(1){
+	width: 40%;
+}
+td:nth-child(2), th:nth-child(2){
+	width: 60%;
 }
 #message{
-	height: 80%;
+	height: 100%;
 	overflow: auto;
 }
-#messageInput{
-	height: 10%;
-}
-#chat{
-	display: inline-block;
-	font-size: 1vw;
-	height: 100%;
-	width: 90%;
+#message div{
+	border: 1px solid gray;
+	border-radius: 10px;
+	padding: 5px;
 }
 #userList{
+	height: 100%;
 	overflow: auto;
-	height: 100%;
-}
-#userInfo{
-	font-size: 1vw;
-	margin: 10px 0px;
-}
-#chattingBox{
-	float: right;
-	height: 100%;
-	width: 60%;
-	border: 1px solid black;
-}
-.input-group-append{
-	float: right;
-	height: 100%;
-}
-#sendBtn{
-	width: 100%;
-	height: 100%;
 }
 h3{
 	white-space: pre-wrap;
 	word-break:break-word;
+}
+#userInfo{
+	border: 1px solid gray;
+	border-radius: 10px;
+	margin-bottom: 30px;
+	padding: 0px 50px;
+	height: 50px;
+	line-height: 50px;
+}
+input{
+	width: 90%;
+}
+button{
+	width: 10%;
+	float: right;
 }
 </style>
 <script type="text/javascript">
@@ -130,43 +129,35 @@ h3{
 			<!-- container -->
 			<div class="container">
 				<sec:authorize access="authenticated">
-					<!-- 채팅 컨테이너 -->
-					<div class="row rounded-lg overflow-hidden shadow" id="chattingDiv">
-						<!-- 채팅방 목록 -->
-						<div class="col-5 px-0" id="userListDiv">
-							<div class="bg-white">
-							    <div class="bg-gray px-4 py-2 bg-light">
-							      	<h3 style="text-align: center;">User List</h3>
-							    </div>
-								<div class="messages-box">
-						      		<div class="list-group rounded-0" id="userList">
-						      		<%-- 채팅방 동적 생성 --%>
-					      			</div>
-						    	</div>
-					  		</div>
-						</div>
-						<!-- 채팅방 목록 -->
-						
-						<!-- 채팅창 -->
-						<div class="col-7 px-0" id="chattingBox">
-							<div id="messageHeader"></div>
-							<div class="px-4 pt-5 chat-box bg-white" id="message">
-							<%-- 메세지 동적 생성 --%>
-							</div>
-							<!-- 메세지 입력 창 -->
-				        	<div id="messageInput">
-					          	<input type="text" id="chat" placeholder="메세지를 입력하세요." class="form-control rounded-0 border-0 py-4 bg-light">
-					          	<div class="input-group-append">
-					            	<button type="button" class="btn btn-link bg-white" id="sendBtn" onclick="send();">
-					            		<i class="fa fa-paper-plane"></i>
-					            	</button>
-					          	</div>
-				        	</div>
-							<!-- 메세지 입력 창 -->
-				    	</div>
-						<!-- 채팅창 -->
-					</div>
-					<!-- 채팅 컨테이너 -->
+					<table class="table table-bordered">
+						<tr>
+							<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_BUSINESS')">
+								<th>사용자 리스트</th>
+							</sec:authorize>
+							<sec:authorize access="hasRole('ROLE_USER')">
+								<th>관리자 리스트</th>
+							</sec:authorize>
+							<th id="messageHeader"></th>
+						</tr>
+						<tr>
+							<td><div id="userList"></div></td>
+							<td><div id="message"></div></td>
+						</tr>
+						<tr>
+							<td>
+								<input type="text" id="search">
+								<button type="button" onclick="search()">
+									<i class="fa fa-search" aria-hidden="true"></i>
+								</button>
+							</td>
+							<td>
+								<input type="text" id="chat">
+								<button type="button" onclick="send()">
+									<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+								</button>
+							</td>
+						</tr>
+					</table>
 				</sec:authorize>
 				
 				
@@ -225,13 +216,22 @@ h3{
 			webSocket.onclose = onClose;
 		}
 		
-		function onOpen(){
-			let list = JSON.parse(ajaxForHTML('./userList.do'));
+		function onOpen(search){
+			let list = '';
+			if(search != undefined && search!=event && search!=''){
+				console.log(search);
+				let data={
+						"search":search
+				};
+				list = JSON.parse(ajaxForHTML('./userList.do', JSON.stringify(data), "application/json"));
+			} else{
+				list = JSON.parse(ajaxForHTML('./userList.do'));
+			}
 			let temp = '';
 			if('${sessionScope.user.authorities}' == '[ROLE_ADMIN]' || '${sessionScope.user.authorities}' == '[ROLE_BUSINESS]'){
 				for(let i=0;i<list.length;i++){
 					temp += "<div id='userInfo' onclick='changeRoom(" + list[i].user_no + ",\"" + list[i].user_nickname + "\")'>";
-					temp += list[i].user_nickname
+					temp += "<strong>" + list[i].user_nickname + "</strong>";
 					if(list[i].room_count>0)
 						temp += "<small style='color:red; float:right;'>" + list[i].room_count + "</small>";
 					temp += "</div>";
@@ -239,7 +239,7 @@ h3{
 			} else{
 				for(let i=0;i<list.length;i++){
 					temp += "<div id='userInfo' onclick='changeRoom(" + list[i].admin_no + ",\"" + list[i].admin_nickname + "\")'>"; 
-					temp += list[i].admin_nickname;
+					temp += "<strong>" + list[i].admin_nickname + "</strong>";
 					if(list[i].room_count<0)
 						temp += "<small style='color:red; float:right;'>" + (list[i].room_count * -1) + "</small>";
 					temp += "</div>";
@@ -248,8 +248,21 @@ h3{
 			$('#userList').html(temp);	
 		}
 		
+		function search(){
+			let search=$('#search').val();
+			clearInterval(proc);
+			proc = setInterval(onOpen, 1000, search);
+		}
+		
+		// 엔터로 검색
+		$(document).on('keydown', '#search', function(e){
+	        if(e.keyCode == 13 && !e.shiftKey) {
+	        	search();
+	        }
+	   	});
+		
 		function send(){
-			let message = $('#chat').val();
+			let message = $('#chat').val().replace(/\</g, "&lt;").replace(/\>/g, "&gt;");
 			data = {
 					"message" : message,
 					"from" : $('#messageHeader').text()
@@ -259,7 +272,7 @@ h3{
 			if($('#messageHeader').text() != '' && message != ''){
 				let temp = '';
 				temp += '<div style="clear:both; float: right; margin-bottom: 10px; width: 50%;">'
-				temp += '<h3 style="display:inline-block;">' + message + '</h3>'
+				temp += '<h3>' + message + '</h3>'
 				temp += '<small>' + today.toISOString().replace('T', ' ').substring(0, 19) + '</small>'
 				temp += '</div>'
 				$('#message').append(temp);
@@ -281,12 +294,12 @@ h3{
 			for(let i=0;i<list.length;i++){
 				if(list[i].u_no == ${sessionScope.user.no}){ //내가 쓴 메시지
 					temp += '<div style="clear:both; float: right; margin-bottom: 10px; width: 50%;">'
-					temp += '<h3 style="display:inline-block;">' + list[i].chat_msg + '</h3>'
+					temp += '<h3>' + list[i].chat_msg + '</h3>'
 					temp += '<small>' + list[i].chat_date + '</small>'
 					temp += '</div>'
 				} else{ //상대방이 쓴 메시지
 					temp += '<div style="clear:both; margin-bottom: 10px; width: 50%;">'
-					temp += '<h3 style="display:inline-block;">' + list[i].chat_msg + '</h3>'
+					temp += '<h3>' + list[i].chat_msg + '</h3>'
 					temp += '<small>' + list[i].chat_date + '</small>'
 					temp += '</div>'
 				}
@@ -309,7 +322,7 @@ h3{
 			if(arr[0] == $('#messageHeader').text()){
 				let temp = '';
 				temp += '<div style="clear:both; margin-bottom: 10px; width: 50%;">'
-				temp += '<h3 style="display:inline-block;">' + arr[1] + '</h3>'
+				temp += '<h3>' + arr[1] + '</h3>'
 				temp += '<small>' + arr[2] + '</small>'
 				temp += '</div>'
 				$('#message').append(temp);
@@ -325,11 +338,12 @@ h3{
 		}
 	    
 		function onError(error){
-			
+			console.log("에러 발생");
+			clearInterval(proc);	
 		}
 		
 		function onClose(){
-			
+			clearInterval(proc);
 		}
 	</script>
 </sec:authorize>

@@ -3,20 +3,26 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="chatting">
-	<select id="getAdminList" resultType="adminDTO" parameterType="integer">
+	<select id="getAdminList" resultType="adminDTO" parameterType="map">
 		SELECT u.u_no AS admin_no, u.u_nickname AS admin_nickname, c.room_count
 		FROM user u
 		LEFT JOIN chattingRoom c
 		ON u.u_no = c.admin_no AND c.user_no = #{u_no}
-		WHERE u.u_grade = 2 OR u.u_grade = 1
+		WHERE (u.u_grade = 2 OR u.u_grade = 1)
+		<if test="search != null">
+			AND u.u_nickname LIKE '%${search}%'
+		</if>
 		ORDER BY c.room_lastChattingTime DESC, u.u_nickname ASC
 	</select>
 	
-	<select id="getRoomList" parameterType="integer" resultType="chattingRoomDTO">
+	<select id="getRoomList" parameterType="map" resultType="chattingRoomDTO">
 		SELECT c.*, (SELECT u_nickname FROM user u WHERE c.user_no = u.u_no) AS user_nickname
       		,(SELECT u_nickname FROM user u WHERE c.admin_no = u.u_no) AS admin_nickname
 		FROM chattingRoom c
 		WHERE admin_no = #{u_no}
+		<if test="search != null">
+			AND user_no IN (SELECT u_no FROM user WHERE u_nickname LIKE '%${search}%')
+		</if>
 		ORDER BY c.room_lastChattingTime DESC
 	</select>
 	
@@ -40,8 +46,8 @@
 	<insert id="addChatting" parameterType="map">
 		INSERT INTO chat(chat_msg, u_no, room_no)
 		VALUES(#{message}, #{sender_no}, (SELECT room_no FROM chattingRoom WHERE (user_no = #{sender_no} AND admin_no = #{receive_no}) OR (user_no = #{receive_no} AND admin_no = #{sender_no})))
-		<selectKey keyColumn="chat_date" keyProperty="chat_date" order="AFTER" resultType="java.sql.Timestamp">
-			SELECT chat_date FROM chat WHERE chat_no = LAST_INSERT_ID()
+		<selectKey keyColumn="chat_date" keyProperty="chat_date" order="AFTER" resultType="string">
+			SELECT DATE_FORMAT(chat_date,'%Y-%m-%d %H:%i:%s') FROM chat WHERE chat_no = LAST_INSERT_ID()
 		</selectKey>
 	</insert>
 	

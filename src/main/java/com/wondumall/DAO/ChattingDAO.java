@@ -14,12 +14,12 @@ import com..DTO.LoginDTO;
 public class ChattingDAO {
 	@Autowired private SqlSession sqlSession;
 
-	public List<LoginDTO> getAdminList(int u_no) {
-		return sqlSession.selectList("chatting.getAdminList", u_no);
+	public List<LoginDTO> getAdminList(Map<String, Object> data) {
+		return sqlSession.selectList("chatting.getAdminList", data);
 	}
 
-	public List<LoginDTO> getRoomList(int u_no) {
-		return sqlSession.selectList("chatting.getRoomList", u_no);
+	public List<LoginDTO> getRoomList(Map<String, Object> data) {
+		return sqlSession.selectList("chatting.getRoomList", data);
 	}
 
 	public List<ChatDTO> getChattingList(Map<String, Object> data) {
