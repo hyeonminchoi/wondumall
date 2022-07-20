@@ -18,10 +18,18 @@ public class LoginController {
 	private LoginService loginService;
 	
 	//회원정보수정	
-	@PostMapping(value = "/update")
+	@GetMapping(value = "/update")
+	public String update() {
+
+		return "update";
+	}
+	
+	@PostMapping(value = "/update.do")
 	public String update(LoginDTO dto) {
+		
 		loginService.update(dto);
-		return "redirect:/login.do";
+		
+		return "index";
 	}
 	
 	//email 중복체크

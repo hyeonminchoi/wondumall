@@ -56,9 +56,9 @@
 	<section>
 		<div id="section">
 			<div id="container">
-				<form action="./join.do" method="POST" id="join" class="joinForm" onsubmit="DoJoinForm__submit(this); return false;">
+				<form action="./update.do" method="POST" id="join" class="joinForm" onsubmit="DoJoinForm__submit(this); return false;">
 	
-					<h2>회원 정보</h2>
+					<h2>마이페이지</h2>
 					<div class="textForm">
 						<input autocomplete="off" name="u_email" id="email" minlength="6" type="email" required="required" class="email" placeholder="아이디(이메일 형식)" oninput = "checkemail()" pattern="^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$" />
 					</div>				
@@ -185,7 +185,7 @@
 	
 					</div>
 	
-					<input type="submit"  id="joinbtn" class="btn" value="가입하기" />
+					<input type="submit"  id="joinbtn" class="btn" value="수정하기" />
 				</form>
 			</div>
 		</div>
