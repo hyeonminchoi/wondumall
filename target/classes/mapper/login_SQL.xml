@@ -29,4 +29,9 @@
 	<select id="nicknameCheck" parameterType="string" resultType="integer">
 		SELECT COUNT(*) FROM user WHERE u_nickname=#{u_nickname} AND u_provider=""
 	</select>
+	<update id="update" parameterType="loginDTO" >
+		UPDATE user SET u_pw = #{u_pw}, u_nickname=#{u_nicnkname}, u_roadAddress = #{u_roadAddress},
+						u_postcode=#{u_postcode}, u_detailAddress=#{u_detailAddress}, u_extraAddress=#{u_extraAddress}
+						WHERE u_eamil=#{u_eamil}
+	 </update>
 </mapper>

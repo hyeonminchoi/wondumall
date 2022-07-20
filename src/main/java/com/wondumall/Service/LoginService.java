@@ -36,6 +36,9 @@ public class LoginService {
 	public int gradeCheck(String grade) {
 		return loginDAO.gradeCheck(grade);
 	}
+	public int update(LoginDTO dto) {
+		return loginDAO.update(dto);
+	}
 
 		
 		

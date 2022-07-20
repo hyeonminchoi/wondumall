@@ -1,5 +1,8 @@
 package com..DAO;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -34,5 +37,10 @@ public class LoginDAO {
 	public int gradeCheck(String grade) {
 		return sqlSession.selectOne("login.gradeCheck", grade);
 	}
+	public int update(LoginDTO dto) {
+		return sqlSession.update("login.update", dto);
+			
+	}
+
 
 }

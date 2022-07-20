@@ -17,6 +17,13 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 	
+	//회원정보수정	
+	@PostMapping(value = "/update")
+	public String update(LoginDTO dto) {
+		loginService.update(dto);
+		return "redirect:/login.do";
+	}
+	
 	//email 중복체크
 	@PostMapping(value = "/emailCheck") //ResposeBody => 결과값을 내상태에서 출력
 	@ResponseBody
