@@ -1,15 +1,18 @@
 package com..Controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com..DTO.CouponDTO;
 import com..DTO.PageDTO;
 import com..DTO.ProductDTO;
+import com..DTO.QuestionDTO;
 import com..Service.BusinessService;
 
 @Controller
@@ -32,10 +36,18 @@ public class BusinessController {
 	}
 	
 	@PostMapping(value = "/business/couponWrite.do")
-	public String businessCoupon(CouponDTO dto) {
-		businessService.couponWrite(dto);
+	public void businessCoupon(CouponDTO dto, @RequestParam(name = "pageNo", defaultValue = "1") int pageNo, HttpServletResponse response) throws Exception {
 		
-		return "businessCoupon";
+		int result = businessService.couponWrite(dto);
+		
+		response.setContentType("text/html; charset=UTF-8");
+		if (result > 0) {
+			response.getWriter().println(
+					"<script> alert('쿠폰 작성에 성공했습니다'); location.href='./coupon.do?pageNo=" + pageNo + "'</script>");
+		} else {
+			response.getWriter().println(
+					"<script> alert('쿠폰 작성에 실패했습니다'); location.href='./coupon.do?pageNo=" + pageNo + "'</script>");
+		}
 	}
 	
 	@GetMapping(value = "/business/coupon.do")
@@ -72,5 +84,35 @@ public class BusinessController {
 		mv.addObject("pageNo", pageNo);
 		
 		return mv;
+	}
+	
+	@GetMapping(value = "/business/coupondel/{coupon_no}")
+	public String coupondel(@PathVariable("coupon_no") int coupon_no) {
+		
+		CouponDTO dto = new CouponDTO();
+		dto.setCoupon_no(coupon_no);
+		businessService.coupondel(coupon_no);
+		
+		return "redirect:/business/coupon.do";
+	}
+	
+	@GetMapping(value = "/business/couponrepair/{coupon_no}")
+	public String qrpr(@PathVariable("coupon_no") int coupon_no) {
+		
+		CouponDTO dto = new CouponDTO();
+		dto.setCoupon_no(coupon_no);
+		businessService.couponrepair(coupon_no);
+		
+		return "redirect:/business/coupon.do";
+	}
+	
+	@GetMapping(value = "/business/couponcdel/{coupon_no}")
+	public String qcompledel(@PathVariable("coupon_no") int coupon_no) {
+		
+		CouponDTO dto = new CouponDTO();
+		dto.setCoupon_no(coupon_no);
+		businessService.couponcdel(coupon_no);
+		
+		return "redirect:/business/coupon.do";
 	}
 }

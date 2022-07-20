@@ -18,7 +18,7 @@
 			</when>
 		</choose>
 		GROUP BY Coupon_no
-		ORDER BY Coupon_minorder DESC
+		ORDER BY Coupon_no DESC
 		LIMIT #{page.startPage}, #{page.lastPage}
 	</select>
 	<select id="getCount" resultType="integer" parameterType="map">
@@ -33,4 +33,13 @@
 			</when>
 		</choose>
 	</select>
+	<update id="coupondel" parameterType="integer">
+		UPDATE coupon SET coupon_del=1 WHERE coupon_no=#{coupon_no}
+	</update>
+	<update id="couponrepair" parameterType="integer">
+		UPDATE coupon SET coupon_del=0 WHERE coupon_no=#{coupon_no}
+	</update>
+	<delete id="couponcdel" parameterType="integer">
+		DELETE FROM coupon WHERE coupon_no=#{coupon_no}
+	</delete>
 </mapper>

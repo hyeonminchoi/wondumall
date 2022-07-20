@@ -15,9 +15,9 @@ public class BusinessService {
 	@Autowired
 	private BusinessDAO businessDAO;
 
-	public void couponWrite(CouponDTO dto) {
+	public int couponWrite(CouponDTO dto) {
 		
-		businessDAO.couponWrite(dto);
+		return businessDAO.couponWrite(dto);
 	}
 
 	public int getCount(Map<String, Object> map) {
@@ -28,5 +28,20 @@ public class BusinessService {
 	public List<CouponDTO> couponList(Map<String, Object> map) {
 		
 		return businessDAO.couponList(map);
+	}
+
+	public void coupondel(int coupon_no) {
+		
+		businessDAO.coupondel(coupon_no);
+	}
+
+	public void couponrepair(int coupon_no) {
+		
+		businessDAO.couponrepair(coupon_no);
+	}
+
+	public void couponcdel(int coupon_no) {
+		
+		businessDAO.couponcdel(coupon_no);
 	}
 }

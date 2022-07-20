@@ -15,9 +15,9 @@ public class BusinessDAO {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public void couponWrite(CouponDTO dto) {
+	public int couponWrite(CouponDTO dto) {
 		
-		sqlSession.insert("business.couponWrite", dto);
+		return sqlSession.insert("business.couponWrite", dto);
 	}
 
 	public int getCount(Map<String, Object> map) {
@@ -28,5 +28,20 @@ public class BusinessDAO {
 	public List<CouponDTO> couponList(Map<String, Object> map) {
 		
 		return sqlSession.selectList("business.couponList", map);
+	}
+
+	public void coupondel(int coupon_no) {
+		
+		sqlSession.update("business.coupondel", coupon_no);
+	}
+
+	public void couponrepair(int coupon_no) {
+		
+		sqlSession.update("business.couponrepair", coupon_no);
+	}
+
+	public void couponcdel(int coupon_no) {
+		
+		sqlSession.delete("business.couponcdel", coupon_no);
 	}
 }

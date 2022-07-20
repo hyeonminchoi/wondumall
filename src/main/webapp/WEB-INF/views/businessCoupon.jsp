@@ -46,35 +46,38 @@
 							<th scope="col">할인비율</th>
 							<th scope="col">삭제여부</th>
 							<th scope="col">삭제</th>
+							<th scope="col">완전삭제</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach items="${couponList }" var="c">
-							<th scope="row">${c.coupon_no }</th>
-							<td>${c.coupon_description }</td>
-							<td>${c.coupon_minorder }</td>
-							<td>${c.coupon_per }</td>
-							<td>
-							<c:choose>
-								<c:when test="${c.coupon_del eq 1}">
-									O
-								</c:when>
-								<c:otherwise>
-									X
-								</c:otherwise>
-							</c:choose>
-							</td>
-							<td>
-							<c:choose>
-								<c:when test="${c.coupon_del eq 1 }">
-									<button onclick="rpr(${b.b_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #A9F5BC;">복구하기</button>
-								</c:when>
-								<c:otherwise>
-									<button onclick="bdel(${b.b_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5A9A9;">삭제하기</button>
-								</c:otherwise>
-							</c:choose>
-							</td>
-							<td><button onclick="compledel(${b.b_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5A9A9;">완전삭제</button></td>
+							<tr>
+								<th scope="row">${c.coupon_no }</th>
+								<td>${c.coupon_description }</td>
+								<td>${c.coupon_minorder }</td>
+								<td>${c.coupon_per * 100 }%</td>
+								<td>
+								<c:choose>
+									<c:when test="${c.coupon_del eq 1}">
+										O
+									</c:when>
+									<c:otherwise>
+										X
+									</c:otherwise>
+								</c:choose>
+								</td>
+								<td>
+								<c:choose>
+									<c:when test="${c.coupon_del eq 1 }">
+										<button onclick="couponrepair(${c.coupon_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #A9F5BC;">복구하기</button>
+									</c:when>
+									<c:otherwise>
+										<button onclick="coupondel(${c.coupon_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5A9A9;">삭제하기</button>
+									</c:otherwise>
+								</c:choose>
+								</td>
+								<td><button onclick="couponcdel(${c.coupon_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5A9A9;">완전삭제</button></td>
+							</tr>
 						</c:forEach>
 					</tbody>
 					<tbody>
@@ -149,6 +152,21 @@ function hideWriteDialog(){
 }
 function linkPage(pageNo) {
 	location.href = "//business/coupon.do?pageNo=" + pageNo;
+}
+function coupondel(coupon_no){
+	if (confirm("삭제를 하시겠습니까?")){
+		location.href = "//business/coupondel/" + coupon_no;
+	}
+}
+function couponrepair(coupon_no){
+	if (confirm("복구를 하시겠습니까?")){
+		location.href = "//business/couponrepair/" + coupon_no;
+	}
+}
+function couponcdel(coupon_no){
+	if (confirm("삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?")){
+		location.href = "//business/couponcdel/" + coupon_no;
+	}
 }
 </script>
 </body>
