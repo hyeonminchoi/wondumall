@@ -117,7 +117,7 @@ function allDel(u_no) {
 							<table class="table">
 								<thead>
 									<tr>
-										<th scope="col">선택</th>
+										<th scope="col"><input type="checkbox" class="all_check" checked="checked" style="margin-right: 6px;">선택</th>
 										<th scope="col">이미지</th>
 										<th scope="col">상품명</th>
 										<th scope="col">가격</th>
@@ -203,11 +203,23 @@ function allDel(u_no) {
 			
 			setTotalInfo();
 		});
-
+		
+		//체크여부에 따른 가격 반영
 		$(".chkbox").on("change", function(){
 			setTotalInfo($(".cart_info"));
 		});
-
+		
+		//체크박스 전체 선택
+		$(".all_check").on("click", function(){
+			// 체크박스 전체 선택/해제 if문
+			if($(".all_check").prop("checked") != false){
+				$(".chkbox").prop("checked", true);
+			} else {
+				$(".chkbox").prop("checked", false);
+			}
+			setTotalInfo($(".cart_info"));
+		});
+		
 		function setTotalInfo(){
 			$(document).ready(function(){
 				let sumPrice = 0;
