@@ -72,6 +72,17 @@ function allDel(u_no) {
 	}
 }
 
+function chkbox(cart_no) {
+	if (confirm("click?")){
+		location.href = "./pCheck.do?cart_no=" + cart_no;
+	}
+}
+
+/* function chkbox(cart_no) {
+	alert("chkbox");
+	location.href = "./pCheck.do?cart_no=" + cart_no;
+} */
+
 
 </script>
     </head>
@@ -113,7 +124,7 @@ function allDel(u_no) {
 				<div class="container">
 					<!-- row -->
 					<div class="row">
-						<form name="orderform" id="orderform" method="post" class="orderform" action="/checkout" onsubmit="return false;">
+						<form action="/checkout.do" name="orderform" id="orderform" method="post" class="orderform" onsubmit="return false;">
 							<table class="table">
 								<thead>
 									<tr>
@@ -128,12 +139,15 @@ function allDel(u_no) {
 								</thead>
 								<tbody>
 									<c:forEach items="${cart}" var="c">
+										${c.cart_no}
 										<tr class="cart_info">
 											<th scope='row'>
-												<input type="checkbox" class="chkbox" name="chkbox" checked="checked">&nbsp;
+												<input type="checkbox" id="chkbox" class="chkbox" name="chkbox" checked="checked" onclick="chkbox(${c.cart_no})">&nbsp;
+												<input type="hidden" class="c_no" value="${c.cart_no }">
 												<input type="hidden" class="c_price" value="${c.p_price }">
 												<input type="hidden" class="c_count" value="${c.p_count }">
 												<input type="hidden" class="addPrice" value="${c.p_count * c.p_price}">
+												<input type="hidden" class="c_p_no" value="${c.p_no}">
 											</th>
 											<td><img src="./productUpload/${p.p_img}" style="width: 60px;"></td>
 											<td>${c.p_name }</td>
@@ -160,7 +174,7 @@ function allDel(u_no) {
 								</tbody>
 							</table>
 							<div class="right-align basketrowcmd">
-								<a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delCheckedItem();">선택상품삭제</a>
+								<!-- <a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delCheckedItem();">선택상품삭제</a> -->
 								<button class="abutton" onclick="allDel(${cart[2].u_no})">장바구니비우기</button>
 							</div>
 							<div class="bigtext right-align sumcount" id="sum_p_num">
@@ -172,7 +186,7 @@ function allDel(u_no) {
 							<div id="goorder" class="">
 								<div class="clear"></div>
 								<div class="buttongroup center-align cmd">
-									<button class="abutton" onclick="location.href='./checkout.do?p_no=${p.p_no}'">결제하기</button>
+									<button type="submit" class="abutton" onclick="location.href='./checkout.do?u_no=${c.u_no}'">결제하기</button>
 								</div>
 							</div>
 						</form>
@@ -220,6 +234,13 @@ function allDel(u_no) {
 			setTotalInfo($(".cart_info"));
 		});
 		
+		/* $(".chkbox").on("click", function(){
+			alert("click!");
+			var cart_no = 49;
+			alert(cart_no);
+			location.href="./pCheck.do?cart_no=" + cart_no;
+		}); */
+		
 		function setTotalInfo(){
 			$(document).ready(function(){
 				let sumPrice = 0;
@@ -236,6 +257,14 @@ function allDel(u_no) {
 				$(".totalPrice").text(sumPrice.toLocaleString());
 			});
 		}
+		
+		/* $(document).ready(function(){
+			$("#chkbox").click(function(p_no){
+				//클릭 시 location.href
+				location.href="./pCheck.do?cart_no=" + cart_no;
+			});
+		}); */
+		
 		</script>
 	</body>
 </html>
