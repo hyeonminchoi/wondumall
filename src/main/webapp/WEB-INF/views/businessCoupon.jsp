@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,7 +56,10 @@
 								<th scope="row">${c.coupon_no }</th>
 								<td>${c.coupon_description }</td>
 								<td>${c.coupon_minorder }</td>
-								<td>${c.coupon_per * 100 }%</td>
+								<td>
+								<fmt:parseNumber var="percent" value="${c.coupon_per * 100 }" integerOnly="true" />
+								${percent}%
+								</td>
 								<td>
 								<c:choose>
 									<c:when test="${c.coupon_del eq 1}">

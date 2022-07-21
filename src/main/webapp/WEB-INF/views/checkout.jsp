@@ -137,6 +137,14 @@
 								<div><strong>FREE</strong></div>
 							</div>
 							<div class="order-col">
+								<div>쿠폰</div>
+								<div>
+								<select name="coupon" id="coupon">
+									<option value="">전체</option>
+								</select>
+								</div>
+							</div>
+							<div class="order-col">
 								<div><strong>총금액</strong></div>
 								<div><strong class="order-total">${product.p_price }</strong></div>
 							</div>
