@@ -1,6 +1,7 @@
 package com..Controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import com..Config.MyUserDetails;
+import com..DTO.CouponDTO;
 import com..DTO.OrderDTO;
 import com..DTO.ProductDTO;
 import com..DTO.UserDTO;
@@ -69,6 +71,10 @@ public class PaymentController {
 		UserDTO user = new UserDTO();
 		paymentService.user(user);
 		
+		List<CouponDTO> couponList = paymentService.couponList();
+		
+		
+		mv.addObject("couponList", couponList);
 		mv.addObject("product", dto);
 		mv.addObject("user", user);
 		

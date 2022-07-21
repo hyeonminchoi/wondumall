@@ -1,9 +1,12 @@
 package com..Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com..DAO.PaymentDAO;
+import com..DTO.CouponDTO;
 import com..DTO.OrderDTO;
 import com..DTO.ProductDTO;
 import com..DTO.UserDTO;
@@ -26,6 +29,11 @@ public class PaymentService {
 	public ProductDTO product(ProductDTO dto) {
 		
 		return paymentDAO.product(dto);
+	}
+
+	public List<CouponDTO> couponList() {
+		
+		return paymentDAO.couponList();
 	}
 
 

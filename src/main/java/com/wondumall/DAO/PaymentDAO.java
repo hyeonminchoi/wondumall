@@ -1,9 +1,12 @@
 package com..DAO;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com..DTO.CouponDTO;
 import com..DTO.OrderDTO;
 import com..DTO.ProductDTO;
 import com..DTO.UserDTO;
@@ -27,6 +30,11 @@ public class PaymentDAO {
 	public ProductDTO product(ProductDTO dto) {
 		
 		return sqlSession.selectOne("payment.product", dto);
+	}
+
+	public List<CouponDTO> couponList() {
+		
+		return sqlSession.selectList("payment.couponList");
 	}
 
 

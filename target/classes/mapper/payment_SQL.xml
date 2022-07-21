@@ -4,13 +4,16 @@
 
 <mapper namespace="payment">
 	<insert id="checkout" parameterType="orderDTO">
-	INSERT INTO orderorder(o_name, o_email, o_postcode, o_roadAddress, o_extraAddress, o_detailAddress, o_tel, o_request, imp_uid, merchant_uid, u_no, p_no )
-	VALUES (#{o_name}, #{o_email}, #{o_postcode}, #{o_roadAddress}, #{o_extraAddress}, #{o_detailAddress}, #{o_tel}, #{o_request}, #{imp_uid}, #{merchant_uid}, #{u_no}, #{p_no})
+		INSERT INTO orderorder(o_name, o_email, o_postcode, o_roadAddress, o_extraAddress, o_detailAddress, o_tel, o_request, imp_uid, merchant_uid, u_no, p_no )
+		VALUES (#{o_name}, #{o_email}, #{o_postcode}, #{o_roadAddress}, #{o_extraAddress}, #{o_detailAddress}, #{o_tel}, #{o_request}, #{imp_uid}, #{merchant_uid}, #{u_no}, #{p_no})
 	</insert>
 	<select id="product" parameterType="productDTO" resultType="productDTO">
-	SELECT * FROM product WHERE p_no=#{p_no}
+		SELECT * FROM product WHERE p_no=#{p_no}
 	</select>
 	<select id="user" resultType="userDTO">
-	SELECT * FROM user WHERE u_no=#{u_no}
+		SELECT * FROM user WHERE u_no=#{u_no}
+	</select>
+	<select id="couponList" resultType="couponDTO">
+		SELECT * FROM coupon
 	</select>
 </mapper>
