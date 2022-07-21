@@ -72,24 +72,6 @@ function allDel(u_no) {
 	}
 }
 
-$(document).ready(function(){
-	
-	setTotalInfo();
-});
-function setTotalInfo(){
-	$(document).ready(function(){
-		let sumPrice = 0;
-		let addProduct = 0;
-		$(".cart_info_td").each(function(index, element){
-			// 총 가격
-			sumPrice += parseInt($(element).find(".addPrice").val());
-			
-			addProduct += 1;
-		});
-		$(".addProduct").text(addProduct);
-		$(".totalPrice").text(sumPrice.toLocaleString());
-	});
-}
 
 </script>
     </head>
@@ -146,11 +128,9 @@ function setTotalInfo(){
 								</thead>
 								<tbody>
 									<c:forEach items="${cart}" var="c">
-										<tr class="cart_info_td">
+										<tr class="cart_info">
 											<th scope='row'>
-												<input type="checkbox" class="chkbox" name="chkbox" checked="checked"
-														onclick="chkbox();"
-												>&nbsp;
+												<input type="checkbox" class="chkbox" name="chkbox" checked="checked">&nbsp;
 												<input type="hidden" class="c_price" value="${c.p_price }">
 												<input type="hidden" class="c_count" value="${c.p_count }">
 												<input type="hidden" class="addPrice" value="${c.p_count * c.p_price}">
@@ -159,11 +139,11 @@ function setTotalInfo(){
 											<td>${c.p_name }</td>
 											<td><fmt:formatNumber pattern="###,###,###" value="${c.p_price }" />원</td>
 											<td class="updown">
-												<input type="text" name="p_num3" id="p_num3" size="2"
+												<%-- <input type="text" name="p_num3" id="p_num3" size="2"
 														maxlength="4" class="p_num" value="${c.p_count }"
 														style="text-align: right;"
-														onkeyup="javascript:basket.changePNum(3);"
-												>
+														onkeyup="javascript:basket.changePNum(3);"> --%>
+												${c.p_count }
 												<span onclick="javascript:basket.changePNum(3);">
 													<i class="fas fa-arrow-alt-circle-up up" style="cursor: pointer;"></i>
 												</span>
@@ -217,6 +197,33 @@ function setTotalInfo(){
 		<script src="./js/nouislider.min.js"></script>
 		<script src="./js/jquery.zoom.min.js"></script>
 		<script src="./js/main.js"></script>
+		
+		<script type="text/javascript">
+		$(document).ready(function(){
+			
+			setTotalInfo();
+		});
 
+		$(".chkbox").on("change", function(){
+			setTotalInfo($(".cart_info"));
+		});
+
+		function setTotalInfo(){
+			$(document).ready(function(){
+				let sumPrice = 0;
+				let addProduct = 0;
+				$(".cart_info").each(function(index, element){
+					if($(element).find(".chkbox").is(":checked") === true){	//체크여부
+						// 총 가격
+						sumPrice += parseInt($(element).find(".addPrice").val());
+						// 상품 종류 갯수
+						addProduct += 1;
+					}
+				});
+				$(".addProduct").text(addProduct);
+				$(".totalPrice").text(sumPrice.toLocaleString());
+			});
+		}
+		</script>
 	</body>
 </html>
