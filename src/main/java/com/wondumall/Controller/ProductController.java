@@ -55,6 +55,20 @@ public class ProductController {
 	@Autowired
 	private ServletContext servletContext;
 	
+	
+	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
+	@RequestMapping(value = "/pCheck.do")
+	public String pCheck(HttpServletRequest request, @RequestParam int cart_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+		CartDTO cartDTO = new CartDTO();
+		cartDTO.setCart_no(cart_no);
+		cartDTO.setU_no(myUserDetails.getNo());
+		
+		System.out.println(cart_no);
+		
+		productService.pCheck(cartDTO);
+		return "redirect:/cart.do?u_no=" + myUserDetails.getNo();
+	}
+	
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@RequestMapping(value = "/cartAllDel.do")
 	public String cartAllDel(HttpServletRequest request, @RequestParam int cart_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
@@ -88,6 +102,7 @@ public class ProductController {
 		}
 		if(myUserDetails!=null)
 			mv.addObject("qty", productService.cartCount(myUserDetails.getNo()));
+		
 		return mv;
 	}
 	

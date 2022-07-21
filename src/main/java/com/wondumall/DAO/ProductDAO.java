@@ -85,4 +85,8 @@ public class ProductDAO {
 	public void cartAllDel(CartDTO cartDTO) {
 		sqlSession.delete("product.cartAllDel", cartDTO);
 	}
+
+	public void pCheck(CartDTO cartDTO) {
+		sqlSession.update("product.pCheck", cartDTO);
+	}
 }

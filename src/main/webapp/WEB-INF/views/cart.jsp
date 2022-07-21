@@ -72,24 +72,17 @@ function allDel(u_no) {
 	}
 }
 
-$(document).ready(function(){
-	
-	setTotalInfo();
-});
-function setTotalInfo(){
-	$(document).ready(function(){
-		let sumPrice = 0;
-		let addProduct = 0;
-		$(".cart_info_td").each(function(index, element){
-			// 총 가격
-			sumPrice += parseInt($(element).find(".addPrice").val());
-			
-			addProduct += 1;
-		});
-		$(".addProduct").text(addProduct);
-		$(".totalPrice").text(sumPrice.toLocaleString());
-	});
+function chkbox(cart_no) {
+	if (confirm("click?")){
+		location.href = "./pCheck.do?cart_no=" + cart_no;
+	}
 }
+
+/* function chkbox(cart_no) {
+	alert("chkbox");
+	location.href = "./pCheck.do?cart_no=" + cart_no;
+} */
+
 
 </script>
     </head>
@@ -131,11 +124,11 @@ function setTotalInfo(){
 				<div class="container">
 					<!-- row -->
 					<div class="row">
-						<form name="orderform" id="orderform" method="post" class="orderform" action="/checkout" onsubmit="return false;">
+						<form action="/checkout.do" name="orderform" id="orderform" method="post" class="orderform" onsubmit="return false;">
 							<table class="table">
 								<thead>
 									<tr>
-										<th scope="col">선택</th>
+										<th scope="col"><input type="checkbox" class="all_check" checked="checked" style="margin-right: 6px;">선택</th>
 										<th scope="col">이미지</th>
 										<th scope="col">상품명</th>
 										<th scope="col">가격</th>
@@ -146,24 +139,25 @@ function setTotalInfo(){
 								</thead>
 								<tbody>
 									<c:forEach items="${cart}" var="c">
-										<tr class="cart_info_td">
+										${c.cart_no}
+										<tr class="cart_info">
 											<th scope='row'>
-												<input type="checkbox" class="chkbox" name="chkbox" checked="checked"
-														onclick="chkbox();"
-												>&nbsp;
+												<input type="checkbox" id="chkbox" class="chkbox" name="chkbox" checked="checked" onclick="chkbox(${c.cart_no})">&nbsp;
+												<input type="hidden" class="c_no" value="${c.cart_no }">
 												<input type="hidden" class="c_price" value="${c.p_price }">
 												<input type="hidden" class="c_count" value="${c.p_count }">
 												<input type="hidden" class="addPrice" value="${c.p_count * c.p_price}">
+												<input type="hidden" class="c_p_no" value="${c.p_no}">
 											</th>
 											<td><img src="./productUpload/${p.p_img}" style="width: 60px;"></td>
 											<td>${c.p_name }</td>
 											<td><fmt:formatNumber pattern="###,###,###" value="${c.p_price }" />원</td>
 											<td class="updown">
-												<input type="text" name="p_num3" id="p_num3" size="2"
+												<%-- <input type="text" name="p_num3" id="p_num3" size="2"
 														maxlength="4" class="p_num" value="${c.p_count }"
 														style="text-align: right;"
-														onkeyup="javascript:basket.changePNum(3);"
-												>
+														onkeyup="javascript:basket.changePNum(3);"> --%>
+												${c.p_count }
 												<span onclick="javascript:basket.changePNum(3);">
 													<i class="fas fa-arrow-alt-circle-up up" style="cursor: pointer;"></i>
 												</span>
@@ -180,7 +174,7 @@ function setTotalInfo(){
 								</tbody>
 							</table>
 							<div class="right-align basketrowcmd">
-								<a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delCheckedItem();">선택상품삭제</a>
+								<!-- <a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delCheckedItem();">선택상품삭제</a> -->
 								<button class="abutton" onclick="allDel(${cart[2].u_no})">장바구니비우기</button>
 							</div>
 							<div class="bigtext right-align sumcount" id="sum_p_num">
@@ -192,7 +186,7 @@ function setTotalInfo(){
 							<div id="goorder" class="">
 								<div class="clear"></div>
 								<div class="buttongroup center-align cmd">
-									<button class="abutton" onclick="location.href='./checkout.do?p_no=${p.p_no}'">결제하기</button>
+									<button type="submit" class="abutton" onclick="location.href='./checkout.do?u_no=${c.u_no}'">결제하기</button>
 								</div>
 							</div>
 						</form>
@@ -217,6 +211,60 @@ function setTotalInfo(){
 		<script src="./js/nouislider.min.js"></script>
 		<script src="./js/jquery.zoom.min.js"></script>
 		<script src="./js/main.js"></script>
-
+		
+		<script type="text/javascript">
+		$(document).ready(function(){
+			
+			setTotalInfo();
+		});
+		
+		//체크여부에 따른 가격 반영
+		$(".chkbox").on("change", function(){
+			setTotalInfo($(".cart_info"));
+		});
+		
+		//체크박스 전체 선택
+		$(".all_check").on("click", function(){
+			// 체크박스 전체 선택/해제 if문
+			if($(".all_check").prop("checked") != false){
+				$(".chkbox").prop("checked", true);
+			} else {
+				$(".chkbox").prop("checked", false);
+			}
+			setTotalInfo($(".cart_info"));
+		});
+		
+		/* $(".chkbox").on("click", function(){
+			alert("click!");
+			var cart_no = 49;
+			alert(cart_no);
+			location.href="./pCheck.do?cart_no=" + cart_no;
+		}); */
+		
+		function setTotalInfo(){
+			$(document).ready(function(){
+				let sumPrice = 0;
+				let addProduct = 0;
+				$(".cart_info").each(function(index, element){
+					if($(element).find(".chkbox").is(":checked") === true){	//체크여부
+						// 총 가격
+						sumPrice += parseInt($(element).find(".addPrice").val());
+						// 상품 종류 갯수
+						addProduct += 1;
+					}
+				});
+				$(".addProduct").text(addProduct);
+				$(".totalPrice").text(sumPrice.toLocaleString());
+			});
+		}
+		
+		/* $(document).ready(function(){
+			$("#chkbox").click(function(p_no){
+				//클릭 시 location.href
+				location.href="./pCheck.do?cart_no=" + cart_no;
+			});
+		}); */
+		
+		</script>
 	</body>
 </html>

@@ -55,6 +55,10 @@
 		DELETE FROM cart
 		WHERE u_no = #{u_no}
 	</delete>
+	<update id="pCheck" parameterType="cartDTO">
+		UPDATE cart SET p_Check = 0
+		WHERE cart_no = #{cart_no}
+	</update>
 	<select id="reviewStatus" parameterType="reviewDTO" resultType="integer">
 		SELECT COUNT(*)
 		FROM review

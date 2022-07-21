@@ -85,4 +85,8 @@ public class ProductService {
 	public void cartAllDel(CartDTO cartDTO) {
 		productDAO.cartAllDel(cartDTO);
 	}
+
+	public void pCheck(CartDTO cartDTO) {
+		productDAO.pCheck(cartDTO);
+	}
 }
