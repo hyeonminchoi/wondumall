@@ -78,7 +78,7 @@ public class SecurityConfig {
 	
 	@Bean
 	public ClientRegistrationRepository clientRegistrationRepository() {
-		return new InMemoryClientRegistrationRepository(this.googleClientRegistration());
+		return new InMemoryClientRegistrationRepository(this.googleClientRegistration(), this.naverClientRegistration());
 	}
 	
 	private ClientRegistration googleClientRegistration() {
@@ -95,6 +95,22 @@ public class SecurityConfig {
  			.userNameAttributeName(IdTokenClaimNames.SUB)
  			.jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
  			.clientName("Google")
+ 			.build();
+	}
+	
+	private ClientRegistration naverClientRegistration() {
+ 		return ClientRegistration.withRegistrationId("naver")
+ 			.clientId("")
+ 			.clientSecret("")
+ 			.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+ 			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+ 			.redirectUri("http://localhost:8080//login/oauth2/code/naver")
+ 			.scope("name", "email")
+ 			.authorizationUri("https://nid.naver.com/oauth2.0/authorize")
+ 			.tokenUri("https://nid.naver.com/oauth2.0/token")
+ 			.userInfoUri("https://openapi.naver.com/v1/nid/me")
+ 			.userNameAttributeName("response")
+ 			.clientName("Naver")
  			.build();
 	}
 }

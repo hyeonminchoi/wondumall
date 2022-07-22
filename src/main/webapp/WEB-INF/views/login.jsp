@@ -4,18 +4,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-String clientId = "FRFPIYJGpsa4k7kAGnTp";//애플리케이션 클라이언트 아이디값";
-String redirectURI = URLEncoder.encode("YOUR_CALLBACK_URL", "UTF-8");
-SecureRandom random = new SecureRandom();
-String state = new BigInteger(130, random).toString();
-String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
-apiURL += "&client_id=" + clientId;
-apiURL += "&redirect_uri=" + redirectURI;
-apiURL += "&state=" + state;
-session.setAttribute("state", state);
-%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -113,11 +101,10 @@ session.setAttribute("state", state);
 					<div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
 						<form action="./login.do" method="post"
 							class="login100-form validate-form flex-sb flex-w">
-							<input type="hidden" name="${_csrf.parameterName}"
-								value="${_csrf.token}" /> <span
-								class="login100-form-title p-b-53"> 로그인 같이할수있다리 </span> <a
-								href="<%=apiURL%>" class="btn-google m-b-20"><img
-								src="./img/btnG_아이콘원형.png" aria-hidden="true" />aver</a>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+							<span class="login100-form-title p-b-53"> 로그인 같이할수있다리 </span>
+							<a href="./oauth2/authorization/naver" class="btn-google m-b-20">
+							<img src="./img/btnG_아이콘원형.png" aria-hidden="true" />aver</a>
 							<!-- 	<a href="#" class="btn-face m-b-20"> <i class="fa fa-facebook-official"></i> Facebook </a> -->
 							<a href="./oauth2/authorization/google" class="btn-google m-b-20"> <i
 								class="fa fa-google" aria-hidden="true"></i> oolge
