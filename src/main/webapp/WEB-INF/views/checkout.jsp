@@ -142,14 +142,14 @@
 								<select name="coupon" id="coupon">
 									<option value="">전체</option>
 									<c:forEach items="${couponList }" var="cl">
-										<option value="${cl.coupon_description }">${cl.coupon_description }</option>
+										<option value="${cl.coupon_no }">${cl.coupon_description }</option>
 									</c:forEach>
 								</select>
 								</div>
 							</div>
 							<div class="order-col">
 								<div><strong>총금액</strong></div>
-								<div><strong class="order-total">${product.p_price * couponList[3].coupon_per}</strong></div>
+								<div><strong class="order-total">${product.p_price }</strong></div>
 							</div>
 						</div>
 						

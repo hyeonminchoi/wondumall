@@ -12,6 +12,7 @@ import com..DTO.LoginDTO;
 import com..DTO.NoticeDTO;
 import com..DTO.ProductDTO;
 import com..DTO.QuestionDTO;
+import com..DTO.ReviewDTO;
 import com..DTO.UserDTO;
 
 @Service
@@ -153,6 +154,16 @@ public class AdminService {
 	public void qcompledel(int q_no) {
 		
 		adminDAO.qcompledel(q_no);
+	}
+
+	public int getReviewCount(Map<String, Object> map) {
+		
+		return adminDAO.getReviewCount(map);
+	}
+
+	public List<ReviewDTO> reviewList(Map<String, Object> map) {
+		
+		return adminDAO.reviewList(map);
 	}
 
 }

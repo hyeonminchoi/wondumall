@@ -12,6 +12,7 @@ import com..DTO.LoginDTO;
 import com..DTO.NoticeDTO;
 import com..DTO.ProductDTO;
 import com..DTO.QuestionDTO;
+import com..DTO.ReviewDTO;
 import com..DTO.UserDTO;
 
 @Component
@@ -153,6 +154,16 @@ public class AdminDAO {
 	public void qcompledel(int q_no) {
 		
 		sqlSession.delete("admin.qcompledel", q_no);
+	}
+
+	public int getReviewCount(Map<String, Object> map) {
+		
+		return sqlSession.selectOne("admin.getReviewCount", map);
+	}
+
+	public List<ReviewDTO> reviewList(Map<String, Object> map) {
+		
+		return sqlSession.selectList("admin.reviewList", map);
 	}
 
 }

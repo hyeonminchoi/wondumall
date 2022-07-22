@@ -3,6 +3,33 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="admin">
+	<select id="getReviewCount" resultType="integer" parameterType="map">
+		SELECT count(*)
+		FROM review JOIN user ON user.u_no = review.u_no
+		<choose>
+			<when test='searchColumn == "r_title"'>
+				WHERE r_title like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_nickname"'>
+				WHERE u_nickname like CONCAT('%',#{searchValue},'%')
+			</when>
+		</choose>
+	</select>
+	<select id="reviewList" resultType="reviewDTO" parameterType="map">
+		SELECT review.*, user.u_nickname
+		FROM review JOIN user ON user.u_no = review.u_no
+		<choose>
+			<when test='searchColumn == "r_title"'>
+				WHERE r_title like CONCAT('%',#{searchValue},'%')
+			</when>
+			<when test='searchColumn == "u_nickname"'>
+				WHERE u_nickname like CONCAT('%',#{searchValue},'%')
+			</when>
+		</choose>
+		GROUP BY r_no
+		ORDER BY r_date DESC
+		LIMIT #{page.startPage}, #{page.lastPage}
+	</select>
 	<delete id="qcompledel" parameterType="questionDTO">
 		DELETE FROM question WHERE q_no=#{q_no}
 	</delete>

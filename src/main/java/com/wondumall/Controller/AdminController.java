@@ -18,6 +18,7 @@ import com..DTO.NoticeDTO;
 import com..DTO.PageDTO;
 import com..DTO.ProductDTO;
 import com..DTO.QuestionDTO;
+import com..DTO.ReviewDTO;
 import com..DTO.UserDTO;
 import com..Service.AdminService;
 
@@ -368,5 +369,38 @@ public class AdminController {
 	public String adminindex() {
 
 		return "adminindex";
+	}
+	
+	@GetMapping(value = "/admin/review.do")
+	public ModelAndView adminreview(@RequestParam(name = "pageNo", required = false, defaultValue = "1") int pageNo, @RequestParam(name="searchColumn", required = false) String searchColumn,
+			@RequestParam(name="searchValue", required=false) String searchValue) {
+		ModelAndView mv = new ModelAndView("adminreview");
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(pageNo); //현재 페이지 번호
+		paginationInfo.setRecordCountPerPage(10); //한 페이지에 게시되는 게시물 건수
+		paginationInfo.setPageSize(10); //페이징 리스트의 사이즈
+		
+		Map<String, Object> map = new HashMap<>();
+		if(searchColumn != null && searchValue != null) {
+			map.put("searchColumn", searchColumn);
+			map.put("searchValue", searchValue);
+			mv.addObject("searchColumn", searchColumn);
+			mv.addObject("searchValue", searchValue);
+		}
+		
+		paginationInfo.setTotalRecordCount(adminService.getReviewCount(map));
+		
+		int startPage = paginationInfo.getFirstRecordIndex();
+		int lastPage = paginationInfo.getRecordCountPerPage();
+		PageDTO page = new PageDTO();
+		page.setStartPage(startPage);
+		page.setLastPage(lastPage);
+		map.put("page", page);
+		List<ReviewDTO> reviewList = adminService.reviewList(map);
+		mv.addObject("reviewList", reviewList);
+		mv.addObject("paginationInfo", paginationInfo);
+		mv.addObject("pageNo", pageNo);
+		
+		return mv;
 	}
 }
