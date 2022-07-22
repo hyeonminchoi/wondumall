@@ -72,11 +72,6 @@ function allDel(u_no) {
 	}
 }
 
-function chkbox(cart_no) {
-	if (confirm("click?")){
-		location.href = "./pCheck.do?cart_no=" + cart_no;
-	}
-}
 
 /* function chkbox(cart_no) {
 	alert("chkbox");
@@ -264,6 +259,20 @@ function chkbox(cart_no) {
 				location.href="./pCheck.do?cart_no=" + cart_no;
 			});
 		}); */
+		
+
+		function chkbox(cart_no) {
+			alert(cart_no);
+			if (confirm("click?")){
+				location.href = "/pCheck.do?cart_no=" + cart_no;
+			}
+		}
+		
+		function couponrepair(coupon_no){
+			if (confirm("복구를 하시겠습니까?")){
+				location.href = "//business/couponrepair/" + coupon_no;
+			}
+		}
 		
 		</script>
 	</body>
