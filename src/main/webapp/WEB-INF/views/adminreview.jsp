@@ -54,7 +54,6 @@ td, th{
 							<th scope="col">삭제여부</th>
 							<th scope="col">삭제</th>
 							<th scope="col">완전삭제</th>
-							<th scope="col">상세보기</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -78,15 +77,14 @@ td, th{
 								<td>
 								<c:choose>
 									<c:when test="${r.r_del eq 1 }">
-										<button onclick="qrpr(${q.q_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #A9F5BC;">복구하기</button>
+										<button onclick="rrpr(${r.r_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #A9F5BC;">복구하기</button>
 									</c:when>
 									<c:otherwise>
-										<button onclick="qdel(${q.q_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5A9A9;">삭제하기</button>
+										<button onclick="rdel(${r.r_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5A9A9;">삭제하기</button>
 									</c:otherwise>
 								</c:choose>
 								</td>
-								<td><button onclick="qcompledel(${q.q_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5A9A9;">완전삭제</button></td>
-								<td><button onclick="detail(${q.q_no}, ${pageNo })" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5D0A9;">상세보기</button></td>
+								<td><button onclick="rcompledel(${r.r_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #F5A9A9;">완전삭제</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -143,8 +141,8 @@ function qcompledel(q_no){
 		
 	}	
 }
-function detail(q_no, pageNo){
-	location.href = "//productDetail.do?p_no=" + q_no + "&pageNo=" + pageNo;
+function detail(p_no){
+	location.href = "//productDetail.do?p_no=" + p_no;
 }
 </script>
 </body>

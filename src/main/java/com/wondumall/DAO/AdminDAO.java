@@ -166,4 +166,5 @@ public class AdminDAO {
 		return sqlSession.selectList("admin.reviewList", map);
 	}
 
+
 }
