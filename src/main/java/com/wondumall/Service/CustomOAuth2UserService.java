@@ -1,15 +1,11 @@
 package com..Service;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 	@Autowired private LoginDAO loginDAO;
+	@Autowired private BCryptPasswordEncoder passwordEncoder;
 	
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -47,7 +44,14 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     	user.setU_provider(registrationId);
     	
     	user = loginDAO.findByUserid(user);
-    	//여기서 개인정보 없다면 회원가입 필요
+    	if(user==null) { //sns 로그인을 처음하는 거라면 회원가입
+    		user = new LoginDTO();
+    		user.setU_email(attributes.getEmail());
+        	user.setU_provider(registrationId);
+        	user.setU_name(attributes.getName());
+        	user.setU_pw(passwordEncoder.encode(RandomStringUtils.randomAlphanumeric(10))); //비밀번호는 랜덤생성
+        	loginDAO.SNSjoin(user);
+    	}
     	return user;
     }
 }

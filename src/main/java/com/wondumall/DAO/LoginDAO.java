@@ -42,4 +42,8 @@ public class LoginDAO {
 			
 	}
 
+	public void SNSjoin(LoginDTO user) {
+		sqlSession.insert("login.SNSjoin", user);
+	}
+
 }

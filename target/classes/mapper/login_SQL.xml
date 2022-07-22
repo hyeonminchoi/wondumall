@@ -34,4 +34,12 @@
 						u_postcode=#{u_postcode}, u_detailAddress=#{u_detailAddress}, u_extraAddress=#{u_extraAddress}
 						WHERE u_eamil=#{u_eamil}
 	 </update>
+	 
+	 <insert id="SNSjoin" parameterType="loginDTO">
+	 	INSERT INTO user(u_email, u_pw, u_name, u_provider)
+		VALUES(#{u_email}, #{u_pw}, #{u_name}, #{u_provider})
+		<selectKey keyProperty="u_no" resultType="integer" order="AFTER">
+			SELECT u_no FROM user WHERE u_email = #{u_email} AND u_pw = #{u_pw} AND u_confirm = 1 AND u_resign = 0 AND u_provider = #{u_provider} 
+		</selectKey>
+	 </insert>
 </mapper>
