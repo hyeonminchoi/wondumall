@@ -158,7 +158,7 @@
 			<!-- /container -->
 		</div>
 		<!-- /SECTION -->
-
+		${cart}
 		<!-- FOOTER -->
 		<footer id="footer">
 			<c:import url="./footer.jsp"></c:import>

@@ -1,6 +1,7 @@
 package com..Controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,10 +23,12 @@ import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import com..Config.MyUserDetails;
+import com..DTO.CartDTO;
 import com..DTO.OrderDTO;
 import com..DTO.ProductDTO;
 import com..DTO.UserDTO;
 import com..Service.PaymentService;
+import com..Service.ProductService;
 
 @Controller
 public class PaymentController {
@@ -35,6 +38,8 @@ public class PaymentController {
 	@Autowired
 	private PaymentService paymentService;
 	
+	@Autowired
+	private ProductService productService;
 	
 	public PaymentController() {
     	// REST API 키와 REST API secret 를 아래처럼 순서대로 입력한다.
@@ -59,15 +64,23 @@ public class PaymentController {
 	}
 	
 	@GetMapping(value = "/checkout.do")
-	public ModelAndView checkout1(HttpServletRequest request, @RequestParam("p_no") int p_no){
+	public ModelAndView checkout1(HttpServletRequest request, @AuthenticationPrincipal MyUserDetails myUserDetails, 
+			@RequestParam(name = "u_no", required = false, defaultValue = "-1") int u_no){
 		ModelAndView mv = new ModelAndView("checkout");
 		
 		ProductDTO dto = new ProductDTO();
-		dto.setP_no(p_no);
+		dto.setU_no(myUserDetails.getNo());
 		dto = paymentService.product(dto);
 		
 		UserDTO user = new UserDTO();
 		paymentService.user(user);
+		
+		if(u_no ==-1) {
+			mv.addObject("cart", 0);
+		} else {
+			List<CartDTO> cart = paymentService.cartPay(u_no);
+			mv.addObject("cart", cart);
+		}
 		
 		mv.addObject("product", dto);
 		mv.addObject("user", user);

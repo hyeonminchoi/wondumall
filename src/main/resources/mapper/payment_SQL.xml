@@ -13,4 +13,9 @@
 	<select id="user" resultType="userDTO">
 	SELECT * FROM user WHERE u_no=#{u_no}
 	</select>
+	<select id="cartPay" parameterType="integer" resultType="cartDTO">
+		SELECT *
+		FROM cartview
+		WHERE p_check = 1 AND u_no = #{u_no}
+	</select>
 </mapper>

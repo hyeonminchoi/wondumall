@@ -112,14 +112,13 @@ function allDel(u_no) {
 				<!-- /container -->
 			</div>
 			<!-- /BREADCRUMB -->
-			
 			<!-- SECTION -->
 			<div class="section">
 				<!-- container -->
 				<div class="container">
 					<!-- row -->
 					<div class="row">
-						<form action="/checkout.do" name="orderform" id="orderform" method="post" class="orderform" onsubmit="return false;">
+						<form action="./checkout.do/${user.u_no}" name="orderform" id="orderform" method="post" class="orderform" onsubmit="return false;">
 							<table class="table">
 								<thead>
 									<tr>
@@ -132,6 +131,7 @@ function allDel(u_no) {
 										<th scope="col">삭제</th>
 									</tr>
 								</thead>
+							
 								<tbody>
 									<c:forEach items="${cart}" var="c">
 										${c.cart_no}
@@ -139,10 +139,13 @@ function allDel(u_no) {
 											<th scope='row'>
 												<input type="checkbox" id="chkbox" class="chkbox" name="chkbox" checked="checked" onclick="chkbox(${c.cart_no})">&nbsp;
 												<input type="hidden" class="c_no" value="${c.cart_no }">
+												<input type="hidden" class="c_p_no" value="${c.p_no }">
 												<input type="hidden" class="c_price" value="${c.p_price }">
 												<input type="hidden" class="c_count" value="${c.p_count }">
 												<input type="hidden" class="addPrice" value="${c.p_count * c.p_price}">
 												<input type="hidden" class="c_p_no" value="${c.p_no}">
+												
+												<input type="hidden" class="individual_bookId_input" value="${c.p_no}">
 											</th>
 											<td><img src="./productUpload/${p.p_img}" style="width: 60px;"></td>
 											<td>${c.p_name }</td>
@@ -181,10 +184,16 @@ function allDel(u_no) {
 							<div id="goorder" class="">
 								<div class="clear"></div>
 								<div class="buttongroup center-align cmd">
-									<button type="submit" class="abutton" onclick="location.href='./checkout.do?u_no=${c.u_no}'">결제하기</button>
+									<button type="submit" class="order_btn abutton" onclick="location.href='./checkout.do?u_no=${cart[2].u_no}'">결제하기</button>
 								</div>
 							</div>
 						</form>
+						
+						<div class="content_btn_section">
+							<button class="order_btn">주문하기</button>
+							<br>
+							<a class="order_btn">주문하기</a>
+						</div>
 					 <%-- <td><a href="./cartDelete.do?cart_no=${cart.cart_no}">[삭제]</a></td> --%>
 					<!-- 삭제 버튼을 누르면 delete.do로 장바구니 개별 id (삭제하길원하는 장바구니 id)를 보내서 삭제한다. -->
 					</div>
@@ -211,6 +220,31 @@ function allDel(u_no) {
 		$(document).ready(function(){
 			
 			setTotalInfo();
+		});
+		
+		/* 주문 페이지 이동 */	
+		$(".order_btn").on("click", function(){
+			let form_contents ='';
+			let orderNumber = 0;
+			alert("check!");
+			$(".cart_info").each(function(index, element){
+				
+				if($(element).find(".chkbox").is(":checked") === true){
+				
+					let cart_no = $(element).find(".c_no").val();
+					let p_count = $(element).find(".c_count").val();
+					
+					let cart_no_input = "<input name='orders[" + orderNumber + "].cart_no' type='hidden' value='" + cart_no + "'>";
+					form_contents += cart_no_input;
+					
+					let p_count_input = "<input name='orders[" + orderNumber + "].p_count' type='hidden' value='" + p_count + "'>";
+					form_contents += p_count_input;
+					
+					orderNumber += 1;
+				}
+			});
+			/* $(".orderform").html(form_contents); */
+			$(".orderform").submit();
 		});
 		
 		//체크여부에 따른 가격 반영
