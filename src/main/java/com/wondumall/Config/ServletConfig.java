@@ -31,7 +31,9 @@ public class ServletConfig implements WebMvcConfigurer, WebSocketConfigurer {
 		registry.addResourceHandler("/upload/**").addResourceLocations("/resources/upload/");
 		registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/");
 		registry.addResourceHandler("/font/**").addResourceLocations("/resources/font/");
+		registry.addResourceHandler("/fonts/**").addResourceLocations("/resources/fonts/");
 		registry.addResourceHandler("/images/**").addResourceLocations("/resources/images/");
+		registry.addResourceHandler("/vendor/**").addResourceLocations("/resources/vendor/");
 		registry.addResourceHandler("/productUpload/**").addResourceLocations("/resources/productUpload/");
 		registry.addResourceHandler("/noticeImage/**").addResourceLocations("/resources/noticeImage/");
 		registry.addResourceHandler("/boardImage/**").addResourceLocations("/resources/boardImage/");
