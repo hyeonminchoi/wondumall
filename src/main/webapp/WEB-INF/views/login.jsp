@@ -119,7 +119,7 @@ session.setAttribute("state", state);
 								href="<%=apiURL%>" class="btn-google m-b-20"><img
 								src="./img/btnG_아이콘원형.png" aria-hidden="true" />aver</a>
 							<!-- 	<a href="#" class="btn-face m-b-20"> <i class="fa fa-facebook-official"></i> Facebook </a> -->
-							<a href="#" class="btn-google m-b-20"> <i
+							<a href="./oauth2/authorization/google" class="btn-google m-b-20"> <i
 								class="fa fa-google" aria-hidden="true"></i> oolge
 							</a> <br> <br>
 

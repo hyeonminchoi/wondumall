@@ -2,16 +2,23 @@ package com..Config;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com..DTO.LoginDTO;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Data
-public class MyUserDetails implements UserDetails {
+public class MyUserDetails implements UserDetails, OAuth2User {
 	//변경 불가(변수명도 변경 불가)
     private static final long serialVersionUID = 1L;
 
@@ -38,7 +45,6 @@ public class MyUserDetails implements UserDetails {
         this.username = user.getU_email();
         this.password = user.getU_pw();
         this.isEnabled = (user.getU_confirm() == 1) && (user.getU_resign()==0); //승인을 받았고, 탈퇴를 안 했을 시 true
-
         //변경 가능
         this.no = user.getU_no();
         this.name = user.getU_name();
@@ -53,4 +59,10 @@ public class MyUserDetails implements UserDetails {
         this.grade = user.getU_grade();
         this.resign = user.getU_resign();
     }
+
+	@Override
+	public Map<String, Object> getAttributes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
