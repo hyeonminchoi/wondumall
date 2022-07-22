@@ -57,7 +57,11 @@ margin-bottom: 20px;
 	<!-- /NAVIGATION -->
 	<!-- HEADER -->
 		<main>
-			<c:import url="./recentlySee.jsp"></c:import>
+			<div id="rightSide">
+				<div id="right_zzim">
+					<c:import url="./recentlySee.jsp"></c:import>
+				</div>
+			</div>
 		</main>
 	<!-- /HEADER -->
 	<section>

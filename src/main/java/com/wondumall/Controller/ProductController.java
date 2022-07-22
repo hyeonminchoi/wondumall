@@ -56,6 +56,7 @@ public class ProductController {
 	private ServletContext servletContext;
 	
 	
+	
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@RequestMapping(value = "/pCheck.do")
 	public String pCheck(HttpServletRequest request, @RequestParam int cart_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {

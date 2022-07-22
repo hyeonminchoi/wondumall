@@ -16,4 +16,9 @@
 	<select id="couponList" resultType="couponDTO">
 		SELECT * FROM coupon
 	</select>
+	<select id="cartPay" parameterType="integer" resultType="cartDTO">
+		SELECT *
+		FROM cartview
+		WHERE p_check = 1 AND u_no = #{u_no}
+	</select>
 </mapper>

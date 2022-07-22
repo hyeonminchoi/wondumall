@@ -328,7 +328,7 @@ textarea {
 												<div class="form-group row">
 													<fieldset name="myform" id="myform">
 														<legend>이모지 별점</legend>
-														<input type="radio" name="r_rating" value="1" id="rate1"><label for="rate1">⭐</label>
+														<input type="radio" name="r_rating" value="1" id="rate1" required><label for="rate1">⭐</label>
 														<input type="radio" name="r_rating" value="2" id="rate2"><label for="rate2">⭐⭐</label>
 														<input type="radio" name="r_rating" value="3" id="rate3"><label for="rate3">⭐⭐⭐</label>
 														<input type="radio" name="r_rating" value="4" id="rate4"><label for="rate4">⭐⭐⭐⭐</label>

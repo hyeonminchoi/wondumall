@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com..DAO.PaymentDAO;
 import com..DTO.CouponDTO;
+import com..DTO.CartDTO;
 import com..DTO.OrderDTO;
 import com..DTO.ProductDTO;
 import com..DTO.UserDTO;
@@ -34,6 +35,9 @@ public class PaymentService {
 	public List<CouponDTO> couponList() {
 		
 		return paymentDAO.couponList();
+	}
+	public List<CartDTO> cartPay(int u_no) {
+		return paymentDAO.cartPay(u_no);
 	}
 
 
