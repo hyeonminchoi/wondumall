@@ -103,7 +103,7 @@
 					<div>
 					
 					<div class="textForm">
-						<input autocomplete="off" type="text" id="sample6_postcode" required="required" class="postcode"  name="u_postcode" placeholder="우편번호" type="button" onclick="sample6_execDaumPostcode()" class="postbtn" value="우편번호 찾기 Click">
+						<input autocomplete="off" type="text" id="sample6_postcode" required="required" class="postcode"  name="u_postcode" placeholder="우편번호 찾기 Click" type="button" onclick="sample6_execDaumPostcode()" class="postbtn">
 						<!-- <input type="button" onclick="sample6_execDaumPostcode()" class="postbtn" value="우편번호 찾기"> -->
 					</div> 
 	
