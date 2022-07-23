@@ -47,8 +47,8 @@
 <!--===============================================================================================-->
 <link rel="icon" type="image/png" href="./images/icons/favicon.ico" />
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css"
-	href="./vendor/bootstrap/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" type="text/css"
+	href="./vendor/bootstrap/css/bootstrap.min.css"> -->
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
 	href="./fonts/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -105,7 +105,7 @@
 							<span class="login100-form-title p-b-53"> 로그인 같이할수있다리 </span>
 							<a href="./oauth2/authorization/naver" class="btn-google m-b-20">
 							<img src="./img/btnG_아이콘원형.png" aria-hidden="true" />aver</a>
-							<!-- 	<a href="#" class="btn-face m-b-20"> <i class="fa fa-facebook-official"></i> Facebook </a> -->
+							<a href="./oauth2/authorization/kakao" class="btn-google m-b-20"><img src="./img/kakao_login_medium_narrow.png" style="height: 100%; width: auto;"></a>
 							<a href="./oauth2/authorization/google" class="btn-google m-b-20"> <i
 								class="fa fa-google" aria-hidden="true"></i> oolge
 							</a> <br> <br>

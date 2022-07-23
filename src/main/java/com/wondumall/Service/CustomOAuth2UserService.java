@@ -26,8 +26,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
     	OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
     	 OAuth2User oAuth2User = delegate.loadUser(userRequest);
-         //네이버 로그인인지 구글로그인인지 서비스를 구분해주는 코드
+    	 
+         //네이버, 구글, 카카오 로그인을 구분해주는 id
          String registrationId = userRequest.getClientRegistration().getRegistrationId();
+         
          //OAuth2 로그인 진행시 키가 되는 필드값 프라이머리키와 같은 값 네이버 카카오 지원 x
          String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
                                          .getUserInfoEndpoint().getUserNameAttributeName();
