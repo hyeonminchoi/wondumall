@@ -46,4 +46,8 @@ public class LoginDAO {
 		sqlSession.insert("login.SNSjoin", user);
 	}
 
+	public int snsInfoUpdate(LoginDTO loginDTO) {
+		return sqlSession.update("login.snsInfoUpdate", loginDTO);
+	}
+
 }

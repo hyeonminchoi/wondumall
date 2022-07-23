@@ -72,7 +72,7 @@ public class SecurityConfig {
 			.logoutRequestMatcher(new AntPathRequestMatcher("/logout.do"))
 			.logoutSuccessUrl("/")
 			.invalidateHttpSession(true);
-		http.oauth2Login().userInfoEndpoint().userService(customOAuth2UserService);
+		http.oauth2Login().defaultSuccessUrl("/snsInfoCheck.do").userInfoEndpoint().userService(customOAuth2UserService);
 		return http.build();
 	}
 	

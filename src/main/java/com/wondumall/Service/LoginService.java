@@ -40,6 +40,10 @@ public class LoginService {
 		return loginDAO.update(dto);
 	}
 
+	public int snsInfoUpdate(LoginDTO loginDTO) {
+		return loginDAO.snsInfoUpdate(loginDTO);
+	}
+
 		
 		
 	
