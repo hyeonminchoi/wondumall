@@ -63,30 +63,8 @@ textarea {
 		<div id="section">
 			<div id="container">
 				<form action="./productAdd.do" method="POST" id="join" class="joinForm" enctype="multipart/form-data">
-	
-					<h2>상품등록</h2>
-					
-					<!-- <div class="textForm">
-						<input name="p_name" id="email" type="text" class="email" placeholder="상품명" >
-					</div>
-					<div class="textForm">
-						<input name="cate_no" id="email" type="text" class="email" placeholder="카테고리 번호">
-					</div>
-					<div class="textForm">
-						<textarea name="p_description" id="email" class="email" rows="50" cols="10"  placeholder="상품설명"></textarea>
-						<input name="p_description" id="email" type="" class="email" placeholder="상품설명" >
-					</div>
-					<div class="textForm">
-						<input name="p_price" id="email" type="number" class="email" placeholder="상품가격">
-					</div>
-					<div class="textForm">
-						<input name="p_stock" id="email" type="number" class="email" placeholder="수량" >
-					</div> -->
-					<!-- <div class="textForm">
-						<input name="p_img" id="email" type="text" class="email" placeholder="상품사진">
-					</div> -->
+					<h2>상품등록신청</h2>
 					<hr>
-	
 					<div class="form-group row">
 						<label class="col-sm-3">상품 이름</label>
 						<div class="com-sm-3">
@@ -106,40 +84,54 @@ textarea {
 					<div class="form-group row">
 						<label class="col-sm-3">상품 설명</label>
 						<div class="com-sm-5">
-							<textarea name="p_description" cols="50" rows="2" class="form-control" required></textarea>
+							<textarea name="p_description" cols="50" rows="2" class="form-control" placeholder="500자 이내로 입력해주세요." maxlength="500" required></textarea>
 						</div>
 					</div>
 	
 					<div class="form-group row">
 						<label class="col-sm-3">상품 가격</label>
 						<div class="com-sm-3">
-							<input type="text" id="unitPrice" name="p_price" class="form-control" required>
+							<input type="number" id="p_price" name="p_price" class="form-control" required>
 						</div>
 					</div>
 	
 					<div class="form-group row">
 						<label class="col-sm-3">상품 수량</label>
 						<div class="com-sm-3">
-							<input type="number" id="p_stock" name="p_stock" class="form-control" required>
+							<input type="number" id="p_stock" name="p_stock" class="form-control" min="1" required>
 						</div>
 					</div>
 	
 					<div class="form-group row">
 						<label class="col-sm-3">상품 이미지</label>
-						<div>
-						<!-- <button type="button" class="btn_upload">
-							<img src="">
-						</button> -->
-						<label for="input-file" style="float: left;">
-							<img src="./img/ico_camera.png">	업로드
-						</label>
-							<input id="input-file" style="display:none;"
+						<div id="image_preview">
+							<img src="./img/productImg.png" alt="사진영역" style="width: 100px; height: 100px; margin-right: 220px;">
+						</div>
+						<div class="f_box">
+							<input id="input-file" 
 								type="file" name="files" class="form-control" 
 								accept=".png, .jpg, .gif, .jpeg, .ico" multiple="multiple" required
 							>
+							<!-- <input type="file" id="img" name="bf_file[]"> -->
 						</div>
+						<script>
+							// 이미지 업로드
+							$('#input-file').on('change',function() {
+									ext = $(this).val().split('.').pop().toLowerCase(); //확장자
+									//배열에 추출한 확장자가 존재하는지 체크
+									if ($.inArray(ext, [ 'gif', 'png', 'jpg', 'jpeg' ]) == -1) {
+										resetFormElement($(this)); //폼 초기화
+										window.alert('이미지 파일이 아닙니다! (gif, png, jpg, jpeg 만 업로드 가능)');
+									} else {
+										file = $('#input-file').prop("files")[0];
+										blobURL = window.URL.createObjectURL(file);
+										$('#image_preview img').attr('src',blobURL);
+										$('#image_preview').slideDown(); //업로드한 이미지 미리보기 
+									}
+								});
+						</script>
 					</div>
-					<input type="submit"  id="addBtn" class="btn" value="등록하기" />
+					<input type="button" id="addBtn" class="btn" value="등록하기" onclick="productAdd()" />
 				</form>
 			</div>
 		</div>
@@ -157,6 +149,10 @@ textarea {
 	<script src="./js/nouislider.min.js"></script>
 	<script src="./js/jquery.zoom.min.js"></script>
 	<script src="./js/main.js"></script>
-
+<script type="text/javascript">
+	function productAdd(){
+		alert("상품등록이 신청 되었습니다.\n관리자 승인 후 상품이 등록됩니다.");
+	}
+</script>
 </body>
 </html>

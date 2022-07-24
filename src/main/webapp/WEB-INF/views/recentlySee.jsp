@@ -92,135 +92,39 @@ $(function(){
 })
 </script>
 <style type="text/css">
-#rightSide {
-	position: absolute;
-	top: 547px;
+#cont{
+	position : fixed;
 	left: 50%;
-	margin: 0 0 0 510px;
+	height: 0px;
 }
 
-#rightSide #right_zzim {
-	position: fixed;
-	top: 126px;
-	left: 50%;
-	margin-left: 510px;
-	border: 1px solid #B0B5BD;
-	width: 114px;
-	height: 543px;
-}
-
-#rightSide #right_zzim  div {
+#float_layer{
+	top: 300px;
+	margin-left: 20px;
+	margin-left: 600px;
 	text-align: center;
 }
-
-#rightSide #right_zzim  div.recTit {
-	line-height: 1.5em;
-	padding: 5px;
-	color: white;
-	background-color: #505A69;
-}
-
-#right_zzim #recentCnt {
-	color: yellow;
-}
-
-#rightSide #right_zzim ul {
-	min-height: 495px;
-}
-
-#rightSide #right_zzim  li {
-	text-align: center;
-	padding: 5px;
-	position: relative;
-}
-
-#rightSide #right_zzim ul li img {
-	border: 1px solid #ccc
-}
-
-#right_zzim .detail {
-	display: none;
-	position: absolute;
-	top: 3px;
-	right: 20px;
-	xheight: 40px;
-	xpadding: 15px 11px 0;
-	xbackground: #404a59;
-	color: #fff;
-	xtext-align: left;
-	white-space: nowrap;
-}
-
-#right_zzim li:hover .detail {
-	display: block
-}
-
-#right_zzim li .btn_delete {
-	position: absolute;
-	top: 3px;
-	right: -1px;
-	width: 11px;
-	height: 11px;
-	background: url(/img/sp.png) no-repeat -193px -111px;
-	text-indent: -9000px;
-}
-
-#right_zzim  #currentPage {
-	color: #505A69;
-	font-weight: bold
-}
-
-#right_zzim  #totalPageCount {
-	color: #CBC8D2;
-	font-weight: bold
-}
-
-.noData {
-	color: #ccc;
-	text-align: center;
-	margin-top: 223px;
-}
-
-#paging {
-	display:;
-	position: relative;
-	line-height: 1em;
-}
-
-#paging .btn_prev {
-	position: absolute;
-	top: 526px;
-	left: 4px;
-	width: 13px;
-	height: 11px;
-	background: url(/images/ico_arrow.png)  no-repeat;
-	text-indent: -9000px;
-	border: 1px solid #CCC;
-	display: inline-block;
-}
-
-#paging .btn_next {
-	position: absolute;
-	top: 526px;
-	right: 4px;
-	width: 13px;
-	height: 11px;
-	background: url(/images/ico_arrow.png) -11px 0px;
-	text-indent: -9000px;
-	border: 1px solid #CCC;
-	display: inline-block;
-}
+.xans-layout-productrecent { border:1px solid #d5d5d5; border-top:0; text-align:center; background:#fff; }
+.xans-layout-productrecent h2 a { display:block; height:30px; line-height:30px; font-size:12px; font-weight:normal; color:#2e2e2e; }
+.xans-layout-productrecent tr { width:76px; margin:0 auto 10px; }
+.xans-layout-productrecent td a { color:#2e2e2e; font-size:11px; }
+.xans-layout-productrecent td img { max-width:76px; }
+.xans-layout-productrecent td span { display:block; padding:2px 0; line-height:16px; }
+.xans-layout-productrecent .player { overflow:hidden; *zoom:1; }
+.xans-layout-productrecent .player img { float:left; }
 </style>
 </head>
 <body>
-	<div id="rightSide">
-		<div id="right_zzim">
+	<div id="cont">
+		<div id="float_layer">
 			<aside>
+			<div class="xans-layout-productrecent">
 				<table id="recentlySee">
 					<tr>
 						<th class="recTit"><h4>최근 본 상품</h4></th>
 					</tr>
 				</table>
+				</div>
 			</aside>
 		</div>
 	</div>

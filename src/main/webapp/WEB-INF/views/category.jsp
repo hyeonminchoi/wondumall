@@ -57,8 +57,8 @@ margin-bottom: 20px;
 	<!-- /NAVIGATION -->
 	<!-- HEADER -->
 		<main>
-			<div id="rightSide">
-				<div id="right_zzim">
+			<div id="cont">
+				<div id="float_layer">
 					<c:import url="./recentlySee.jsp"></c:import>
 				</div>
 			</div>
