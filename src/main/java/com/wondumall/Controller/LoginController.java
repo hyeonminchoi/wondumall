@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com..Config.MyUserDetails;
 import com..DTO.LoginDTO;
 import com..Service.LoginService;
+import com..Util.Util;
 
 @Controller
 public class LoginController {
@@ -66,8 +67,8 @@ public class LoginController {
 		return "join";
 	}
 	@PostMapping(value = "/join.do")
-	public String join(LoginDTO dto) {
-		
+	public String join(LoginDTO dto) throws Exception{
+		Util.userInfoRegex("join", dto);
 		int result = loginService.join(dto);
 		
 		if(result == 1) {
@@ -96,6 +97,7 @@ public class LoginController {
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@PostMapping("/snsInfo.do")
 	public void snsInfoUpdate(LoginDTO loginDTO, @AuthenticationPrincipal MyUserDetails myUserDetails, HttpServletResponse response) throws Exception {
+		Util.userInfoRegex("join", loginDTO);
 		response.setContentType("text/html; charset=UTF-8");
 		loginDTO.setU_provider(myUserDetails.getProvider());
 		int result = loginService.snsInfoUpdate(loginDTO);

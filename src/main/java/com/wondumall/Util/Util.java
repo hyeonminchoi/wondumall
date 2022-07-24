@@ -4,7 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
+
+import com..DTO.LoginDTO;
 
 @Component
 public class Util {
@@ -31,5 +35,18 @@ public class Util {
 			safe_value = "XSS 공격이 감지되었습니다.";
 		}
 		return safe_value;
+	}
+	
+	public static void userInfoRegex(String method, LoginDTO user) throws Exception{
+		if(method.equals("join")) {
+			if(!user.getU_email().matches("^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$"))
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+			if(!user.getU_pw().matches("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"))
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+		}
+		if(!user.getU_name().matches("^[가-힣]{2,20}|[a-zA-Z]{2,20}\\s[a-zA-Z]{2,20}$"))
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+		if(!user.getU_nickname().matches("^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$"))
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 	}
 }
