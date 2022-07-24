@@ -78,8 +78,8 @@ $(function(){
 			for(i in result){
 				tr += "<tr>";
 				tr += "<td>";
-				tr += result[i].p_name;
 				tr += "<img src='./productUpload/" + result[i].p_img + "'>"
+				tr += result[i].p_name;
 				tr += "</td>";
 				tr += "</tr>";
 			}
@@ -92,40 +92,70 @@ $(function(){
 })
 </script>
 <style type="text/css">
-#cont{
-	position : fixed;
+#cont {
+	position: fixed;
 	left: 50%;
 	height: 0px;
 }
 
-#float_layer{
-	top: 300px;
-	margin-left: 20px;
-	margin-left: 600px;
+#float_layer {
+	margin-top: 10px;
+	margin-left: 620px;
 	text-align: center;
 }
-.xans-layout-productrecent { border:1px solid #d5d5d5; border-top:0; text-align:center; background:#fff; }
-.xans-layout-productrecent h2 a { display:block; height:30px; line-height:30px; font-size:12px; font-weight:normal; color:#2e2e2e; }
-.xans-layout-productrecent tr { width:76px; margin:0 auto 10px; }
-.xans-layout-productrecent td a { color:#2e2e2e; font-size:11px; }
-.xans-layout-productrecent td img { max-width:76px; }
-.xans-layout-productrecent td span { display:block; padding:2px 0; line-height:16px; }
-.xans-layout-productrecent .player { overflow:hidden; *zoom:1; }
-.xans-layout-productrecent .player img { float:left; }
+
+.xans-layout-productrecent {
+	border: 1px solid #d5d5d5;
+	/* border-top:0; */
+	text-align: center;
+	background: #fff;
+}
+.xans-layout-productrecent h2 a {
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	font-size: 12px;
+	font-weight: normal;
+	color: #2e2e2e;
+}
+.xans-layout-productrecent tr {
+	width: 76px;
+	margin: 0 auto 10px;
+}
+.xans-layout-productrecent td a {
+	color: #2e2e2e;
+	font-size: 11px;
+}
+.xans-layout-productrecent td img {
+	max-width: 76px;
+}
+.xans-layout-productrecent td span {
+	display: block;
+	padding: 2px 0;
+	line-height: 16px;
+}
+.xans-layout-productrecent .player {
+	overflow: hidden;
+	*zoom: 1;
+}
+.xans-layout-productrecent .player img {
+	float: left;
+}
+tr{
+	border: 1px solid #ddd;
+}
 </style>
 </head>
 <body>
 	<div id="cont">
 		<div id="float_layer">
-			<aside>
 			<div class="xans-layout-productrecent">
 				<table id="recentlySee">
 					<tr>
-						<th class="recTit"><h4>최근 본 상품</h4></th>
+						<th class="recTit"><h4 style="text-align: center; margin-top: 14px;">최근 본 상품</h4></th>
 					</tr>
 				</table>
-				</div>
-			</aside>
+			</div>
 		</div>
 	</div>
 </body>
