@@ -97,7 +97,7 @@ public class LoginController {
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@PostMapping("/snsInfo.do")
 	public void snsInfoUpdate(LoginDTO loginDTO, @AuthenticationPrincipal MyUserDetails myUserDetails, HttpServletResponse response) throws Exception {
-		Util.userInfoRegex("join", loginDTO);
+		Util.userInfoRegex("snsInfo", loginDTO);
 		response.setContentType("text/html; charset=UTF-8");
 		loginDTO.setU_provider(myUserDetails.getProvider());
 		int result = loginService.snsInfoUpdate(loginDTO);
