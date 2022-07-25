@@ -71,14 +71,9 @@ function allDel(u_no) {
 		location.href = "./cartAllDel.do?cart_no=" + u_no;
 	}
 }
-
-
-/* function chkbox(cart_no) {
-	alert("chkbox");
-	location.href = "./pCheck.do?cart_no=" + cart_no;
-} */
-
-
+function checkBox(cart_no){
+	alert(cart_no);
+}
 </script>
     </head>
 	<body>
@@ -137,7 +132,15 @@ function allDel(u_no) {
 										${c.cart_no}
 										<tr class="cart_info">
 											<th scope='row'>
-												<input type="checkbox" id="chkbox" class="chkbox" name="chkbox" checked="checked" onclick="chkbox(${c.cart_no})">&nbsp;
+												<c:choose>
+													<c:when test="${c.p_check eq 1}">
+														<button onclick="checkBox(${c.cart_no})">V</button>
+													</c:when>
+													<c:otherwise>
+														<button onclick="checkBox(${c.cart_no})">X</button>
+													</c:otherwise>
+												</c:choose>
+												<input type="checkbox" id="chkbox" class="chkbox" name="chkbox" checked="checked"  value="${c.cart_no}">&nbsp;
 												<input type="hidden" class="c_no" value="${c.cart_no }">
 												<input type="hidden" class="c_p_no" value="${c.p_no }">
 												<input type="hidden" class="c_price" value="${c.p_price }">
@@ -188,14 +191,9 @@ function allDel(u_no) {
 								</div>
 							</div>
 						</form>
-						
-						<div class="content_btn_section">
-							<button class="order_btn">주문하기</button>
-							<br>
-							<a class="order_btn">주문하기</a>
-						</div>
 					 <%-- <td><a href="./cartDelete.do?cart_no=${cart.cart_no}">[삭제]</a></td> --%>
 					<!-- 삭제 버튼을 누르면 delete.do로 장바구니 개별 id (삭제하길원하는 장바구니 id)를 보내서 삭제한다. -->
+					<input type="checkbox" onclick="inputCheck()">zzzzzz
 					</div>
 				<!-- /row -->
 				</div>
@@ -217,8 +215,8 @@ function allDel(u_no) {
 		<script src="./js/main.js"></script>
 		
 		<script type="text/javascript">
+		
 		$(document).ready(function(){
-			
 			setTotalInfo();
 		});
 		
@@ -243,13 +241,35 @@ function allDel(u_no) {
 					orderNumber += 1;
 				}
 			});
-			/* $(".orderform").html(form_contents); */
 			$(".orderform").submit();
 		});
 		
 		//체크여부에 따른 가격 반영
-		$(".chkbox").on("change", function(){
+		$(".chkbox").on("click", function(){
 			setTotalInfo($(".cart_info"));
+			var obj_length = document.getElementsByName("chkbox").length;
+			var check = document.getElementsByName("chkbox");
+			var check1 = new Array();
+			var cart_no = 0;
+			for (var i=0; i<obj_length; i++) {
+		        if(check[i].checked){
+					//cart_no = check[i].value;
+		        }else if($(".chkbox").attr("checked") != undefined){
+					alert(check[i].value);
+					cart_no = check[i].value;
+		        }
+		  	}	  
+		  	$.ajax({
+				url:'./pCheck.do' , //Controller에서 요청 받을 주소
+	            type:'post', //POST 방식으로 전달
+	            data:{"cart_no" : cart_no},
+	            success:function(data){
+	            	alert("제발 성공!");
+	            },
+	            error:function(){
+	            	alert("떙 ㅠ.ㅠ");
+	            }
+       		});  
 		});
 		
 		//체크박스 전체 선택
@@ -262,13 +282,7 @@ function allDel(u_no) {
 			}
 			setTotalInfo($(".cart_info"));
 		});
-		
-		/* $(".chkbox").on("click", function(){
-			alert("click!");
-			var cart_no = 49;
-			alert(cart_no);
-			location.href="./pCheck.do?cart_no=" + cart_no;
-		}); */
+
 		
 		function setTotalInfo(){
 			$(document).ready(function(){
@@ -286,28 +300,6 @@ function allDel(u_no) {
 				$(".totalPrice").text(sumPrice.toLocaleString());
 			});
 		}
-		
-		/* $(document).ready(function(){
-			$("#chkbox").click(function(p_no){
-				//클릭 시 location.href
-				location.href="./pCheck.do?cart_no=" + cart_no;
-			});
-		}); */
-		
-
-		function chkbox(cart_no) {
-			alert(cart_no);
-			if (confirm("click?")){
-				location.href = "/pCheck.do?cart_no=" + cart_no;
-			}
-		}
-		
-		function couponrepair(coupon_no){
-			if (confirm("복구를 하시겠습니까?")){
-				location.href = "//business/couponrepair/" + coupon_no;
-			}
-		}
-		
 		</script>
 	</body>
 </html>
