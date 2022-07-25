@@ -19,7 +19,6 @@ import com..DTO.PageDTO;
 import com..DTO.ProductDTO;
 import com..DTO.QuestionDTO;
 import com..DTO.ReviewDTO;
-import com..DTO.UserDTO;
 import com..Service.AdminService;
 
 @Controller
@@ -402,5 +401,35 @@ public class AdminController {
 		mv.addObject("pageNo", pageNo);
 		
 		return mv;
+	}
+	
+	@GetMapping(value = "/admin/rdel/{r_no}")
+	public String rdel(@PathVariable("r_no") int r_no) {
+		
+		ReviewDTO dto = new ReviewDTO();
+		dto.setR_no(r_no);
+		adminService.rdel(r_no);
+		
+		return "redirect:/admin/review.do";
+	}
+	
+	@GetMapping(value = "/admin/rrpr/{r_no}")
+	public String rrpr(@PathVariable("r_no") int r_no) {
+		
+		ReviewDTO dto = new ReviewDTO();
+		dto.setR_no(r_no);
+		adminService.rrpr(r_no);
+		
+		return "redirect:/admin/review.do";
+	}
+	
+	@GetMapping(value = "/admin/rcompledel/{r_no}")
+	public String rcompledel(@PathVariable("r_no") int r_no) {
+		
+		ReviewDTO dto = new ReviewDTO();
+		dto.setR_no(r_no);
+		adminService.rcompledel(r_no);
+		
+		return "redirect:/admin/review.do";
 	}
 }

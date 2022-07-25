@@ -120,29 +120,26 @@ td, th{
 function linkPage(pageNo) {
 	location.href = "//admin/review.do?pageNo=" + pageNo;
 }
-function qdel(q_no){
+function rdel(r_no){
 	if (confirm("삭제하시겠습니까?")){
-		location.href = "//admin/qdel/" + q_no;
+		location.href = "//admin/rdel/" + r_no;
 	} else {
 		
 	}
 }
-function qrpr(q_no){
+function rrpr(r_no){
 	if (confirm("복구하시겠습니까?")){
-		location.href = "//admin/qrpr/" + q_no;
+		location.href = "//admin/rrpr/" + r_no;
 	} else {
 		
 	}
 }
-function qcompledel(q_no){
+function rcompledel(r_no){
 	if (confirm("삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?")){
-		location.href = "//admin/qcompledel/" + q_no;
+		location.href = "//admin/rcompledel/" + r_no;
 	} else {
 		
 	}	
-}
-function detail(p_no){
-	location.href = "//productDetail.do?p_no=" + p_no;
 }
 </script>
 </body>

@@ -166,5 +166,20 @@ public class AdminService {
 		return adminDAO.reviewList(map);
 	}
 
+	public void rdel(int r_no) {
+		
+		adminDAO.rdel(r_no);
+	}
+
+	public void rrpr(int r_no) {
+		
+		adminDAO.rrpr(r_no);
+	}
+
+	public void rcompledel(int r_no) {
+		
+		adminDAO.rcompledel(r_no);
+	}
+
 
 }

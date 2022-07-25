@@ -166,5 +166,20 @@ public class AdminDAO {
 		return sqlSession.selectList("admin.reviewList", map);
 	}
 
+	public void rdel(int r_no) {
+		
+		sqlSession.update("admin.rdel", r_no);
+	}
+
+	public void rrpr(int r_no) {
+		
+		sqlSession.update("admin.rrpr", r_no);
+	}
+
+	public void rcompledel(int r_no) {
+		
+		sqlSession.delete("admin.rcompledel", r_no);
+	}
+
 
 }

@@ -3,6 +3,15 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="admin">
+	<delete id="rcompledel" parameterType="reviewDTO">
+		DELETE FROM review WHERE r_no=#{r_no}
+	</delete>
+	<update id="rdel" parameterType="reviewDTO">
+		UPDATE review SET r_del=1 WHERE r_no=#{r_no} 
+	</update>
+	<update id="rrpr" parameterType="reviewDTO">
+		UPDATE review SET r_del=0 WHERE r_no=#{r_no} 
+	</update>
 	<select id="getReviewCount" resultType="integer" parameterType="map">
 		SELECT count(*)
 		FROM review JOIN user ON user.u_no = review.u_no
