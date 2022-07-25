@@ -133,9 +133,13 @@
 										</tr>
 										<c:set var="total" value="0"/>
 										<c:set var="cnttotal" value="0"/>
+										<c:set var="p_name" value=""/>
 										<c:forEach items="${cart }" var="ct">
 											<tr>
-												<td>${ct.p_name }</td>
+												<td>
+												<c:set var="p_name" value="${ct.p_name }"/>
+												${ct.p_name }
+												</td>
 												<td>${ct.p_count }</td>
 												<td>
 													<c:set var="cnttotal" value="${ct.p_price * ct.p_count }"/>
@@ -203,7 +207,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 function iamport(){
-	var p_name = '${product.p_name}';
+	var p_name = '${p_name}';
 	var price = ${total};
 	var email = $("#o_email").val();
 	var o_name = $("#o_name").val();
