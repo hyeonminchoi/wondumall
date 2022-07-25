@@ -122,14 +122,33 @@
 							<h3 class="title">주문</h3>
 						</div>
 						<div class="order-summary">
-							<div class="order-col">
-								<div><strong>제품</strong></div>
-								<div><strong>TOTAL</strong></div>
-							</div>
+
 							<div class="order-products">
 								<div class="order-col">
-									<div>${product.p_name }</div>
-									<div>${product.p_price }</div>
+									<table class="table" style="width:90%; margin: 0 auto;">
+										<tr>
+											<th>제품</th>
+											<th>개수</th>
+											<th>금액</th>
+										</tr>
+										<c:set var="total" value="0"/>
+										<c:set var="cnttotal" value="0"/>
+										<c:forEach items="${cart }" var="ct">
+											<tr>
+												<td>${ct.p_name }</td>
+												<td>${ct.p_count }</td>
+												<td>
+													<c:set var="cnttotal" value="${ct.p_price * ct.p_count }"/>
+													<c:out value="${cnttotal }"/>
+												</td>
+											</tr>
+											<c:set var="total" value="${total + cnttotal }"/>
+										</c:forEach>
+										<tr>
+											<th>총 금액</th>
+											<td><c:out value="${total }"/></td>
+										</tr>
+									</table>
 								</div>
 							</div>
 							<div class="order-col">
@@ -146,10 +165,6 @@
 									</c:forEach>
 								</select>
 								</div>
-							</div>
-							<div class="order-col">
-								<div><strong>총금액</strong></div>
-								<div><strong class="order-total">${product.p_price }</strong></div>
 							</div>
 						</div>
 						
@@ -169,7 +184,6 @@
 			<!-- /container -->
 		</div>
 		<!-- /SECTION -->
-		${cart}
 		<!-- FOOTER -->
 		<footer id="footer">
 			<c:import url="./footer.jsp"></c:import>
@@ -190,7 +204,7 @@
 <script type="text/javascript">
 function iamport(){
 	var p_name = '${product.p_name}';
-	var price = ${product.p_price};
+	var price = ${total};
 	var email = $("#o_email").val();
 	var o_name = $("#o_name").val();
 	var roadAddress = $("#o_roadAddress").val();
