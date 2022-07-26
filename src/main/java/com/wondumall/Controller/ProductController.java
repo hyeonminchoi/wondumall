@@ -57,8 +57,6 @@ public class ProductController {
 	@Autowired
 	private ServletContext servletContext;
 	
-	
-	
 	@ResponseBody
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@RequestMapping(value = "/pCheck.do", method = RequestMethod.POST)

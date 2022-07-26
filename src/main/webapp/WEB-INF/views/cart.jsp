@@ -62,17 +62,20 @@
 function del(cart_no){
 	if (confirm("삭제하시겠습니까?")){
 		location.href = "./cartDelete.do?cart_no=" + cart_no;
-	} else {
-		
-	}
+	} 
 }
 function allDel(u_no) {
 	if (confirm("장바구니를 비우시겠습니까?")){
 		location.href = "./cartAllDel.do?cart_no=" + u_no;
 	}
 }
-function checkBox(cart_no){
-	alert(cart_no);
+function modify(cart_no){
+	if (confirm("수량을 변경하시겠습니까?")){
+		alert("수량 변경이 완료되었습니다.");
+		alert();
+	} else {
+		alert("수량 변경을 취소하였습니다.");
+	}
 }
 </script>
     </head>
@@ -156,16 +159,18 @@ function checkBox(cart_no){
 											<td>${c.p_name }</td>
 											<td><fmt:formatNumber pattern="###,###,###" value="${c.p_price }" />원</td>
 											<td class="updown">
-												<%-- <input type="text" name="p_num3" id="p_num3" size="2"
-														maxlength="4" class="p_num" value="${c.p_count }"
-														style="text-align: right;"
-														onkeyup="javascript:basket.changePNum(3);"> --%>
-												${c.p_count }
+												<input type="number" name="p_num3" id="p_num3" size="2"
+														maxlength="4" class="p_num" value="${c.p_count }" min="1"
+														style="text-align: right;">
+												<%-- ${c.p_count } --%>
 												<span onclick="javascript:basket.changePNum(3);">
 													<i class="fas fa-arrow-alt-circle-up up" style="cursor: pointer;"></i>
 												</span>
 												<span onclick="javascript:basket.changePNum(3);">
 													<i class="fas fa-arrow-alt-circle-down down" style="cursor: pointer;"></i>
+												</span>
+												<span>
+													<button class="quantity_modify_btn abutton" data-cartId="${c.cart_no}" onclick="modify(${c.cart_no})">변경</button>
 												</span>
 											</td>
 											<td>
