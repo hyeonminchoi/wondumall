@@ -35,7 +35,48 @@
 		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
-
+		<style>
+		.starRev{
+			margin: 0 auto;
+		}
+		.starR1 {
+			background:
+				url('http://miuu227.godohosting.com/images/icon/ico_review.png')
+				no-repeat -52px 0;
+			background-size: auto 100%;
+			width: 15px;
+			height: 30px;
+			float: left;
+			text-indent: -9999px;
+			cursor: pointer;
+		}
+		.starR2 {
+			background:
+				url('http://miuu227.godohosting.com/images/icon/ico_review.png')
+				no-repeat right 0;
+			background-size: auto 100%;
+			width: 15px;
+			height: 30px;
+			float: left;
+			text-indent: -9999px;
+			cursor: pointer;
+		}
+		.starR1.on {
+			background-position: 0 0;
+		}
+		.starR2.on {
+			background-position: -15px 0;
+		}
+		</style>
+		
+		<!-- jQuery Plugins -->
+		<script src="./js/jquery.min.js"></script>
+		<script src="./js/bootstrap.min.js"></script>
+		<script src="./js/slick.min.js"></script>
+		<script src="./js/nouislider.min.js"></script>
+		<script src="./js/jquery.zoom.min.js"></script>
+		<script src="./js/main.js"></script>
+		
     </head>
 	<body>
 		<!-- HEADER -->
@@ -123,13 +164,17 @@
 											<p class="product-category">${p.category }</p>
 											<h3 class="product-name"><a href="#">${p.p_name }</a></h3>
 											<h4 class="product-price">${p.p_price }</h4>
-											${p.rating }
-											<div class="product-rating">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
+											<div class="starRev">
+												<span class="starR1 ${p.rating>0.5?'on':'' }">0.5</span>
+												<span class="starR2 ${p.rating>1?'on':'' }">1</span>
+												<span class="starR1 ${p.rating>1.5?'on':'' }">1.5</span>
+												<span class="starR2 ${p.rating>2?'on':'' }">2</span>
+												<span class="starR1 ${p.rating>2.5?'on':'' }">2.5</span>
+												<span class="starR2 ${p.rating>3?'on':'' }">3</span>
+												<span class="starR1 ${p.rating>3.5?'on':'' }">3.5</span>
+												<span class="starR2 ${p.rating>4?'on':'' }">4</span>
+												<span class="starR1 ${p.rating>4.5?'on':'' }">4.5</span>
+												<span class="starR2 ${p.rating>5?'on':'' }">5</span>
 											</div>
 										</div>
 										<div class="add-to-cart">
@@ -156,13 +201,6 @@
 		</footer>
 		<!-- /FOOTER -->
 
-		<!-- jQuery Plugins -->
-		<script src="./js/jquery.min.js"></script>
-		<script src="./js/bootstrap.min.js"></script>
-		<script src="./js/slick.min.js"></script>
-		<script src="./js/nouislider.min.js"></script>
-		<script src="./js/jquery.zoom.min.js"></script>
-		<script src="./js/main.js"></script>
 
 	</body>
 </html>
