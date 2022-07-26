@@ -67,8 +67,6 @@ $(function(){
 	for(let i=0;i<temp.length;i++){
 		arr[i] = temp[i].substring(1, temp[i].length-1);
 	}
-	
-	alert(arr);
 	$.ajax({
 		url: './recentlySee.do',
 		type: 'post',

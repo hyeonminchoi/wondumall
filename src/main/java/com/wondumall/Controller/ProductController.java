@@ -57,6 +57,18 @@ public class ProductController {
 	@Autowired
 	private ServletContext servletContext;
 	
+	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
+	@PostMapping(value = "/modify.do")
+	public String modify(HttpServletRequest request, @RequestParam int cart_no, @RequestParam int p_count, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+		CartDTO cartDTO = new CartDTO();
+		cartDTO.setP_count(p_count);
+		cartDTO.setCart_no(cart_no);
+		cartDTO.setU_no(myUserDetails.getNo());
+		
+		productService.modify(cartDTO);
+		return "redirect:/cart.do?u_no=" + myUserDetails.getNo();
+	}
+	
 	@ResponseBody
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@RequestMapping(value = "/pCheck.do", method = RequestMethod.POST)

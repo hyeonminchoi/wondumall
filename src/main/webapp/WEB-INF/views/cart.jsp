@@ -72,7 +72,7 @@ function allDel(u_no) {
 function modify(cart_no){
 	if (confirm("수량을 변경하시겠습니까?")){
 		alert("수량 변경이 완료되었습니다.");
-		alert();
+		location.href = "./modify.do?cart_no=" + cart_no;
 	} else {
 		alert("수량 변경을 취소하였습니다.");
 	}
@@ -135,7 +135,6 @@ function modify(cart_no){
 							
 								<tbody>
 									<c:forEach items="${cart}" var="c">
-										${c.cart_no}
 										<tr class="cart_info">
 											<th scope='row'>
 												<c:choose>
@@ -159,19 +158,14 @@ function modify(cart_no){
 											<td>${c.p_name }</td>
 											<td><fmt:formatNumber pattern="###,###,###" value="${c.p_price }" />원</td>
 											<td class="updown">
-												<input type="number" name="p_num3" id="p_num3" size="2"
-														maxlength="4" class="p_num" value="${c.p_count }" min="1"
-														style="text-align: right;">
-												<%-- ${c.p_count } --%>
-												<span onclick="javascript:basket.changePNum(3);">
+												<input type="number" class="p_num quantity_input" value="${c.p_count }" min="1" max="50" style="text-align: right;">
+												<button class="quantity_modify_btn abutton" data-cartId="${c.cart_no}">변경</button>
+												<!-- <span onclick="javascript:basket.changePNum(3);">
 													<i class="fas fa-arrow-alt-circle-up up" style="cursor: pointer;"></i>
 												</span>
 												<span onclick="javascript:basket.changePNum(3);">
 													<i class="fas fa-arrow-alt-circle-down down" style="cursor: pointer;"></i>
-												</span>
-												<span>
-													<button class="quantity_modify_btn abutton" data-cartId="${c.cart_no}" onclick="modify(${c.cart_no})">변경</button>
-												</span>
+												</span> -->
 											</td>
 											<td>
 												<fmt:formatNumber pattern="###,###,###" value="${c.sumPrice}" />원
@@ -182,7 +176,6 @@ function modify(cart_no){
 								</tbody>
 							</table>
 							<div class="right-align basketrowcmd">
-								<!-- <a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delCheckedItem();">선택상품삭제</a> -->
 								<button class="abutton" onclick="allDel(${cart[2].u_no})">장바구니비우기</button>
 							</div>
 							<div class="bigtext right-align sumcount" id="sum_p_num">
@@ -204,6 +197,12 @@ function modify(cart_no){
 			<!-- /container -->
 			</div>
 		</section>
+		
+		<form action="./modify.do?${cart[2].u_no}" method="post" class="quantity_update_form">
+			<input type="hidden" name="cart_no" class="update_cart_no">
+			<input type="hidden" name="p_count" class="update_p_count">
+			<input type="hidden" name="u_no" value="${user[0].u_no}">
+		</form>
 		<!-- FOOTER -->
 		<footer id="footer">
 			<c:import url="./footer.jsp"></c:import>
@@ -222,6 +221,16 @@ function modify(cart_no){
 		
 		$(document).ready(function(){
 			setTotalInfo();
+		});
+		
+		//수량 변경
+		$(".quantity_modify_btn").on("click", function(){
+			let cart_no = $(this).data("cartid");
+			let p_count = $(this).parent("td").find("input").val();
+			$(".update_cart_no").val(cart_no);
+			$(".update_p_count").val(p_count);
+			$(".quantity_update_form").submit();
+			alert("수량이 변경되었습니다.");
 		});
 		
 		/* 주문 페이지 이동 */	

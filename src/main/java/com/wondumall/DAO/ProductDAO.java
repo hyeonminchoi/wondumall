@@ -93,4 +93,8 @@ public class ProductDAO {
 	public List<Map<String, Object>> search(String search) {
 		return sqlSession.selectList("product.search", search);
 	}
+
+	public void modify(CartDTO cartDTO) {
+		sqlSession.update("product.modify", cartDTO);
+	}
 }

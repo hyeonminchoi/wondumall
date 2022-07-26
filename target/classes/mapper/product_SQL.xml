@@ -97,4 +97,9 @@
   		WHERE product.p_name LIKE CONCAT('%', #{search}, '%')
   		GROUP BY p_no
   	</select>
+  	<update id="modify" parameterType="cartDTO">
+  		UPDATE cart 
+  		SET p_count = #{p_count}
+  		WHERE cart_no = #{cart_no} AND u_no = #{u_no}
+  	</update>
 </mapper>
