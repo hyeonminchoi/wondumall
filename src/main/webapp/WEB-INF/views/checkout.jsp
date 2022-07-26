@@ -150,6 +150,7 @@
 										</c:forEach>
 										<tr>
 											<th>총 금액</th>
+											<td> : </td>
 											<td>
 											<label id="total"><c:out value="${total }"/></label>
 											</td>
@@ -270,7 +271,8 @@ function iamport(){
         		"o_request" : request,
         		"merchant_uid" : rsp.merchant_uid,
         		"u_no" : u_no,
-        		"o_pname" : p_name
+        		"o_pname" : p_name,
+        		"o_price" : price
         	}
         }).done(function(data) {
         	
