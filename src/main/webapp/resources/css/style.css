@@ -1071,6 +1071,10 @@ textarea.input {
   visibility: visible;
 }
 
+.product-img{
+	height: 150px;
+}
+
 /*----------------------------*\
 	Widget product
 \*----------------------------*/

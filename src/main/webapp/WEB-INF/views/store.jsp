@@ -38,6 +38,8 @@
 		<style>
 		.starRev{
 			margin: 0 auto;
+			height: 30px;
+			display: inline-block;
 		}
 		.starR1 {
 			background:
@@ -158,7 +160,7 @@
 								<div class="col-md-4 col-xs-6">
 									<div class="product">
 										<div class="product-img">
-											<img src="./productUpload/${p.p_img}" alt="">
+											<img src="./productUpload/${p.p_img}" alt="이미지 로딩 실패">
 										</div>
 										<div class="product-body">
 											<p class="product-category">${p.category }</p>
