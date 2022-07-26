@@ -86,8 +86,8 @@ public class ProductDAO {
 		sqlSession.delete("product.cartAllDel", cartDTO);
 	}
 
-	public void pCheck(CartDTO cartDTO) {
-		sqlSession.update("product.pCheck", cartDTO);
+	public void resetCheck(Map<String, Object> map) {
+		sqlSession.update("product.resetCheck", map);
 	}
 
 	public List<Map<String, Object>> search(String search) {
