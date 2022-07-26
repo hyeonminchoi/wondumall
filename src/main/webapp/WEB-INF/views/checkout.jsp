@@ -150,7 +150,9 @@
 										</c:forEach>
 										<tr>
 											<th>총 금액</th>
-											<td><c:out value="${total }"/></td>
+											<td>
+											<c:out value="${total }"/>
+											</td>
 										</tr>
 									</table>
 								</div>
@@ -165,7 +167,8 @@
 								<select name="coupon" id="coupon">
 									<option value="">전체</option>
 									<c:forEach items="${couponList }" var="cl">
-										<option value="${cl.coupon_no }">${cl.coupon_description }</option>
+										<option value="${cl.coupon_no }">${cl.coupon_description }
+										</option>
 									</c:forEach>
 								</select>
 								</div>
@@ -204,8 +207,24 @@
 		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 <script type="text/javascript">
+$("#coupon").change(function(){
+	if($("#coupon option:selected").val()=='0'){
+		 var originPrice = ${title};
+		 $("input[name=lastPrice]").val(originPrice);
+	 } else {
+		 var coupon_per = $("#coupon option:selected").text().slice(-3,-1).trim();
+		 var discountPrice = Math.floor(originalPrice*(discountRate/100)/10)*10;
+		 var finalPrice = originalPrice-discountPrice
+		 var couponNo = $("select").val();
+		 $("#discountPrice").html("<strong>-<span style=\"color:red;\">"+discountPrice+"</span></strong>");
+		 $("#finalprice").html(finalPrice+"원");
+		 $("input[name=lastPrice]").val(finalPrice);
+		 $("input[name=\"couponNo\"]").val(couponNo);
+	 } 
+});
+
 function iamport(){
 	var p_name = '${p_name}';
 	var price = ${total};
@@ -218,7 +237,6 @@ function iamport(){
 	var tel = $("#o_tel").val();
 	var request = $("#o_request").val();
 	var u_no = $("#u_no").val();
-	var p_no = ${product.p_no};
 	
 	//가맹점 식별코드
 	IMP.init('imp56561187');
@@ -250,7 +268,7 @@ function iamport(){
         		"o_request" : request,
         		"merchant_uid" : rsp.merchant_uid,
         		"u_no" : u_no,
-        		"p_no" : p_no
+        		"o_pname" : p_name
         	}
         }).done(function(data) {
         	

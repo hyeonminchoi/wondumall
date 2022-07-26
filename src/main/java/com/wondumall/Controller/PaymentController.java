@@ -72,7 +72,7 @@ public class PaymentController {
 		ProductDTO dto = new ProductDTO();
 		dto.setU_no(myUserDetails.getNo());
 		dto = paymentService.product(dto);
-		
+		System.out.println(dto);
 		UserDTO user = new UserDTO();
 		paymentService.user(user);
 		
