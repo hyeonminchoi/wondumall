@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import com..DAO.LoginDAO;
 import com..DTO.LoginDTO;
@@ -42,6 +43,11 @@ public class LoginService {
 
 	public int snsInfoUpdate(LoginDTO loginDTO) {
 		return loginDAO.snsInfoUpdate(loginDTO);
+	}
+
+	public ModelAndView mypage(LoginDTO dto) {
+		return loginDAO.mypage(dto);
+		
 	}
 
 		

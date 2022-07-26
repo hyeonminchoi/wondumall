@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.servlet.ModelAndView;
 
 import com..DTO.LoginDTO;
 
@@ -48,6 +49,10 @@ public class LoginDAO {
 
 	public int snsInfoUpdate(LoginDTO loginDTO) {
 		return sqlSession.update("login.snsInfoUpdate", loginDTO);
+	}
+
+	public ModelAndView mypage(LoginDTO dto) {
+		return sqlSession.selectOne("login.mypage", dto);
 	}
 
 }

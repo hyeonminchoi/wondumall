@@ -1,15 +1,20 @@
 package com..Controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.mybatis.spring.batch.MyBatisPagingItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com..Config.MyUserDetails;
 import com..DTO.LoginDTO;
@@ -36,6 +41,24 @@ public class LoginController {
 		
 		return "index";
 	}
+	
+	//마이페이지 구현
+	@GetMapping(value = "/mypage")
+	public String mypage() {
+		return"mypage";
+	}
+	@PostMapping(value ="/mypage.do")
+	public ModelAndView mypage(LoginDTO dto) {
+		
+		ModelAndView mv = new ModelAndView("mypage");
+		
+		loginService.mypage(dto);
+		
+		mv.addObject("mypage", dto);
+		
+		return mv;
+	}
+
 	
 	//email 중복체크
 	@PostMapping(value = "/emailCheck") //ResposeBody => 결과값을 내상태에서 출력
