@@ -89,4 +89,8 @@ public class ProductDAO {
 	public void pCheck(CartDTO cartDTO) {
 		sqlSession.update("product.pCheck", cartDTO);
 	}
+
+	public List<Map<String, Object>> search(String search) {
+		return sqlSession.selectList("product.search", search);
+	}
 }

@@ -86,4 +86,12 @@
   		JOIN product p on c.cate_no = p.cate_no
   		WHERE p_no = #{p_no}
   	</select>
+  	<select id="search" parameterType="string" resultType="map">
+  		SELECT product.*, category.category, AVG(review.r_rating) AS rating
+  		FROM product
+  		JOIN category ON category.cate_no = product.cate_no
+  		LEFT JOIN review ON review.p_no = product.p_no AND review.r_del = 0
+  		WHERE product.p_name LIKE CONCAT('%', #{search}, '%')
+  		GROUP BY p_no
+  	</select>
 </mapper>

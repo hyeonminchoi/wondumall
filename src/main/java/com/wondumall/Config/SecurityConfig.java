@@ -127,7 +127,7 @@ public class SecurityConfig {
  			.userInfoUri("https://kapi.kakao.com/v2/user/me")
  			.userNameAttributeName("id")
  			.clientName("Kakao")
- 			.clientAuthenticationMethod(ClientAuthenticationMethod.POST)
+ 			.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
  			.build();
 	}
 }

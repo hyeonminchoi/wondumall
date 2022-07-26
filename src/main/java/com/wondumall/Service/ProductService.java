@@ -89,4 +89,8 @@ public class ProductService {
 	public void pCheck(CartDTO cartDTO) {
 		productDAO.pCheck(cartDTO);
 	}
+
+	public List<Map<String, Object>> search(String search) {
+		return productDAO.search(search);
+	}
 }
