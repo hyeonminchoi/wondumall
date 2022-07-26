@@ -14,7 +14,7 @@
 		SELECT * FROM user WHERE u_no=#{u_no}
 	</select>
 	<select id="couponList" resultType="couponDTO">
-		SELECT * FROM coupon
+		SELECT * FROM coupon WHERE coupon_del=0
 	</select>
 	<select id="cartPay" parameterType="integer" resultType="cartDTO">
 		SELECT *

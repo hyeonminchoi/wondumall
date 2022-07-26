@@ -135,9 +135,9 @@
 										<c:set var="cnttotal" value="0"/>
 										<c:set var="p_name" value=""/>
 										<c:forEach items="${cart }" var="ct">
+										<c:set var="p_name" value="${ct.p_name }"/>
 											<tr>
 												<td>
-												<c:set var="p_name" value="${ct.p_name }"/>
 												${ct.p_name }
 												</td>
 												<td>${ct.p_count }</td>
@@ -151,7 +151,7 @@
 										<tr>
 											<th>총 금액</th>
 											<td>
-											<c:out value="${total }"/>
+											<label id="total"><c:out value="${total }"/></label>
 											</td>
 										</tr>
 									</table>
@@ -167,8 +167,7 @@
 								<select name="coupon" id="coupon">
 									<option value="">전체</option>
 									<c:forEach items="${couponList }" var="cl">
-										<option value="${cl.coupon_no }">${cl.coupon_description }
-										</option>
+										<option value="${cl.coupon_per }">${cl.coupon_description }</option>
 									</c:forEach>
 								</select>
 								</div>
@@ -176,13 +175,13 @@
 						</div>
 						
 						<div class="input-checkbox">
-							<input type="checkbox" id="terms">
+							<input type="checkbox" id="terms" onclick="checkBox()">
 							<label for="terms">
 								<span></span>
 								결제를 하시겠습니까?
 							</label>
 						</div>
-						<button onclick="iamport()" class="primary-btn order-submit">결제</button>
+						<button onclick="iamport()" class="primary-btn order-submit" id="payment" disabled="disabled">결제</button>
 					</div>
 					<!-- /Order Details -->
 				</div>
@@ -210,24 +209,27 @@
 		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 <script type="text/javascript">
 $("#coupon").change(function(){
-	if($("#coupon option:selected").val()=='0'){
-		 var originPrice = ${title};
-		 $("input[name=lastPrice]").val(originPrice);
+	if($("#coupon").val()== 0){
+		 var originalPrice = ${total};
+		 $("label[id=total]").val(originalPrice);
 	 } else {
-		 var coupon_per = $("#coupon option:selected").text().slice(-3,-1).trim();
-		 var discountPrice = Math.floor(originalPrice*(discountRate/100)/10)*10;
-		 var finalPrice = originalPrice-discountPrice
-		 var couponNo = $("select").val();
-		 $("#discountPrice").html("<strong>-<span style=\"color:red;\">"+discountPrice+"</span></strong>");
-		 $("#finalprice").html(finalPrice+"원");
-		 $("input[name=lastPrice]").val(finalPrice);
-		 $("input[name=\"couponNo\"]").val(couponNo);
+		 var originalPrice = ${total};
+		 var coupon_per = $("#coupon").val();
+		 var discountPrice = ${total} * coupon_per;
+		 var finalPrice = originalPrice-discountPrice;
+		 $("#total").text(Math.ceil(finalPrice));
 	 } 
 });
-
+function checkBox(){
+	if($('#terms').is(':checked')){
+		$('#payment').attr("disabled",false);
+	} else{
+		$('#payment').attr("disabled",true);
+	}
+}
 function iamport(){
 	var p_name = '${p_name}';
-	var price = ${total};
+	var price = $("#total").text();
 	var email = $("#o_email").val();
 	var o_name = $("#o_name").val();
 	var roadAddress = $("#o_roadAddress").val();
