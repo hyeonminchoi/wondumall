@@ -86,7 +86,7 @@ public class ProductService {
 		productDAO.cartAllDel(cartDTO);
 	}
 
-	public void pCheck(CartDTO cartDTO) {
-		productDAO.pCheck(cartDTO);
+	public void resetCheck(Map<String, Object> map) {
+		productDAO.resetCheck(map);
 	}
 }

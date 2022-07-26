@@ -55,9 +55,21 @@
 		DELETE FROM cart
 		WHERE u_no = #{u_no}
 	</delete>
-	<update id="pCheck" parameterType="cartDTO">
-		UPDATE cart SET p_Check = 0
-		WHERE cart_no = #{cart_no}
+	<update id="resetCheck" parameterType="map">
+		UPDATE cart 
+		<foreach collection="check" item="item">
+		<choose>
+			<when test="p_check eq 1">
+				SET p_check = 0
+			</when>
+			<otherwise>
+				SET p_check = 1
+			</otherwise>
+		</choose>
+		
+		IF(#{item.value},1,0)
+		WHERE u_no = #{u_no} OR cart_no=#{item.value}
+		</foreach>
 	</update>
 	<select id="reviewStatus" parameterType="reviewDTO" resultType="integer">
 		SELECT COUNT(*)

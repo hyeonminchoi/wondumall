@@ -21,7 +21,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,17 +59,14 @@ public class ProductController {
 	
 	
 	
+	@ResponseBody
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
-	@RequestMapping(value = "/pCheck.do")
-	public String pCheck(HttpServletRequest request, @RequestParam int cart_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
-		CartDTO cartDTO = new CartDTO();
+	@RequestMapping(value = "/pCheck.do", method = RequestMethod.POST)
+	public void pCheck(@RequestBody Map<String, Object> map
+			,@AuthenticationPrincipal MyUserDetails myUserDetails) {
+		System.out.println(map);
 		
-		cartDTO.setCart_no(cart_no);
-		cartDTO.setU_no(myUserDetails.getNo());
-		
-		System.out.println(cart_no);
-		productService.pCheck(cartDTO);
-		return "redirect:/cart.do?u_no=" + myUserDetails.getNo();
+		productService.resetCheck(map);
 	}
 	
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})

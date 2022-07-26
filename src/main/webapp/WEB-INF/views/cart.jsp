@@ -117,7 +117,10 @@ function checkBox(cart_no){
 							<table class="table">
 								<thead>
 									<tr>
-										<th scope="col"><input type="checkbox" class="all_check" checked="checked" style="margin-right: 6px;">선택</th>
+										<th scope="col">
+											<!-- <input type="checkbox" class="all_check" checked="checked" style="margin-right: 6px;"> -->
+											선택
+										</th>
 										<th scope="col">이미지</th>
 										<th scope="col">상품명</th>
 										<th scope="col">가격</th>
@@ -134,13 +137,12 @@ function checkBox(cart_no){
 											<th scope='row'>
 												<c:choose>
 													<c:when test="${c.p_check eq 1}">
-														<button onclick="checkBox(${c.cart_no})">V</button>
+														<input type="checkbox" id="chkbox" class="chkbox" name="chkbox" checked="checked"  value="${c.cart_no}">&nbsp;
 													</c:when>
 													<c:otherwise>
-														<button onclick="checkBox(${c.cart_no})">X</button>
+														<input type="checkbox" id="chkbox" class="chkbox" name="chkbox" value="${c.cart_no}">&nbsp;
 													</c:otherwise>
 												</c:choose>
-												<input type="checkbox" id="chkbox" class="chkbox" name="chkbox" checked="checked"  value="${c.cart_no}">&nbsp;
 												<input type="hidden" class="c_no" value="${c.cart_no }">
 												<input type="hidden" class="c_p_no" value="${c.p_no }">
 												<input type="hidden" class="c_price" value="${c.p_price }">
@@ -191,9 +193,6 @@ function checkBox(cart_no){
 								</div>
 							</div>
 						</form>
-					 <%-- <td><a href="./cartDelete.do?cart_no=${cart.cart_no}">[삭제]</a></td> --%>
-					<!-- 삭제 버튼을 누르면 delete.do로 장바구니 개별 id (삭제하길원하는 장바구니 id)를 보내서 삭제한다. -->
-					<input type="checkbox" onclick="inputCheck()">zzzzzz
 					</div>
 				<!-- /row -->
 				</div>
@@ -244,30 +243,35 @@ function checkBox(cart_no){
 			$(".orderform").submit();
 		});
 		
-		//체크여부에 따른 가격 반영
+		
 		$(".chkbox").on("click", function(){
+			//체크여부에 따른 가격 반영
 			setTotalInfo($(".cart_info"));
+			
 			var obj_length = document.getElementsByName("chkbox").length;
 			var check = document.getElementsByName("chkbox");
-			var check1 = new Array();
+			var checkArr = new Map();
 			var cart_no = 0;
 			for (var i=0; i<obj_length; i++) {
-		        if(check[i].checked){
+				checkArr.set(check[i].value, check[i].checked);
+		        /* if(check[i].checked){
 					//cart_no = check[i].value;
 		        }else if($(".chkbox").attr("checked") != undefined){
-					alert(check[i].value);
+					//alert(check[i].value);
 					cart_no = check[i].value;
-		        }
+					checkArr.push(check[i].value);
+		        } */
 		  	}	  
+			
 		  	$.ajax({
 				url:'./pCheck.do' , //Controller에서 요청 받을 주소
-	            type:'post', //POST 방식으로 전달
-	            data:{"cart_no" : cart_no},
+	            method :'post', //POST 방식으로 전달
+	            data:checkArr,
 	            success:function(data){
 	            	alert("제발 성공!");
 	            },
 	            error:function(){
-	            	alert("떙 ㅠ.ㅠ");
+	            	alert("떙 ㅠ.ㅠ.....");
 	            }
        		});  
 		});

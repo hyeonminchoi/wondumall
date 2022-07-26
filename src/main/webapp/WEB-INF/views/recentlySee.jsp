@@ -68,6 +68,7 @@ $(function(){
 		arr[i] = temp[i].substring(1, temp[i].length-1);
 	}
 	
+	alert(arr);
 	$.ajax({
 		url: './recentlySee.do',
 		type: 'post',
