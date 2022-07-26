@@ -56,19 +56,10 @@
 		WHERE u_no = #{u_no}
 	</delete>
 	<update id="resetCheck" parameterType="map">
-		UPDATE cart 
-		<foreach collection="check" item="item">
-		<choose>
-			<when test="p_check eq 1">
-				SET p_check = 0
-			</when>
-			<otherwise>
-				SET p_check = 1
-			</otherwise>
-		</choose>
-		
-		IF(#{item.value},1,0)
-		WHERE u_no = #{u_no} OR cart_no=#{item.value}
+		<foreach collection="_parameter.entrySet()" index="key" item="value">
+			UPDATE cart
+			SET p_check = IF(#{value},1,0)
+			WHERE cart_no = #{key};
 		</foreach>
 	</update>
 	<select id="reviewStatus" parameterType="reviewDTO" resultType="integer">

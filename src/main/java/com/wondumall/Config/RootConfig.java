@@ -53,7 +53,7 @@ public class RootConfig {
 	public DriverManagerDataSource dataSource() {
 		DriverManagerDataSource source = new DriverManagerDataSource();
 		source.setDriverClassName("org.mariadb.jdbc.Driver");
-		source.setUrl("jdbc:mariadb:///");
+		source.setUrl("jdbc:mariadb:///?allowMultiQueries=true");
 		source.setUsername("");
 		source.setPassword("");
 		return source;

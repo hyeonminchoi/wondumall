@@ -64,8 +64,6 @@ public class ProductController {
 	@RequestMapping(value = "/pCheck.do", method = RequestMethod.POST)
 	public void pCheck(@RequestBody Map<String, Object> map
 			,@AuthenticationPrincipal MyUserDetails myUserDetails) {
-		System.out.println(map);
-		
 		productService.resetCheck(map);
 	}
 	

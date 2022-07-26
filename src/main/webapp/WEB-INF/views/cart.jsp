@@ -253,25 +253,16 @@ function checkBox(cart_no){
 			var checkArr = new Map();
 			var cart_no = 0;
 			for (var i=0; i<obj_length; i++) {
-				checkArr.set(check[i].value, check[i].checked);
-		        /* if(check[i].checked){
-					//cart_no = check[i].value;
-		        }else if($(".chkbox").attr("checked") != undefined){
-					//alert(check[i].value);
-					cart_no = check[i].value;
-					checkArr.push(check[i].value);
-		        } */
+				checkArr[check[i].value] =  check[i].checked;
 		  	}	  
-			
 		  	$.ajax({
 				url:'./pCheck.do' , //Controller에서 요청 받을 주소
 	            method :'post', //POST 방식으로 전달
-	            data:checkArr,
-	            success:function(data){
-	            	alert("제발 성공!");
+	            data:JSON.stringify(checkArr),
+	            contentType: 'application/json',
+	            success:function(){
 	            },
 	            error:function(){
-	            	alert("떙 ㅠ.ㅠ.....");
 	            }
        		});  
 		});
