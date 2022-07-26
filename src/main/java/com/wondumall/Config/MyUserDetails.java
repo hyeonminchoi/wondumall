@@ -31,7 +31,7 @@ public class MyUserDetails implements UserDetails, OAuth2User {
     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
     //변경 가능
-    final String name, postcode, roadAddress, extraAddress, detailAddress, joindate, img, nickname, provider;
+    final String name, postcode, roadAddress, extraAddress, detailAddress, joindate, img, nickname, provider, tel;
     final int grade, resign, no;
 
     //생성자
@@ -58,6 +58,7 @@ public class MyUserDetails implements UserDetails, OAuth2User {
         this.provider = user.getU_provider();
         this.grade = user.getU_grade();
         this.resign = user.getU_resign();
+        this.tel = user.getU_tel();
     }
 
 	@Override

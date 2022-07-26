@@ -29,7 +29,6 @@ import com..DTO.OrderDTO;
 import com..DTO.ProductDTO;
 import com..DTO.UserDTO;
 import com..Service.PaymentService;
-import com..Service.ProductService;
 
 @Controller
 public class PaymentController {
@@ -38,9 +37,6 @@ public class PaymentController {
 	
 	@Autowired
 	private PaymentService paymentService;
-	
-	@Autowired
-	private ProductService productService;
 	
 	public PaymentController() {
     	// REST API 키와 REST API secret 를 아래처럼 순서대로 입력한다.
@@ -72,7 +68,6 @@ public class PaymentController {
 		ProductDTO dto = new ProductDTO();
 		dto.setU_no(myUserDetails.getNo());
 		dto = paymentService.product(dto);
-		System.out.println(dto);
 		UserDTO user = new UserDTO();
 		paymentService.user(user);
 		

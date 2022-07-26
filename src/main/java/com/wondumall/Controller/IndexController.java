@@ -7,6 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com..Config.MyUserDetails;
@@ -65,5 +66,17 @@ public class IndexController {
 		mv.addObject("productList", productService.search(search));
 		mv.addObject("categoryList", categoryService.getCategoryList());
 		return mv;
+	}
+	
+	@ResponseBody
+	@GetMapping("/searchAjax.do")
+	public List<ProductDTO> searchAjax(@RequestParam("categoryArr[]") List<Boolean> check,@RequestParam("price_min")int price_min, @RequestParam("price_max")int price_max,
+			@RequestParam("order")int order, @RequestParam("search")String search){
+		System.out.println(check);
+		System.out.println(price_max);
+		System.out.println(price_min);
+		System.out.println(order);
+		System.out.println(search);
+		return null;
 	}
 }

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,13 +60,10 @@
 			<div id="container">
 				<form action="./update.do" method="POST" id="join" class="joinForm" onsubmit="DoJoinForm__submit(this); return false;">
 	
-					<h2>마이페이지</h2>
+					<h2>회원정보수정</h2>
 					<div class="textForm">
-						<input autocomplete="off" name="u_email" id="email" minlength="6" type="email" required="required" class="email" placeholder="아이디(이메일 형식)" oninput = "checkemail()" pattern="^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$" />
-					</div>				
-					<!-- email ajax 중복체크 -->
-					<span class="email_ok" >사용 가능한 이메일 입니다.</span>
-					<span class="email_already">사용중인 이메일 입니다.</span>
+						<input autocomplete="off" name="u_email" id="email" minlength="6" type="email" required="required" class="email" value="<sec:authentication property='principal.username' />" disabled="disabled"/>
+					</div>
 					
 					<div class="textForm">
 						<input autocomplete="off" name="u_pw" type="password" id="pw1" required="required" class="pw" placeholder="비밀번호" onkeyup="passlength()" pattern="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$">
@@ -76,22 +75,20 @@
 					<span id ="confirmMsg2"></span>
 					
 					<div class="textForm">
-						<input autocomplete="off" name="u_name" minlength="2" type="text" class="name" required="required" placeholder="이름" pattern="^[가-힣]{2,20}|[a-zA-Z]{2,20}\s[a-zA-Z]{2,20}$">
+						<p class="mypagename" >이름</p>
+						<input autocomplete="off" name="u_name" minlength="2" type="text" class="name" required="required" placeholder="이름" pattern="^[가-힣]{2,20}|[a-zA-Z]{2,20}\s[a-zA-Z]{2,20}$" value="<sec:authentication property='principal.name' />" disabled="disabled">
 					</div>
 					<div class="textForm">
-						<input autocomplete="off" name="u_tel" type="text" minlength="10" class="name" required="required" placeholder="핸드폰번호 ( - 없이 입력)">
+						<input autocomplete="off" name="u_tel" type="text" minlength="10" class="name" required="required" placeholder="핸드폰번호 ( - 없이 입력)" value="<sec:authentication property='principal.tel' />">
 					</div>
 					
 					<div class="textForm">
-						<select name="u_grade" required="required" class="nickname" id="grade" onchange="gradeText()">
-							<option value="">가입 유형을 선택하세요</option>
-							<option value="0">일반</option>
-							<option value="1">사업자</option>
+						<select name="u_grade" required="required" class="nickname" id="grade" onchange="gradeText()" disabled="disabled">
+							<option <sec:authentication property='principal.grade' /> eq 0 ? 'checked':''>일반</option>
+							<option <sec:authentication property='principal.grade' /> eq 1 ? 'checked':''>사업자</option>
 						</select>
 					</div>
-					<span class="normal" ></span>
-					<span class="company" style="display: none;">사업자 등록은 관리자에게 승인을 받아야 합니다. 약 1~2일 정도 시간이 소요 되며 자세한건 관리자에게 문의 바랍니다.</span>
-					
+							
 					<div class="textForm">
 						<input autocomplete="off" name="u_nickname" type="text" id="nickname" minlength="1" required="required" class="nickname" placeholder="닉네임" oninput = "checknickname()" pattern="^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$">
 					</div>
@@ -103,19 +100,19 @@
 					<div>
 					
 					<div class="textForm">
-						<input autocomplete="off" type="text" id="sample6_postcode" required="required" class="postcode"  name="u_postcode" placeholder="우편번호" type="button" onclick="sample6_execDaumPostcode()" class="postbtn" value="우편번호 찾기 Click">
+						<input autocomplete="off" type="text" id="sample6_postcode" required="required" class="postcode"  name="u_postcode" placeholder="우편번호" type="button" onclick="sample6_execDaumPostcode()" class="postbtn"value="<sec:authentication property='principal.postcode' />">
 						<!-- <input type="button" onclick="sample6_execDaumPostcode()" class="postbtn" value="우편번호 찾기"> -->
 					</div> 
 	
 	
 					<div class="textForm">
-						<input autocomplete="off" type="text" id="sample6_address" required="required" class="roadAddress" name="u_roadAddress" placeholder="주소"><br>
+						<input autocomplete="off" type="text" id="sample6_address" required="required" class="roadAddress" name="u_roadAddress" placeholder="주소" value="<sec:authentication property='principal.roadAddress' />"><br>
 					</div>
 					<div class="textForm">
-						<input autocomplete="off" type="text" id="sample6_detailAddress" required="required" class="detailAddress" name="u_detailAddress" placeholder="상세주소">
+						<input autocomplete="off" type="text" id="sample6_detailAddress" required="required" class="detailAddress" name="u_detailAddress" placeholder="상세주소" value="<sec:authentication property='principal.detailAddress' />">
 					</div>
 					<div class="textForm">
-						<input autocomplete="off" type="text" id="sample6_extraAddress" class="roadAddress"  name="u_extraAddress" placeholder="참고항목">
+						<input autocomplete="off" type="text" id="sample6_extraAddress" class="roadAddress"  name="u_extraAddress" placeholder="참고항목" value="<sec:authentication property='principal.extraAddress' />">
 					</div>
 	
 						<script

@@ -140,10 +140,10 @@
 
 	function updatePriceSlider(elem , value) {
 		if ( elem.hasClass('price-min') ) {
-			console.log('min')
+			//console.log('min')
 			priceSlider.noUiSlider.set([value, null]);
 		} else if ( elem.hasClass('price-max')) {
-			console.log('max')
+			//console.log('max')
 			priceSlider.noUiSlider.set([null, value]);
 		}
 	}
@@ -154,7 +154,7 @@
 		noUiSlider.create(priceSlider, {
 			start: [1, 1000000],
 			connect: true,
-			step: 100,
+			step: 1,
 			range: {
 				'min': 1,
 				'max': 1000000

@@ -77,3 +77,8 @@ display: none;
 .btn:hover {
   background-position: right;
 }
+.mypagename{
+	color:green;
+	text-decoration: underline;
+	text-decoration-style: wavy; 
+}
