@@ -71,14 +71,6 @@
 		}
 		</style>
 		
-		<!-- jQuery Plugins -->
-		<script src="./js/jquery.min.js"></script>
-		<script src="./js/bootstrap.min.js"></script>
-		<script src="./js/slick.min.js"></script>
-		<script src="./js/nouislider.min.js"></script>
-		<script src="./js/jquery.zoom.min.js"></script>
-		<script src="./js/main.js"></script>
-		
     </head>
 	<body>
 		<!-- HEADER -->
@@ -107,7 +99,7 @@
 							<div class="checkbox-filter">
 								<c:forEach var="c" items="${categoryList }" begin="1">
 									<div class="input-checkbox">
-										<input type="checkbox" name="category">
+										<input type="checkbox" name="category" onchange="changeProductList()">
 										<label>
 											${c.category }
 										</label>
@@ -121,13 +113,12 @@
 						<div class="aside">
 							<h3 class="aside-title">Price</h3>
 							<div class="price-filter">
-								<div id="price-slider"></div>
 								<div class="input-number price-min">
-									<input id="price-min" type="number" >
+									<input id="price-min" type="number" onchange="changeProductList()" placeholder="min" value="1">
 								</div>
 								<span>-</span>
 								<div class="input-number price-max">
-									<input id="price-max" type="number">
+									<input id="price-max" type="number" onchange="changeProductList()" placeholder="max" value="1000000">
 								</div>
 							</div>
 						</div>
@@ -142,7 +133,7 @@
 							<div class="store-sort">
 								<label>
 									Sort By:
-									<select class="input-select">
+									<select class="input-select" onchange="changeProductList()" id="order">
 										<option value="0">Price↑</option>
 										<option value="1">Price↓</option>
 										<option value="2">Rating↑</option>
@@ -164,7 +155,7 @@
 										</div>
 										<div class="product-body">
 											<p class="product-category">${p.category }</p>
-											<h3 class="product-name"><a href="#">${p.p_name }</a></h3>
+											<h3 class="product-name"><a href="./productDetail.do?p_no=${p.p_no }">${p.p_name }</a></h3>
 											<h4 class="product-price">${p.p_price }</h4>
 											<div class="starRev">
 												<span class="starR1 ${p.rating>0.5?'on':'' }">0.5</span>
@@ -204,5 +195,46 @@
 		<!-- /FOOTER -->
 
 
+		<!-- jQuery Plugins -->
+		<script src="./js/jquery.min.js"></script>
+		<script src="./js/bootstrap.min.js"></script>
+		<script src="./js/slick.min.js"></script>
+		<script src="./js/nouislider.min.js"></script>
+		<script src="./js/jquery.zoom.min.js"></script>
+		<script src="./js/main.js"></script>
+		
+		<script>
+		function changeProductList(){
+			let category = $('input[name=category]');
+			let categoryArr = {};
+			for(let i=0;i<category.length;i++){
+				categoryArr[i] = category[i].checked;
+			}
+			//console.log(categoryArr); -> 카테고리 체크 여부
+			let price_min = $('#price-min').val();
+			let price_max = $('#price-max').val();
+			
+			//console.log(price_max); //최대, 최소 가격
+			//console.log(price_min);
+			
+			let order = $('#order').val();
+			//console.log(order); //정렬 기준
+			
+			$.ajax({
+				method: "get",
+				url: './searchAjax.do?search=${param.search}',
+				dataType: "JSON",
+				data:{
+					categoryArr : categoryArr,
+					price_min : price_min,
+					price_max : price_max,
+					order : order,
+				},
+				success: function(data){
+					
+				},
+			})
+		}
+		</script>
 	</body>
 </html>
