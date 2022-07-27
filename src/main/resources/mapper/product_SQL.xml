@@ -71,6 +71,7 @@
 		select review.*, user.u_nickname
 		from review join user ON review.u_no = user.u_no
 		WHERE r_del = 0 AND p_no = #{dto.p_no}
+		ORDER BY review.r_date desc
 		LIMIT #{page.startPage}, #{page.recordCountPerPage}
 	</select>
 	<select id="reviewCount" parameterType="integer" resultType="integer">
@@ -113,5 +114,10 @@
   		</foreach>
   		GROUP BY product.p_no
   		ORDER BY ${order}, product.p_name ASC 
+  	<select id="ratingCount" parameterType="integer" resultType="map">
+  		SELECT r_rating, COUNT(r_rating) AS r_count
+		FROM review
+		WHERE p_no = #{p_no}
+		GROUP BY r_rating
   	</select>
 </mapper>

@@ -101,4 +101,8 @@ public class ProductDAO {
 	public List<Map<String, Object>> searchDetail(Map<String, Object> map) {
 		return sqlSession.selectList("product.searchDetail", map);
 	}
+	
+	public List<Map<String, Object>> ratingCount(int p_no) {
+		return sqlSession.selectList("product.ratingCount", p_no);
+	}
 }

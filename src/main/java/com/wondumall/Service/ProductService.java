@@ -101,4 +101,8 @@ public class ProductService {
 	public List<Map<String, Object>> searchDetail(Map<String, Object> map) {
 		return productDAO.searchDetail(map);
 	}
+	public List<Map<String, Object>> ratingCount(int p_no) {
+		return productDAO.ratingCount(p_no);
+	}
+
 }
