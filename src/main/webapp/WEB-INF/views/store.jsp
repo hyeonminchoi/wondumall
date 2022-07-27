@@ -50,7 +50,6 @@
 			height: 30px;
 			float: left;
 			text-indent: -9999px;
-			cursor: pointer;
 		}
 		.starR2 {
 			background:
@@ -61,7 +60,6 @@
 			height: 30px;
 			float: left;
 			text-indent: -9999px;
-			cursor: pointer;
 		}
 		.starR1.on {
 			background-position: 0 0;
@@ -170,9 +168,6 @@
 												<span class="starR2 ${p.rating>5?'on':'' }">5</span>
 											</div>
 										</div>
-										<div class="add-to-cart">
-											<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-										</div>
 									</div>
 								</div>
 								<!-- /product -->
@@ -255,9 +250,6 @@
 						temp += '<span class="starR1 ' + (data[i].rating>4.5?"on":"") + '">4.5</span>'
 						temp += '<span class="starR2 ' + (data[i].rating>5?"on":"") + '">5</span>'
 						temp += '</div>'
-						temp += '</div>'
-						temp += '<div class="add-to-cart">'
-						temp += '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>'
 						temp += '</div>'
 						temp += '</div>'
 						temp += '</div>'
