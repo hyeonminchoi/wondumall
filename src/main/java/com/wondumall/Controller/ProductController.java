@@ -261,6 +261,19 @@ public class ProductController {
 		CategoryDTO cdto = new CategoryDTO();
 		cdto.setCategory("category");
 		
+		//리뷰 점수마다 등록한 사람 수만큼 보여주기
+		List<Map<String, Object>> list = productService.ratingCount(p_no);
+		List<Integer> rating = new ArrayList<>();
+		for(int i=0;i<6;i++) //리스트에 0으로 초기화 시켜줌
+			rating.add(0);
+		for(int i=0;i<list.size();i++) {
+			String temp = list.get(i).get("r_rating").toString();
+			int a = Double.valueOf(temp).intValue();
+			rating.set(a, Integer.parseInt(list.get(i).get("r_count").toString()));
+		}
+		mv.addObject("rating", rating);
+				
+		
 		mv.addObject("cateName", productService.cateName(p_no));
 		mv.addObject("reviewCount", productService.reviewCount(p_no));
 		mv.addObject("productDetail", productService.productDetail(p_no));

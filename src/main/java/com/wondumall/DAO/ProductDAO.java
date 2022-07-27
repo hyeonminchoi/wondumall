@@ -97,4 +97,8 @@ public class ProductDAO {
 	public void modify(CartDTO cartDTO) {
 		sqlSession.update("product.modify", cartDTO);
 	}
+
+	public List<Map<String, Object>> ratingCount(int p_no) {
+		return sqlSession.selectList("product.ratingCount", p_no);
+	}
 }

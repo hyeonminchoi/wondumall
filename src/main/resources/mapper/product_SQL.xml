@@ -103,4 +103,10 @@
   		SET p_count = #{p_count}
   		WHERE cart_no = #{cart_no} AND u_no = #{u_no}
   	</update>
+  	<select id="ratingCount" parameterType="integer" resultType="map">
+  		SELECT r_rating, COUNT(r_rating) AS r_count
+		FROM review
+		WHERE p_no = #{p_no}
+		GROUP BY r_rating
+  	</select>
 </mapper>

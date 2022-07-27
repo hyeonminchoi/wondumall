@@ -97,4 +97,9 @@ public class ProductService {
 	public void modify(CartDTO cartDTO) {
 		productDAO.modify(cartDTO);
 	}
+
+	public List<Map<String, Object>> ratingCount(int p_no) {
+		return productDAO.ratingCount(p_no);
+	}
+
 }
