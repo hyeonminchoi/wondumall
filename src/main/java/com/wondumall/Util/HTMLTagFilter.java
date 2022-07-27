@@ -40,7 +40,7 @@ public class HTMLTagFilter implements Filter {
 		if (uri.startsWith("//noticeWrite.do") || uri.startsWith("//noticeEdit.do")
 				|| uri.startsWith("//boardWrite.do") || uri.startsWith("//boardEdit.do")
 				|| uri.startsWith("//questionWrite.do") || uri.startsWith("//questionEdit.do")
-				|| uri.startsWith("//faqWrite.do")) {
+				|| uri.startsWith("//faqWrite.do") || uri.startsWith("//faqEdit.do")) {
 			return true;
 		} else {
 			return false;

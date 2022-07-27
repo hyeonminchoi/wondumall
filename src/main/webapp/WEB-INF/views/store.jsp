@@ -156,16 +156,16 @@
 											<h3 class="product-name"><a href="./productDetail.do?p_no=${p.p_no }">${p.p_name }</a></h3>
 											<h4 class="product-price">${p.p_price }</h4>
 											<div class="starRev">
-												<span class="starR1 ${p.rating>0.5?'on':'' }">0.5</span>
-												<span class="starR2 ${p.rating>1?'on':'' }">1</span>
-												<span class="starR1 ${p.rating>1.5?'on':'' }">1.5</span>
-												<span class="starR2 ${p.rating>2?'on':'' }">2</span>
-												<span class="starR1 ${p.rating>2.5?'on':'' }">2.5</span>
-												<span class="starR2 ${p.rating>3?'on':'' }">3</span>
-												<span class="starR1 ${p.rating>3.5?'on':'' }">3.5</span>
-												<span class="starR2 ${p.rating>4?'on':'' }">4</span>
-												<span class="starR1 ${p.rating>4.5?'on':'' }">4.5</span>
-												<span class="starR2 ${p.rating>5?'on':'' }">5</span>
+												<span class="starR1 ${p.rating>=0.5?'on':'' }">0.5</span>
+												<span class="starR2 ${p.rating>=1?'on':'' }">1</span>
+												<span class="starR1 ${p.rating>=1.5?'on':'' }">1.5</span>
+												<span class="starR2 ${p.rating>=2?'on':'' }">2</span>
+												<span class="starR1 ${p.rating>=2.5?'on':'' }">2.5</span>
+												<span class="starR2 ${p.rating>=3?'on':'' }">3</span>
+												<span class="starR1 ${p.rating>=3.5?'on':'' }">3.5</span>
+												<span class="starR2 ${p.rating>=4?'on':'' }">4</span>
+												<span class="starR1 ${p.rating>=4.5?'on':'' }">4.5</span>
+												<span class="starR2 ${p.rating>=5?'on':'' }">5</span>
 											</div>
 										</div>
 									</div>
@@ -239,16 +239,16 @@
 						temp += '<h3 class="product-name"><a href="./productDetail.do?p_no=' + data[i].p_no + '">' + data[i].p_name + '</a></h3>'
 						temp += '<h4 class="product-price">' + data[i].p_price + '</h4>'
 						temp += '<div class="starRev">'
-						temp += '<span class="starR1 ' + (data[i].rating>0.5?"on":"") + '">0.5</span>'
-						temp += '<span class="starR2 ' + (data[i].rating>1?"on":"") + '">1</span>'
-						temp += '<span class="starR1 ' + (data[i].rating>1.5?"on":"") + '">1.5</span>'
-						temp += '<span class="starR2 ' + (data[i].rating>2?"on":"") + '">2</span>'
-						temp += '<span class="starR1 ' + (data[i].rating>2.5?"on":"") + '">2.5</span>'
-						temp += '<span class="starR2 ' + (data[i].rating>3?"on":"") + '">3</span>'
-						temp += '<span class="starR1 ' + (data[i].rating>3.5?"on":"") + '">3.5</span>'
-						temp += '<span class="starR2 ' + (data[i].rating>4?"on":"") + '">4</span>'
-						temp += '<span class="starR1 ' + (data[i].rating>4.5?"on":"") + '">4.5</span>'
-						temp += '<span class="starR2 ' + (data[i].rating>5?"on":"") + '">5</span>'
+						temp += '<span class="starR1 ' + (data[i].rating>=0.5?"on":"") + '">0.5</span>'
+						temp += '<span class="starR2 ' + (data[i].rating>=1?"on":"") + '">1</span>'
+						temp += '<span class="starR1 ' + (data[i].rating>=1.5?"on":"") + '">1.5</span>'
+						temp += '<span class="starR2 ' + (data[i].rating>=2?"on":"") + '">2</span>'
+						temp += '<span class="starR1 ' + (data[i].rating>=2.5?"on":"") + '">2.5</span>'
+						temp += '<span class="starR2 ' + (data[i].rating>=3?"on":"") + '">3</span>'
+						temp += '<span class="starR1 ' + (data[i].rating>=3.5?"on":"") + '">3.5</span>'
+						temp += '<span class="starR2 ' + (data[i].rating>=4?"on":"") + '">4</span>'
+						temp += '<span class="starR1 ' + (data[i].rating>=4.5?"on":"") + '">4.5</span>'
+						temp += '<span class="starR2 ' + (data[i].rating>=5?"on":"") + '">5</span>'
 						temp += '</div>'
 						temp += '</div>'
 						temp += '</div>'

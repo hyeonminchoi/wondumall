@@ -97,6 +97,7 @@ public class NoticeController {
 				noticeService.countUp(n_no);
 				cookie.setValue(cookie.getValue() + "_[" + n_no + "]");
 				cookie.setMaxAge(60*60);
+				cookie.setHttpOnly(true);
 				response.addCookie(cookie);
 			}
 		} else {

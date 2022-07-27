@@ -92,6 +92,7 @@ public class BoardController {
 				boardService.countUp(b_no);
 				cookie.setValue(cookie.getValue() + "_[" + b_no + "]");
 				cookie.setMaxAge(60*60);
+				cookie.setHttpOnly(true);
 				response.addCookie(cookie);
 			}
 		} else {
