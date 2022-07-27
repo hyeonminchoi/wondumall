@@ -65,7 +65,6 @@ font-size: 20px;
 				<table class="table" style="width:90%; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;">
 					<thead>
 						<tr>
-							<th>#</th>
 							<th>이메일</th>
 							<th>이름</th>
 							<th>전화번호</th>
@@ -80,7 +79,7 @@ font-size: 20px;
 					<tbody>
 						<c:forEach items="${orderList }" var="o">
 							<tr>
-								<th>${o.o_no }</th>
+								<c:set var="merchant_uid" value="${o.merchant_uid }"/>
 								<td>${o.o_email }</td>
 								<td>${o.o_name }</td>
 								<td>${o.o_tel }</td>
@@ -88,8 +87,11 @@ font-size: 20px;
 								<td>${o.o_roadAddress }</td>
 								<td>${o.o_detailAddress }</td>
 								<td>${o.o_status }</td>
-								<td>${o.o_price }</td>
-								<td><button class="primary btn" id="refund" onclick="refund()">환불하기</button></td>
+								<td>
+								<c:set var="price" value="${o.o_price}"/>
+								${o.o_price }
+								</td>
+								<td><button class="primary btn" id="refund" onclick="cancelPay()">환불하기</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -110,8 +112,12 @@ font-size: 20px;
 	<script src="./js/nouislider.min.js"></script>
 	<script src="./js/jquery.zoom.min.js"></script>
 	<script src="./js/main.js"></script>
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script type="text/javascript">
-function refund(){
+function cancelPay(){
+	var o_price = ${price};
+	var merchant_uid = ${merchant_uid};
 	jQuery.ajax({
 		"url": "./refund", // 예: http://www.myservice.com/payments/cancel
 		"type": "POST",
