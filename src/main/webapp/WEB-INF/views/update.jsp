@@ -62,10 +62,12 @@
 	
 					<h2>회원정보수정</h2>
 					<div class="textForm">
+					<p class="mypagename" >아이디</p>
 						<input autocomplete="off" name="u_email" id="email" minlength="6" type="email" required="required" class="email" value="<sec:authentication property='principal.username' />" disabled="disabled"/>
 					</div>
 					
 					<div class="textForm">
+					<p class="mypagename" >비밀번호</p>
 						<input autocomplete="off" name="u_pw" type="password" id="pw1" required="required" class="pw" placeholder="비밀번호" onkeyup="passlength()" pattern="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$">
 					</div>
 					<div class="textForm">
@@ -76,9 +78,10 @@
 					
 					<div class="textForm">
 						<p class="mypagename" >이름</p>
-						<input autocomplete="off" name="u_name" minlength="2" type="text" class="name" required="required" placeholder="이름" pattern="^[가-힣]{2,20}|[a-zA-Z]{2,20}\s[a-zA-Z]{2,20}$" value="<sec:authentication property='principal.name' />" disabled="disabled">
+						<input autocomplete="off" name="u_name" minlength="2" type="text" class="name" required="required" placeholder="이름" pattern="^[가-힣]{2,20}|[a-zA-Z]{2,20}\s[a-zA-Z]{2,20}$" value="<sec:authentication property='principal.name' />">
 					</div>
 					<div class="textForm">
+					<p class="mypagename" >핸드폰번호</p>
 						<input autocomplete="off" name="u_tel" type="text" minlength="10" class="name" required="required" placeholder="핸드폰번호 ( - 없이 입력)" value="<sec:authentication property='principal.tel' />">
 					</div>
 					
@@ -100,6 +103,7 @@
 					<div>
 					
 					<div class="textForm">
+					<p class="mypagename" >주소</p>
 						<input autocomplete="off" type="text" id="sample6_postcode" required="required" class="postcode"  name="u_postcode" placeholder="우편번호" type="button" onclick="sample6_execDaumPostcode()" class="postbtn"value="<sec:authentication property='principal.postcode' />">
 						<!-- <input type="button" onclick="sample6_execDaumPostcode()" class="postbtn" value="우편번호 찾기"> -->
 					</div> 

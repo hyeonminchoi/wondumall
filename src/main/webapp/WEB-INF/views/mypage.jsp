@@ -109,7 +109,7 @@
 	
 					</div>
 					<input class="btn" type="submit" value="회원정보수정"/>
-					<input type="submit"  id="joinbtn" class="btn" value="회원탈퇴" />
+					<input type="submit"  id="deletebtn" class="btn" value="회원탈퇴" />
 				</form>
 			</div>
 		</div>

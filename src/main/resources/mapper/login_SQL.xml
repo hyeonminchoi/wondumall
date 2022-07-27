@@ -53,4 +53,25 @@
 		FROM user
 		WHERE u_no=#{u_no}			 	
 	 </select>
+	 
+	 <delete id="delete" parameterType="loginDTO">
+	 	DELETE FROM user
+	 	WEHERE u_no=#{u_no} 
+	 </delete>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
