@@ -99,8 +99,8 @@
 							<div class="checkbox-filter">
 								<c:forEach var="c" items="${categoryList }" begin="1">
 									<div class="input-checkbox">
-										<input type="checkbox" name="category" onchange="changeProductList()">
 										<label>
+											<input type="checkbox" name="category" onchange="changeProductList()">
 											${c.category }
 										</label>
 									</div>

@@ -97,6 +97,7 @@
   		LEFT JOIN review ON review.p_no = product.p_no AND review.r_del = 0
   		WHERE product.p_name LIKE CONCAT('%', #{search}, '%')
   		GROUP BY p_no
+  		ORDER BY product.p_price ASC, product.p_name ASC
   	</select>
   	<update id="modify" parameterType="cartDTO">
   		UPDATE cart 
