@@ -109,7 +109,7 @@
 	
 					</div>
 					<input class="btn" type="submit" value="회원정보수정"/>
-					<input type="submit"  id="deletebtn" class="btn" value="회원탈퇴" />
+					<input type="button"  id="deletebtn" class="btn" value="회원탈퇴" />
 				</form>
 			</div>
 		</div>
@@ -141,7 +141,10 @@
 $(document).ready(function(){
 	$('#orderBtn').click(function(){
 		location.href="./orderHistory.do";
-	})
+	});
+	$('#deletebtn').click(function(){
+		location.href="./delete";
+	});
 });
 </script>
 </body>

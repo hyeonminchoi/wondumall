@@ -58,6 +58,7 @@ public class LoginController {
 		
 		return mv;
 	}
+	//회원탈퇴
 
 	
 	//email 중복체크
