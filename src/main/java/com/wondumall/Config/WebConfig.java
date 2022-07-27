@@ -49,5 +49,12 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 		servletContext.addListener(new HttpSessionEventPublisher());
 		return super.registerServletFilter(servletContext, filter);
 	}
+
+	@Override
+	protected void customizeRegistration(javax.servlet.ServletRegistration.Dynamic registration) {
+		// TODO Auto-generated method stub
+		registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
+	}
+	
 	
 }
