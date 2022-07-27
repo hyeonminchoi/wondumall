@@ -75,7 +75,7 @@ $(function(){
 		success: function(result){
 			let tr = '';
 			for(i in result){
-				tr += "<tr>";
+				tr += "<tr onclick=\"location.href='./productDetail.do?p_no=" + result[i].p_no + "'\">";
 				tr += "<td>";
 				tr += "<img src='./productUpload/" + result[i].p_img + "'>"
 				tr += result[i].p_name;
