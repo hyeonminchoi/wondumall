@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com..DTO.CategoryDTO;
-import com..DTO.ProductDTO;
 
 @Repository
 public class CategoryDAO {

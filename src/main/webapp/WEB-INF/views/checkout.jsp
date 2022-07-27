@@ -212,7 +212,7 @@
 $("#coupon").change(function(){
 	if($("#coupon").val()== 0){
 		 var originalPrice = ${total};
-		 $("label[id=total]").val(originalPrice);
+		 $("#total").text(Math.ceil(originalPrice));
 	 } else {
 		 var originalPrice = ${total};
 		 var coupon_per = $("#coupon").val();
