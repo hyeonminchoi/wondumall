@@ -24,6 +24,6 @@
 	<select id="orderList" parameterType="orderDTO" resultType="orderDTO">
 		SELECT *
 		FROM orderorder
-		WHERE u_no=#{u_no} AND o_name=#{o_name}
+		WHERE u_no=#{u_no}
 	</select>
 </mapper>

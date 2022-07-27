@@ -10,12 +10,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com..DTO.LoginDTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Data
 public class MyUserDetails implements UserDetails, OAuth2User {

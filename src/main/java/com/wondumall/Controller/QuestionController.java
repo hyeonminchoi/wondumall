@@ -3,7 +3,6 @@ package com..Controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.security.sasl.AuthenticationException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com..Config.MyUserDetails;
 import com..DTO.AnswerDTO;
-import com..DTO.BoardDTO;
 import com..DTO.QuestionDTO;
 import com..Service.AnswerService;
 import com..Service.QuestionService;

@@ -101,12 +101,9 @@ public class PaymentController {
 	@GetMapping(value = "/orderHistory.do")
 	public ModelAndView orderHistory(OrderDTO dto, @AuthenticationPrincipal MyUserDetails myUserDetails, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("orderHistory");
-		dto.setU_no(myUserDetails.getNo());
-		dto.setO_name(request.getParameter("o_name"));
-		List<OrderDTO> orderList = paymentService.orderList(dto);
-		
-		mv.addObject("orderList", orderList);
-		
+			dto.setU_no(myUserDetails.getNo());
+			List<OrderDTO> orderList = paymentService.orderList(dto);
+			mv.addObject("orderList", orderList);
 		return mv;
 	}
 }

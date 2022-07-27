@@ -43,7 +43,11 @@
 
 <link type="text/css" rel="stylesheet" href="./css/join.css" />
 
-
+<style type="text/css">
+th, td{
+font-size: 20px;
+}
+</style>
 </head>
 <body>
 	<header>
@@ -58,23 +62,37 @@
 	<section>
 		<div id="section">
 			<div id="container">
-				<table class="table">
-					<tr>
-						<th>#</th>
-						<th>이메일</th>
-						<th>이름</th>
-						<th>전화번호</th>
-						<th>우편번호</th>
-						<th>도로명주소</th>
-						<th>상세주소</th>
-						<th>결제상태</th>
-						<th>결제금액</th>
-					</tr>
-					<tr>
+				<table class="table" style="width:90%; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>이메일</th>
+							<th>이름</th>
+							<th>전화번호</th>
+							<th>우편번호</th>
+							<th>도로명주소</th>
+							<th>상세주소</th>
+							<th>결제상태</th>
+							<th>결제금액</th>
+							<th>환불하기</th>
+						</tr>
+					</thead>
+					<tbody>
 						<c:forEach items="${orderList }" var="o">
-							
+							<tr>
+								<th>${o.o_no }</th>
+								<td>${o.o_email }</td>
+								<td>${o.o_name }</td>
+								<td>${o.o_tel }</td>
+								<td>${o.o_postcode }</td>
+								<td>${o.o_roadAddress }</td>
+								<td>${o.o_detailAddress }</td>
+								<td>${o.o_status }</td>
+								<td>${o.o_price }</td>
+								<td><button class="primary btn" id="refund">환불하기</button></td>
+							</tr>
 						</c:forEach>
-					</tr>
+					</tbody>
 				</table>
 			</div>
 		</div>

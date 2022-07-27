@@ -2,10 +2,6 @@ package com..DTO;
 
 import java.util.Map;
 
-import org.springframework.security.core.userdetails.User;
-
-import com..Config.MyUserDetails;
-
 import lombok.Builder;
 import lombok.Data;
 
