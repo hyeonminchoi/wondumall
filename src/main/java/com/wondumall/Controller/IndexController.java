@@ -1,6 +1,11 @@
 package com..Controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -70,13 +75,35 @@ public class IndexController {
 	
 	@ResponseBody
 	@GetMapping("/searchAjax.do")
-	public List<ProductDTO> searchAjax(@RequestParam("categoryArr[]") List<Boolean> check,@RequestParam("price_min")int price_min, @RequestParam("price_max")int price_max,
-			@RequestParam("order")int order, @RequestParam("search")String search){
-		System.out.println(check);
-		System.out.println(price_max);
-		System.out.println(price_min);
-		System.out.println(order);
-		System.out.println(search);
-		return null;
+	public List<Map<String, Object>> searchAjax(Boolean[] categoryArr, @RequestParam("price_min")int price_min, @RequestParam("price_max")int price_max,
+			@RequestParam("order")int order, @RequestParam("search")String search, HttpServletRequest request){
+		List<CategoryDTO> categoryList = categoryService.getCategoryList();
+		List<Integer> list = new ArrayList<>();
+		for(int i=0;i<categoryArr.length;i++) {
+			if(categoryArr[i]) {
+				list.add(categoryList.get(i+1).getCate_no());
+			}
+		}
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", list);
+		map.put("price_min", price_min);
+		map.put("price_max", price_max);
+		map.put("search", search);
+		switch(order) {
+		case 0:
+			map.put("order", "p_price ASC");
+			break;
+		case 1:
+			map.put("order", "p_price DESC");
+			break;
+		case 2:
+			map.put("order", "rating ASC");
+			break;
+		case 3:
+			map.put("order", "rating DESC");
+			break;
+		}
+		List<Map<String, Object>> productList = productService.searchDetail(map);
+		return productList;
 	}
 }

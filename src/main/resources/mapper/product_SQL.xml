@@ -102,4 +102,16 @@
   		SET p_count = #{p_count}
   		WHERE cart_no = #{cart_no} AND u_no = #{u_no}
   	</update>
+  	<select id="searchDetail" parameterType="map" resultType="map">
+  		SELECT product.*, category.category, AVG(review.r_rating) AS rating
+  		FROM product
+  		JOIN category ON category.cate_no = product.cate_no
+  		LEFT JOIN review ON review.p_no = product.p_no AND review.r_del = 0
+  		WHERE product.p_name LIKE CONCAT('%', #{search}, '%') AND product.p_price BETWEEN #{price_min} AND #{price_max}
+  		<foreach collection="list" open="AND product.cate_no IN(" close=")" separator="," item="item">
+  			#{item}
+  		</foreach>
+  		GROUP BY product.p_no
+  		ORDER BY ${order}, product.p_name ASC 
+  	</select>
 </mapper>

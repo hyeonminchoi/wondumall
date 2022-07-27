@@ -125,6 +125,7 @@
 		})
 	});
 	
+	/*
 	var priceInputMax = document.getElementById('price-max');
 	var	priceInputMin = document.getElementById('price-min');
 	
@@ -166,5 +167,5 @@
 			handle ? priceInputMax.value = value : priceInputMin.value = value
 		});
 	}
-
+	*/
 })(jQuery);

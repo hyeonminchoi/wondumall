@@ -145,7 +145,7 @@
 						<!-- /store top filter -->
 
 						<!-- store products -->
-						<div class="row">
+						<div class="row" id="productList">
 							<!-- product -->
 							<c:forEach var="p" items="${productList}">
 								<div class="col-md-4 col-xs-6">
@@ -206,7 +206,7 @@
 		<script>
 		function changeProductList(){
 			let category = $('input[name=category]');
-			let categoryArr = {};
+			let categoryArr = [];
 			for(let i=0;i<category.length;i++){
 				categoryArr[i] = category[i].checked;
 			}
@@ -224,6 +224,7 @@
 				method: "get",
 				url: './searchAjax.do?search=${param.search}',
 				dataType: "JSON",
+				traditional : true,
 				data:{
 					categoryArr : categoryArr,
 					price_min : price_min,
@@ -231,7 +232,37 @@
 					order : order,
 				},
 				success: function(data){
-					
+					var temp = '';
+					for(i in data){
+ 						temp += '<div class="col-md-4 col-xs-6">';
+						temp += '<div class="product">';
+						temp += '<div class="product-img">';
+						temp += '<img src="./productUpload/' + data[i].p_img + '" alt="이미지 로딩 실패">';
+						temp += '</div>';
+						temp += '<div class="product-body">';
+						temp += '<p class="product-category">' + data[i].category + '</p>';
+						temp += '<h3 class="product-name"><a href="./productDetail.do?p_no=' + data[i].p_no + '">' + data[i].p_name + '</a></h3>'
+						temp += '<h4 class="product-price">' + data[i].p_price + '</h4>'
+						temp += '<div class="starRev">'
+						temp += '<span class="starR1 ' + (data[i].rating>0.5?"on":"") + '">0.5</span>'
+						temp += '<span class="starR2 ' + (data[i].rating>1?"on":"") + '">1</span>'
+						temp += '<span class="starR1 ' + (data[i].rating>1.5?"on":"") + '">1.5</span>'
+						temp += '<span class="starR2 ' + (data[i].rating>2?"on":"") + '">2</span>'
+						temp += '<span class="starR1 ' + (data[i].rating>2.5?"on":"") + '">2.5</span>'
+						temp += '<span class="starR2 ' + (data[i].rating>3?"on":"") + '">3</span>'
+						temp += '<span class="starR1 ' + (data[i].rating>3.5?"on":"") + '">3.5</span>'
+						temp += '<span class="starR2 ' + (data[i].rating>4?"on":"") + '">4</span>'
+						temp += '<span class="starR1 ' + (data[i].rating>4.5?"on":"") + '">4.5</span>'
+						temp += '<span class="starR2 ' + (data[i].rating>5?"on":"") + '">5</span>'
+						temp += '</div>'
+						temp += '</div>'
+						temp += '<div class="add-to-cart">'
+						temp += '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>'
+						temp += '</div>'
+						temp += '</div>'
+						temp += '</div>'
+					}
+					$('#productList').empty().append(temp);
 				},
 			})
 		}

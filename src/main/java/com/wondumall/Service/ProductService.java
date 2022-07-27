@@ -97,4 +97,8 @@ public class ProductService {
 	public void modify(CartDTO cartDTO) {
 		productDAO.modify(cartDTO);
 	}
+
+	public List<Map<String, Object>> searchDetail(Map<String, Object> map) {
+		return productDAO.searchDetail(map);
+	}
 }
