@@ -40,5 +40,9 @@ public class PaymentService {
 		return paymentDAO.cartPay(u_no);
 	}
 
+	public List<OrderDTO> orderList(OrderDTO dto) {
+		
+		return paymentDAO.orderList(dto);
+	}
 
 }

@@ -21,4 +21,9 @@
 		FROM cartview
 		WHERE p_check = 1 AND u_no = #{u_no}
 	</select>
+	<select id="orderList" parameterType="orderDTO" resultType="orderDTO">
+		SELECT *
+		FROM orderorder
+		WHERE u_no=#{u_no} AND o_name=#{o_name}
+	</select>
 </mapper>

@@ -26,7 +26,6 @@ import com..Config.MyUserDetails;
 import com..DTO.CouponDTO;
 import com..DTO.CartDTO;
 import com..DTO.OrderDTO;
-import com..DTO.ProductDTO;
 import com..DTO.UserDTO;
 import com..Service.PaymentService;
 
@@ -65,10 +64,9 @@ public class PaymentController {
 			@RequestParam(name = "u_no", required = false, defaultValue = "-1") int u_no){
 		ModelAndView mv = new ModelAndView("checkout");
 		
-		ProductDTO dto = new ProductDTO();
-		dto.setU_no(myUserDetails.getNo());
-		dto = paymentService.product(dto);
 		UserDTO user = new UserDTO();
+		user.setU_no(myUserDetails.getNo());
+		
 		paymentService.user(user);
 		
 		List<CouponDTO> couponList = paymentService.couponList();
@@ -82,7 +80,6 @@ public class PaymentController {
 			mv.addObject("cart", cart);
 		}
 		
-		mv.addObject("product", dto);
 		mv.addObject("user", user);
 		
 
@@ -99,5 +96,17 @@ public class PaymentController {
 	public String payfailure() {
 		
 		return "payfailure";
+	}
+	
+	@GetMapping(value = "/orderHistory.do")
+	public ModelAndView orderHistory(OrderDTO dto, @AuthenticationPrincipal MyUserDetails myUserDetails, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("orderHistory");
+		dto.setU_no(myUserDetails.getNo());
+		dto.setO_name(request.getParameter("o_name"));
+		List<OrderDTO> orderList = paymentService.orderList(dto);
+		
+		mv.addObject("orderList", orderList);
+		
+		return mv;
 	}
 }

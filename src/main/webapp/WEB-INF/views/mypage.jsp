@@ -61,7 +61,7 @@
 				<form action="./update"  id="join" class="joinForm" >
 	
 					<h2>마이페이지</h2>
-					<input type="submit"  id="joinbtn" class="btn" value="주문내역" />
+					<input type="button"  id="orderBtn" class="btn" value="주문내역" />
 					<div class="textForm">
 						<p class="mypagename" >아이디</p>
 						<input autocomplete="off" name="u_email" id="email" minlength="6" type="email" required="required" class="email" value="<sec:authentication property='principal.username' />" disabled="disabled"/>
@@ -137,6 +137,12 @@
 	<script src="./js/nouislider.min.js"></script>
 	<script src="./js/jquery.zoom.min.js"></script>
 	<script src="./js/main.js"></script>
-
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#orderBtn').click(function(){
+		location.href="./orderHistory.do";
+	})
+});
+</script>
 </body>
 </html>

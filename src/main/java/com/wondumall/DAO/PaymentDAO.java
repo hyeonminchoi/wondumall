@@ -41,5 +41,10 @@ public class PaymentDAO {
 		return sqlSession.selectList("payment.cartPay", u_no);
 	}
 
+	public List<OrderDTO> orderList(OrderDTO dto) {
+		
+		return sqlSession.selectList("payment.orderList", dto);
+	}
+
 
 }
