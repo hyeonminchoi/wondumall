@@ -201,7 +201,7 @@ margin-bottom: 20px;
 									</td>
 									<td class="option">
 										<div class="add-to-cart">
-											<button type="button" class="add-to-cart-btn" onclick="location.href='./productDetail.do?p_no=${p.p_no}'"><i class="fa fa-shopping-cart"></i> 상품으로 이동</button>
+											<button type="button" class="add-to-cart-btn" onclick="location.href='./productDetail.do?p_no=${p.p_no}'"><i class="fa fa-shopping-cart"></i>상품 페이지로</button>
 										</div>
 									</td>
 								</tr>
