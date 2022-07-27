@@ -101,7 +101,7 @@ textarea {
 			});
 		}); */
 		function linkPage(reviewPageNo){
-			location.href = "./productDetail.do?p_no=${param.p_no}&reviewPageNo=" + reviewPageNo;
+			location.href = "./productDetail.do?p_no=${param.p_no}&reviewPageNo=" + reviewPageNo + "#reviewHref";
 		}
 	</script>
 
