@@ -113,7 +113,8 @@
   			#{item}
   		</foreach>
   		GROUP BY product.p_no
-  		ORDER BY ${order}, product.p_name ASC 
+  		ORDER BY ${order}, product.p_name ASC
+  	</select>
   	<select id="ratingCount" parameterType="integer" resultType="map">
   		SELECT r_rating, COUNT(r_rating) AS r_count
 		FROM review
