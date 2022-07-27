@@ -33,6 +33,70 @@
  		<!-- Custom stlylesheet -->
  		<link type="text/css" rel="stylesheet" href="./css/style.css"/>
 <style type="text/css">
+.starRev{
+	margin: 0 auto;
+	height: 30px;
+	display: inline-block;
+}
+.starR1 {
+	background:
+		url('http://miuu227.godohosting.com/images/icon/ico_review.png')
+		no-repeat -52px 0;
+	background-size: auto 100%;
+	width: 15px;
+	height: 30px;
+	float: left;
+	text-indent: -9999px;
+	cursor: pointer;
+}
+.starR2 {
+	background:
+		url('http://miuu227.godohosting.com/images/icon/ico_review.png')
+		no-repeat right 0;
+	background-size: auto 100%;
+	width: 15px;
+	height: 30px;
+	float: left;
+	text-indent: -9999px;
+	cursor: pointer;
+}
+
+.starR1.on {
+	background-position: 0 0;
+}
+.starR2.on {
+	background-position: -15px 0;
+}
+
+.starP1 {
+	background:
+		url('./img/star.png')
+		no-repeat -52px 0;
+	background-size: auto 100%;
+	width: 15px;
+	height: 30px;
+	float: left;
+	text-indent: -9999px;
+	cursor: pointer;
+}
+.starP2 {
+	background:
+		url('./img/star.png')
+		no-repeat right 0;
+	background-size: auto 100%;
+	width: 15px;
+	height: 30px;
+	float: left;
+	text-indent: -9999px;
+	cursor: pointer;
+}
+.starP1.on {
+	background-position: 0 0;
+}
+.starP2.on {
+	background-position: -15px 0;
+}
+
 .c_product_title_style2 .title, .c_product_title_style3 .title {
     color: #111;
     font-size: 22px;
@@ -50,6 +114,7 @@ body, h1, h2, h3, h4, th, td, input, select, textarea, button {
     color: #666;
     letter-spacing: 0;
 }
+
 
 
 textarea {
@@ -166,12 +231,17 @@ textarea {
 							<div class="product-details">
 								<h2 class="product-name">${productDetail.p_name}</h2>
 								<div>
-									<div class="product-rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-o"></i>
+									<div class="starRev">
+										<span class="starR1 ${reviewRating>=0.5?'on':'' }">0.5</span>
+										<span class="starR2 ${reviewRating>=1?'on':'' }">1</span>
+										<span class="starR1 ${reviewRating>=1.5?'on':'' }">1.5</span>
+										<span class="starR2 ${reviewRating>=2?'on':'' }">2</span>
+										<span class="starR1 ${reviewRating>=2.5?'on':'' }">2.5</span>
+										<span class="starR2 ${reviewRating>=3?'on':'' }">3</span>
+										<span class="starR1 ${reviewRating>=3.5?'on':'' }">3.5</span>
+										<span class="starR2 ${reviewRating>=4?'on':'' }">4</span>
+										<span class="starR1 ${reviewRating>=4.5?'on':'' }">4.5</span>
+										<span class="starR2 ${reviewRating>=5?'on':'' }">5</span>
 									</div>
 									<a class="review-link" href="#reviewHref">${reviewCount} Review(s) | Add your review</a>
 								</div>
@@ -356,10 +426,17 @@ textarea {
 											</div>
 											<div>
 											</div>
-											<div class="rating-stars">
-												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star-o"></i>
+											<div class="starRev">
+												<span class="starR1 ${reviewRating>=0.5?'on':'' }">0.5</span>
+												<span class="starR2 ${reviewRating>=1?'on':'' }">1</span>
+												<span class="starR1 ${reviewRating>=1.5?'on':'' }">1.5</span>
+												<span class="starR2 ${reviewRating>=2?'on':'' }">2</span>
+												<span class="starR1 ${reviewRating>=2.5?'on':'' }">2.5</span>
+												<span class="starR2 ${reviewRating>=3?'on':'' }">3</span>
+												<span class="starR1 ${reviewRating>=3.5?'on':'' }">3.5</span>
+												<span class="starR2 ${reviewRating>=4?'on':'' }">4</span>
+												<span class="starR1 ${reviewRating>=4.5?'on':'' }">4.5</span>
+												<span class="starR2 ${reviewRating>=5?'on':'' }">5</span>
 											</div>
 										</div>
 										<ul class="rating">
@@ -444,10 +521,17 @@ textarea {
 																${time }
 																<%-- ${r.r_date} --%>
 																</p>
-																<div class="review-rating">
-																	<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-																		class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-																		class="fa fa-star-o empty"></i>
+																<div class="starRev">
+																	<span class="starP1 ${r.r_rating>=0.5?'on':'' }">0.5</span>
+																	<span class="starP2 ${r.r_rating>=1?'on':'' }">1</span>
+																	<span class="starP1 ${r.r_rating>=1.5?'on':'' }">1.5</span>
+																	<span class="starP2 ${r.r_rating>=2?'on':'' }">2</span>
+																	<span class="starP1 ${r.r_rating>=2.5?'on':'' }">2.5</span>
+																	<span class="starP2 ${r.r_rating>=3?'on':'' }">3</span>
+																	<span class="starP1 ${r.r_rating>=3.5?'on':'' }">3.5</span>
+																	<span class="starP2 ${r.r_rating>=4?'on':'' }">4</span>
+																	<span class="starP1 ${r.r_rating>=4.5?'on':'' }">4.5</span>
+																	<span class="starP2 ${r.r_rating>=5?'on':'' }">5</span>
 																</div>
 															</div>
 															<div class="review-body">

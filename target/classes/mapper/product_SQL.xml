@@ -4,12 +4,15 @@
 
 <mapper namespace="product">
 	<select id="productList" parameterType="categoryDTO" resultType="productDTO">
-		select * 
+		select product.*, category.category, ROUND(AVG(review.r_rating),1) AS rating
 		from product
-		WHERE p_del = 0 AND p_confirm = 1
+		JOIN category ON product.cate_no = category.cate_no
+		LEFT JOIN review ON product.p_no = review.p_no AND review.r_del = 0
+		WHERE product.p_del = 0 AND product.p_confirm = 1
 		<if test="cate_no != 1">
-			AND cate_no=#{cate_no} ;
+			AND product.cate_no=#{cate_no}
 		</if>
+		GROUP BY product.p_no
 	</select>
 	<insert id="productAdd" parameterType="productDTO">
 		INSERT INTO product (p_name, cate_no, p_description, p_price, p_stock, p_img, u_no)

@@ -273,7 +273,6 @@ public class ProductController {
 		}
 		mv.addObject("rating", rating);
 				
-		
 		mv.addObject("cateName", productService.cateName(p_no));
 		mv.addObject("reviewCount", productService.reviewCount(p_no));
 		mv.addObject("productDetail", productService.productDetail(p_no));
@@ -285,7 +284,7 @@ public class ProductController {
 	
 	//제품 종류별 카테고리 분류하기
 	@RequestMapping(value = "/category.do")
-	public ModelAndView category(HttpServletRequest request) {
+	public ModelAndView category(HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("category");
 		
 		//물품마다 카테고리로 분류하기 위한 cate_no;
