@@ -7,6 +7,7 @@ import org.mybatis.spring.batch.MyBatisPagingItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,6 +60,14 @@ public class LoginController {
 		return mv;
 	}
 	//회원탈퇴
+	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
+	@GetMapping (value = "/resign.do")
+	public String resign (@AuthenticationPrincipal MyUserDetails myUserDetails) {
+		System.out.println(myUserDetails.getNo());
+		loginService.resign(myUserDetails.getNo());
+		
+		return "redirect:./logout.do";
+	}
 
 	
 	//email 중복체크
