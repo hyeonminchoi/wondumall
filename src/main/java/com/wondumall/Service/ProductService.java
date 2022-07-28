@@ -108,4 +108,8 @@ public class ProductService {
 		return productDAO.cateCount(cate_no);
 	}
 
+	public List<ProductDTO> productListByCateNo(int cate_no) {
+		return productDAO.productListByCateNo(cate_no);
+	}
+
 }

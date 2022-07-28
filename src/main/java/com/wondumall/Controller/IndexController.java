@@ -32,18 +32,16 @@ public class IndexController {
 	@GetMapping(value = "/")
 	public ModelAndView index() {
 		ModelAndView mv = new ModelAndView("index");
-
-		// 물품마다 카테고리로 분류하기 위한 cate_no;
-		int cate_no = 1;
-
-		CategoryDTO dto = new CategoryDTO();
-		dto.setCate_no(cate_no);
-
+		List<CategoryDTO> categoryList = categoryService.getCategoryList();
+		
 		// 물품리스트를 List에 담아서 jsp에 반환
-		List<ProductDTO> productList = productService.productList(dto);
-
+		List<List<ProductDTO>> productList = new ArrayList<>();
+		for(int i=0;i<categoryList.size();i++) {
+			List<ProductDTO> temp = productService.productListByCateNo(categoryList.get(i).getCate_no());
+			productList.add(temp);
+		}
 		mv.addObject("productList", productList);
-		mv.addObject("cate_no", cate_no);
+		mv.addObject("categoryList", categoryList);
 		return mv;
 	}
 

@@ -108,4 +108,8 @@ public class ProductDAO {
 	public int cateCount(int cate_no) {
 		return sqlSession.selectOne("product.cateCount", cate_no);
 	}
+
+	public List<ProductDTO> productListByCateNo(int cate_no) {
+		return sqlSession.selectList("product.productListByCateNo", cate_no);
+	}
 }

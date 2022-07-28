@@ -135,4 +135,18 @@
   			WHERE cate_no=#{cate_no}
   		</if>
   	</select>
+  	
+  	<select id="productListByCateNo" parameterType="integer" resultType="productDTO">
+  		SELECT product.*, category.category, ROUND(AVG(review.r_rating),1) AS rating
+  		FROM product
+  		JOIN category ON product.cate_no = category.cate_no
+  		LEFT JOIN review ON product.p_no = review.p_no AND review.r_del = 0
+  		WHERE product.p_del = 0 AND product.p_confirm = 1
+  		<if test="cate_no > 1">
+  			AND product.cate_no = #{cate_no}
+  		</if>
+  		GROUP BY product.p_no
+  		ORDER BY product.p_date DESC
+  		LIMIT 10
+  	</select>
 </mapper>
