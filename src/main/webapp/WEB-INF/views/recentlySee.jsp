@@ -78,6 +78,7 @@ $(function(){
 				tr += "<tr onclick=\"location.href='./productDetail.do?p_no=" + result[i].p_no + "'\">";
 				tr += "<td>";
 				tr += "<img src='./productUpload/" + result[i].p_img + "'>"
+				tr += "<br>";
 				tr += result[i].p_name;
 				tr += "</td>";
 				tr += "</tr>";
@@ -98,8 +99,8 @@ $(function(){
 }
 
 #float_layer {
-	margin-top: 10px;
-	margin-left: 620px;
+	margin-top: 70px;
+	margin-left: 650px;
 	text-align: center;
 }
 
@@ -142,6 +143,13 @@ $(function(){
 }
 tr{
 	border: 1px solid #ddd;
+}
+table {
+	width: 150px;
+}
+.type_list{
+	width: 1000px;
+    margin: auto;
 }
 </style>
 </head>

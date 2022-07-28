@@ -91,6 +91,15 @@ function modify(cart_no){
 			<c:import url="./nav.jsp"></c:import>
 		</nav>
 		<!-- /NAVIGATION -->
+		<!-- HEADER -->
+		<main>
+			<div id="cont">
+				<div id="float_layer">
+					<c:import url="./recentlySee.jsp"></c:import>
+				</div>
+			</div>
+		</main>
+	<!-- /HEADER -->
 		<section>
 			<div id="breadcrumb" class="section">
 				<!-- container -->
@@ -154,7 +163,7 @@ function modify(cart_no){
 											<input type="hidden" class="individual_bookId_input" value="${c.p_no}">
 										</th>
 										<td><img src="./productUpload/${p.p_img}" style="width: 60px;"></td>
-										<td>${c.p_name }</td>
+										<td><a class="title" href="./productDetail.do?p_no=${c.p_no}">${c.p_name }</a></td>
 										<td><fmt:formatNumber pattern="###,###,###" value="${c.p_price }" />원</td>
 										<td class="updown">
 											<input type="number" class="p_num quantity_input" value="${c.p_count }" min="1" max="50" style="text-align: right;">

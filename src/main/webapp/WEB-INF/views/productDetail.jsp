@@ -97,7 +97,7 @@
 	background-position: -15px 0;
 }
 
-.c_product_title_style2 .title, .c_product_title_style3 .title {
+/* .c_product_title_style2 .title, .c_product_title_style3 .title {
     color: #111;
     font-size: 22px;
 }
@@ -113,8 +113,7 @@ body, h1, h2, h3, h4, th, td, input, select, textarea, button {
     font-family: "Noto Sans KR", "Helvetica Neue", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", "돋움", dotum, sans-serif;
     color: #666;
     letter-spacing: 0;
-}
-
+} */
 
 
 textarea {
@@ -132,6 +131,10 @@ textarea {
 
 #myform label:hover ~ label {
 	text-shadow: 0 0 0 #a00; /* 마우스 호버 뒤에오는 이모지들 */
+}
+
+.review-body{
+	margin-left: 30px;
 }
 </style>
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -183,6 +186,15 @@ textarea {
 			<c:import url="./nav.jsp"></c:import>
 		</nav>
 		<!-- /NAVIGATION -->
+		<!-- HEADER -->
+		<main>
+			<div id="cont">
+				<div id="float_layer">
+					<c:import url="./recentlySee.jsp"></c:import>
+				</div>
+			</div>
+		</main>
+	<!-- /HEADER -->
 		<!-- BREADCRUMB -->
 		<section>
 			<div id="breadcrumb" class="section">
@@ -191,6 +203,7 @@ textarea {
 					<!-- row -->
 					<div class="row">
 						<div class="col-md-12">
+							<h3 class="breadcrumb-header" style="font-size: 24px; color: #2B2D42; line-height: 1.1;">상세상품</h3>
 							<ul class="breadcrumb-tree">
 								<li><a href="./">Home</a></li>
 								<li><a href="./category.do">All Categories</a></li>

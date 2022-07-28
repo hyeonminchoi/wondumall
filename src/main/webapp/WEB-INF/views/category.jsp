@@ -121,7 +121,12 @@ margin-bottom: 20px;
     	font-size: 18px;
 	}
 #wonduImg{
-	margin-left: 200px;
+	margin-left: 175px;
+}
+.rating{
+	font-size: 18px;
+    font-weight: 600;
+    margin-top: 6px;
 }
 </style>
 </head>
@@ -152,6 +157,7 @@ margin-bottom: 20px;
 					<!-- row -->
 					<div class="row">
 						<div class="col-md-12">
+							<h3 class="breadcrumb-header">카테고리</h3>
 							<ul class="breadcrumb-tree">
 								<li><a href="./">Home</a></li>
 								<li><a href="./category.do">All Categories</a></li>
@@ -174,8 +180,8 @@ margin-bottom: 20px;
 							<tbody id="searchList>">
 								<c:forEach items="${productList}" var="p">
 									<tr>
-										<td class="image">
-											<img src="./productUpload/${p.p_img}" style="width: 100px; height: 100px;" alt="이미지 준비중입니다.">
+										<td class="image" style="width: 230px;">
+											<img src="./productUpload/${p.p_img}" style="width: 100px; height: 100px; margin-left: 50px;" alt="로딩 실패">
 										</td>
 										<td class="detail">
 											<div class="category">
