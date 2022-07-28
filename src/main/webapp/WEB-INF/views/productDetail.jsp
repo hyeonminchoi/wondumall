@@ -447,7 +447,7 @@ textarea {
 														class="fa fa-star"></i>
 												</div>
 												<div class="rating-progress">
-													<div style="width: 80%;"></div>
+													<div style="width: ${rating[5] * 100 / reviewCount}%;"></div>
 												</div> <span class="sum">${rating[5]}</span>
 											</li>
 											<li>
@@ -457,7 +457,7 @@ textarea {
 														class="fa fa-star-o"></i>
 												</div>
 												<div class="rating-progress">
-													<div style="width: 60%;"></div>
+													<div style="width: ${rating[4] * 100 / reviewCount}%;"></div>
 												</div> <span class="sum">${rating[4]}</span>
 											</li>
 											<li>
@@ -467,7 +467,7 @@ textarea {
 														class="fa fa-star-o"></i>
 												</div>
 												<div class="rating-progress">
-													<div></div>
+													<div style="width: ${rating[3] * 100 / reviewCount}%;"></div>
 												</div> <span class="sum">${rating[3]}</span>
 											</li>
 											<li>
@@ -477,7 +477,7 @@ textarea {
 														class="fa fa-star-o"></i>
 												</div>
 												<div class="rating-progress">
-													<div></div>
+													<div style="width: ${rating[2] * 100 / reviewCount}%;"></div>
 												</div> <span class="sum">${rating[2]}</span>
 											</li>
 											<li>
@@ -487,7 +487,7 @@ textarea {
 														class="fa fa-star-o"></i>
 												</div>
 												<div class="rating-progress">
-													<div></div>
+													<div style="width: ${rating[1] * 100 / reviewCount}%;"></div>
 												</div> <span class="sum">${rating[1]}</span>
 											</li>
 										</ul>

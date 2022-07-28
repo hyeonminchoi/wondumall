@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com..DTO.CartDTO;
-import com..DTO.CategoryDTO;
 import com..DTO.ProductDTO;
 import com..DTO.ReviewDTO;
 
@@ -18,8 +17,8 @@ public class ProductDAO {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public List<ProductDTO> productList(CategoryDTO dto) {
-		return sqlSession.selectList("product.productList", dto);
+	public List<ProductDTO> productList(Map<String, Object> map) {
+		return sqlSession.selectList("product.productList", map);
 	}
 
 	public int productAdd(ProductDTO add) {
@@ -104,5 +103,9 @@ public class ProductDAO {
 	
 	public List<Map<String, Object>> ratingCount(int p_no) {
 		return sqlSession.selectList("product.ratingCount", p_no);
+	}
+
+	public int cateCount(int cate_no) {
+		return sqlSession.selectOne("product.cateCount", cate_no);
 	}
 }
