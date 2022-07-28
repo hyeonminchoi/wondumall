@@ -84,7 +84,7 @@ textarea {
 					<div class="form-group row">
 						<label class="col-sm-3">상품 설명</label>
 						<div class="com-sm-5">
-							<textarea name="p_description" cols="50" rows="2" class="form-control" placeholder="500자 이내로 입력해주세요." maxlength="500" required></textarea>
+							<textarea name="p_description" id="p_description" cols="50" rows="2" class="form-control" placeholder="500자 이내로 입력해주세요." maxlength="500" required></textarea>
 						</div>
 					</div>
 	
@@ -131,7 +131,7 @@ textarea {
 								});
 						</script>
 					</div>
-					<input type="submit" id="addBtn" class="btn" value="등록하기" onclick="productAdd()" />
+					<input type="submit" id="addBtn" name="addBtn" class="btn" value="등록하기" onclick="productAdd()"/>
 				</form>
 			</div>
 		</div>
@@ -150,9 +150,61 @@ textarea {
 	<script src="./js/jquery.zoom.min.js"></script>
 	<script src="./js/main.js"></script>
 <script type="text/javascript">
-	function productAdd(){
+	$(document).ready(function () {
+		var addBtn = document.getElementById('addBtn');
+		addBtn.disabled = true;
+	    $('#p_name').on('input change', function () {
+	        if ($(this).val() != '') {
+	        	$('#cate_no').on('input change', function () {
+	    	    	if ($(this).val() != '') {
+	    	    		 $('#cate_no').on('input change', function () {
+	    	    		    	if ($(this).val() != '') {
+	    	    		    		 $('#p_description').on('input change', function () {
+	    	    		    		    	if ($(this).val() != '') {
+	    	    		    		    		 $('#p_price').on('input change', function () {
+	    	    		    		    		    	if ($(this).val() != '') {
+	    	    		    		    		    		 $('#p_stock').on('input change', function () {
+	    	    		    		    		    		    	if ($(this).val() != '') {
+	    	    		    		    		    		    		$('#input-file').on('input change', function () {
+	    	    		    		    		    		    	    	if ($(this).val() != '') {
+	    	    		    		    		    		    	            $('#addBtn').prop('disabled', false);
+	    	    		    		    		    		    	        }
+	    	    		    		    		    		    	    });
+	    	    		    		    		    		        }
+	    	    		    		    		    		    });
+	    	    		    		    		        }
+	    	    		    		    		    });
+	    	    		    		        }
+	    	    		    		    });
+									}
+							});
+	    	        }
+	    	    });
+	        }
+	        else {
+	            $('#addBtn').prop('disabled', true);
+	        }
+	    });
+	    
+		$("#addBtn").click(function() {   
+			if($('#p_name').val().trim() == ''){
+				alert('이름은 필수 입력입니다.');
+				$('#p_name').val('');
+				$('#p_name').focus();
+				return false;
+			}
+			if($('#p_description').val().trim() == ''){
+				alert('상품 설명은 필수 입력입니다.');
+				$('#p_description').val('');
+				$('#p_description').focus();
+				return false;
+			}
+		})
+	});
+
+	/* function productAdd(){
 		alert("상품등록이 신청 되었습니다.\n관리자 승인 후 상품이 등록됩니다.");
-	}
+	} */
 </script>
 </body>
 </html>

@@ -146,6 +146,23 @@ margin-bottom: 20px;
 		</main>
 	<!-- /HEADER -->
 	<section>
+		<div id="breadcrumb" class="section">
+				<!-- container -->
+				<div class="container">
+					<!-- row -->
+					<div class="row">
+						<div class="col-md-12">
+							<ul class="breadcrumb-tree">
+								<li><a href="./">Home</a></li>
+								<li><a href="./category.do">All Categories</a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- /row -->
+				</div>
+				<!-- /container -->
+			</div>
+			<!-- /BREADCRUMB -->
 		<div class="section">
 			<div class="container">
 				<div class="row">
