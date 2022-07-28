@@ -75,7 +75,7 @@ textarea {
 					<div class="form-group row">
 						<label class="col-sm-3">분류 번호</label>
 						<div class="com-sm-3" id="flex">
-							<c:forEach var="c" items="${categoryList }" begin="1">
+							<c:forEach var="c" items="${categoryList }" begin="1" varStatus="">
 								<input style="margin-left: 10px;" type="radio" id="cate_no" name="cate_no" value="${c.cate_no }" required>${c.category }					
 							</c:forEach>
 						</div>
@@ -151,41 +151,6 @@ textarea {
 	<script src="./js/main.js"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
-		var addBtn = document.getElementById('addBtn');
-		addBtn.disabled = true;
-	    $('#p_name').on('input change', function () {
-	        if ($(this).val() != '') {
-	        	$('#cate_no').on('input change', function () {
-	    	    	if ($(this).val() != '') {
-	    	    		 $('#cate_no').on('input change', function () {
-	    	    		    	if ($(this).val() != '') {
-	    	    		    		 $('#p_description').on('input change', function () {
-	    	    		    		    	if ($(this).val() != '') {
-	    	    		    		    		 $('#p_price').on('input change', function () {
-	    	    		    		    		    	if ($(this).val() != '') {
-	    	    		    		    		    		 $('#p_stock').on('input change', function () {
-	    	    		    		    		    		    	if ($(this).val() != '') {
-	    	    		    		    		    		    		$('#input-file').on('input change', function () {
-	    	    		    		    		    		    	    	if ($(this).val() != '') {
-	    	    		    		    		    		    	            $('#addBtn').prop('disabled', false);
-	    	    		    		    		    		    	        }
-	    	    		    		    		    		    	    });
-	    	    		    		    		    		        }
-	    	    		    		    		    		    });
-	    	    		    		    		        }
-	    	    		    		    		    });
-	    	    		    		        }
-	    	    		    		    });
-									}
-							});
-	    	        }
-	    	    });
-	        }
-	        else {
-	            $('#addBtn').prop('disabled', true);
-	        }
-	    });
-	    
 		$("#addBtn").click(function() {   
 			if($('#p_name').val().trim() == ''){
 				alert('이름은 필수 입력입니다.');
