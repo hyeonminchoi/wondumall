@@ -6,11 +6,10 @@
 <div id="top-header">
 	<div class="container">
 		<ul class="header-links pull-left">
-			<li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
+			<li><a href="#"><i class="fa fa-phone"></i> 010-0000-0000</a></li>
 			<li><a href="#"><i class="fa fa-envelope-o"></i>
-					email@email.com</a></li>
-			<li><a href="#"><i class="fa fa-map-marker"></i> 1734
-					Stonecoal Road</a></li>
+					jeho0809@naver.com</a></li>
+			<li><a href="#"><i class="fa fa-map-marker"></i> 부천우리컴퓨터학원</a></li>
 		</ul>
 		<ul class="header-links pull-right">
 			<sec:authorize access="hasRole('ROLE_ADMIN')">

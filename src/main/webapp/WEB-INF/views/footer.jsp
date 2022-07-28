@@ -1,5 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(function(){
+		$.ajax({
+			type : "GET",
+			url : "//categoryList.do",
+			dataType: "JSON",
+			success : function(res){
+				var temp = '';
+				
+				$.each(res, function(index,data){
+					temp += '<li><a href="./category.do?cate_no=' + data.cate_no + '">' + data.category + '</a></li>'
+				});
+				$('#category').html(temp);
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown){
+                alert("통신 실패.")
+            }
+		})
+	});
+</script>
 <!-- top footer -->
 <div class="section">
 	<!-- container -->
@@ -9,26 +29,19 @@
 			<div class="col-md-3 col-xs-6">
 				<div class="footer">
 					<h3 class="footer-title">About Us</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-						sed do eiusmod tempor incididunt ut.</p>
 					<ul class="footer-links">
-						<li><a href="#"><i class="fa fa-map-marker"></i>1734
-								Stonecoal Road</a></li>
-						<li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
-						<li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
+						<li><a href="#"><i class="fa fa-map-marker"></i>부천우리컴퓨터학원</a></li>
+						<li><a href="#"><i class="fa fa-phone"></i>010-0000-0000</a></li>
+						<li><a href="#"><i class="fa fa-envelope-o"></i>jeho0809@naver.com</a></li>
 					</ul>
 				</div>
 			</div>
 
 			<div class="col-md-3 col-xs-6">
 				<div class="footer">
-					<h3 class="footer-title">Categories</h3>
-					<ul class="footer-links">
-						<li><a href="#">Hot deals</a></li>
-						<li><a href="#">Laptops</a></li>
-						<li><a href="#">Smartphones</a></li>
-						<li><a href="#">Cameras</a></li>
-						<li><a href="#">Accessories</a></li>
+					<h3 class="footer-title">카테고리</h3>
+					<ul class="footer-links" id="category">
+						
 					</ul>
 				</div>
 			</div>
@@ -37,26 +50,23 @@
 
 			<div class="col-md-3 col-xs-6">
 				<div class="footer">
-					<h3 class="footer-title">Information</h3>
+					<h3 class="footer-title">커뮤니티</h3>
 					<ul class="footer-links">
-						<li><a href="#">About Us</a></li>
-						<li><a href="#">Contact Us</a></li>
-						<li><a href="#">Privacy Policy</a></li>
-						<li><a href="#">Orders and Returns</a></li>
-						<li><a href="#">Terms & Conditions</a></li>
+						<li><a href="./board.do">자유게시판</a></li>
+						<li><a href="./notice.do">공지사항</a></li>
+						<li><a href="./question.do">질문게시판</a></li>
 					</ul>
 				</div>
 			</div>
 
 			<div class="col-md-3 col-xs-6">
 				<div class="footer">
-					<h3 class="footer-title">Service</h3>
+					<h3 class="footer-title">서비스</h3>
 					<ul class="footer-links">
-						<li><a href="#">내 계정</a></li>
-						<li><a href="#">장바구니</a></li>
-						<li><a href="#">Wishlist</a></li>
-						<li><a href="#">Track My Order</a></li>
-						<li><a href="#">Help</a></li>
+						<li><a href="./mypage">마이페이지</a></li>
+						<li><a href="./cart.do">장바구니</a></li>
+						<li><a href="./faq.do">FAQ</a></li>
+						<li><a href="./chatting.do">실시간문의</a></li>
 					</ul>
 				</div>
 			</div>

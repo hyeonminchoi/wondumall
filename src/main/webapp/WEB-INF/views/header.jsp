@@ -7,15 +7,14 @@
 <div id="top-header">
 	<div class="container">
 		<ul class="header-links pull-left">
-			<li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
+			<li><a href="#"><i class="fa fa-phone"></i> 010-0000-0000</a></li>
 			<li><a href="#"><i class="fa fa-envelope-o"></i>
-					email@email.com</a></li>
-			<li><a href="#"><i class="fa fa-map-marker"></i> 1734
-					Stonecoal Road</a></li>
+					jeho0809@naver.com</a></li>
+			<li><a href="#"><i class="fa fa-map-marker"></i> 부천우리컴퓨터학원</a></li>
 		</ul>
 		<ul class="header-links pull-right">
 			<sec:authorize access="hasRole('ROLE_BUSINESS')">
-				<li><a href="./business/index.do"><i class="fa fa-building"></i>사업자페이지</a></li>
+				<li><a href="./business/coupon.do"><i class="fa fa-building"></i>사업자페이지</a></li>
 			</sec:authorize>
 			
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
@@ -58,8 +57,8 @@
 			<div class="col-md-6">
 				<div class="header-search">
 					<form action="./search.do" method="get">
-						<input class="input" placeholder="Search here" name="search">
-						<button class="search-btn">Search</button>
+						<input class="input" placeholder="검색어를 입력하세요." name="search">
+						<button class="search-btn">검색</button>
 					</form>
 				</div>
 			</div>
@@ -68,27 +67,19 @@
 			<!-- ACCOUNT -->
 			<div class="col-md-3 clearfix">
 				<div class="header-ctn">
-					<!-- Wishlist -->
-					<div>
-						<a href="#"> <i class="fa fa-heart-o"></i> <span>Your
-								Wishlist</span>
-							<div class="qty">0</div>
-						</a>
-					</div>
-					<!-- /Wishlist -->
 
 					<!-- Cart -->
 					<div class="dropdown">
 						<c:choose>
 							<c:when test="${user ne 'anonymousUser'}">
 								<a href="./cart.do" class="dropdown-toggle" > <i class="fa fa-shopping-cart"></i> 
-								<span>Your Cart</span>
+								<span>장바구니</span>
 									<div class="qty">${qty}</div>
 								</a>
 							</c:when>
 							<c:otherwise>
 								<a href="./login.do" class="dropdown-toggle" > <i class="fa fa-shopping-cart"></i> 
-								<span>Your Cart</span>
+								<span>장바구니</span>
 									<div class="qty">0</div>
 								</a>
 							</c:otherwise>
