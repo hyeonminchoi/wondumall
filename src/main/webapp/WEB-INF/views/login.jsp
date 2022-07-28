@@ -102,16 +102,16 @@
 						<form action="./login.do" method="post"
 							class="login100-form validate-form flex-sb flex-w">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-							<span class="login100-form-title p-b-53"> 로그인 같이할수있다리 </span>
+							<span class="login100-form-title p-b-53"> 로그인 </span>
 							<a href="./oauth2/authorization/naver" class="btn-google m-b-20">
 							<img src="./img/btnG_아이콘원형.png" aria-hidden="true" />aver</a>
 							<a href="./oauth2/authorization/kakao" class="btn-google m-b-20"><img src="./img/kakao_login_medium_narrow.png" style="height: 100%; width: auto;"></a>
 							<a href="./oauth2/authorization/google" class="btn-google m-b-20"> <i
-								class="fa fa-google" aria-hidden="true"></i> oolge
+								class="fa fa-google" aria-hidden="true"></i> oogle
 							</a> <br> <br>
 
 							<div class="p-t-31 p-b-9">
-								<span class="txt1"> 아이디 (ex) Jex@jex.com </span>
+								<span class="txt1"> <strong>아이디</strong> <small>(ex) example@example.com</small> </span>
 							</div>
 							<div class="wrap-input100 validate-input"
 								data-validate="Username is required">
@@ -120,7 +120,7 @@
 							</div>
 
 							<div class="p-t-13 p-b-9">
-								<span class="txt1"> 비밀번호 </span> <a href="#"
+								<span class="txt1"> <strong>비밀번호</strong> </span> <a href="#"
 									class="txt2 bo1 m-l-5"> 잊으셨나요? </a>
 							</div>
 							<div class="wrap-input100 validate-input"
