@@ -70,6 +70,7 @@
 						<p class="mypagename" >이름</p>
 						<input autocomplete="off" name="u_name" minlength="2" type="text" class="name" required="required" placeholder="이름" pattern="^[가-힣]{2,20}|[a-zA-Z]{2,20}\s[a-zA-Z]{2,20}$" value="<sec:authentication property='principal.name' />" disabled="disabled">
 					</div>
+					<input class="btn" type="button" value="비밀번호변경하기" onclick="location.href='./pwchange'"/>
 					<div class="textForm">
 						<p class="mypagename" >핸드폰 번호</p>
 						<input autocomplete="off" name="u_tel" type="text" minlength="10" class="name" required="required" placeholder="핸드폰번호 ( - 없이 입력)" value="<sec:authentication property='principal.tel' />" disabled="disabled">

@@ -55,6 +55,15 @@ public class LoginService {
 		
 	}
 
+	public void changepw(String changepw) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		
+		String securepw =  encoder.encode(changepw);
+		
+		loginDAO.changepw(securepw);
+		
+	}
+
 		
 		
 	

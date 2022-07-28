@@ -1,13 +1,16 @@
 package com..Controller;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +19,8 @@ import com..Config.MyUserDetails;
 import com..DTO.LoginDTO;
 import com..Service.LoginService;
 import com..Util.Util;
+
+import retrofit2.http.GET;
 
 @Controller
 public class LoginController {
@@ -35,7 +40,22 @@ public class LoginController {
 		dto.setU_no(myUserDetails.getNo());
 		loginService.update(dto);
 		return "redirect:./logout.do";
+	} 
+	//비밀번호변경
+	//현재비밀번호 확인
+	@GetMapping(value = "/pwchange")
+	public ModelAndView pwchange() {
+		return new ModelAndView("pwchange");
 	}
+	@PostMapping(value = "/pwchange.do")
+	public String checkpw(@RequestBody String changepw, @RequestBody String u_pw, HttpSession session) throws Exception {
+		
+		session.invalidate();
+		
+		
+		return "redirect:./login.do";
+	}
+	
 	
 	//마이페이지 구현
 	@GetMapping(value = "/mypage")
@@ -105,7 +125,7 @@ public class LoginController {
 		}
 	}
 	
-
+	//로그인
 	@GetMapping("/login.do")
     public String login() {
         return "login";
