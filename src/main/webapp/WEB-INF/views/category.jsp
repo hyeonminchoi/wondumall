@@ -121,6 +121,8 @@ margin-bottom: 20px;
     	font-size: 18px;
 	}
 #wonduImg{
+	width: 830px;
+    height: 466px;
 	margin-left: 175px;
 }
 .rating{
@@ -173,7 +175,15 @@ margin-bottom: 20px;
 			<div class="container">
 				<div class="row">
 					<div class="img">
-						<img id="wonduImg" alt="" src="./img/wonduBackground.png">
+						<c:if test="${productList[0].cate_no == 2}">
+							<img id="wonduImg" alt="" src="./img/wonduBackground.png">
+						</c:if>
+						<c:if test="${productList[0].cate_no == 3}">
+							<img id="wonduImg" alt="" src="./img/machineBackground.png">
+						</c:if>
+						<c:if test="${productList[0].cate_no == 4}">
+							<img id="wonduImg" alt="" src="./img/accessoryBackground.png">
+						</c:if>
 					</div>
 					<hr>
 							<table class="type_list">
