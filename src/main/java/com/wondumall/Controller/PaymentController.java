@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import com..Config.MyUserDetails;
@@ -58,6 +59,13 @@ public class PaymentController {
 		
 		
 		return api.paymentByImpUid(imp_uid);
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/refund")
+	public IamportResponse<Payment> paymentRefund(CancelData cancelData) throws IamportResponseException, IOException{
+		
+		return api.cancelPaymentByImpUid(cancelData);
 	}
 	
 	

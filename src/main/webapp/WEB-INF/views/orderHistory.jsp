@@ -77,6 +77,8 @@ font-size: 20px;
 						</tr>
 					</thead>
 					<tbody>
+						<c:set var="price" value="0"/>
+						<c:set var="merchant_uid" value=""/>
 						<c:forEach items="${orderList }" var="o">
 							<tr>
 								<c:set var="merchant_uid" value="${o.merchant_uid }"/>
@@ -125,6 +127,7 @@ function cancelPay(){
 	    "data": JSON.stringify({
 	    	"merchant_uid": merchant_uid, // 예: ORD20180131-0000011
 	        "cancel_request_amount": o_price, // 환불금액
+	        "reason": "테스트 결제 환불" // 환불사유
 	      }),
 	      "dataType": "json"
 	});

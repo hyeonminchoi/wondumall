@@ -121,7 +121,7 @@
 							<h4>
 								<label>할인비율</label>
 							</h4>
-							<input style="width: 100%;" type="text" name="coupon_per" required>
+							<input placeholder="ex)0.56 -> 56%" style="width: 100%;" type="text" name="coupon_per" required>
 						</div>
 						<div>
 							<button type="submit">쿠폰작성</button>
