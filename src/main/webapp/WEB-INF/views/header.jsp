@@ -81,7 +81,7 @@
 					<div class="dropdown">
 						<c:choose>
 							<c:when test="${user ne 'anonymousUser'}">
-								<a href="./cart.do?u_no=<sec:authentication property='principal.no'/>" class="dropdown-toggle" > <i class="fa fa-shopping-cart"></i> 
+								<a href="./cart.do" class="dropdown-toggle" > <i class="fa fa-shopping-cart"></i> 
 								<span>Your Cart</span>
 									<div class="qty">${qty}</div>
 								</a>

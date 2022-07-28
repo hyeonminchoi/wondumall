@@ -1,6 +1,7 @@
 package com..Service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,10 @@ public class PaymentService {
 	public List<OrderDTO> orderList(OrderDTO dto) {
 		
 		return paymentDAO.orderList(dto);
+	}
+
+	public void setStatus(Map<String, Object> map) {
+		paymentDAO.setStatus(map);
 	}
 
 }

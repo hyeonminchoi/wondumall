@@ -26,4 +26,9 @@
 		FROM orderorder
 		WHERE u_no=#{u_no}
 	</select>
+	
+	<update id="setStatus" parameterType="map">
+		UPDATE orderorder SET o_status = "환불완료"
+		WHERE u_no = #{u_no} AND merchant_uid = #{merchant_uid}
+	</update>
 </mapper>

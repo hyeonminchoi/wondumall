@@ -93,7 +93,11 @@ font-size: 20px;
 								<c:set var="price" value="${o.o_price}"/>
 								${o.o_price }
 								</td>
-								<td><button class="primary btn" id="refund" onclick="cancelPay()">환불하기</button></td>
+								<td>
+									<c:if test="${o.o_status == '결제완료' }">
+										<button class="primary btn" id="refund" onclick="cancelPay('${o.merchant_uid}', ${o.o_price })">환불하기</button>
+									</c:if>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -117,20 +121,24 @@ font-size: 20px;
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script type="text/javascript">
-function cancelPay(){
-	var o_price = ${price};
-	var merchant_uid = ${merchant_uid};
-	jQuery.ajax({
-		"url": "./refund", // 예: http://www.myservice.com/payments/cancel
-		"type": "POST",
-		"contentType": "application/json",
-	    "data": JSON.stringify({
+function cancelPay(merchant_uid, o_price){
+	$.ajax({
+		url: "./refund", // 예: http://www.myservice.com/payments/cancel
+		type: "POST",
+	    data: {
 	    	"merchant_uid": merchant_uid, // 예: ORD20180131-0000011
-	        "cancel_request_amount": o_price, // 환불금액
-	        "reason": "테스트 결제 환불" // 환불사유
-	      }),
-	      "dataType": "json"
-	});
+	        "amount": o_price, // 환불금액
+	        "reason": "사용자 환불 요청" // 환불사유
+	    	},
+	    success: function(result){
+	    	alert("환불 성공");
+	    	location.href = location.href; history.go(0);
+	    },
+	    error: function(error){
+	    	alert("환불 실패");
+	    	location.href = location.href; history.go(0);
+	    }
+	})
 }
 </script>
 </body>

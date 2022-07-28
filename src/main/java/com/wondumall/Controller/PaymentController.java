@@ -1,13 +1,17 @@
 package com..Controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,8 +29,8 @@ import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import com..Config.MyUserDetails;
-import com..DTO.CouponDTO;
 import com..DTO.CartDTO;
+import com..DTO.CouponDTO;
 import com..DTO.OrderDTO;
 import com..DTO.UserDTO;
 import com..Service.PaymentService;
@@ -61,17 +65,23 @@ public class PaymentController {
 		return api.paymentByImpUid(imp_uid);
 	}
 	
+	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@ResponseBody
 	@PostMapping(value = "/refund")
-	public IamportResponse<Payment> paymentRefund(CancelData cancelData) throws IamportResponseException, IOException{
-		
+	public IamportResponse<Payment> paymentRefund(@RequestParam("merchant_uid") String merchant_uid,
+			@RequestParam("amount")int amount, @RequestParam("reason")String reason, @AuthenticationPrincipal MyUserDetails myUserDetails) throws IamportResponseException, IOException{
+		CancelData cancelData = new CancelData(merchant_uid, false, new BigDecimal(amount));
+		cancelData.setReason(reason);
+		Map<String, Object> map = new HashMap<>();
+		map.put("merchant_uid", merchant_uid);
+		map.put("u_no", myUserDetails.getNo());
+		paymentService.setStatus(map);
 		return api.cancelPaymentByImpUid(cancelData);
 	}
 	
-	
+	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@GetMapping(value = "/checkout.do")
-	public ModelAndView checkout1(HttpServletRequest request, @AuthenticationPrincipal MyUserDetails myUserDetails, 
-			@RequestParam(name = "u_no", required = false, defaultValue = "-1") int u_no){
+	public ModelAndView checkout1(HttpServletRequest request, @AuthenticationPrincipal MyUserDetails myUserDetails){
 		ModelAndView mv = new ModelAndView("checkout");
 		
 		UserDTO user = new UserDTO();
@@ -81,13 +91,12 @@ public class PaymentController {
 		
 		List<CouponDTO> couponList = paymentService.couponList();
 		
-		
 		mv.addObject("couponList", couponList);
-		if(u_no ==-1) {
-			mv.addObject("cart", 0);
-		} else {
-			List<CartDTO> cart = paymentService.cartPay(u_no);
+		if(myUserDetails.getNo() > 0) {
+			List<CartDTO> cart = paymentService.cartPay(myUserDetails.getNo());
 			mv.addObject("cart", cart);
+		} else {
+			mv.addObject("cart", 0);
 		}
 		
 		mv.addObject("user", user);

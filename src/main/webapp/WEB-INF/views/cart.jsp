@@ -116,81 +116,73 @@ function modify(cart_no){
 				<div class="container">
 					<!-- row -->
 					<div class="row">
-						<form action="./checkout.do/${user.u_no}" name="orderform" id="orderform" method="post" class="orderform" onsubmit="return false;">
-							<table class="table">
-								<thead>
-									<tr>
-										<th scope="col">
-											<!-- <input type="checkbox" class="all_check" checked="checked" style="margin-right: 6px;"> -->
-											선택
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">
+										<!-- <input type="checkbox" class="all_check" checked="checked" style="margin-right: 6px;"> -->
+										선택
+									</th>
+									<th scope="col">이미지</th>
+									<th scope="col">상품명</th>
+									<th scope="col">가격</th>
+									<th scope="col">수량</th>
+									<th scope="col">합계</th>
+									<th scope="col">삭제</th>
+								</tr>
+							</thead>
+						
+							<tbody>
+								<c:forEach items="${cart}" var="c">
+									<tr class="cart_info">
+										<th scope='row'>
+											<c:choose>
+												<c:when test="${c.p_check eq 1}">
+													<input type="checkbox" id="chkbox" class="chkbox" name="chkbox" checked="checked"  value="${c.cart_no}">&nbsp;
+												</c:when>
+												<c:otherwise>
+													<input type="checkbox" id="chkbox" class="chkbox" name="chkbox" value="${c.cart_no}">&nbsp;
+												</c:otherwise>
+											</c:choose>
+											<input type="hidden" class="c_no" value="${c.cart_no }">
+											<input type="hidden" class="c_p_no" value="${c.p_no }">
+											<input type="hidden" class="c_price" value="${c.p_price }">
+											<input type="hidden" class="c_count" value="${c.p_count }">
+											<input type="hidden" class="addPrice" value="${c.p_count * c.p_price}">
+											<input type="hidden" class="c_p_no" value="${c.p_no}">
+											
+											<input type="hidden" class="individual_bookId_input" value="${c.p_no}">
 										</th>
-										<th scope="col">이미지</th>
-										<th scope="col">상품명</th>
-										<th scope="col">가격</th>
-										<th scope="col">수량</th>
-										<th scope="col">합계</th>
-										<th scope="col">삭제</th>
+										<td><img src="./productUpload/${p.p_img}" style="width: 60px;"></td>
+										<td>${c.p_name }</td>
+										<td><fmt:formatNumber pattern="###,###,###" value="${c.p_price }" />원</td>
+										<td class="updown">
+											<input type="number" class="p_num quantity_input" value="${c.p_count }" min="1" max="50" style="text-align: right;">
+											<button class="quantity_modify_btn abutton" data-cartId="${c.cart_no}">변경</button>
+										</td>
+										<td>
+											<fmt:formatNumber pattern="###,###,###" value="${c.sumPrice}" />원
+										</td>
+										<td><button class="abutton" onclick="del(${c.cart_no})">삭제</button></td>
 									</tr>
-								</thead>
-							
-								<tbody>
-									<c:forEach items="${cart}" var="c">
-										<tr class="cart_info">
-											<th scope='row'>
-												<c:choose>
-													<c:when test="${c.p_check eq 1}">
-														<input type="checkbox" id="chkbox" class="chkbox" name="chkbox" checked="checked"  value="${c.cart_no}">&nbsp;
-													</c:when>
-													<c:otherwise>
-														<input type="checkbox" id="chkbox" class="chkbox" name="chkbox" value="${c.cart_no}">&nbsp;
-													</c:otherwise>
-												</c:choose>
-												<input type="hidden" class="c_no" value="${c.cart_no }">
-												<input type="hidden" class="c_p_no" value="${c.p_no }">
-												<input type="hidden" class="c_price" value="${c.p_price }">
-												<input type="hidden" class="c_count" value="${c.p_count }">
-												<input type="hidden" class="addPrice" value="${c.p_count * c.p_price}">
-												<input type="hidden" class="c_p_no" value="${c.p_no}">
-												
-												<input type="hidden" class="individual_bookId_input" value="${c.p_no}">
-											</th>
-											<td><img src="./productUpload/${p.p_img}" style="width: 60px;"></td>
-											<td>${c.p_name }</td>
-											<td><fmt:formatNumber pattern="###,###,###" value="${c.p_price }" />원</td>
-											<td class="updown">
-												<input type="number" class="p_num quantity_input" value="${c.p_count }" min="1" max="50" style="text-align: right;">
-												<button class="quantity_modify_btn abutton" data-cartId="${c.cart_no}">변경</button>
-												<!-- <span onclick="javascript:basket.changePNum(3);">
-													<i class="fas fa-arrow-alt-circle-up up" style="cursor: pointer;"></i>
-												</span>
-												<span onclick="javascript:basket.changePNum(3);">
-													<i class="fas fa-arrow-alt-circle-down down" style="cursor: pointer;"></i>
-												</span> -->
-											</td>
-											<td>
-												<fmt:formatNumber pattern="###,###,###" value="${c.sumPrice}" />원
-											</td>
-											<td><button class="abutton" onclick="del(${c.cart_no})">삭제</button></td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-							<div class="right-align basketrowcmd">
-								<button class="abutton" onclick="allDel(${cart[2].u_no})">장바구니비우기</button>
+								</c:forEach>
+							</tbody>
+						</table>
+						<div class="right-align basketrowcmd">
+							<button class="abutton" onclick="allDel(${cart[2].u_no})">장바구니비우기</button>
+						</div>
+						<div class="bigtext right-align sumcount" id="sum_p_num">
+							상품갯수:<span class="addProduct"></span>개
+						</div>
+						<div class="bigtext right-align box blue summoney" id="sum_p_price">
+							합계금액:<span class="totalPrice"></span>원
+						</div>
+						<div id="goorder" class="">
+							<div class="clear"></div>
+							<div class="buttongroup center-align cmd">
+								<button type="button" class="order_btn abutton" onclick="location.href='./checkout.do'">결제하기</button>
 							</div>
-							<div class="bigtext right-align sumcount" id="sum_p_num">
-								상품갯수:<span class="addProduct"></span>개
-							</div>
-							<div class="bigtext right-align box blue summoney" id="sum_p_price">
-								합계금액:<span class="totalPrice"></span>원
-							</div>
-							<div id="goorder" class="">
-								<div class="clear"></div>
-								<div class="buttongroup center-align cmd">
-									<button type="submit" class="order_btn abutton" onclick="location.href='./checkout.do?u_no=${cart[2].u_no}'">결제하기</button>
-								</div>
-							</div>
-						</form>
+						</div>
 					</div>
 				<!-- /row -->
 				</div>

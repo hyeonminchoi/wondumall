@@ -66,7 +66,7 @@ public class ProductController {
 		cartDTO.setU_no(myUserDetails.getNo());
 		
 		productService.modify(cartDTO);
-		return "redirect:/cart.do?u_no=" + myUserDetails.getNo();
+		return "redirect:/cart.do";
 	}
 	
 	@ResponseBody
@@ -85,7 +85,7 @@ public class ProductController {
 		cartDTO.setU_no(myUserDetails.getNo());
 		
 		productService.cartAllDel(cartDTO);
-		return "redirect:/cart.do?u_no=" + myUserDetails.getNo();
+		return "redirect:/cart.do";
 	}
 	
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
@@ -96,17 +96,18 @@ public class ProductController {
 		cartDTO.setU_no(myUserDetails.getNo());
 		
 		productService.cartDelete(cartDTO);
-		return "redirect:/cart.do?u_no=" + myUserDetails.getNo();
+		return "redirect:/cart.do";
 	}
 	
+	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@RequestMapping(value = "/cart.do")
-	public ModelAndView cart(@RequestParam(name = "u_no", required = false, defaultValue = "-1") int u_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+	public ModelAndView cart(@AuthenticationPrincipal MyUserDetails myUserDetails) {
 		ModelAndView mv = new ModelAndView("cart");
-		if(u_no ==-1) {
-			mv.addObject("cart", 0);
-		} else {
-			List<CartDTO> cart = productService.cart(u_no);
+		if(myUserDetails.getNo() > 0) {
+			List<CartDTO> cart = productService.cart(myUserDetails.getNo());
 			mv.addObject("cart", cart);
+		} else {
+			mv.addObject("cart", 0);
 		}
 		if(myUserDetails!=null)
 			mv.addObject("qty", productService.cartCount(myUserDetails.getNo()));
