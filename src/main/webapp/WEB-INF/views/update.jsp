@@ -67,16 +67,6 @@
 					</div>
 					
 					<div class="textForm">
-					<p class="mypagename" >비밀번호</p>
-						<input autocomplete="off" name="u_pw" type="password" id="pw1" required="required" class="pw" placeholder="비밀번호" onkeyup="passlength()" pattern="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$">
-					</div>
-					<div class="textForm">
-						<input autocomplete="off" name="loginPwConfirm" type="password" minlength="4" required="required" id="pw2" class="pw" placeholder="비밀번호 확인" onkeyup="passConfirm()" pattern="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$">
-					</div>
-					<span id ="confirmMsg"><br></span> 
-					<span id ="confirmMsg2"></span>
-					
-					<div class="textForm">
 						<p class="mypagename" >이름</p>
 						<input autocomplete="off" name="u_name" minlength="2" type="text" class="name" required="required" placeholder="이름" pattern="^[가-힣]{2,20}|[a-zA-Z]{2,20}\s[a-zA-Z]{2,20}$" value="<sec:authentication property='principal.name' />">
 					</div>
@@ -93,7 +83,8 @@
 					</div>
 							
 					<div class="textForm">
-						<input autocomplete="off" name="u_nickname" type="text" id="nickname" minlength="1" required="required" class="nickname" placeholder="닉네임" oninput = "checknickname()" pattern="^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$">
+					<p class="mypagename" >닉네임</p>
+						<input autocomplete="off" name="u_nickname" type="text" id="nickname" minlength="1" required="required" class="nickname" placeholder="닉네임" oninput = "checknickname()" pattern="^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$"  value="<sec:authentication property='principal.nickname' />">
 					</div>
 					<!-- nickname ajax 중복체크 -->
 					<span class="nickname_ok" >사용 가능한 닉네임 입니다.</span>
