@@ -50,6 +50,11 @@ public class LoginService {
 		
 	}
 
+	public void resign(int u_no) {
+		loginDAO.resign(u_no);
+		
+	}
+
 		
 		
 	

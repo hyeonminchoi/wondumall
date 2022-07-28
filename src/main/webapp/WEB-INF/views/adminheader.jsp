@@ -20,6 +20,7 @@
 			<sec:authorize access="authenticated">
 				<div style="float:right;">
 					<li><a href="//logout.do"><i class="fa fa-user-o"></i> 로그아웃</a></li>
+					<li><a href="//mypage"><i class="fa fa-user-o"></i> 마이페이지</a></li>
 				</div>
 			</sec:authorize>
 			<sec:authorize access="not authenticated">

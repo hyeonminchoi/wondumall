@@ -143,7 +143,7 @@ $(document).ready(function(){
 		location.href="./orderHistory.do";
 	});
 	$('#deletebtn').click(function(){
-		location.href="./delete";
+		location.href="./resign.do";
 	});
 });
 </script>

@@ -55,4 +55,8 @@ public class LoginDAO {
 		return sqlSession.selectOne("login.mypage", dto);
 	}
 
+	public Object resign(int u_no) {
+		return sqlSession.update("login.resign", u_no);
+	}
+
 }
