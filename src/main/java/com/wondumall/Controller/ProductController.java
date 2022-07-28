@@ -334,7 +334,6 @@ public class ProductController {
 		
 		//물품리스트를 List에 담아서 jsp에 반환
 		List<ProductDTO> productList = productService.productList(map);
-		System.out.println(productList);
 		mv.addObject("productList", productList);
 		mv.addObject("cate_no",cate_no);
 		mv.addObject("paginationInfo", paginationInfo);
