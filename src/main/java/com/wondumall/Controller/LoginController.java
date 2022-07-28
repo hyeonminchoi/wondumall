@@ -1,18 +1,13 @@
 package com..Controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.mybatis.spring.batch.MyBatisPagingItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,10 +31,10 @@ public class LoginController {
 	}
 	
 	@PostMapping(value = "/update.do")
-	public void update(LoginDTO dto) {
-		
+	public String update(LoginDTO dto, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+		dto.setU_no(myUserDetails.getNo());
 		loginService.update(dto);
-//		return "redirect:./logout.do";
+		return "redirect:./logout.do";
 	}
 	
 	//마이페이지 구현

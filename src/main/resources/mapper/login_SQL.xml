@@ -31,7 +31,8 @@
 	</select>
 	<update id="update" parameterType="loginDTO" >
 		UPDATE user SET u_nickname=#{u_nickname}, u_roadAddress = #{u_roadAddress},
-						u_postcode=#{u_postcode}, u_detailAddress=#{u_detailAddress}, u_extraAddress=#{u_extraAddress}
+						u_postcode=#{u_postcode}, u_detailAddress=#{u_detailAddress}, u_extraAddress=#{u_extraAddress},
+						u_name=#{u_name}, u_tel = #{u_tel}
 						WHERE u_no=#{u_no}
 	 </update>
 	 
