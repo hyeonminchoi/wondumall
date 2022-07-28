@@ -36,11 +36,10 @@ public class LoginController {
 	}
 	
 	@PostMapping(value = "/update.do")
-	public String update(LoginDTO dto) {
+	public void update(LoginDTO dto) {
 		
 		loginService.update(dto);
-		
-		return "index";
+//		return "redirect:./logout.do";
 	}
 	
 	//마이페이지 구현
@@ -105,9 +104,9 @@ public class LoginController {
 		int result = loginService.join(dto);
 		
 		if(result == 1) {
-			return "./login";
+			return "redirect:./login.do";
 		}else {
-			return "./join";
+			return "redirect:./join.do";
 		}
 	}
 	

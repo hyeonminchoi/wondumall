@@ -58,8 +58,7 @@
 	<section>
 		<div id="section">
 			<div id="container">
-				<form action="./update"  id="join" class="joinForm" >
-	
+				<div  id="join" class="joinForm" >
 					<h2>마이페이지</h2>
 					<input type="button"  id="orderBtn" class="btn" value="주문내역" />
 					<div class="textForm">
@@ -108,9 +107,9 @@
 					</div>
 	
 					</div>
-					<input class="btn" type="submit" value="회원정보수정"/>
+					<input class="btn" type="button" value="회원정보수정" onclick="location.href='./update'"/>
 					<input type="button"  id="deletebtn" class="btn" value="회원탈퇴" />
-				</form>
+				</div>
 			</div>
 		</div>
 	

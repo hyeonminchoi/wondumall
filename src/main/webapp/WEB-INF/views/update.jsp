@@ -58,7 +58,8 @@
 	<section>
 		<div id="section">
 			<div id="container">
-				<form action="./update.do" method="POST" id="join" class="joinForm" onsubmit="DoJoinForm__submit(this); return false;">
+				<form action="./update.do" method="post" id="join" class="joinForm">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	
 					<h2>회원정보수정</h2>
 					<div class="textForm">
@@ -95,7 +96,7 @@
 					
 					<div class="textForm">
 					<p class="mypagename" >주소</p>
-						<input autocomplete="off" type="text" id="sample6_postcode" required="required" class="postcode"  name="u_postcode" placeholder="우편번호" type="button" onclick="sample6_execDaumPostcode()" class="postbtn"value="<sec:authentication property='principal.postcode' />">
+						<input autocomplete="off" type="text" id="sample6_postcode" required="required" class="postcode"  name="u_postcode" placeholder="우편번호" type="button" onclick="sample6_execDaumPostcode()" class="postbtn" value="<sec:authentication property='principal.postcode' />">
 						<!-- <input type="button" onclick="sample6_execDaumPostcode()" class="postbtn" value="우편번호 찾기"> -->
 					</div> 
 	
