@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com..DAO.ProductDAO;
 import com..DTO.CartDTO;
-import com..DTO.CategoryDTO;
 import com..DTO.ProductDTO;
 import com..DTO.ReviewDTO;
 
@@ -18,8 +17,8 @@ public class ProductService {
 	@Autowired
 	private ProductDAO productDAO;
 
-	public List<ProductDTO> productList(CategoryDTO dto) {
-		return productDAO.productList(dto);
+	public List<ProductDTO> productList(Map<String, Object> map) {
+		return productDAO.productList(map);
 	}
 
 	public int productAdd(ProductDTO add) {
@@ -103,6 +102,10 @@ public class ProductService {
 	}
 	public List<Map<String, Object>> ratingCount(int p_no) {
 		return productDAO.ratingCount(p_no);
+	}
+
+	public int cateCount(int cate_no) {
+		return productDAO.cateCount(cate_no);
 	}
 
 }

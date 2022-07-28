@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="product">
-	<select id="productList" parameterType="categoryDTO" resultType="productDTO">
+	<select id="productList" parameterType="map" resultType="productDTO">
 		select product.*, category.category, ROUND(AVG(review.r_rating),1) AS rating
 		from product
 		JOIN category ON product.cate_no = category.cate_no
@@ -13,6 +13,9 @@
 			AND product.cate_no=#{cate_no}
 		</if>
 		GROUP BY product.p_no
+		
+		ORDER BY product.p_date desc
+		LIMIT #{page.startPage}, #{page.recordCountPerPage}
 	</select>
 	<insert id="productAdd" parameterType="productDTO">
 		INSERT INTO product (p_name, cate_no, p_description, p_price, p_stock, p_img, u_no)
@@ -124,5 +127,12 @@
 		FROM review
 		WHERE p_no = #{p_no}
 		GROUP BY r_rating
+  	</select>
+  	<select id="cateCount" parameterType="integer" resultType="integer">
+  		SELECT count(*) as count
+  		FROM product
+  		<if test="cate_no > 1">
+  			WHERE cate_no=#{cate_no}
+  		</if>
   	</select>
 </mapper>

@@ -297,11 +297,46 @@ public class ProductController {
 		CategoryDTO dto = new CategoryDTO();
 		dto.setCate_no(cate_no);
 		
-		//물품리스트를 List에 담아서 jsp에 반환
-		List<ProductDTO> productList = productService.productList(dto);
+
 		
+		// 전자정부페이징 사용하기
+		int catePageNo = 1;
+		if (request.getParameter("catePageNo") != null) {
+			catePageNo = Integer.parseInt(request.getParameter("catePageNo"));
+		}
+
+		// recordCountPageNo 한 페이지당 게시되는 게시물 수 yes
+		int listScale = 5;
+
+		// 전자정부페이징 호출
+		PaginationInfo paginationInfo = new PaginationInfo();
+		// 값대입
+		paginationInfo.setCurrentPageNo(catePageNo);
+		paginationInfo.setRecordCountPerPage(listScale);
+		paginationInfo.setPageSize(5); // pageSize = 페이지 리스트에 게시되는 페이지 수
+		paginationInfo.setTotalRecordCount(productService.cateCount(cate_no)); // totalRecordCount 전체 게시물 건수
+		// 전자정부 계산하기
+		int startPage = paginationInfo.getFirstRecordIndex();
+		int recordCountPerPage = paginationInfo.getRecordCountPerPage();
+
+		// 서버로 보내기
+		PageDTO page = new PageDTO();
+		page.setStartPage(startPage);
+		page.setRecordCountPerPage(recordCountPerPage);
+		
+		//pageDTO도 넘겨줘야 하고 page도 넘겨줘야 해서 map 사용
+		Map<String, Object> map = new HashMap<>();
+		map.put("page", page);
+		map.put("dto",dto);
+		map.put("cate_no", cate_no);
+		
+		
+		//물품리스트를 List에 담아서 jsp에 반환
+		List<ProductDTO> productList = productService.productList(map);
+		System.out.println(productList);
 		mv.addObject("productList", productList);
 		mv.addObject("cate_no",cate_no);
+		mv.addObject("paginationInfo", paginationInfo);
 		return mv;
 	}
 	

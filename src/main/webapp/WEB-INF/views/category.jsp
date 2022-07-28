@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,6 +30,11 @@
 
  		<!-- Custom stlylesheet -->
  		<link type="text/css" rel="stylesheet" href="./css/style.css"/>
+<script type="text/javascript">
+function linkPage(catePageNo){
+	location.href = "./category.do?cate_no=${param.cate_no}&catePageNo=" + catePageNo;
+}
+</script>
 <style type="text/css">
 tr{
 max-width: 996px;
@@ -147,69 +153,61 @@ margin-bottom: 20px;
 						<img id="wonduImg" alt="" src="./img/wonduBackground.png">
 					</div>
 					<hr>
-					<div class="list_search_result">
-					<table class="type_list">
-						<colgroup>
-							<col width="110">
-							<col width="*">
-							<col width="120">
-							<col width="120">
-							<col width="120">
-						</colgroup>
-						<tbody id="searchList>">
-							<c:forEach items="${productList}" var="p">
-								<tr>
-									<td class="image">
-										<img src="./productUpload/${p.p_img}" style="width: 100px; height: 100px;" alt="이미지 준비중입니다.">
-									</td>
-									<td class="detail">
-										<div class="category">
-											[${p.category}]
-										</div>
-										<div class="title">
-											${p.p_name}
-										</div>
-										<div class="author">
-											${p.p_description}
-										</div>
-									</td>
-									<td class="info">
-										<div>
-											<div class="starRev">
-												<span class="starR1 ${p.rating>=0.5?'on':'' }">0.5</span>
-												<span class="starR2 ${p.rating>=1?'on':'' }">1</span>
-												<span class="starR1 ${p.rating>=1.5?'on':'' }">1.5</span>
-												<span class="starR2 ${p.rating>=2?'on':'' }">2</span>
-												<span class="starR1 ${p.rating>=2.5?'on':'' }">2.5</span>
-												<span class="starR2 ${p.rating>=3?'on':'' }">3</span>
-												<span class="starR1 ${p.rating>=3.5?'on':'' }">3.5</span>
-												<span class="starR2 ${p.rating>=4?'on':'' }">4</span>
-												<span class="starR1 ${p.rating>=4.5?'on':'' }">4.5</span>
-												<span class="starR2 ${p.rating>=5?'on':'' }">5</span>
+							<table class="type_list">
+							<tbody id="searchList>">
+								<c:forEach items="${productList}" var="p">
+									<tr>
+										<td class="image">
+											<img src="./productUpload/${p.p_img}" style="width: 100px; height: 100px;" alt="이미지 준비중입니다.">
+										</td>
+										<td class="detail">
+											<div class="category">
+												[${p.category}]
 											</div>
-										</div>
-										<div class="rating">
-											${p.rating }
-										</div>
-									</td>
-									<td class="price">
-										<div class="sell_price">
-											<strong>
-												<fmt:formatNumber pattern="###,###,###" value="${p.p_price }" />원
-											</strong>
-										</div>
-									</td>
-									<td class="option">
-										<div class="add-to-cart">
-											<button type="button" class="add-to-cart-btn" onclick="location.href='./productDetail.do?p_no=${p.p_no}'"><i class="fa fa-shopping-cart"></i>상품 페이지로</button>
-										</div>
-									</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					
-					</table>
-				</div>
+											<div class="title">
+												<a class="title" href="./productDetail.do?p_no=${p.p_no}">${p.p_name}</a>
+											</div>
+											<div class="author">
+												${p.p_description}
+											</div>
+										</td>
+										<td class="info">
+											<div>
+												<div class="starRev">
+													<span class="starR1 ${p.rating>=0.5?'on':'' }">0.5</span>
+													<span class="starR2 ${p.rating>=1?'on':'' }">1</span>
+													<span class="starR1 ${p.rating>=1.5?'on':'' }">1.5</span>
+													<span class="starR2 ${p.rating>=2?'on':'' }">2</span>
+													<span class="starR1 ${p.rating>=2.5?'on':'' }">2.5</span>
+													<span class="starR2 ${p.rating>=3?'on':'' }">3</span>
+													<span class="starR1 ${p.rating>=3.5?'on':'' }">3.5</span>
+													<span class="starR2 ${p.rating>=4?'on':'' }">4</span>
+													<span class="starR1 ${p.rating>=4.5?'on':'' }">4.5</span>
+													<span class="starR2 ${p.rating>=5?'on':'' }">5</span>
+												</div>
+											</div>
+											<div class="rating">
+												${p.rating }
+											</div>
+										</td>
+										<td class="price">
+											<div class="sell_price">
+												<strong>
+													<fmt:formatNumber pattern="###,###,###" value="${p.p_price }" />원
+												</strong>
+											</div>
+										</td>
+										<td class="option">
+											<div class="add-to-cart">
+											</div>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					<div style="text-align: center; margin-top: 30px;">
+						<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage"/>
+					</div>
 				</div>
 			</div>
 		</div>
