@@ -28,11 +28,12 @@
 		<div class="row">
 			<div class="col-md-3 col-xs-6">
 				<div class="footer">
-					<h3 class="footer-title">About Us</h3>
+					<h3 class="footer-title">개발자</h3>
 					<ul class="footer-links">
-						<li><a href="#"><i class="fa fa-map-marker"></i>부천우리컴퓨터학원</a></li>
-						<li><a href="#"><i class="fa fa-phone"></i>010-0000-0000</a></li>
-						<li><a href="#"><i class="fa fa-envelope-o"></i>jeho0809@naver.com</a></li>
+						<li><a href="https://github.com/hwangjeho"><i class="fa fa-github"></i>황제호</a></li>
+						<li><a href="https://github.com/cheuljin"><i class="fa fa-github"></i>황철진</a></li>
+						<li><a href="https://github.com/hyeonminchoi"><i class="fa fa-github"></i>최현민</a></li>
+						<li><a href="https://github.com/newbieccc"><i class="fa fa-github"></i>서승준</a></li>
 					</ul>
 				</div>
 			</div>
