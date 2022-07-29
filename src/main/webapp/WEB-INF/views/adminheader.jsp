@@ -16,7 +16,6 @@
 				<li><a href="./index.do"><i class="fa fa-lock"></i>관리자페이지</a></li>
 			</sec:authorize>
 			<li><a href="//notice.do"><i class="fa fa-users"></i> 커뮤니티</a></li>
-			<li><a href="#"><i class="fa fa-krw"></i> WON</a></li>
 			<sec:authorize access="authenticated">
 				<div style="float:right;">
 					<li><a href="//logout.do"><i class="fa fa-user-o"></i> 로그아웃</a></li>
