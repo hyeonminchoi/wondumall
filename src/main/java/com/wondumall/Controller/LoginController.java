@@ -48,12 +48,25 @@ public class LoginController {
 		return new ModelAndView("pwchange");
 	}
 	@PostMapping(value = "/pwchange.do")
-	public String checkpw(@RequestBody String changepw, @RequestBody String u_pw, HttpSession session) throws Exception {
-		
-		session.invalidate();
-		
-		
-		return "redirect:./login.do";
+	public void checkpw(HttpServletResponse response, @RequestParam String changepw, @RequestParam String u_pw, HttpSession session, @AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
+		response.setContentType("text/html; charset=UTF-8");
+		if(loginService.checkpw(myUserDetails.getNo(), u_pw)) { //기존 비밀번호랑 일치
+			if(loginService.checkpw(myUserDetails.getNo(), changepw)) { //기존 비밀번호랑 현재 비밀번호가 일치
+				response.getWriter().println("<script>alert('기존 비밀번호와 일치합니다.'); window.location.href = document.referrer;</script>");
+			} else { //기존 비밀번호랑 현재 비밀번호가 다를 경우
+				LoginDTO user = new LoginDTO();
+				user.setU_no(myUserDetails.getNo());
+				user.setU_pw(changepw);
+				if(loginService.changepw(user)>0) { //변경 성공
+					session.invalidate();
+					response.getWriter().println("<script>alert('비밀번호 변경에 성공했습니다.\\n다시 로그인해주세요.'); location.href='./login.do';</script>");
+				} else { //변경 실패
+					response.getWriter().println("<script>alert('비밀번호 변경에 실패했습니다.'); window.location.href = document.referrer;</script>");
+				}
+			}
+		} else {
+			response.getWriter().println("<script>alert('현재 비밀번호와 다릅니다.'); window.location.href = document.referrer;</script>");
+		}
 	}
 	
 	

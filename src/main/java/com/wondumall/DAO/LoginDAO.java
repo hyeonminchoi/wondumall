@@ -59,8 +59,12 @@ public class LoginDAO {
 		return sqlSession.update("login.resign", u_no);
 	}
 
-	public int changepw(String changepw) {
-		return sqlSession.update("login.changepw", changepw);	
+	public int changepw(LoginDTO user) {
+		return sqlSession.update("login.changepw", user);	
+	}
+
+	public String checkpw(int u_no) {
+		return sqlSession.selectOne("login.checkpw", u_no);
 	}
 
 }

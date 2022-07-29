@@ -60,6 +60,16 @@
 	 	WHERE u_no=#{u_no} 
 	 </update>
 	 
+	 <select id="checkpw" parameterType="integer" resultType="string">
+	 	SELECT u_pw
+	 	FROM user
+	 	WHERE u_no = #{u_no} 
+	 </select>
+	 
+	 <update id="changepw" parameterType="loginDTO">
+	 	UPDATE user SET u_pw = #{u_pw}
+	 	WHERE u_no = #{u_no}
+	 </update>
 </mapper>
 
 

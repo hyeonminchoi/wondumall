@@ -55,13 +55,18 @@ public class LoginService {
 		
 	}
 
-	public void changepw(String changepw) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		
-		String securepw =  encoder.encode(changepw);
-		
-		loginDAO.changepw(securepw);
-		
+	public int changepw(LoginDTO user) {
+		user.setU_pw(passwordEncoder.encode(user.getU_pw()));
+		return loginDAO.changepw(user);
+	}
+
+	public boolean checkpw(int u_no, String u_pw) {
+		String pw = loginDAO.checkpw(u_no);
+		if(passwordEncoder.matches(u_pw, pw)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 		
