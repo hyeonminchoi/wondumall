@@ -198,6 +198,11 @@ function modify(cart_no){
 			<!-- /container -->
 			</div>
 		</section>
+		${cart[1].p_no}
+		<br>
+		zz
+		<br>
+		${cart}
 		
 		<form action="./modify.do?${cart[2].u_no}" method="post" class="quantity_update_form">
 			<input type="hidden" name="cart_no" class="update_cart_no">

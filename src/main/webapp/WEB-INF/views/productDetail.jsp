@@ -33,11 +33,12 @@
  		<!-- Custom stlylesheet -->
  		<link type="text/css" rel="stylesheet" href="./css/style.css"/>
 <style type="text/css">
-.starRev{
+.starRev {
 	margin: 0 auto;
 	height: 30px;
 	display: inline-block;
 }
+
 .starR1 {
 	background:
 		url('http://miuu227.godohosting.com/images/icon/ico_review.png')
@@ -49,6 +50,7 @@
 	text-indent: -9999px;
 	cursor: pointer;
 }
+
 .starR2 {
 	background:
 		url('http://miuu227.godohosting.com/images/icon/ico_review.png')
@@ -64,14 +66,13 @@
 .starR1.on {
 	background-position: 0 0;
 }
+
 .starR2.on {
 	background-position: -15px 0;
 }
 
 .starP1 {
-	background:
-		url('./img/star.png')
-		no-repeat -52px 0;
+	background: url('./img/star.png') no-repeat -52px 0;
 	background-size: auto 100%;
 	width: 15px;
 	height: 30px;
@@ -79,10 +80,9 @@
 	text-indent: -9999px;
 	cursor: pointer;
 }
+
 .starP2 {
-	background:
-		url('./img/star.png')
-		no-repeat right 0;
+	background: url('./img/star.png') no-repeat right 0;
 	background-size: auto 100%;
 	width: 15px;
 	height: 30px;
@@ -90,9 +90,11 @@
 	text-indent: -9999px;
 	cursor: pointer;
 }
+
 .starP1.on {
 	background-position: 0 0;
 }
+
 .starP2.on {
 	background-position: -15px 0;
 }
@@ -114,15 +116,13 @@ body, h1, h2, h3, h4, th, td, input, select, textarea, button {
     color: #666;
     letter-spacing: 0;
 } */
-
-
 textarea {
 	resize: none;
 }
 /* 이모지 별점 */
-#myform fieldset{
-    display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
-    border: 0; /* 필드셋 테두리 제거 */
+#myform fieldset {
+	display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+	border: 0; /* 필드셋 테두리 제거 */
 }
 
 #myform label:hover {
@@ -133,8 +133,19 @@ textarea {
 	text-shadow: 0 0 0 #a00; /* 마우스 호버 뒤에오는 이모지들 */
 }
 
-.review-body{
+.review-body {
 	margin-left: 30px;
+}
+
+.link-icon {
+	position: relative;
+	display: inline-block;
+	width: auto;
+	font-size: 14px;
+	font-weight: 500;
+	color: #333;
+	background-repeat: no-repeat;
+	cursor: pointer;
 }
 </style>
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -296,10 +307,13 @@ textarea {
 	
 								<ul class="product-links">
 									<li>Share:</li>
-									<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+									<!-- <li><a href="javascript:shareTwitter();"><i class="fa fa-twitter"></i></a></li>
+									<li><a href="javascript:shareFacebook();"><i class="fa fa-facebook"></i></a></li>
 									<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-									<li><a href="#"><i class="fa fa-envelope"></i></a></li>
+									<li><a href="#"><i class="fa fa-envelope"></i></a></li> -->
+									<li><a id="btnTwitter" href="javascript:shareTwitter();"><img src="./img/icon-twitter.png" class="link-icon twitter"></a></li>
+									<li><a id="btnFacebook" href="javascript:shareFacebook();"><img src="./img/icon-facebook.png" class="link-icon facebook"></a></li>
+									<li><a id="btnKakao" href="javascript:shareKakao();"><img src="./img/icon-kakao.png" class="link-icon kakao"></a></li>
 								</ul>
 	
 							</div>
@@ -366,7 +380,7 @@ textarea {
 												</div>
 												<div class="form-group row">
 													<fieldset name="myform" id="myform">
-														<legend>이모지 별점</legend>
+														<legend>별점</legend>
 														<input type="radio" name="r_rating" value="1" id="rate1" required><label for="rate1">⭐</label>
 														<input type="radio" name="r_rating" value="2" id="rate2"><label for="rate2">⭐⭐</label>
 														<input type="radio" name="r_rating" value="3" id="rate3"><label for="rate3">⭐⭐⭐</label>
@@ -579,6 +593,38 @@ textarea {
 			<c:import url="./footer.jsp"></c:import>
 		</footer>
 		<!-- /FOOTER -->
+	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+	<script type="text/javascript">
+		function shareTwitter() {
+		    var sendText = "twitter"; // 전달할 텍스트
+		    var sendUrl = "twitter.com"; // 전달할 URL
+		    window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
+		}
+		function shareFacebook() {
+		    var sendUrl = "facebook.com/"; // 전달할 URL
+		    window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendUrl);
+		}
 
+		function shareKakao() {
+		 
+		  // 사용할 앱의 JavaScript 키 설정
+		  Kakao.init('');
+		 
+		  // 카카오링크 버튼 생성
+		  Kakao.Link.createDefaultButton({
+		    container: '#btnKakao', // 카카오공유버튼ID
+		    objectType: 'feed',
+		    content: {
+		      title: "WonduMall test", // 보여질 제목
+		      description: "Spring Project Test입니다.", // 보여질 설명
+		      imageUrl: "https://developers.kakao.com", // 콘텐츠 URL
+		      link: {
+		         mobileWebUrl: "http://localhost:8080//",
+		         webUrl: window.location.href
+		      }
+		    }
+		  });
+		}
+	</script>
 	</body>
 </html>
