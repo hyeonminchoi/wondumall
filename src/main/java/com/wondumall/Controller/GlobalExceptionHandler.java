@@ -9,6 +9,6 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	public String exceptionHandler(Exception exception) {
 		System.out.println(exception);
-		return "redirect:/error";
+		return "error";
 	}
 }

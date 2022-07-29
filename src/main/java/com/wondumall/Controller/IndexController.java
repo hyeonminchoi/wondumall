@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -55,7 +56,7 @@ public class IndexController {
 		return "product";
 	}
 
-	@GetMapping("/header.do")
+	@RequestMapping("/header.do")
 	public ModelAndView header(@AuthenticationPrincipal MyUserDetails myUserDetails) {
 		ModelAndView mv = new ModelAndView("header");
 		if(myUserDetails!=null)
@@ -103,10 +104,5 @@ public class IndexController {
 		}
 		List<Map<String, Object>> productList = productService.searchDetail(map);
 		return productList;
-	}
-	
-	@GetMapping("/error")
-	public String error() {
-		return "error";
 	}
 }
