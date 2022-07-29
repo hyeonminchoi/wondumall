@@ -120,14 +120,14 @@
 							</div>
 
 							<div class="p-t-13 p-b-9">
-								<span class="txt1"> <strong>비밀번호</strong> </span> <a href="#"
-									class="txt2 bo1 m-l-5"> 잊으셨나요? </a>
+								<span class="txt1"> <strong>비밀번호</strong> </span> 
 							</div>
 							<div class="wrap-input100 validate-input"
 								data-validate="Password is required">
-								<input class="input100" type="password" name="u_pw"> <span
-									class="focus-input100"></span>
+								<input class="input100" type="password" name="u_pw">
+								 <span class="focus-input100"></span>
 							</div>
+								  <a href="./findpw.do" class="txt2 bo1 m-l-5">비밀번호를 잊으셨나요? </a> 
 
 							<input type="hidden" value="" name="u_provider">
 
@@ -136,12 +136,11 @@
 							</div>
 
 							<div class="w-full text-center p-t-55">
-								<span class="txt2"> 아직 회원이 아니신가요? </span> <a href="./join.do"
-									class="txt2 bo1"> 회원가입 </a>
+								<span class="txt2"> 아직 회원이 아니신가요? </span> <a href="./join.do" class="txt2 bo1"> 회원가입 </a>
 							</div>
 						</form>
 					</div>
-				</div>
+				</div>8/
 			</div>
 			</section>
 	</div>

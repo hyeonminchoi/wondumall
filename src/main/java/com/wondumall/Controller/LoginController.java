@@ -40,13 +40,47 @@ public class LoginController {
 		dto.setU_no(myUserDetails.getNo());
 		loginService.update(dto);
 		return "redirect:./logout.do";
-	} 
+	}
+	
+	@GetMapping("/findpw.do")
+	public String findpw() {
+		return "findpw";
+	}
+	
+	//비밀번호찾기
+	@PostMapping(value = "/findpw.do")
+	public ModelAndView findpw(HttpServletResponse response, @RequestParam String u_email, @RequestParam String u_tel,  HttpSession session, @AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		LoginDTO user = new LoginDTO();
+		user.setU_email(u_email);
+		user.setU_tel(u_tel);
+		user.setU_provider("");
+		if(loginService.contain(user)>0) {
+			//변경 페이지 이동
+			mv.setViewName("resetpw");
+			mv.addObject("user", user);
+			return mv;
+		} else {
+			//존재하지 않는 경우
+			mv.setViewName("findpw");
+			return mv;
+		}
+	}
+	
+	@PostMapping("/resetpw.do")
+	public String resetpw(LoginDTO user) {
+		System.out.println(user);
+		loginService.resetpw(user);
+		return "resetpw";
+	}
+	
 	//비밀번호변경
 	//현재비밀번호 확인
 	@GetMapping(value = "/pwchange")
 	public ModelAndView pwchange() {
 		return new ModelAndView("pwchange");
 	}
+	
 	@PostMapping(value = "/pwchange.do")
 	public void checkpw(HttpServletResponse response, @RequestParam String changepw, @RequestParam String u_pw, HttpSession session, @AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
 		response.setContentType("text/html; charset=UTF-8");

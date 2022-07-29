@@ -69,6 +69,16 @@ public class LoginService {
 		}
 	}
 
+	public int contain(LoginDTO user) {
+		return loginDAO.contain(user);
+	}
+
+	public int resetpw(LoginDTO user) {
+		user.setU_pw(passwordEncoder.encode(user.getU_pw()));
+		return loginDAO.resetpw(user);
+		
+	}
+
 		
 		
 	

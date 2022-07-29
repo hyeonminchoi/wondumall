@@ -67,4 +67,12 @@ public class LoginDAO {
 		return sqlSession.selectOne("login.checkpw", u_no);
 	}
 
+	public int contain(LoginDTO user) {
+		return sqlSession.selectOne("login.contain", user);
+	}
+
+	public int resetpw(LoginDTO user) {
+		return sqlSession.update("login.resetpw", user);
+	}
+
 }

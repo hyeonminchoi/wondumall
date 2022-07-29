@@ -143,7 +143,8 @@ $(document).ready(function(){
 		location.href="./orderHistory.do";
 	});
 	$('#deletebtn').click(function(){
-		location.href="./resign.do";
+		if(confirm("정말로 탈퇴하시겠습니까?"))
+			location.href="./resign.do";
 	});
 });
 </script>

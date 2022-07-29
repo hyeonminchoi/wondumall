@@ -70,6 +70,15 @@
 	 	UPDATE user SET u_pw = #{u_pw}
 	 	WHERE u_no = #{u_no}
 	 </update>
+	 
+	 <select id="contain" parameterType="loginDTO" resultType="integer">
+	 	select count(*) from user where u_email = #{u_email} AND u_tel = #{u_tel} AND u_provider = #{u_provider}
+	 </select>
+	 
+	 <update id="resetpw" parameterType="loginDTO">
+	 	UPDATE user SET u_pw = #{u_pw}
+	 	WHERE u_email = #{u_email} AND u_provider = #{u_provider}
+	 </update>
 </mapper>
 
 
