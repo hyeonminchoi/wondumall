@@ -55,7 +55,7 @@
 			<div class="section">
 				<!-- container -->
 				<div class="container">
-					<h1>페이지를 찾을 수 없습니다</h1>
+					<h1>에러가 발생하였습니다.</h1>
 					<h3>관리자에게 문의하세요.</h3>
 					<h5>jeho0809@naver.com(황제호)</h5>
 					<button type="button" onclick="location.href='./'" class="primary-btn"><i class="fa fa-home" aria-hidden="true"></i>홈으로</button>

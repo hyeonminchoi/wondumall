@@ -104,4 +104,9 @@ public class IndexController {
 		List<Map<String, Object>> productList = productService.searchDetail(map);
 		return productList;
 	}
+	
+	@GetMapping("/error")
+	public String error() {
+		return "error";
+	}
 }
