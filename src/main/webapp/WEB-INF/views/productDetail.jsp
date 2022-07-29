@@ -595,6 +595,10 @@ textarea {
 		<!-- /FOOTER -->
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 	<script type="text/javascript">
+		$(document).ready(function(){
+			shareKakao()
+		});
+		
 		function shareTwitter() {
 		    var sendText = "twitter"; // 전달할 텍스트
 		    var sendUrl = "twitter.com"; // 전달할 URL
@@ -619,7 +623,7 @@ textarea {
 		      description: "Spring Project Test입니다.", // 보여질 설명
 		      imageUrl: "https://developers.kakao.com", // 콘텐츠 URL
 		      link: {
-		         mobileWebUrl: "http://localhost:8080//",
+		         mobileWebUrl: window.location.href,
 		         webUrl: window.location.href
 		      }
 		    }
