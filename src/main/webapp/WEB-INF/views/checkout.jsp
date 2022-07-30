@@ -168,7 +168,7 @@
 								<select name="coupon" id="coupon">
 									<option value="">전체</option>
 									<c:forEach items="${couponList }" var="cl">
-										<option value="${cl.coupon_per }">${cl.coupon_description } / ${cl.coupon_minorder }</option>
+										<option value="${cl.coupon_per }">${cl.coupon_description }</option>
 									</c:forEach>
 								</select>
 								</div>
