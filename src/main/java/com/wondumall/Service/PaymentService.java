@@ -41,9 +41,9 @@ public class PaymentService {
 		return paymentDAO.cartPay(u_no);
 	}
 
-	public List<OrderDTO> orderList(OrderDTO dto) {
+	public List<OrderDTO> orderList(int u_no) {
 		
-		return paymentDAO.orderList(dto);
+		return paymentDAO.orderList(u_no);
 	}
 
 	public void setStatus(Map<String, Object> map) {

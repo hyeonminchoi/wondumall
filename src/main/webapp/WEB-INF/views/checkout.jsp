@@ -84,27 +84,27 @@
 								<h3 class="title">청구지</h3>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" id="o_name" name="o_name" placeholder="이름">
+								<input class="input" type="text" id="o_name" name="o_name" placeholder="이름" onchange="check()">
 								<input class="input" type="hidden" id="u_no" name="u_no" value="${user.u_no }">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" id="o_email" name="o_email" placeholder="이메일">
+								<input class="input" type="text" id="o_email" name="o_email" placeholder="이메일" onchange="check()">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" id="o_postcode" name="o_postcode" placeholder="우편번호">
+								<input class="input" type="text" id="o_postcode" name="o_postcode" placeholder="우편번호" onchange="check()">
 								<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" class="primary-btn">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" id="o_roadAddress" name="o_roadAddress" placeholder="도로명주소">
+								<input class="input" type="text" id="o_roadAddress" name="o_roadAddress" placeholder="도로명주소" onchange="check()">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" id="o_extraAddress" name="o_extraAddress" placeholder="참고항목">
+								<input class="input" type="text" id="o_extraAddress" name="o_extraAddress" placeholder="참고항목" onchange="check()">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" id="o_detailAddress" name="o_detailAddress" placeholder="상세주소">
+								<input class="input" type="text" id="o_detailAddress" name="o_detailAddress" placeholder="상세주소" onchange="check()">
 							</div>
 							<div class="form-group">
-								<input class="input" type="tel" id="o_tel" name="o_tel" placeholder="전화번호">
+								<input class="input" type="tel" id="o_tel" name="o_tel" placeholder="전화번호" onchange="check()">
 							</div>
 						</div>
 						<!-- /Billing Details -->
@@ -176,7 +176,7 @@
 						</div>
 						
 						<div class="input-checkbox">
-							<input type="checkbox" id="terms" onclick="checkBox()">
+							<input type="checkbox" id="terms" onclick="check()">
 							<label for="terms">
 								<span></span>
 								결제를 하시겠습니까?
@@ -221,8 +221,9 @@ $("#coupon").change(function(){
 		 $("#total").text(Math.ceil(finalPrice));
 	 } 
 });
-function checkBox(){
-	if($('#terms').is(':checked')){
+function check(){
+	if($('#terms').is(':checked') && $('#o_name').val().length!=0 && $('#o_email').val().length!=0 && $('#o_postcode').val().length!=0 && $('#o_roadAddress').val().length!=0 
+			&& $('#o_extraAddress').val().length!=0 && $('#o_detailAddress').val().length!=0 && $('#o_tel').val().length!=0 ){
 		$('#payment').attr("disabled",false);
 	} else{
 		$('#payment').attr("disabled",true);

@@ -65,34 +65,22 @@ font-size: 20px;
 				<table class="table" style="width:90%; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;">
 					<thead>
 						<tr>
-							<th>이메일</th>
-							<th>이름</th>
-							<th>전화번호</th>
-							<th>우편번호</th>
-							<th>도로명주소</th>
-							<th>상세주소</th>
+							<th>결제번호</th>
+							<th>주문번호</th>
+							<th>결제일</th>
+							<th>가격</th>
 							<th>결제상태</th>
-							<th>결제금액</th>
 							<th>환불하기</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:set var="price" value="0"/>
-						<c:set var="merchant_uid" value=""/>
 						<c:forEach items="${orderList }" var="o">
 							<tr>
-								<c:set var="merchant_uid" value="${o.merchant_uid }"/>
-								<td>${o.o_email }</td>
-								<td>${o.o_name }</td>
-								<td>${o.o_tel }</td>
-								<td>${o.o_postcode }</td>
-								<td>${o.o_roadAddress }</td>
-								<td>${o.o_detailAddress }</td>
+								<td>${o.imp_uid }</td>
+								<td>${o.merchant_uid }</td>
+								<td>${o.o_date }</td>
+								<td>${o.o_price }</td>
 								<td>${o.o_status }</td>
-								<td>
-								<c:set var="price" value="${o.o_price}"/>
-								${o.o_price }
-								</td>
 								<td>
 									<c:if test="${o.o_status == '결제완료' }">
 										<button class="primary btn" id="refund" onclick="cancelPay('${o.merchant_uid}', ${o.o_price })">환불하기</button>

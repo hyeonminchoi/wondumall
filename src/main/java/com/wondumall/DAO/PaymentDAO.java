@@ -42,9 +42,9 @@ public class PaymentDAO {
 		return sqlSession.selectList("payment.cartPay", u_no);
 	}
 
-	public List<OrderDTO> orderList(OrderDTO dto) {
+	public List<OrderDTO> orderList(int u_no) {
 		
-		return sqlSession.selectList("payment.orderList", dto);
+		return sqlSession.selectList("payment.orderList", u_no);
 	}
 
 	public void setStatus(Map<String, Object> map) {

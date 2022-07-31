@@ -23,10 +23,12 @@
 		FROM cartview
 		WHERE p_check = 1 AND u_no = #{u_no}
 	</select>
-	<select id="orderList" parameterType="orderDTO" resultType="orderDTO">
-		SELECT *
+	<select id="orderList" parameterType="integer" resultType="orderDTO">
+		SELECT imp_uid, merchant_uid, SUM(o_price) AS o_price, o_date, o_status
 		FROM orderorder
 		WHERE u_no=#{u_no}
+		GROUP BY imp_uid
+		ORDER BY o_date ASC
 	</select>
 	
 	<update id="setStatus" parameterType="map">

@@ -198,11 +198,6 @@ function modify(cart_no){
 			<!-- /container -->
 			</div>
 		</section>
-		${cart[1].p_no}
-		<br>
-		zz
-		<br>
-		${cart}
 		
 		<form action="./modify.do?${cart[2].u_no}" method="post" class="quantity_update_form">
 			<input type="hidden" name="cart_no" class="update_cart_no">
@@ -243,7 +238,6 @@ function modify(cart_no){
 		$(".order_btn").on("click", function(){
 			let form_contents ='';
 			let orderNumber = 0;
-			alert("check!");
 			$(".cart_info").each(function(index, element){
 				
 				if($(element).find(".chkbox").is(":checked") === true){
