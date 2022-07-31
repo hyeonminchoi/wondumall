@@ -35,6 +35,8 @@ import com..DTO.OrderDTO;
 import com..DTO.UserDTO;
 import com..Service.PaymentService;
 
+import net.sf.log4jdbc.CallableStatementSpy;
+
 @Controller
 public class PaymentController {
 
@@ -45,23 +47,39 @@ public class PaymentController {
 
 	public PaymentController() {
 		// REST API 키와 REST API secret 를 아래처럼 순서대로 입력한다.
-		this.api = new IamportClient("2957455845749684",
-				"703427efb6b461bd1728a1927256f45046eae03e4c50f6cf58bad7820b729c367da56a7742419f8d");
+		this.api = new IamportClient("",
+				"");
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/verifyIamport/{imp_uid}")
-	public IamportResponse<Payment> paymentByImpUid(HttpServletRequest request, Model model, Locale locale,
-			HttpSession session, @PathVariable(value = "imp_uid") String imp_uid, OrderDTO orderInfo,
-			@AuthenticationPrincipal MyUserDetails myUserDetails) throws IamportResponseException, IOException {
+	public IamportResponse<Payment> paymentByImpUid(@PathVariable(value = "imp_uid") String imp_uid, OrderDTO orderInfo,
+			@AuthenticationPrincipal MyUserDetails myUserDetails, @RequestParam(name="coupon", required = false) Integer coupon_no) throws IamportResponseException, IOException {
+		List<CartDTO> cart = paymentService.cartPay(myUserDetails.getNo());
+		int totalPrice = cart.stream().mapToInt(e->e.getP_price() * e.getP_count()).sum();
+		if(coupon_no!=null) {
+			totalPrice = (int) Math.ceil((double)totalPrice * (1-paymentService.findByCouponNo(coupon_no.intValue()).getCoupon_per()));
+		}
 		orderInfo.setU_no(myUserDetails.getNo());
 		IamportResponse<Payment> payment = api.paymentByImpUid(imp_uid);
-		if (api.paymentByImpUid(imp_uid).getResponse().getStatus().equals("paid")) {
-			orderInfo.setO_status("결제완료");
-			paymentService.checkout(orderInfo);
+		Map<String, Object> map = new HashMap<>();
+		map.put("orderInfo", orderInfo);
+		map.put("cart", cart);
+		if (payment.getResponse().getStatus().equals("paid")) {
+			if(payment.getResponse().getAmount().intValue() == totalPrice) {
+				orderInfo.setO_status("결제완료");
+				paymentService.checkout(map);
+				paymentService.cartRemove(myUserDetails.getNo());
+			} else {
+				orderInfo.setO_status("위조된 결제시도");
+				CancelData calcelData = new CancelData(imp_uid, true);
+				calcelData.setReason("위조된 결제시도");
+				paymentService.checkout(map);
+				return api.cancelPaymentByImpUid(calcelData);
+			}
 		} else {
 			orderInfo.setO_status("결제실패");
-			paymentService.checkout(orderInfo);
+			paymentService.checkout(map);
 		}
 		return payment;
 	}

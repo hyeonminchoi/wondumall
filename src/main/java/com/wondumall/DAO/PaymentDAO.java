@@ -19,9 +19,9 @@ public class PaymentDAO {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public void checkout(OrderDTO orderInfo) {
+	public void checkout(Map<String, Object> map) {
 		
-		sqlSession.insert("payment.checkout", orderInfo);
+		sqlSession.insert("payment.checkout", map);
 	}
 
 	public void user(UserDTO user) {
@@ -49,5 +49,13 @@ public class PaymentDAO {
 
 	public void setStatus(Map<String, Object> map) {
 		sqlSession.update("payment.setStatus", map);
+	}
+
+	public CouponDTO findByCouponNo(int coupon_no) {
+		return sqlSession.selectOne("payment.findByCouponNo", coupon_no);
+	}
+
+	public void cartRemove(int u_no) {
+		sqlSession.delete("payment.cartRemove", u_no);
 	}
 }

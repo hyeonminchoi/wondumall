@@ -166,9 +166,9 @@
 								<div>쿠폰</div>
 								<div>
 								<select name="coupon" id="coupon">
-									<option value="">전체</option>
+									<option value="">쿠폰을 선택하세요</option>
 									<c:forEach items="${couponList }" var="cl">
-										<option value="${cl.coupon_per }">${cl.coupon_description }</option>
+										<option value="${cl.coupon_per }" data-no="${cl.coupon_no }">${cl.coupon_description }</option>
 									</c:forEach>
 								</select>
 								</div>
@@ -242,7 +242,7 @@ function iamport(){
 	var u_no = $("#u_no").val();
 	
 	//가맹점 식별코드
-	IMP.init('imp56561187');
+	IMP.init('imp20046286');
 	IMP.request_pay({
 	    pg : 'kg',
 	    pay_method : 'card',
@@ -255,7 +255,6 @@ function iamport(){
 	    buyer_addr : roadAddress,
 	    buyer_postcode : postcode
 	}, function(rsp) {
-		console.log(rsp);
 		// 결제검증
 		$.ajax({
         	type : "POST",
@@ -271,19 +270,19 @@ function iamport(){
         		"o_request" : request,
         		"merchant_uid" : rsp.merchant_uid,
         		"u_no" : u_no,
-        		"o_pname" : p_name,
-        		"o_price" : price
+        		"coupon" : $('#coupon').find("option:selected").data("no")
         	}
         }).done(function(data) {
-        	
-        	console.log(data);
-        	
+			console.log(data);        	
         	// 위의 rsp.paid_amount 와 data.response.amount를 비교한후 로직 실행 (import 서버검증)
-        	if(rsp.paid_amount == data.response.amount){
-	        	alert("결제 및 결제검증완료");
+        	if(data.response.status == 'paid'){
+	        	alert("결제완료");
 	        	location.href = "./paysuccess.do";
-        	} else {
-        		alert("결제 실패");
+        	} else if(data.response.status == 'failed'){
+        		alert(data.response.failReason);
+        		location.href = "./payfailure.do";
+        	} else if(data.response.status == 'cancelled'){
+        		alert(data.response.cancelReason);
         		location.href = "./payfailure.do";
         	}
         });

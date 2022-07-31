@@ -3,9 +3,11 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="payment">
-	<insert id="checkout" parameterType="orderDTO">
-		INSERT INTO orderorder(o_name, o_email, o_postcode, o_roadAddress, o_extraAddress, o_detailAddress, o_tel, o_request, imp_uid, merchant_uid, u_no, o_pname, o_price, o_status)
-		VALUES (#{o_name}, #{o_email}, #{o_postcode}, #{o_roadAddress}, #{o_extraAddress}, #{o_detailAddress}, #{o_tel}, #{o_request}, #{imp_uid}, #{merchant_uid}, #{u_no}, #{o_pname}, #{o_price}, #{o_status})
+	<insert id="checkout" parameterType="map">
+		<foreach collection="cart" item="item">
+			INSERT INTO orderorder(o_name, o_email, o_postcode, o_roadAddress, o_extraAddress, o_detailAddress, o_tel, o_request, imp_uid, merchant_uid, u_no, o_pname, o_price, o_status)
+			VALUES (#{orderInfo.o_name}, #{orderInfo.o_email}, #{orderInfo.o_postcode}, #{orderInfo.o_roadAddress}, #{orderInfo.o_extraAddress}, #{orderInfo.o_detailAddress}, #{orderInfo.o_tel}, #{orderInfo.o_request}, #{orderInfo.imp_uid}, #{orderInfo.merchant_uid}, #{orderInfo.u_no}, #{item.p_name}, #{item.p_price}, #{orderInfo.o_status});
+		</foreach>
 	</insert>
 	<select id="product" parameterType="productDTO" resultType="productDTO">
 		SELECT * FROM product WHERE p_no=#{p_no}
@@ -31,4 +33,15 @@
 		UPDATE orderorder SET o_status = "환불완료"
 		WHERE u_no = #{u_no} AND merchant_uid = #{merchant_uid}
 	</update>
+	
+	<select id="findByCouponNo" parameterType="integer" resultType="couponDTO">
+		SELECT *
+		FROM coupon
+		WHERE coupon_no = #{coupon_no}
+	</select>
+	
+	<delete id="cartRemove" parameterType="integer">
+		DELETE FROM cart
+		WHERE u_no = #{u_no} AND p_check = 1
+	</delete>
 </mapper>

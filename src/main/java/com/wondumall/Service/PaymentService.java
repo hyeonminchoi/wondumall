@@ -18,9 +18,9 @@ public class PaymentService {
 	
 	@Autowired PaymentDAO paymentDAO;
 
-	public void checkout(OrderDTO orderInfo) {
+	public void checkout(Map<String, Object> map) {
 		
-		paymentDAO.checkout(orderInfo);
+		paymentDAO.checkout(map);
 	}
 
 	public void user(UserDTO user) {
@@ -48,6 +48,14 @@ public class PaymentService {
 
 	public void setStatus(Map<String, Object> map) {
 		paymentDAO.setStatus(map);
+	}
+
+	public CouponDTO findByCouponNo(int coupon_no) {
+		return paymentDAO.findByCouponNo(coupon_no);
+	}
+
+	public void cartRemove(int u_no) {
+		paymentDAO.cartRemove(u_no);
 	}
 
 }
