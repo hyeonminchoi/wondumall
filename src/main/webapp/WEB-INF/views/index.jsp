@@ -85,8 +85,15 @@
 			<c:import url="./nav.jsp"></c:import>
 		</nav>
 		<!-- /NAVIGATION -->
-		
-		
+		<!-- HEADER -->
+		<main>
+			<div id="cont">
+				<div id="float_layer">
+					<c:import url="./recentlySee.jsp"></c:import>
+				</div>
+			</div>
+		</main>
+		<!-- /HEADER -->
 		<!-- SECTION -->
 		<div class="section">
 			<!-- container -->

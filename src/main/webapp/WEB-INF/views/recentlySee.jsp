@@ -150,6 +150,9 @@ table {
 	width: 1000px;
     margin: auto;
 }
+img {
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
