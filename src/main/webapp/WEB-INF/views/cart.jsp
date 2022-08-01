@@ -77,6 +77,9 @@ function modify(cart_no){
 		alert("수량 변경을 취소하였습니다.");
 	}
 }
+function priceZero() {
+	alert("선택된 상품이 없습니다.\n상품 선택 후 결제해주세요.");
+}
 </script>
     </head>
 	<body>
@@ -189,7 +192,14 @@ function modify(cart_no){
 						<div id="goorder" class="">
 							<div class="clear"></div>
 							<div class="buttongroup center-align cmd">
-								<button type="button" class="order_btn abutton" onclick="location.href='./checkout.do'">결제하기</button>
+								<c:choose>
+									<c:when test="${cart[0].p_price gt 0}">
+										<button type="button" class="order_btn abutton" onclick="location.href='./checkout.do'">결제하기</button>
+									</c:when>
+									<c:otherwise>
+										<button type="button" class="order_btn abutton" onclick="priceZero()">결제하기</button>
+									</c:otherwise>
+								</c:choose>
 							</div>
 						</div>
 					</div>
@@ -219,6 +229,8 @@ function modify(cart_no){
 		<script src="./js/main.js"></script>
 		
 		<script type="text/javascript">
+		
+		
 		
 		$(document).ready(function(){
 			setTotalInfo();
