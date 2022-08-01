@@ -127,6 +127,7 @@
 								<input class="input100" type="password" name="u_pw">
 								 <span class="focus-input100"></span>
 							</div>
+								  <a href="./findid.do" class="txt2 bo1 m-l-5">아이디를 잊으셨나요? </a> 
 								  <a href="./findpw.do" class="txt2 bo1 m-l-5">비밀번호를 잊으셨나요? </a> 
 
 							<input type="hidden" value="" name="u_provider">

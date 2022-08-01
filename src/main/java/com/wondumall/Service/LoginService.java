@@ -79,6 +79,20 @@ public class LoginService {
 		
 	}
 
+	public String findid(String u_name, String u_tel) {
+		String result = "";
+		
+		try {
+			 result= loginDAO.findid(u_name, u_tel);
+			 
+			} catch(Exception e) {
+				
+				e.printStackTrace();
+			}
+		
+		return null;
+	}
+
 		
 		
 	
