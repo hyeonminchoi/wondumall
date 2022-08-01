@@ -5,8 +5,8 @@
 <mapper namespace="payment">
 	<insert id="checkout" parameterType="map">
 		<foreach collection="cart" item="item">
-			INSERT INTO orderorder(o_name, o_email, o_postcode, o_roadAddress, o_extraAddress, o_detailAddress, o_tel, o_request, imp_uid, merchant_uid, u_no, o_pname, o_price, o_status)
-			VALUES (#{orderInfo.o_name}, #{orderInfo.o_email}, #{orderInfo.o_postcode}, #{orderInfo.o_roadAddress}, #{orderInfo.o_extraAddress}, #{orderInfo.o_detailAddress}, #{orderInfo.o_tel}, #{orderInfo.o_request}, #{orderInfo.imp_uid}, #{orderInfo.merchant_uid}, #{orderInfo.u_no}, #{item.p_name}, #{item.p_price}, #{orderInfo.o_status});
+			INSERT INTO orderorder(o_name, o_email, o_postcode, o_roadAddress, o_extraAddress, o_detailAddress, o_tel, o_request, imp_uid, merchant_uid, u_no, o_pname, o_price, o_status, o_amount)
+			VALUES (#{orderInfo.o_name}, #{orderInfo.o_email}, #{orderInfo.o_postcode}, #{orderInfo.o_roadAddress}, #{orderInfo.o_extraAddress}, #{orderInfo.o_detailAddress}, #{orderInfo.o_tel}, #{orderInfo.o_request}, #{orderInfo.imp_uid}, #{orderInfo.merchant_uid}, #{orderInfo.u_no}, #{item.p_name}, #{item.p_price}, #{orderInfo.o_status}, #{orderInfo.o_amount});
 		</foreach>
 	</insert>
 	<select id="product" parameterType="productDTO" resultType="productDTO">
@@ -24,7 +24,7 @@
 		WHERE p_check = 1 AND u_no = #{u_no}
 	</select>
 	<select id="orderList" parameterType="integer" resultType="orderDTO">
-		SELECT imp_uid, merchant_uid, SUM(o_price) AS o_price, o_date, o_status
+		SELECT DISTINCT imp_uid, merchant_uid, SUM(o_price * o_amount) AS o_price, o_date, o_status
 		FROM orderorder
 		WHERE u_no=#{u_no}
 		GROUP BY imp_uid

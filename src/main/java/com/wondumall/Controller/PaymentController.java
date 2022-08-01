@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -32,6 +33,7 @@ import com..Config.MyUserDetails;
 import com..DTO.CartDTO;
 import com..DTO.CouponDTO;
 import com..DTO.OrderDTO;
+import com..DTO.PageDTO;
 import com..DTO.UserDTO;
 import com..Service.PaymentService;
 
@@ -140,8 +142,10 @@ public class PaymentController {
 	public ModelAndView orderHistory(@AuthenticationPrincipal MyUserDetails myUserDetails,
 			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("orderHistory");
+
 		List<OrderDTO> orderList = paymentService.orderList(myUserDetails.getNo());
 		mv.addObject("orderList", orderList);
+
 		return mv;
 	}
 }
