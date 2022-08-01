@@ -46,7 +46,7 @@
 
 		<!-- NAVIGATION -->
 		<nav id="navigation">
-			<c:import url="./nav.jsp"></c:import>
+			<c:import url="/nav.do"></c:import>
 		</nav>
 		<!-- /NAVIGATION -->
 
@@ -140,7 +140,10 @@
 												<td>
 												${ct.p_name }
 												</td>
-												<td>${ct.p_count }</td>
+												<td>
+												<c:set var="p_count" value="${ct.p_count }"/>
+												${ct.p_count }
+												</td>
 												<td>
 													<c:set var="cnttotal" value="${ct.p_price * ct.p_count }"/>
 													<c:out value="${cnttotal }"/>
@@ -193,7 +196,7 @@
 		<!-- /SECTION -->
 		<!-- FOOTER -->
 		<footer id="footer">
-			<c:import url="./footer.jsp"></c:import>
+			<c:import url="/footer.do"></c:import>
 		</footer>
 		<!-- /FOOTER -->
 
@@ -241,6 +244,7 @@ function iamport(){
 	var tel = $("#o_tel").val();
 	var request = $("#o_request").val();
 	var u_no = $("#u_no").val();
+	var p_count = ${p_count};
 	
 	//가맹점 식별코드
 	IMP.init('imp20046286');
@@ -271,7 +275,8 @@ function iamport(){
         		"o_request" : request,
         		"merchant_uid" : rsp.merchant_uid,
         		"u_no" : u_no,
-        		"coupon" : $('#coupon').find("option:selected").data("no")
+        		"coupon" : $('#coupon').find("option:selected").data("no"),
+        		"o_amount" : p_count
         	}
         }).done(function(data) {
 			console.log(data);        	
