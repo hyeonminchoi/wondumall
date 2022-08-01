@@ -16,7 +16,7 @@
 <!-- Google font -->
 <link
 	href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700"
-	rel="stylesheet">
+	rel="stylesheet"/>
 
 <!-- Bootstrap -->
 <link type="text/css" rel="stylesheet" href="./css/bootstrap.min.css" />
@@ -29,7 +29,7 @@
 <link type="text/css" rel="stylesheet" href="./css/nouislider.min.css" />
 
 <!-- Font Awesome Icon -->
-<link rel="stylesheet" href="./css/font-awesome.min.css">
+<link rel="stylesheet" href="./css/font-awesome.min.css"/>
 
 <!-- Custom stlylesheet -->
 <link type="text/css" rel="stylesheet" href="./css/style.css" />
@@ -46,6 +46,7 @@
 <style type="text/css">
 th, td{
 font-size: 20px;
+text-align: center;
 }
 </style>
 </head>
@@ -62,39 +63,38 @@ font-size: 20px;
 	<section>
 		<div id="section">
 			<div id="container">
-				<table class="table" style="width:90%; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;">
-					<thead>
+				<h1 style="width:50%; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;">주문상세보기</h1>
+				<table class="table" style="width:40%; margin: 0 auto; margin-top: 20px; margin-bottom: 20px; border:1px solid #000; text-align: center;">
 						<tr>
-							<th>결제번호</th>
 							<th>주문번호</th>
-							<th>결제일</th>
-							<th>가격</th>
-							<th>결제상태</th>
-							<th>환불하기</th>
-							<th>상세보기</th>
+							<td>${order[0].merchant_uid }</td>
 						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${orderList }" var="o">
+						<tr>
+							<th>주문날짜</th>
+							<td>
+							<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order[0].o_date }"/>
+							</td>
+						</tr>
+						<tr>
+							<th>결제상태</th>
+							<td>${order[0].o_status }</td>
+						</tr>
+						
+						<c:forEach items="${order }" var="od">
 							<tr>
-								<td>${o.imp_uid }</td>
-								<td>${o.merchant_uid }</td>
-								<td>
-								<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${o.o_date }"/>
-								</td>
-								<td>${o.o_price}</td>
-								<td>${o.o_status }</td>
-								<td>
-									<c:if test="${o.o_status == '결제완료' }">
-										<button class="primary btn" id="refund" onclick="cancelPay('${o.merchant_uid}', ${o.o_price })">환불하기</button>
-									</c:if>
-								</td>
-								<td>
-								<button onclick="orderDetail('${o.merchant_uid }')">상세보기</button>
-								</td>
+								<th>제품이름</th>
+								<td>${od.o_pname }</td>
+							</tr>
+							<tr>
+								<th>제품갯수</th>
+								<td>${od.o_amount }</td>
+							</tr>
+							<tr>
+								<th>제품가격</th>
+								<td>${od.o_price }</td>
 							</tr>
 						</c:forEach>
-					</tbody>
+					
 				</table>
 			</div>
 		</div>
@@ -114,29 +114,5 @@ font-size: 20px;
 	<script src="./js/main.js"></script>
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-<script type="text/javascript">
-function cancelPay(merchant_uid, o_price){
-	$.ajax({
-		url: "./refund", // 예: http://www.myservice.com/payments/cancel
-		type: "POST",
-	    data: {
-	    	"merchant_uid": merchant_uid, // 예: ORD20180131-0000011
-	        "amount": o_price, // 환불금액
-	        "reason": "사용자 환불 요청" // 환불사유
-	    	},
-	    success: function(result){
-	    	alert("환불 성공");
-	    	location.href = location.href; history.go(0);
-	    },
-	    error: function(error){
-	    	alert("환불 실패");
-	    	location.href = location.href; history.go(0);
-	    }
-	})
-}
-function orderDetail(merchant_uid){
-	location.href = "./orderDetail.do?merchant_uid=" + merchant_uid;
-}
-</script>
 </body>
 </html>

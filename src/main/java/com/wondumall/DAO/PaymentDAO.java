@@ -58,4 +58,9 @@ public class PaymentDAO {
 	public void cartRemove(int u_no) {
 		sqlSession.delete("payment.cartRemove", u_no);
 	}
+
+	public List<OrderDTO> orderDetail(String merchant_uid) {
+		
+		return sqlSession.selectList("payment.orderDetail",merchant_uid);
+	}
 }

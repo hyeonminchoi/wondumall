@@ -139,13 +139,22 @@ public class PaymentController {
 	}
 
 	@GetMapping(value = "/orderHistory.do")
-	public ModelAndView orderHistory(@AuthenticationPrincipal MyUserDetails myUserDetails,
-			HttpServletRequest request) {
+	public ModelAndView orderHistory(@AuthenticationPrincipal MyUserDetails myUserDetails) {
 		ModelAndView mv = new ModelAndView("orderHistory");
 
 		List<OrderDTO> orderList = paymentService.orderList(myUserDetails.getNo());
 		mv.addObject("orderList", orderList);
 
+		return mv;
+	}
+	
+	@GetMapping(value = "/orderDetail.do")
+	public ModelAndView orderDetail(@RequestParam("merchant_uid") String merchant_uid) {
+		ModelAndView mv = new ModelAndView("orderDetail");
+		
+		List<OrderDTO> order = paymentService.orderDetail(merchant_uid);
+		mv.addObject("order", order);
+		
 		return mv;
 	}
 }

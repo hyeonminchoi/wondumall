@@ -58,4 +58,9 @@ public class PaymentService {
 		paymentDAO.cartRemove(u_no);
 	}
 
+	public List<OrderDTO> orderDetail(String merchant_uid) {
+		
+		return paymentDAO.orderDetail(merchant_uid);
+	}
+
 }

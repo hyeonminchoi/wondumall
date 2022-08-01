@@ -46,4 +46,10 @@
 		DELETE FROM cart
 		WHERE u_no = #{u_no} AND p_check = 1
 	</delete>
+	<select id="orderDetail" parameterType="String" resultType="orderDTO">
+		SELECT merchant_uid, o_date, o_amount, o_status, o_pname, o_price
+		FROM orderorder
+		WHERE merchant_uid=#{merchant_uid}
+		ORDER BY o_pname DESC
+	</select>
 </mapper>
