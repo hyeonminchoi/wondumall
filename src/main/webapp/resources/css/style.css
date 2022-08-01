@@ -498,15 +498,15 @@ textarea.input {
 .header-ctn>div {
   display: inline-block;
 }
-
+/* 
 .header-ctn>div+div {
   margin-left: 15px;
-}
+} */
 
 .header-ctn>div>a {
-  display: block;
+  display: inline-block;
   position: relative;
-  width: 90px;
+  width: 70px;
   text-align: center;
   color: #FFF;
 }

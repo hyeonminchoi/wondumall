@@ -30,7 +30,7 @@
 		<!-- NAV -->
 		<ul class="main-nav nav navbar-nav" id="nav">
 		</ul>
-		<ul class="main-nav nav navbar-nav" id="nav" style="float: right;">
+		<ul class="main-nav nav navbar-nav" style="float: right;">
 			<li>
 				<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_BUSINESS')">
 					<a href="./productAdd.do">제품 등록</a>

@@ -41,7 +41,6 @@
 	<script src="./js/slick.min.js"></script>
 	<script src="./js/nouislider.min.js"></script>
 	<script src="./js/jquery.zoom.min.js"></script>
-	<script src="./js/main.js"></script>
 <script type="text/javascript">
 $(function(){
 	function getCookie(name) { //--가져올 쿠키의 이름을 파라미터 값으로 받고

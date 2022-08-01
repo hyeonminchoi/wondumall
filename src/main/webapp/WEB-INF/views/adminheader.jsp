@@ -11,23 +11,21 @@
 					jeho0809@naver.com</a></li>
 			<li><a href="#"><i class="fa fa-map-marker"></i> 부천우리컴퓨터학원</a></li>
 		</ul>
-		<ul class="header-links pull-right">
-			<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<li><a href="./index.do"><i class="fa fa-lock"></i>관리자페이지</a></li>
-			</sec:authorize>
-			<li><a href="//notice.do"><i class="fa fa-users"></i> 커뮤니티</a></li>
-			<sec:authorize access="authenticated">
-				<div style="float:right;">
-					<li><a href="//logout.do"><i class="fa fa-user-o"></i> 로그아웃</a></li>
-					<li><a href="//mypage"><i class="fa fa-user-o"></i> 마이페이지</a></li>
-				</div>
-			</sec:authorize>
-			<sec:authorize access="not authenticated">
-				<div style="float:right;">
-					<li><a href="//login.do"><i class="fa fa-user-o"></i> 로그인</a></li>
-				</div>
-			</sec:authorize>
-		</ul>
+		<div style="float:right;">
+			<ul class="header-links pull-right">
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<li><a href="./index.do"><i class="fa fa-lock"></i>관리자페이지</a></li>
+				</sec:authorize>
+				<li><a href="//notice.do"><i class="fa fa-users"></i> 커뮤니티</a></li>
+				<sec:authorize access="authenticated">
+						<li><a href="//logout.do"><i class="fa fa-user-o"></i> 로그아웃</a></li>
+						<li><a href="//mypage"><i class="fa fa-user-o"></i> 마이페이지</a></li>
+				</sec:authorize>
+				<sec:authorize access="not authenticated">
+						<li><a href="//login.do"><i class="fa fa-user-o"></i> 로그인</a></li>
+				</sec:authorize>
+			</ul>
+		</div>
 	</div>
 </div>
 <!-- /TOP HEADER -->
