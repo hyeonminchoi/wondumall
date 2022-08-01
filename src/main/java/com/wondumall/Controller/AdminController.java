@@ -1,15 +1,16 @@
 package com..Controller;
 
-import java.rmi.registry.Registry;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,6 @@ import com..DTO.PageDTO;
 import com..DTO.ProductDTO;
 import com..DTO.QuestionDTO;
 import com..DTO.ReviewDTO;
-import com..DTO.UserDTO;
 import com..Service.AdminService;
 
 @Controller
@@ -442,21 +442,23 @@ public class AdminController {
 		return "redirect:/admin/review.do";
 	}
 	
+	@GetMapping("/admin/loginuser.do")
+	public ModelAndView loginUser() {
+		ModelAndView mv = new ModelAndView("adminloginuser");
+		mv.addObject("userList", sessionRegistry.getAllPrincipals());
+		return mv;
+	}
 	@GetMapping(value = "/admin/logout/{u_no}")
-	public String logout(@PathVariable("u_no") int u_no) {
-		
+	public void logout(@PathVariable("u_no") int u_no, HttpServletResponse response) throws Exception{
+		response.setContentType("text/html; charset=UTF-8");
 		for(final Object principal : sessionRegistry.getAllPrincipals()) {
 			for(SessionInformation information : sessionRegistry.getAllSessions(principal, true)) {
-				System.out.println("information : " + information.getPrincipal());
 				MyUserDetails user = (MyUserDetails) information.getPrincipal();
-				System.out.println("user : " + user);
-				if(user.getNickname().equals("123")) {
+				if(user.getNo() == u_no) {
 					information.expireNow();
+					response.getWriter().println("<script>alert('" + user.getNickname() +  " 회원을 강제 로그아웃 시켰습니다.'); window.location.href = '//admin/loginuser.do';</script>");
 				}
 			}
-			
 		}
-		
-		return "redirect:/admin/user.do";
 	}
 }

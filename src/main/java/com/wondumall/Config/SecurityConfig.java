@@ -60,7 +60,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		//여기 expiredUrl 중복 로그인 시 jsp 만들어서 변경 필요
-		http.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry()).expiredUrl("/");
+		http.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry()).expiredUrl("/login.do?expired");
 		
 		http.authorizeRequests()
 			.antMatchers("/admin*/**").access("hasRole('ROLE_ADMIN')")

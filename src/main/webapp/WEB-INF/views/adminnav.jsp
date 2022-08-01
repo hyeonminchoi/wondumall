@@ -8,6 +8,7 @@
 		<ul class="main-nav nav navbar-nav">
 			<li><a href="./index.do">메인</a></li>
 			<li><a href="./user.do">유저관리</a></li>
+			<li><a href="./loginuser.do">로그인유저관리</a></li>
 			<li><a href="./product.do">제품관리</a></li>
 			<li><a href="./board.do">자유게시판관리</a></li>
 			<li><a href="./notice.do">공지사항관리</a></li>
