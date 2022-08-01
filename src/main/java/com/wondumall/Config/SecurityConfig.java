@@ -75,6 +75,14 @@ public class SecurityConfig {
 			.logoutSuccessUrl("/")
 			.invalidateHttpSession(true);
 		http.oauth2Login().defaultSuccessUrl("/snsInfoCheck.do").userInfoEndpoint().userService(customOAuth2UserService);
+		
+		http.exceptionHandling()
+        .accessDeniedHandler((request, response, authException) -> {
+    		response.sendRedirect("//accessDeniedException");
+        })
+        .authenticationEntryPoint((request, response, authException) -> {
+    		response.sendRedirect("//unauthorizedException");
+        });
 		return http.build();
 	}
 	

@@ -8,12 +8,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import com..Config.MyUserDetails;
@@ -104,5 +106,15 @@ public class IndexController {
 		}
 		List<Map<String, Object>> productList = productService.searchDetail(map);
 		return productList;
+	}
+	
+	@RequestMapping("/accessDeniedException")
+	public void accessDeniedException() throws Exception{
+		throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+	}
+
+	@RequestMapping("/unauthorizedException")
+	public void unauthorizedException() throws Exception{
+		throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 	}
 }
