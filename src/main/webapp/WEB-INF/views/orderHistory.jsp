@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://www.springframework.org/security/tags"
-	prefix="sec"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,7 +57,7 @@ font-size: 20px;
 
 	<!-- NAVIGATION -->
 	<nav id="navigation">
-		<c:import url="./nav.jsp"></c:import>
+		<c:import url="/nav.do"></c:import>
 	</nav>
 	<section>
 		<div id="section">
@@ -75,11 +75,13 @@ font-size: 20px;
 					</thead>
 					<tbody>
 						<c:forEach items="${orderList }" var="o">
-							<tr>
+							<tr onclick="orderDetail()">
 								<td>${o.imp_uid }</td>
 								<td>${o.merchant_uid }</td>
-								<td>${o.o_date }</td>
-								<td>${o.o_price }</td>
+								<td>
+								<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${o.o_date }"/>
+								</td>
+								<td>${o.o_price}</td>
 								<td>${o.o_status }</td>
 								<td>
 									<c:if test="${o.o_status == '결제완료' }">
@@ -95,7 +97,7 @@ font-size: 20px;
 	</section>
 	<!-- FOOTER -->
 	<footer id="footer">
-		<c:import url="./footer.jsp"></c:import>
+		<c:import url="/footer.do"></c:import>
 	</footer>
 	<!-- /FOOTER -->
 

@@ -56,6 +56,7 @@ td, th{
 							<th scope="col">탈퇴</th>
 							<th scope="col">완전탈퇴</th>
 							<th scope="col">승인</th>
+							<th scope="col">로그아웃</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -118,6 +119,9 @@ td, th{
 										<button onclick="admiss(${u.u_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #A9F5BC;">승인하기</button>
 									</c:otherwise>
 								</c:choose>
+								</td>
+								<td>
+									<button onclick="logout(${u.u_no})" class="primary-btn order-submit" style="padding: 7px 12px; background-color: #A9F5BC;">로그아웃</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -187,6 +191,11 @@ function adcan(u_no){
 		location.href = "//admin/adcan/" + u_no;
 	} else {
 		
+	}
+}
+function logout(u_no){
+	if (confirm("해당 사용자 계정을 로그아웃 시키겠습니까?")){
+		location.href = "//admin/logout/" + u_no;
 	}
 }
 </script>
