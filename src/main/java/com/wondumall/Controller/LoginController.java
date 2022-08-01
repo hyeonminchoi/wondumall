@@ -1,6 +1,8 @@
 package com..Controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -40,19 +42,34 @@ public class LoginController {
 		return "redirect:./logout.do";
 	}
 	
+	//아이디찾기
+	@GetMapping("/findid.do")
+	public String findid() {
+		return "findid";
+	}
+	
+	@PostMapping(value = "/findid.do")
+	public void findid(HttpServletResponse response, @RequestParam String u_name, @RequestParam String u_tel, HttpSession session) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("u_name", u_name);
+		map.put("u_tel", u_tel);
+		String result = loginService.findid(map);
+		response.setContentType("text/html; charset=UTF-8");
+		if (result != null) {
+			response.getWriter().println(
+					"<script> alert('" + result +  "'); location.href='./login.do'</script>");
+		} else {
+			response.getWriter().println(
+					"<script> alert('아이디가 없습니다.'); location.href='./'</script>");
+		}
+	}
+	
+	//비밀번호찾기	
 	@GetMapping("/findpw.do")
 	public String findpw() {
 		return "findpw";
 	}
-	//아이디찾기
-	@PostMapping(value = "/findid.do")
-	public ModelAndView findid(HttpServletResponse response, @RequestParam String u_name, @RequestParam String u_tel, HttpSession session) throws Exception {
-		LoginDTO user = new LoginDTO();
-		String result = loginService.findid(u_name, u_tel);
-		
-	}
 	
-	//비밀번호찾기
 	@PostMapping(value = "/findpw.do")
 	public ModelAndView findpw(HttpServletResponse response, @RequestParam String u_email, @RequestParam String u_tel,  HttpSession session, @AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
 		ModelAndView mv = new ModelAndView();

@@ -79,6 +79,12 @@
 	 	UPDATE user SET u_pw = #{u_pw}
 	 	WHERE u_email = #{u_email} AND u_provider = #{u_provider}
 	 </update>
+	 
+	 <select id="findid" parameterType="map" resultType="string">
+	 	SELECT u_email
+	 	FROM user
+	 	WHERE u_name = #{u_name} AND u_tel = #{u_tel} AND u_provider = ''
+	 </select>
 </mapper>
 
 

@@ -55,10 +55,13 @@
 	<nav id="navigation">
 		<c:import url="/nav.do"></c:import>
 	</nav>
+	
+	
+	
 	<section>
 		<div id="section">
 			<div id="container">
-				<form action="findpw.do" method="POST" id="join" class="joinForm">
+				<form action="findid.do" method="POST" id="join" class="joinForm">
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<h2>개인정보 확인</h2>
 				
@@ -73,7 +76,9 @@
 				</form>
 			</div>
 		</div>
+		
 	</section>
+	
 	<!-- FOOTER -->
 	<footer id="footer">
 		<c:import url="/footer.do"></c:import>

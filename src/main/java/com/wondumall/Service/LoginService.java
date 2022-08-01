@@ -1,6 +1,7 @@
 package com..Service;
 
-import org.apache.ibatis.annotations.Mapper;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -79,18 +80,9 @@ public class LoginService {
 		
 	}
 
-	public String findid(String u_name, String u_tel) {
-		String result = "";
-		
-		try {
-			 result= loginDAO.findid(u_name, u_tel);
-			 
-			} catch(Exception e) {
-				
-				e.printStackTrace();
-			}
-		
-		return null;
+
+	public String findid(Map<String, Object> map) {
+		return loginDAO.findid(map);
 	}
 
 		
