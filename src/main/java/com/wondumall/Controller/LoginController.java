@@ -6,11 +6,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,8 +17,6 @@ import com..Config.MyUserDetails;
 import com..DTO.LoginDTO;
 import com..Service.LoginService;
 import com..Util.Util;
-
-import retrofit2.http.GET;
 
 @Controller
 public class LoginController {
@@ -36,7 +32,8 @@ public class LoginController {
 	}
 	
 	@PostMapping(value = "/update.do")
-	public String update(LoginDTO dto, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+	public String update(LoginDTO dto, @AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception	{
+		Util.userInfoRegex("update", dto);
 		dto.setU_no(myUserDetails.getNo());
 		loginService.update(dto);
 		return "redirect:./logout.do";
@@ -124,7 +121,6 @@ public class LoginController {
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@GetMapping (value = "/resign.do")
 	public String resign (@AuthenticationPrincipal MyUserDetails myUserDetails) {
-		System.out.println(myUserDetails.getNo());
 		loginService.resign(myUserDetails.getNo());
 		
 		return "redirect:./logout.do";

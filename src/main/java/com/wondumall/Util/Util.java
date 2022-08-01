@@ -48,5 +48,15 @@ public class Util {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 		if(!user.getU_nickname().matches("^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$"))
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+		if(user.getU_tel().equals("") || user.getU_tel()==null)
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+		if(user.getU_postcode().equals("") || user.getU_postcode()==null)
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+		if(user.getU_roadAddress().equals("") || user.getU_roadAddress()==null)
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+		if(user.getU_extraAddress().equals("") || user.getU_extraAddress()==null)
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+		if(user.getU_detailAddress().equals("") || user.getU_detailAddress()==null)
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 	}
 }
