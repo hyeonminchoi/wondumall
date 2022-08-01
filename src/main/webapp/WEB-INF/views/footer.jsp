@@ -1,24 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<script>
-	$(function(){
-		$.ajax({
-			type : "GET",
-			url : "//categoryList.do",
-			dataType: "JSON",
-			success : function(res){
-				var temp = '';
-				
-				$.each(res, function(index,data){
-					temp += '<li><a href="./category.do?cate_no=' + data.cate_no + '">' + data.category + '</a></li>'
-				});
-				$('#category').html(temp);
-            },
-            error : function(XMLHttpRequest, textStatus, errorThrown){
-                alert("통신 실패.")
-            }
-		})
-	});
-</script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- top footer -->
 <div class="section">
 	<!-- container -->
@@ -41,7 +22,9 @@
 				<div class="footer">
 					<h3 class="footer-title">카테고리</h3>
 					<ul class="footer-links" id="category">
-						
+						<c:forEach var="c" items="${categoryList }">
+							<li><a href="./category.do?cate_no=${c.cate_no }">${c.category }</a></li>
+						</c:forEach>
 					</ul>
 				</div>
 			</div>

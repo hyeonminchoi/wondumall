@@ -130,7 +130,7 @@ td, th{
 	</section>
 	
 	<footer id="footer">
-		<c:import url="./footer.jsp"></c:import>
+		<c:import url="/footer.do"></c:import>
 	</footer>
 		<!-- jQuery Plugins -->
 	<script src="//js/jquery.min.js"></script>  

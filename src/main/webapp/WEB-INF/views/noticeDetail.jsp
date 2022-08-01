@@ -355,7 +355,7 @@ function noticeCommentEdit(nc_no, nc_comment){
 
 	<!-- FOOTER -->
 	<footer id="footer">
-		<c:import url="./footer.jsp"></c:import>
+		<c:import url="/footer.do"></c:import>
 	</footer>
 	<!-- /FOOTER -->
 
