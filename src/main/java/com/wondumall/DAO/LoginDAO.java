@@ -75,4 +75,8 @@ public class LoginDAO {
 		return sqlSession.update("login.resetpw", user);
 	}
 
+	public String findid(Map<String, Object> map) {
+		return sqlSession.selectOne("login.findid", map);
+	}
+
 }

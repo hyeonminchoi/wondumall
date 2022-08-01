@@ -65,7 +65,21 @@ public class IndexController {
 			mv.addObject("qty", productService.cartCount(myUserDetails.getNo()));
 		return mv;
 	}
+	
+	@RequestMapping("/nav.do")
+	public ModelAndView nav() {
+		ModelAndView mv = new ModelAndView("nav");
+		mv.addObject("categoryList", categoryService.getCategoryList());
+		return mv;
+	}
 
+	@RequestMapping("/footer.do")
+	public ModelAndView footer() {
+		ModelAndView mv = new ModelAndView("footer");
+		mv.addObject("categoryList", categoryService.getCategoryList());
+		return mv;
+	}
+	
 	@GetMapping("/search.do")
 	public ModelAndView search(@RequestParam("search")String search) {
 		ModelAndView mv = new ModelAndView("store");

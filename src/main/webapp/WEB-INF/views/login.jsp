@@ -92,7 +92,7 @@
 
 		<!-- NAVIGATION -->
 		<nav id="navigation">
-			<c:import url="./nav.jsp"></c:import>
+			<c:import url="/nav.do"></c:import>
 		</nav>
 		<section>
 			<div class="limiter">
@@ -127,6 +127,7 @@
 								<input class="input100" type="password" name="u_pw">
 								 <span class="focus-input100"></span>
 							</div>
+								  <a href="./findid.do" class="txt2 bo1 m-l-5">아이디를 잊으셨나요? </a> 
 								  <a href="./findpw.do" class="txt2 bo1 m-l-5">비밀번호를 잊으셨나요? </a> 
 
 							<input type="hidden" value="" name="u_provider">
@@ -169,7 +170,7 @@
 
 	<!-- FOOTER -->
 	<footer id="footer">
-		<c:import url="./footer.jsp"></c:import>
+		<c:import url="/footer.do"></c:import>
 	</footer>
 	<!-- /FOOTER -->
 

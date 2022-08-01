@@ -1,6 +1,7 @@
 package com..Service;
 
-import org.apache.ibatis.annotations.Mapper;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -77,6 +78,11 @@ public class LoginService {
 		user.setU_pw(passwordEncoder.encode(user.getU_pw()));
 		return loginDAO.resetpw(user);
 		
+	}
+
+
+	public String findid(Map<String, Object> map) {
+		return loginDAO.findid(map);
 	}
 
 		

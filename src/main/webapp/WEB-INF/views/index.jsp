@@ -82,7 +82,7 @@
 
 		<!-- NAVIGATION -->
 		<nav id="navigation">
-			<c:import url="./nav.jsp"></c:import>
+			<c:import url="/nav.do"></c:import>
 		</nav>
 		<!-- /NAVIGATION -->
 		<!-- HEADER -->
@@ -229,7 +229,7 @@
 
 		<!-- FOOTER -->
 		<footer id="footer">
-			<c:import url="./footer.jsp"></c:import>
+			<c:import url="/footer.do"></c:import>
 		</footer>
 		<!-- /FOOTER -->
 
