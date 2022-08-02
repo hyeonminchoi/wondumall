@@ -131,7 +131,7 @@ textarea {
 								});
 						</script>
 					</div>
-					<input type="submit" id="addBtn" name="addBtn" class="btn" value="등록하기" onclick="productAdd()"/>
+					<input type="submit" id="addBtn" name="addBtn" class="btn" value="등록신청하기" onclick="productAdd()"/>
 				</form>
 			</div>
 		</div>

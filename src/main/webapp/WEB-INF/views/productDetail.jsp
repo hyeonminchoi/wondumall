@@ -270,7 +270,7 @@ textarea {
 									<a class="review-link" href="#reviewHref">${reviewCount} Review(s) | Add your review</a>
 								</div>
 								<div>
-									<h3 class="product-price">${productDetail.p_price}원 <del class="product-old-price">${productDetail.p_price}원</del></h3>
+									<h3 class="product-price"><fmt:formatNumber pattern="###,###,###" value="${productDetail.p_price}" />원</h3>
 									<span class="product-available">남은 수량</span> <div class="product-old-price" style="display: inline;">${productDetail.p_stock}개</div>
 								</div>
 								${productDetail.p_description}
