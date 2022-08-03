@@ -1,4 +1,4 @@
-package com..Controller;
+package com.wondumall.Controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;

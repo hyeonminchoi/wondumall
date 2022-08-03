@@ -1,4 +1,4 @@
-package com..Controller;
+package com.wondumall.Controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com..Config.MyUserDetails;
-import com..DTO.BoardDTO;
-import com..DTO.LoginDTO;
-import com..DTO.NoticeDTO;
-import com..DTO.PageDTO;
-import com..DTO.ProductDTO;
-import com..DTO.QuestionDTO;
-import com..DTO.ReviewDTO;
-import com..Service.AdminService;
+import com.wondumall.Config.MyUserDetails;
+import com.wondumall.DTO.BoardDTO;
+import com.wondumall.DTO.LoginDTO;
+import com.wondumall.DTO.NoticeDTO;
+import com.wondumall.DTO.PageDTO;
+import com.wondumall.DTO.ProductDTO;
+import com.wondumall.DTO.QuestionDTO;
+import com.wondumall.DTO.ReviewDTO;
+import com.wondumall.Service.AdminService;
 
 @Controller
 public class AdminController {
@@ -456,7 +456,7 @@ public class AdminController {
 				MyUserDetails user = (MyUserDetails) information.getPrincipal();
 				if(user.getNo() == u_no) {
 					information.expireNow();
-					response.getWriter().println("<script>alert('" + user.getNickname() +  " 회원을 강제 로그아웃 시켰습니다.'); window.location.href = '//admin/loginuser.do';</script>");
+					response.getWriter().println("<script>alert('" + user.getNickname() +  " 회원을 강제 로그아웃 시켰습니다.'); window.location.href = '/wondumall/admin/loginuser.do';</script>");
 				}
 			}
 		}

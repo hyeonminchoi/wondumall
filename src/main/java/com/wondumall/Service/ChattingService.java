@@ -1,4 +1,4 @@
-package com..Service;
+package com.wondumall.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -6,9 +6,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com..DAO.ChattingDAO;
-import com..DTO.ChatDTO;
-import com..DTO.LoginDTO;
+import com.wondumall.DAO.ChattingDAO;
+import com.wondumall.DTO.ChatDTO;
+import com.wondumall.DTO.LoginDTO;
 
 @Service
 public class ChattingService {

@@ -1,12 +1,12 @@
-package com..Service;
+package com.wondumall.Service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com..DAO.AnswerDAO;
-import com..DTO.AnswerDTO;
+import com.wondumall.DAO.AnswerDAO;
+import com.wondumall.DTO.AnswerDTO;
 
 @Service
 public class AnswerService {

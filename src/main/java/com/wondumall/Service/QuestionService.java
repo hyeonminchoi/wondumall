@@ -1,4 +1,4 @@
-package com..Service;
+package com.wondumall.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -6,8 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com..DAO.QuestionDAO;
-import com..DTO.QuestionDTO;
+import com.wondumall.DAO.QuestionDAO;
+import com.wondumall.DTO.QuestionDTO;
 
 @Service
 public class QuestionService {

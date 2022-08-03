@@ -1,4 +1,4 @@
-package com..Controller;
+package com.wondumall.Controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
-import com..Config.MyUserDetails;
-import com..DTO.CategoryDTO;
-import com..DTO.ProductDTO;
-import com..Service.CategoryService;
-import com..Service.ProductService;
+import com.wondumall.Config.MyUserDetails;
+import com.wondumall.DTO.CategoryDTO;
+import com.wondumall.DTO.ProductDTO;
+import com.wondumall.Service.CategoryService;
+import com.wondumall.Service.ProductService;
 
 @Controller
 public class IndexController {

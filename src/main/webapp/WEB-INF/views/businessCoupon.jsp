@@ -8,24 +8,24 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title></title>
+<title>wondumall</title>
  		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
  		<!-- Bootstrap -->
- 		<link type="text/css" rel="stylesheet" href="//css/bootstrap.min.css"/>
+ 		<link type="text/css" rel="stylesheet" href="/wondumall/css/bootstrap.min.css"/>
 
  		<!-- Slick -->
- 		<link type="text/css" rel="stylesheet" href="//css/slick.css"/>
- 		<link type="text/css" rel="stylesheet" href="//css/slick-theme.css"/>
+ 		<link type="text/css" rel="stylesheet" href="/wondumall/css/slick.css"/>
+ 		<link type="text/css" rel="stylesheet" href="/wondumall/css/slick-theme.css"/>
 
  		<!-- nouislider -->
- 		<link type="text/css" rel="stylesheet" href="//css/nouislider.min.css"/>
+ 		<link type="text/css" rel="stylesheet" href="/wondumall/css/nouislider.min.css"/>
 
  		<!-- Font Awesome Icon -->
- 		<link rel="stylesheet" href="//css/font-awesome.min.css">
+ 		<link rel="stylesheet" href="/wondumall/css/font-awesome.min.css">
 
  		<!-- Custom stlylesheet -->
- 		<link type="text/css" rel="stylesheet" href="//css/style.css"/>
+ 		<link type="text/css" rel="stylesheet" href="/wondumall/css/style.css"/>
 </head>
 <body>
 	<header>
@@ -94,7 +94,7 @@
 				<div id="pagination" style="text-align: center; margin-bottom: 20px;">
 					<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
 				</div>
-				<form action="//business/coupon.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center; margin-bottom: 20px;">
+				<form action="/wondumall/business/coupon.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center; margin-bottom: 20px;">
 					<select name="searchColumn">
 						<option value="coupon_description" ${searchColumn eq 'coupon_description'?'selected':'' }>쿠폰설명</option>
 						<option value="coupon_minorder" ${searchColumn eq 'coupon_minorder'?'selected':''}>최소주문금액</option>
@@ -137,12 +137,12 @@
 		<c:import url="/footer.do"></c:import>
 	</footer>
 		<!-- jQuery Plugins -->
-	<script src="//js/jquery.min.js"></script>  
-	<script src="//js/bootstrap.min.js"></script>
-	<script src="//js/slick.min.js"></script>
-	<script src="//js/nouislider.min.js"></script>
-	<script src="//js/jquery.zoom.min.js"></script>
-	<script src="//js/main.js"></script>
+	<script src="/wondumall/js/jquery.min.js"></script>  
+	<script src="/wondumall/js/bootstrap.min.js"></script>
+	<script src="/wondumall/js/slick.min.js"></script>
+	<script src="/wondumall/js/nouislider.min.js"></script>
+	<script src="/wondumall/js/jquery.zoom.min.js"></script>
+	<script src="/wondumall/js/main.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
@@ -155,21 +155,21 @@ function hideWriteDialog(){
 	couponWriteDialog.close();
 }
 function linkPage(pageNo) {
-	location.href = "//business/coupon.do?pageNo=" + pageNo;
+	location.href = "/wondumall/business/coupon.do?pageNo=" + pageNo;
 }
 function coupondel(coupon_no){
 	if (confirm("삭제를 하시겠습니까?")){
-		location.href = "//business/coupondel/" + coupon_no;
+		location.href = "/wondumall/business/coupondel/" + coupon_no;
 	}
 }
 function couponrepair(coupon_no){
 	if (confirm("복구를 하시겠습니까?")){
-		location.href = "//business/couponrepair/" + coupon_no;
+		location.href = "/wondumall/business/couponrepair/" + coupon_no;
 	}
 }
 function couponcdel(coupon_no){
 	if (confirm("삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?")){
-		location.href = "//business/couponcdel/" + coupon_no;
+		location.href = "/wondumall/business/couponcdel/" + coupon_no;
 	}
 }
 </script>

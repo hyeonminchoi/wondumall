@@ -1,4 +1,4 @@
-package com..Controller;
+package com.wondumall.Controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com..Config.MyUserDetails;
-import com..DTO.ChatDTO;
-import com..DTO.LoginDTO;
-import com..Service.ChattingService;
+import com.wondumall.Config.MyUserDetails;
+import com.wondumall.DTO.ChatDTO;
+import com.wondumall.DTO.LoginDTO;
+import com.wondumall.Service.ChattingService;
 
 @Controller
 public class ChattingController {

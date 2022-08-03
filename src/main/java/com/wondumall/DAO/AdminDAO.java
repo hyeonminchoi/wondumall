@@ -1,4 +1,4 @@
-package com..DAO;
+package com.wondumall.DAO;
 
 import java.util.List;
 import java.util.Map;
@@ -7,12 +7,12 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com..DTO.BoardDTO;
-import com..DTO.LoginDTO;
-import com..DTO.NoticeDTO;
-import com..DTO.ProductDTO;
-import com..DTO.QuestionDTO;
-import com..DTO.ReviewDTO;
+import com.wondumall.DTO.BoardDTO;
+import com.wondumall.DTO.LoginDTO;
+import com.wondumall.DTO.NoticeDTO;
+import com.wondumall.DTO.ProductDTO;
+import com.wondumall.DTO.QuestionDTO;
+import com.wondumall.DTO.ReviewDTO;
 
 @Component
 public class AdminDAO {

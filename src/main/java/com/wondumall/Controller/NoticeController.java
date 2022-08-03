@@ -1,4 +1,4 @@
-package com..Controller;
+package com.wondumall.Controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,13 +23,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
-import com..Config.MyUserDetails;
-import com..DTO.NoticeCommentDTO;
-import com..DTO.NoticeDTO;
-import com..Service.NoticeCommentService;
-import com..Service.NoticeService;
-import com..Util.FileSave;
-import com..Util.Util;
+import com.wondumall.Config.MyUserDetails;
+import com.wondumall.DTO.NoticeCommentDTO;
+import com.wondumall.DTO.NoticeDTO;
+import com.wondumall.Service.NoticeCommentService;
+import com.wondumall.Service.NoticeService;
+import com.wondumall.Util.FileSave;
+import com.wondumall.Util.Util;
 
 @Controller
 public class NoticeController {

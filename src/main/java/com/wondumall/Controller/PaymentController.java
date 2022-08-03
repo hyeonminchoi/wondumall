@@ -1,4 +1,4 @@
-package com..Controller;
+package com.wondumall.Controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -29,13 +29,13 @@ import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
-import com..Config.MyUserDetails;
-import com..DTO.CartDTO;
-import com..DTO.CouponDTO;
-import com..DTO.OrderDTO;
-import com..DTO.PageDTO;
-import com..DTO.UserDTO;
-import com..Service.PaymentService;
+import com.wondumall.Config.MyUserDetails;
+import com.wondumall.DTO.CartDTO;
+import com.wondumall.DTO.CouponDTO;
+import com.wondumall.DTO.OrderDTO;
+import com.wondumall.DTO.PageDTO;
+import com.wondumall.DTO.UserDTO;
+import com.wondumall.Service.PaymentService;
 
 import net.sf.log4jdbc.CallableStatementSpy;
 

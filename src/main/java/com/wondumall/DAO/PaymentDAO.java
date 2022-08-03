@@ -1,4 +1,4 @@
-package com..DAO;
+package com.wondumall.DAO;
 
 import java.util.List;
 import java.util.Map;
@@ -7,11 +7,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com..DTO.CouponDTO;
-import com..DTO.CartDTO;
-import com..DTO.OrderDTO;
-import com..DTO.ProductDTO;
-import com..DTO.UserDTO;
+import com.wondumall.DTO.CouponDTO;
+import com.wondumall.DTO.CartDTO;
+import com.wondumall.DTO.OrderDTO;
+import com.wondumall.DTO.ProductDTO;
+import com.wondumall.DTO.UserDTO;
 
 @Repository
 public class PaymentDAO {

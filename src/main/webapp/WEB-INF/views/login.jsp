@@ -12,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-<title>-로그인</title>
+<title>wondumall-로그인</title>
 
 <!-- Google font -->
 <link
@@ -130,7 +130,7 @@
 								  <a href="./findid.do" class="txt2 bo1 m-l-5">아이디를 잊으셨나요? </a> 
 								  <a href="./findpw.do" class="txt2 bo1 m-l-5">비밀번호를 잊으셨나요? </a> 
 
-							<input type="hidden" value="" name="u_provider">
+							<input type="hidden" value="wondumall" name="u_provider">
 
 							<div class="container-login100-form-btn m-t-17">
 								<button type="submit" class="login100-form-btn">로그인</button>

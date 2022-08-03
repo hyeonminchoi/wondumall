@@ -1,4 +1,4 @@
-package com..Controller;
+package com.wondumall.Controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com..DTO.CouponDTO;
-import com..DTO.PageDTO;
-import com..Service.BusinessService;
+import com.wondumall.DTO.CouponDTO;
+import com.wondumall.DTO.PageDTO;
+import com.wondumall.Service.BusinessService;
 
 @Controller
 public class BusinessController {

@@ -1,4 +1,4 @@
-package com..Controller;
+package com.wondumall.Controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,13 +23,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
-import com..Config.MyUserDetails;
-import com..DTO.BoardCommentDTO;
-import com..DTO.BoardDTO;
-import com..Service.BoardCommentService;
-import com..Service.BoardService;
-import com..Util.FileSave;
-import com..Util.Util;
+import com.wondumall.Config.MyUserDetails;
+import com.wondumall.DTO.BoardCommentDTO;
+import com.wondumall.DTO.BoardDTO;
+import com.wondumall.Service.BoardCommentService;
+import com.wondumall.Service.BoardService;
+import com.wondumall.Util.FileSave;
+import com.wondumall.Util.Util;
 
 @Controller
 public class BoardController {

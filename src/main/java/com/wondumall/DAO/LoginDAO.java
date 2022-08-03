@@ -1,4 +1,4 @@
-package com..DAO;
+package com.wondumall.DAO;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.ModelAndView;
 
-import com..DTO.LoginDTO;
+import com.wondumall.DTO.LoginDTO;
 
 @Repository
 public class LoginDAO {

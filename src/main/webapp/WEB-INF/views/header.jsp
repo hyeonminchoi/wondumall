@@ -43,7 +43,7 @@
 			<!-- LOGO -->
 			<div class="col-md-3">
 				<div class="header-logo">
-					<a href="./" class="logo"> <img src="./img/Logo.png" alt="">
+					<a href="./" class="logo"> <img src="./img/wondumallLogo.png" alt="">
 					</a>
 				</div>
 			</div>

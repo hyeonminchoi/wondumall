@@ -1,4 +1,4 @@
-package com..DAO;
+package com.wondumall.DAO;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com..DTO.FaqCategoryDTO;
-import com..DTO.FaqDTO;
+import com.wondumall.DTO.FaqCategoryDTO;
+import com.wondumall.DTO.FaqDTO;
 
 @Repository
 public class FaqDAO {

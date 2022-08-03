@@ -1,4 +1,4 @@
-package com..DTO;
+package com.wondumall.DTO;
 
 import java.util.Map;
 

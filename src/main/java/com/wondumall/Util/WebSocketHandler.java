@@ -1,4 +1,4 @@
-package com..Util;
+package com.wondumall.Util;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,8 +12,8 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
-import com..Config.MyUserDetails;
-import com..Service.ChattingService;
+import com.wondumall.Config.MyUserDetails;
+import com.wondumall.Service.ChattingService;
 
 public class WebSocketHandler extends TextWebSocketHandler{
 	

@@ -1,4 +1,4 @@
-package com..Controller;
+package com.wondumall.Controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,13 +21,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
-import com..Config.MyUserDetails;
-import com..DTO.AnswerDTO;
-import com..DTO.QuestionDTO;
-import com..Service.AnswerService;
-import com..Service.QuestionService;
-import com..Util.FileSave;
-import com..Util.Util;
+import com.wondumall.Config.MyUserDetails;
+import com.wondumall.DTO.AnswerDTO;
+import com.wondumall.DTO.QuestionDTO;
+import com.wondumall.Service.AnswerService;
+import com.wondumall.Service.QuestionService;
+import com.wondumall.Util.FileSave;
+import com.wondumall.Util.Util;
 
 @Controller
 public class QuestionController {

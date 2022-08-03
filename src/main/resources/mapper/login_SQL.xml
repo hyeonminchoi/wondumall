@@ -24,10 +24,10 @@
 		SELECT * FROM user WHERE u_email = #{u_email} AND u_confirm = 1 AND u_resign = 0 AND u_provider = #{u_provider}
 	</select>
 	<select id="emailCheck" parameterType="string" resultType="integer">
-		SELECT COUNT(*) FROM user WHERE u_email=#{u_email} AND u_provider=""
+		SELECT COUNT(*) FROM user WHERE u_email=#{u_email} AND u_provider="wondumall"
 	</select>
 	<select id="nicknameCheck" parameterType="string" resultType="integer">
-		SELECT COUNT(*) FROM user WHERE u_nickname=#{u_nickname} AND u_provider=""
+		SELECT COUNT(*) FROM user WHERE u_nickname=#{u_nickname} AND u_provider="wondumall"
 	</select>
 	<update id="update" parameterType="loginDTO" >
 		UPDATE user SET u_nickname=#{u_nickname}, u_roadAddress = #{u_roadAddress},
@@ -83,7 +83,7 @@
 	 <select id="findid" parameterType="map" resultType="string">
 	 	SELECT u_email
 	 	FROM user
-	 	WHERE u_name = #{u_name} AND u_tel = #{u_tel} AND u_provider = ''
+	 	WHERE u_name = #{u_name} AND u_tel = #{u_tel} AND u_provider = 'wondumall'
 	 </select>
 </mapper>
 

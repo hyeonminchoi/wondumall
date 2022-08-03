@@ -1,4 +1,4 @@
-package com..Service;
+package com.wondumall.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -6,8 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com..DAO.BusinessDAO;
-import com..DTO.CouponDTO;
+import com.wondumall.DAO.BusinessDAO;
+import com.wondumall.DTO.CouponDTO;
 
 @Service
 public class BusinessService {

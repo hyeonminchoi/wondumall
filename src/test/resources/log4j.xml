@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com..web">
+	<logger name="com.wondumall.web">
 		<level value="info" />
 	</logger>
 	

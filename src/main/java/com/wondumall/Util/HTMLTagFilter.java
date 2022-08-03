@@ -1,4 +1,4 @@
-package com..Util;
+package com.wondumall.Util;
 
 import java.io.IOException;
 
@@ -37,10 +37,10 @@ public class HTMLTagFilter implements Filter {
 
 	private boolean checkUrl(HttpServletRequest req) {
 		String uri = req.getRequestURI().toString().trim();
-		if (uri.startsWith("//noticeWrite.do") || uri.startsWith("//noticeEdit.do")
-				|| uri.startsWith("//boardWrite.do") || uri.startsWith("//boardEdit.do")
-				|| uri.startsWith("//questionWrite.do") || uri.startsWith("//questionEdit.do")
-				|| uri.startsWith("//faqWrite.do") || uri.startsWith("//faqEdit.do")) {
+		if (uri.startsWith("/wondumall/noticeWrite.do") || uri.startsWith("/wondumall/noticeEdit.do")
+				|| uri.startsWith("/wondumall/boardWrite.do") || uri.startsWith("/wondumall/boardEdit.do")
+				|| uri.startsWith("/wondumall/questionWrite.do") || uri.startsWith("/wondumall/questionEdit.do")
+				|| uri.startsWith("/wondumall/faqWrite.do") || uri.startsWith("/wondumall/faqEdit.do")) {
 			return true;
 		} else {
 			return false;

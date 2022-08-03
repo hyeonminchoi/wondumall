@@ -1,4 +1,4 @@
-package com..Controller;
+package com.wondumall.Controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -29,16 +29,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com..Config.MyUserDetails;
-import com..DTO.CartDTO;
-import com..DTO.CategoryDTO;
-import com..DTO.PageDTO;
-import com..DTO.ProductDTO;
-import com..DTO.ReviewDTO;
-import com..Service.CategoryService;
-import com..Service.ProductService;
-import com..Util.FileSave;
-import com..Util.Util;
+import com.wondumall.Config.MyUserDetails;
+import com.wondumall.DTO.CartDTO;
+import com.wondumall.DTO.CategoryDTO;
+import com.wondumall.DTO.PageDTO;
+import com.wondumall.DTO.ProductDTO;
+import com.wondumall.DTO.ReviewDTO;
+import com.wondumall.Service.CategoryService;
+import com.wondumall.Service.ProductService;
+import com.wondumall.Util.FileSave;
+import com.wondumall.Util.Util;
 
 @Controller
 public class ProductController {

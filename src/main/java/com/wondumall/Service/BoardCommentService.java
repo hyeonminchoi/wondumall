@@ -1,12 +1,12 @@
-package com..Service;
+package com.wondumall.Service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com..DAO.BoardCommentDAO;
-import com..DTO.BoardCommentDTO;
+import com.wondumall.DAO.BoardCommentDAO;
+import com.wondumall.DTO.BoardCommentDTO;
 
 @Service
 public class BoardCommentService {

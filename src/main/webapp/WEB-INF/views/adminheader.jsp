@@ -16,13 +16,13 @@
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 					<li><a href="./index.do"><i class="fa fa-lock"></i>관리자페이지</a></li>
 				</sec:authorize>
-				<li><a href="//notice.do"><i class="fa fa-users"></i> 커뮤니티</a></li>
+				<li><a href="/wondumall/notice.do"><i class="fa fa-users"></i> 커뮤니티</a></li>
 				<sec:authorize access="authenticated">
-						<li><a href="//logout.do"><i class="fa fa-user-o"></i> 로그아웃</a></li>
-						<li><a href="//mypage"><i class="fa fa-user-o"></i> 마이페이지</a></li>
+						<li><a href="/wondumall/logout.do"><i class="fa fa-user-o"></i> 로그아웃</a></li>
+						<li><a href="/wondumall/mypage"><i class="fa fa-user-o"></i> 마이페이지</a></li>
 				</sec:authorize>
 				<sec:authorize access="not authenticated">
-						<li><a href="//login.do"><i class="fa fa-user-o"></i> 로그인</a></li>
+						<li><a href="/wondumall/login.do"><i class="fa fa-user-o"></i> 로그인</a></li>
 				</sec:authorize>
 			</ul>
 		</div>
@@ -39,7 +39,7 @@
 			<!-- LOGO -->
 			<div class="col-md-3">
 				<div class="header-logo">
-					<a href="//" class="logo"> <img src="//img/Logo.png" alt="">
+					<a href="/wondumall/" class="logo"> <img src="/wondumall/img/wondumallLogo.png" alt="">
 					</a>
 				</div>
 			</div>

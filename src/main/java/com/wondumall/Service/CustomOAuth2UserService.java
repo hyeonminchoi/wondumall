@@ -1,4 +1,4 @@
-package com..Service;
+package com.wondumall.Service;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,10 +9,10 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import com..Config.MyUserDetails;
-import com..DAO.LoginDAO;
-import com..DTO.LoginDTO;
-import com..DTO.OAuthAttributes;
+import com.wondumall.Config.MyUserDetails;
+import com.wondumall.DAO.LoginDAO;
+import com.wondumall.DTO.LoginDTO;
+import com.wondumall.DTO.OAuthAttributes;
 
 import lombok.RequiredArgsConstructor;
 

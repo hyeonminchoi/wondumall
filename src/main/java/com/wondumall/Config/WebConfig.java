@@ -1,5 +1,5 @@
 //web.xml
-package com..Config;
+package com.wondumall.Config;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterRegistration.Dynamic;
@@ -10,7 +10,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.multipart.support.MultipartFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import com..Util.HTMLTagFilter;
+import com.wondumall.Util.HTMLTagFilter;
 
 public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
 

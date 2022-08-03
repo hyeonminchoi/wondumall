@@ -1,4 +1,4 @@
-package com..Controller;
+package com.wondumall.Controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com..Config.MyUserDetails;
-import com..DTO.LoginDTO;
-import com..Service.LoginService;
-import com..Util.Util;
+import com.wondumall.Config.MyUserDetails;
+import com.wondumall.DTO.LoginDTO;
+import com.wondumall.Service.LoginService;
+import com.wondumall.Util.Util;
 
 @Controller
 public class LoginController {
@@ -76,7 +76,7 @@ public class LoginController {
 		LoginDTO user = new LoginDTO();
 		user.setU_email(u_email);
 		user.setU_tel(u_tel);
-		user.setU_provider("");
+		user.setU_provider("wondumall");
 		if(loginService.contain(user)>0) {
 			//변경 페이지 이동
 			mv.setViewName("resetpw");

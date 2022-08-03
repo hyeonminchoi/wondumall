@@ -1,4 +1,4 @@
-package com..Config;
+package com.wondumall.Config;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,7 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import com..DTO.LoginDTO;
+import com.wondumall.DTO.LoginDTO;
 
 import lombok.Data;
 

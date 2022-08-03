@@ -1,4 +1,4 @@
-package com..Controller;
+package com.wondumall.Controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
-import com..Config.MyUserDetails;
-import com..DTO.FaqCategoryDTO;
-import com..DTO.FaqDTO;
-import com..Service.FaqService;
-import com..Util.FileSave;
-import com..Util.Util;
+import com.wondumall.Config.MyUserDetails;
+import com.wondumall.DTO.FaqCategoryDTO;
+import com.wondumall.DTO.FaqDTO;
+import com.wondumall.Service.FaqService;
+import com.wondumall.Util.FileSave;
+import com.wondumall.Util.Util;
 
 @Controller
 public class FaqController {

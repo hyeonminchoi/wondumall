@@ -1,4 +1,4 @@
-package com..Config;
+package com.wondumall.Config;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

@@ -1,4 +1,4 @@
-package com..Service;
+package com.wondumall.Service;
 
 import java.util.Map;
 
@@ -7,8 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import com..DAO.LoginDAO;
-import com..DTO.LoginDTO;
+import com.wondumall.DAO.LoginDAO;
+import com.wondumall.DTO.LoginDTO;
 
 @Service
 public class LoginService {

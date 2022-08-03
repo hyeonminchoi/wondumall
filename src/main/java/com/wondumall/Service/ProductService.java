@@ -1,4 +1,4 @@
-package com..Service;
+package com.wondumall.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -6,10 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com..DAO.ProductDAO;
-import com..DTO.CartDTO;
-import com..DTO.ProductDTO;
-import com..DTO.ReviewDTO;
+import com.wondumall.DAO.ProductDAO;
+import com.wondumall.DTO.CartDTO;
+import com.wondumall.DTO.ProductDTO;
+import com.wondumall.DTO.ReviewDTO;
 
 @Service
 public class ProductService {

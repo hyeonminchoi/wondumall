@@ -1,12 +1,12 @@
-package com..Service;
+package com.wondumall.Service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com..DAO.NoticeCommentDAO;
-import com..DTO.NoticeCommentDTO;
+import com.wondumall.DAO.NoticeCommentDAO;
+import com.wondumall.DTO.NoticeCommentDTO;
 
 @Service
 public class NoticeCommentService {

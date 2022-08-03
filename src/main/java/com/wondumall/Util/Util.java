@@ -1,4 +1,4 @@
-package com..Util;
+package com.wondumall.Util;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import com..DTO.LoginDTO;
+import com.wondumall.DTO.LoginDTO;
 
 @Component
 public class Util {

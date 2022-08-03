@@ -1,4 +1,4 @@
-package com..DAO;
+package com.wondumall.DAO;
 
 import java.util.List;
 import java.util.Map;
@@ -7,8 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com..DTO.ChatDTO;
-import com..DTO.LoginDTO;
+import com.wondumall.DTO.ChatDTO;
+import com.wondumall.DTO.LoginDTO;
 
 @Repository
 public class ChattingDAO {

@@ -7,24 +7,24 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title></title>
+<title>wondumall</title>
  		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
  		<!-- Bootstrap -->
- 		<link type="text/css" rel="stylesheet" href="//css/bootstrap.min.css"/>
+ 		<link type="text/css" rel="stylesheet" href="/wondumall/css/bootstrap.min.css"/>
 
  		<!-- Slick -->
- 		<link type="text/css" rel="stylesheet" href="//css/slick.css"/>
- 		<link type="text/css" rel="stylesheet" href="//css/slick-theme.css"/>
+ 		<link type="text/css" rel="stylesheet" href="/wondumall/css/slick.css"/>
+ 		<link type="text/css" rel="stylesheet" href="/wondumall/css/slick-theme.css"/>
 
  		<!-- nouislider -->
- 		<link type="text/css" rel="stylesheet" href="//css/nouislider.min.css"/>
+ 		<link type="text/css" rel="stylesheet" href="/wondumall/css/nouislider.min.css"/>
 
  		<!-- Font Awesome Icon -->
- 		<link rel="stylesheet" href="//css/font-awesome.min.css">
+ 		<link rel="stylesheet" href="/wondumall/css/font-awesome.min.css">
 
  		<!-- Custom stlylesheet -->
- 		<link type="text/css" rel="stylesheet" href="//css/style.css"/>
+ 		<link type="text/css" rel="stylesheet" href="/wondumall/css/style.css"/>
 <style type="text/css">
 td, th{
 	margin: 0 auto;
@@ -131,7 +131,7 @@ td, th{
 				<div id="pagination" style="text-align: center; margin-bottom: 20px;">
 					<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage" />
 				</div>
-				<form action="//admin/user.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center; margin-bottom: 20px;">
+				<form action="/wondumall/admin/user.do?pageNo=${pageNo }" style="display: block; margin: 0 auto; text-align: center; margin-bottom: 20px;">
 					<select name="searchColumn">
 						<option value="u_name" ${searchColumn eq 'u_name'?'selected':'' }>이름</option>
 						<option value="u_nickname" ${searchColumn eq 'u_nickname'?'selected':''}>별명</option>
@@ -146,56 +146,56 @@ td, th{
 		<c:import url="/footer.do"></c:import>
 	</footer>
 		<!-- jQuery Plugins -->
-	<script src="//js/jquery.min.js"></script>  
-	<script src="//js/bootstrap.min.js"></script>
-	<script src="//js/slick.min.js"></script>
-	<script src="//js/nouislider.min.js"></script>
-	<script src="//js/jquery.zoom.min.js"></script>
-	<script src="//js/main.js"></script>
+	<script src="/wondumall/js/jquery.min.js"></script>  
+	<script src="/wondumall/js/bootstrap.min.js"></script>
+	<script src="/wondumall/js/slick.min.js"></script>
+	<script src="/wondumall/js/nouislider.min.js"></script>
+	<script src="/wondumall/js/jquery.zoom.min.js"></script>
+	<script src="/wondumall/js/main.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 function linkPage(pageNo) {
-	location.href = "//admin/user.do?pageNo=" + pageNo;
+	location.href = "/wondumall/admin/user.do?pageNo=" + pageNo;
 }
 function sec(u_no){
 	if (confirm("삭제하시겠습니까?")){
-		location.href = "//admin/sec/" + u_no;
+		location.href = "/wondumall/admin/sec/" + u_no;
 	} else {
 		
 	}
 }
 function rep(u_no){
 	if (confirm("복구하시겠습니까?")){
-		location.href = "//admin/rep/" + u_no;
+		location.href = "/wondumall/admin/rep/" + u_no;
 	} else {
 		
 	}
 }
 function comsec(u_no){
 	if (confirm("삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?")){
-		location.href = "//admin/comsec/" + u_no;
+		location.href = "/wondumall/admin/comsec/" + u_no;
 	} else {
 		
 	}	
 }
 function admiss(u_no){
 	if (confirm("승인하시겠습니까?")){
-		location.href = "//admin/admiss/" + u_no;
+		location.href = "/wondumall/admin/admiss/" + u_no;
 	} else {
 		
 	}
 }
 function adcan(u_no){
 	if (confirm("승인을 취소하시겠습니까?")){
-		location.href = "//admin/adcan/" + u_no;
+		location.href = "/wondumall/admin/adcan/" + u_no;
 	} else {
 		
 	}
 }
 function logout(u_no){
 	if (confirm("해당 사용자 계정을 로그아웃 시키겠습니까?")){
-		location.href = "//admin/logout/" + u_no;
+		location.href = "/wondumall/admin/logout/" + u_no;
 	}
 }
 </script>

@@ -1,4 +1,4 @@
-package com..Controller;
+package com.wondumall.Controller;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com..DTO.CategoryDTO;
-import com..Service.CategoryService;
+import com.wondumall.DTO.CategoryDTO;
+import com.wondumall.Service.CategoryService;
 
 @Controller
 public class CategoryController {

@@ -1,4 +1,4 @@
-package com..Service;
+package com.wondumall.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -6,13 +6,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com..DAO.AdminDAO;
-import com..DTO.BoardDTO;
-import com..DTO.LoginDTO;
-import com..DTO.NoticeDTO;
-import com..DTO.ProductDTO;
-import com..DTO.QuestionDTO;
-import com..DTO.ReviewDTO;
+import com.wondumall.DAO.AdminDAO;
+import com.wondumall.DTO.BoardDTO;
+import com.wondumall.DTO.LoginDTO;
+import com.wondumall.DTO.NoticeDTO;
+import com.wondumall.DTO.ProductDTO;
+import com.wondumall.DTO.QuestionDTO;
+import com.wondumall.DTO.ReviewDTO;
 
 @Service
 public class AdminService {

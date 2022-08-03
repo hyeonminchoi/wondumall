@@ -1,13 +1,13 @@
-package com..Service;
+package com.wondumall.Service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com..DAO.FaqDAO;
-import com..DTO.FaqCategoryDTO;
-import com..DTO.FaqDTO;
+import com.wondumall.DAO.FaqDAO;
+import com.wondumall.DTO.FaqCategoryDTO;
+import com.wondumall.DTO.FaqDTO;
 
 @Service
 public class FaqService {

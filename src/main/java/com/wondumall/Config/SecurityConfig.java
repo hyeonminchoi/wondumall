@@ -1,4 +1,4 @@
-package com..Config;
+package com.wondumall.Config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,8 +22,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com..Service.CustomOAuth2UserService;
-import com..Service.MyUserDetailsService;
+import com.wondumall.Service.CustomOAuth2UserService;
+import com.wondumall.Service.MyUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -78,10 +78,10 @@ public class SecurityConfig {
 		
 		http.exceptionHandling()
         .accessDeniedHandler((request, response, authException) -> {
-    		response.sendRedirect("//accessDeniedException");
+    		response.sendRedirect("/wondumall/accessDeniedException");
         })
         .authenticationEntryPoint((request, response, authException) -> {
-    		response.sendRedirect("//unauthorizedException");
+    		response.sendRedirect("/wondumall/unauthorizedException");
         });
 		return http.build();
 	}
@@ -97,7 +97,7 @@ public class SecurityConfig {
  			.clientSecret("")
  			.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
  			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
- 			.redirectUri("http://localhost:8080//login/oauth2/code/google")
+ 			.redirectUri("http://localhost:8080/wondumall/login/oauth2/code/google")
  			.scope("profile", "email")
  			.authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
  			.tokenUri("https://www.googleapis.com/oauth2/v4/token")
@@ -114,7 +114,7 @@ public class SecurityConfig {
  			.clientSecret("")
  			.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
  			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
- 			.redirectUri("http://localhost:8080//login/oauth2/code/naver")
+ 			.redirectUri("http://localhost:8080/wondumall/login/oauth2/code/naver")
  			.scope("name", "email")
  			.authorizationUri("https://nid.naver.com/oauth2.0/authorize")
  			.tokenUri("https://nid.naver.com/oauth2.0/token")
@@ -130,7 +130,7 @@ public class SecurityConfig {
  			.clientSecret("")
  			.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
  			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
- 			.redirectUri("http://localhost:8080//login/oauth2/code/kakao")
+ 			.redirectUri("http://localhost:8080/wondumall/login/oauth2/code/kakao")
  			.scope("profile_nickname", "account_email")
  			.authorizationUri("https://kauth.kakao.com/oauth/authorize")
  			.tokenUri("https://kauth.kakao.com/oauth/token")

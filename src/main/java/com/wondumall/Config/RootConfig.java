@@ -1,5 +1,5 @@
 //root-context.xml
-package com..Config;
+package com.wondumall.Config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,11 +19,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import com..Util.ImagePaginationRenderer;
+import com.wondumall.Util.ImagePaginationRenderer;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com..*")
+@ComponentScan("com.wondumall.*")
 public class RootConfig {
 	@Autowired private ApplicationContext applicationContext;
 	
@@ -53,8 +53,8 @@ public class RootConfig {
 	public DriverManagerDataSource dataSource() {
 		DriverManagerDataSource source = new DriverManagerDataSource();
 		source.setDriverClassName("org.mariadb.jdbc.Driver");
-		source.setUrl("jdbc:mariadb:///?allowMultiQueries=true");
-		source.setUsername("");
+		source.setUrl("jdbc:mariadb:///wondumall?allowMultiQueries=true");
+		source.setUsername("wondumall");
 		source.setPassword("");
 		return source;
 	}

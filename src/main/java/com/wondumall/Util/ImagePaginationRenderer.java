@@ -1,4 +1,4 @@
-package com..Util;
+package com.wondumall.Util;
 
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.AbstractPaginationRenderer;
 

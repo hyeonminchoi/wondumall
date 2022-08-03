@@ -1,4 +1,4 @@
-package com..DTO;
+package com.wondumall.DTO;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
