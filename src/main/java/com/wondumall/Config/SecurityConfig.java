@@ -74,7 +74,7 @@ public class SecurityConfig {
 			.logoutRequestMatcher(new AntPathRequestMatcher("/logout.do"))
 			.logoutSuccessUrl("/")
 			.invalidateHttpSession(true);
-		http.oauth2Login().defaultSuccessUrl("/snsInfoCheck.do").userInfoEndpoint().userService(customOAuth2UserService);
+//		http.oauth2Login().defaultSuccessUrl("/snsInfoCheck.do").userInfoEndpoint().userService(customOAuth2UserService);
 		
 		http.exceptionHandling()
         .accessDeniedHandler((request, response, authException) -> {
@@ -86,58 +86,58 @@ public class SecurityConfig {
 		return http.build();
 	}
 	
-	@Bean
-	public ClientRegistrationRepository clientRegistrationRepository() {
-		return new InMemoryClientRegistrationRepository(this.googleClientRegistration(), this.naverClientRegistration(), this.kakaoClientRegistration());
-	}
+//	@Bean
+//	public ClientRegistrationRepository clientRegistrationRepository() {
+//		return new InMemoryClientRegistrationRepository(this.googleClientRegistration(), this.naverClientRegistration(), this.kakaoClientRegistration());
+//	}
 	
-	private ClientRegistration googleClientRegistration() {
- 		return ClientRegistration.withRegistrationId("google")
- 			.clientId("")
- 			.clientSecret("")
- 			.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
- 			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
- 			.redirectUri("http://localhost:8080/wondumall/login/oauth2/code/google")
- 			.scope("profile", "email")
- 			.authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
- 			.tokenUri("https://www.googleapis.com/oauth2/v4/token")
- 			.userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
- 			.userNameAttributeName(IdTokenClaimNames.SUB)
- 			.jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
- 			.clientName("Google")
- 			.build();
-	}
-	
-	private ClientRegistration naverClientRegistration() {
- 		return ClientRegistration.withRegistrationId("naver")
- 			.clientId("")
- 			.clientSecret("")
- 			.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
- 			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
- 			.redirectUri("http://localhost:8080/wondumall/login/oauth2/code/naver")
- 			.scope("name", "email")
- 			.authorizationUri("https://nid.naver.com/oauth2.0/authorize")
- 			.tokenUri("https://nid.naver.com/oauth2.0/token")
- 			.userInfoUri("https://openapi.naver.com/v1/nid/me")
- 			.userNameAttributeName("response")
- 			.clientName("Naver")
- 			.build();
-	}
-	
-	private ClientRegistration kakaoClientRegistration() {
- 		return ClientRegistration.withRegistrationId("kakao")
- 			.clientId("")
- 			.clientSecret("")
- 			.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
- 			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
- 			.redirectUri("http://localhost:8080/wondumall/login/oauth2/code/kakao")
- 			.scope("profile_nickname", "account_email")
- 			.authorizationUri("https://kauth.kakao.com/oauth/authorize")
- 			.tokenUri("https://kauth.kakao.com/oauth/token")
- 			.userInfoUri("https://kapi.kakao.com/v2/user/me")
- 			.userNameAttributeName("id")
- 			.clientName("Kakao")
- 			.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
- 			.build();
-	}
+//	private ClientRegistration googleClientRegistration() {
+// 		return ClientRegistration.withRegistrationId("google")
+// 			.clientId("")
+// 			.clientSecret("")
+// 			.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+// 			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+// 			.redirectUri("http://localhost:8080/wondumall/login/oauth2/code/google")
+// 			.scope("profile", "email")
+// 			.authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
+// 			.tokenUri("https://www.googleapis.com/oauth2/v4/token")
+// 			.userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
+// 			.userNameAttributeName(IdTokenClaimNames.SUB)
+// 			.jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
+// 			.clientName("Google")
+// 			.build();
+//	}
+//	
+//	private ClientRegistration naverClientRegistration() {
+// 		return ClientRegistration.withRegistrationId("naver")
+// 			.clientId("")
+// 			.clientSecret("")
+// 			.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+// 			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+// 			.redirectUri("http://localhost:8080/wondumall/login/oauth2/code/naver")
+// 			.scope("name", "email")
+// 			.authorizationUri("https://nid.naver.com/oauth2.0/authorize")
+// 			.tokenUri("https://nid.naver.com/oauth2.0/token")
+// 			.userInfoUri("https://openapi.naver.com/v1/nid/me")
+// 			.userNameAttributeName("response")
+// 			.clientName("Naver")
+// 			.build();
+//	}
+//	
+//	private ClientRegistration kakaoClientRegistration() {
+// 		return ClientRegistration.withRegistrationId("kakao")
+// 			.clientId("")
+// 			.clientSecret("")
+// 			.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+// 			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+// 			.redirectUri("http://localhost:8080/wondumall/login/oauth2/code/kakao")
+// 			.scope("profile_nickname", "account_email")
+// 			.authorizationUri("https://kauth.kakao.com/oauth/authorize")
+// 			.tokenUri("https://kauth.kakao.com/oauth/token")
+// 			.userInfoUri("https://kapi.kakao.com/v2/user/me")
+// 			.userNameAttributeName("id")
+// 			.clientName("Kakao")
+// 			.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
+// 			.build();
+//	}
 }

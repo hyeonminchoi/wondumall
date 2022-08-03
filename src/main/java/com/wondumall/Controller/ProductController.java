@@ -57,6 +57,7 @@ public class ProductController {
 	@Autowired
 	private ServletContext servletContext;
 	
+	//cart.jsp 상품 수량 수정 기능
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@PostMapping(value = "/modify.do")
 	public String modify(HttpServletRequest request, @RequestParam int cart_no, @RequestParam int p_count, @AuthenticationPrincipal MyUserDetails myUserDetails) {
@@ -69,6 +70,7 @@ public class ProductController {
 		return "redirect:/cart.do";
 	}
 	
+	//cart.jsp 체크박스 유무 update
 	@ResponseBody
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@RequestMapping(value = "/pCheck.do", method = RequestMethod.POST)
@@ -77,6 +79,7 @@ public class ProductController {
 		productService.resetCheck(map);
 	}
 	
+	//cart.jsp 장바구니 상품 전부 비우기
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@RequestMapping(value = "/cartAllDel.do")
 	public String cartAllDel(HttpServletRequest request, @RequestParam int cart_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
@@ -88,6 +91,7 @@ public class ProductController {
 		return "redirect:/cart.do";
 	}
 	
+	//cart.jsp 장바구이에 해당 상품만 삭제
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@RequestMapping(value = "/cartDelete.do")
 	public String cartDelete(HttpServletRequest request, @RequestParam int cart_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
@@ -99,6 +103,7 @@ public class ProductController {
 		return "redirect:/cart.do";
 	}
 	
+	//cart.jsp 장바구니에 담긴 상품 리스트
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@RequestMapping(value = "/cart.do")
 	public ModelAndView cart(@AuthenticationPrincipal MyUserDetails myUserDetails) {
@@ -109,8 +114,6 @@ public class ProductController {
 		} else {
 			mv.addObject("cart", 0);
 		}
-		if(myUserDetails!=null)
-			mv.addObject("qty", productService.cartCount(myUserDetails.getNo()));
 		
 		return mv;
 	}
@@ -124,7 +127,7 @@ public class ProductController {
 		return count;
 	}
 	
-	//장바구니에 추가하기
+	//productDetail.jsp 장바구니에 추가하기
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@PostMapping(value = "/cartAdd.do")
 	public String cartAdd(HttpServletRequest request, CartDTO dto, @AuthenticationPrincipal MyUserDetails myUserDetails) {
@@ -138,6 +141,7 @@ public class ProductController {
 		return "redirect:/productDetail.do?p_no=" + request.getParameter("p_no")+"&result=" + result;
 	}
 	
+	//productDetail.jsp 상품 리뷰 등록
 	@Secured({"ROLE_USER", "ROLE_BUSINESS", "ROLE_ADMIN"})
 	@PostMapping(value = "/productReview.do")
 	public String productReview(HttpServletRequest request, @AuthenticationPrincipal MyUserDetails myUserDetails) throws UnsupportedEncodingException {
@@ -159,6 +163,7 @@ public class ProductController {
 		return "redirect:/productDetail.do?p_no=" + request.getParameter("p_no");
 	}
 	
+	//productDetail.jsp 상세 상품 페이지
 	@GetMapping(value = "/productDetail.do")
 	public ModelAndView productDetail(HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "p_no", required = false, defaultValue = "-1") int p_no, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 		ModelAndView mv = new ModelAndView("productDetail");
@@ -171,20 +176,22 @@ public class ProductController {
 			reviewPageNo = Integer.parseInt(request.getParameter("reviewPageNo"));
 		}
 
-		// recordCountPageNo 한 페이지당 게시되는 게시물 수 yes
+		// recordCountPageNo 한 페이지당 게시되는 게시물 수
 		int listScale = 3;
-		// pageSize = 페이지 리스트에 게시되는 페이지 수 yes
+		// pageSize = 페이지 리스트에 게시되는 페이지 수
 		int pageScale = 5;
-		// totalRecordCount 전체 게시물 건수 yes
+		// totalRecordCount 전체 게시물 건수
 		int totalCount = productService.reviewCount(p_no);
 
 		// 전자정부페이징 호출
 		PaginationInfo paginationInfo = new PaginationInfo();
+		
 		// 값대입
 		paginationInfo.setCurrentPageNo(reviewPageNo);
 		paginationInfo.setRecordCountPerPage(listScale);
 		paginationInfo.setPageSize(pageScale);
 		paginationInfo.setTotalRecordCount(totalCount);
+		
 		// 전자정부 계산하기
 		int startPage = paginationInfo.getFirstRecordIndex();
 		int recordCountPerPage = paginationInfo.getRecordCountPerPage();
@@ -198,6 +205,8 @@ public class ProductController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("page", page);
 		map.put("dto",dto);
+		
+		//리뷰 리스트
 		List<ReviewDTO> reviewList = productService.reviewList(map);
 		
 		//로그인 되있을 경우 리뷰 썼는지 안썼는지 확인
@@ -206,7 +215,7 @@ public class ProductController {
 			mv.addObject("reviewStatus", productService.reviewStatus(dto));
 		} 
 		
-		//최근 본 상품
+		//최근 본 상품 Cookie로 구현
 		Cookie cookie = null;
 		Cookie[] cookies = request.getCookies();
 		if(cookies!=null) {
@@ -216,13 +225,7 @@ public class ProductController {
 					break;
 				}
 		}
-		//queue와 deque의 차이 생각하기
-		//StringTokenizer 찾아보기 <-> split과 차이 있음
-		//속도의 차이가 있다.
-		//얼마 안되는 값은 Tokenizer 가 좋음 / 값이 많아 질수록 split의 속도가 좋음 /
 		
-		//hasMoreTokenizer
-		//StringBuilder 찾아보기
 		if(cookie!=null) {
 			StringTokenizer st = new StringTokenizer(cookie.getValue(),"_");
 			StringBuilder sb = new StringBuilder();
@@ -254,7 +257,9 @@ public class ProductController {
 			newCookie.setMaxAge(60*60);
 			response.addCookie(newCookie);
 		}
-		try {
+		
+		//리뷰 평점 구현
+		try {	
 		mv.addObject("reviewRating", productService.reviewRating(p_no));
 		} catch (Exception e) {
 		}
@@ -272,8 +277,8 @@ public class ProductController {
 			int a = Double.valueOf(temp).intValue();
 			rating.set(a, Integer.parseInt(list.get(i).get("r_count").toString()));
 		}
+		
 		mv.addObject("rating", rating);
-				
 		mv.addObject("cateName", productService.cateName(p_no));
 		mv.addObject("reviewCount", productService.reviewCount(p_no));
 		mv.addObject("productDetail", productService.productDetail(p_no));
@@ -299,14 +304,13 @@ public class ProductController {
 		dto.setCate_no(cate_no);
 		
 
-		
 		// 전자정부페이징 사용하기
 		int catePageNo = 1;
 		if (request.getParameter("catePageNo") != null) {
 			catePageNo = Integer.parseInt(request.getParameter("catePageNo"));
 		}
 
-		// recordCountPageNo 한 페이지당 게시되는 게시물 수 yes
+		// recordCountPageNo 한 페이지당 게시되는 게시물 수
 		int listScale = 5;
 
 		// 전자정부페이징 호출
@@ -331,7 +335,6 @@ public class ProductController {
 		map.put("dto",dto);
 		map.put("cate_no", cate_no);
 		
-		
 		//물품리스트를 List에 담아서 jsp에 반환
 		List<ProductDTO> productList = productService.productList(map);
 		mv.addObject("productList", productList);
@@ -340,16 +343,18 @@ public class ProductController {
 		return mv;
 	}
 	
-	//상품등록 화면 나오게 하기
+	//productAdd.jsp 상품등록 화면 나오게 하기
 	@Secured({"ROLE_BUSINESS", "ROLE_ADMIN"})
 	@GetMapping(value = "/productAdd.do")
 	public ModelAndView productAdd(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("productAdd");
 		
+		//상품 등록에서 카테고리 이름 불러오기
 		mv.addObject("categoryList", categoryService.getCategoryList());
 		return mv;
 	}
 	
+	//productAdd.jsp 상품 데이터 값 입력
 	@PostMapping(value = "/productAdd.do")
 	public String productAdd(HttpServletRequest request, MultipartFile[] files ,@AuthenticationPrincipal MyUserDetails myUserDetails) throws Exception {
 		// 한글 입력 UTF-8로 set.
@@ -379,7 +384,6 @@ public class ProductController {
 			}
 			int result = productService.productAdd(add);
 			
-			//redirect는 언제 쓰는지?
 			if(result == 1) {
 				return "redirect:/";
 			} else {
@@ -390,6 +394,7 @@ public class ProductController {
 		}
 	}
 	
+	//최근 본 상품 반환
 	@ResponseBody
 	@PostMapping("/recentlySee.do")
 	public List<ProductDTO> recentlySee(@RequestParam("arr[]") List<Integer> arr){
