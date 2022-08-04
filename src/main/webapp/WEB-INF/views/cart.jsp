@@ -165,7 +165,7 @@ function priceZero() {
 											
 											<input type="hidden" class="individual_bookId_input" value="${c.p_no}">
 										</th>
-										<td><img src="./productUpload/${p.p_img}" style="width: 60px;"></td>
+										<td><img src="./productUpload/${c.p_img}" style="width: 60px;"></td>
 										<td><a class="title" href="./productDetail.do?p_no=${c.p_no}">${c.p_name }</a></td>
 										<td><fmt:formatNumber pattern="###,###,###" value="${c.p_price }" />원</td>
 										<td class="updown">

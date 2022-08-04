@@ -98,7 +98,7 @@ $(function(){
 }
 
 #float_layer {
-	margin-top: 70px;
+	margin-top: 55px;
 	margin-left: 650px;
 	text-align: center;
 }
