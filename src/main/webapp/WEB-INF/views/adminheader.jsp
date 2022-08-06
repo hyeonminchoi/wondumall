@@ -8,8 +8,8 @@
 		<ul class="header-links pull-left">
 			<li><a href="#"><i class="fa fa-phone"></i> 010-0000-0000</a></li>
 			<li><a href="#"><i class="fa fa-envelope-o"></i>
-					jeho0809@naver.com</a></li>
-			<li><a href="#"><i class="fa fa-map-marker"></i> 부천우리컴퓨터학원</a></li>
+					gusalsdl5119@naver.com</a></li>
+			<li><a href="#"><i class="fa fa-map-marker"></i> 부천우리컴퓨터전산회계학원</a></li>
 		</ul>
 		<div style="float:right;">
 			<ul class="header-links pull-right">

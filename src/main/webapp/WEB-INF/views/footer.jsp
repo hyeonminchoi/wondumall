@@ -10,9 +10,9 @@
 				<div class="footer">
 					<h3 class="footer-title">개발자</h3>
 					<ul class="footer-links">
+						<li><a href="https://github.com/hyeonminchoi"><i class="fa fa-github"></i>최현민</a></li>
 						<li><a href="https://github.com/hwangjeho"><i class="fa fa-github"></i>황제호</a></li>
 						<li><a href="https://github.com/cheuljin"><i class="fa fa-github"></i>황철진</a></li>
-						<li><a href="https://github.com/hyeonminchoi"><i class="fa fa-github"></i>최현민</a></li>
 						<li><a href="https://github.com/newbieccc"><i class="fa fa-github"></i>서승준</a></li>
 					</ul>
 				</div>
