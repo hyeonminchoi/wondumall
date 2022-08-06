@@ -101,7 +101,7 @@
   		FROM product
   		JOIN category ON category.cate_no = product.cate_no
   		LEFT JOIN review ON review.p_no = product.p_no AND review.r_del = 0
-  		WHERE product.p_name LIKE CONCAT('%', #{search}, '%')
+  		WHERE product.p_confirm = 1 AND product.p_name LIKE CONCAT('%', #{search}, '%')
   		GROUP BY p_no
   		ORDER BY product.p_price ASC, product.p_name ASC
   	</select>

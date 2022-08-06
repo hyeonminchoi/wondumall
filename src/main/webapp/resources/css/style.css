@@ -871,6 +871,7 @@ textarea.input {
   height: 100%;
   width: auto;
   margin: 0 auto;
+  display: block;
 }
 
 .product .product-img .product-label {
